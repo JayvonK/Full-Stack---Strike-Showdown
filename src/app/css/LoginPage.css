@@ -1,0 +1,27 @@
+
+@font-face {
+    font-family: Jura;
+    src: url(../../../public/fonts/static/Jura-Regular.ttf);
+}
+
+@font-face {
+    font-family: JuraBold;
+    src: url(../../../public/fonts/static/Jura-Bold.ttf);
+}
+
+.bgLogin {
+    background-image: url(../../../public/images/Main\ Background\ Img\ Placeholder.jpg);
+    background-size: cover;
+}
+
+.txtOrange {
+    color: #FF7A00;
+}
+
+.juraBold {
+    font-family: JuraBold;
+}
+
+.jura {
+    font-family: Jura;
+}
