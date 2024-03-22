@@ -16,24 +16,28 @@ export default function Home() {
         <img src="" alt="" />
 
         {
-          openerBool ? ( 
-            // First Ternary Return Statement
-          <div className="min-h-screen bg-black opacity-90" onClick={handleOpenerBoolChange}>
-          </div>
-          ) : (
-            // Second Ternary Return Statement
-          <div className="grid grid-cols-[45%_55%]">
+          // Start of Ternary
+          openerBool ? ( // First Ternary Return Statement
 
-            {/* Column 1 (Login Side) */}
-            <div className="min-h-screen bg-black opacity-90">
-            </div>
-
-            {/* Column 2 (Nothing) */}
-            <div>
+            <div className="min-h-screen bg-black opacity-90" onClick={handleOpenerBoolChange}>
 
             </div>
 
-          </div>
+          ) : ( // Second Ternary Return Statement
+
+            <div className="grid grid-cols-[45%_55%]">
+
+              {/* Column 1 (Login Side) */}
+              <div className="min-h-screen bg-black opacity-90">
+
+              </div>
+
+              {/* Column 2 (Nothing) */}
+              <div>
+
+              </div>
+
+            </div>
           )
         }
       </div>
