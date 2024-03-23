@@ -35,7 +35,19 @@ export default function Home() {
             <div className="grid grid-cols-[45%_55%]">
 
               {/* Column 1 (Login Side) */}
-              <div className="min-h-screen bg-black opacity-90">
+              <div className="min-h-screen bg-black opacity-90 p-36">
+                <h1 className="txtOrange text-6xl juraBold mb-16"> Strike <span className="text-white">Showdown</span></h1>
+
+                <h3 className="text-3xl text-white jura">Username:</h3>
+
+                <input type="text" />
+
+                <h3 className="text-3xl text-white jura">Password:</h3>
+
+                <input type="text" />
+
+                <h3 className="text-3xl txtOrange jura">Forgot Password?</h3>
+
 
               </div>
 
