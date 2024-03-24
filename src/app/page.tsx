@@ -5,10 +5,20 @@ import { useState } from "react";
 import '@/app/css/LoginPage.css'
 
 export default function Home() {
-  const [openerBool, setOpenerBool] = useState<boolean>(true);
+  const [openerBool, setOpenerBool] = useState<boolean>(false);
+  const [username, setUsername] = useState<string>();
+  const [password, setPassword] = useState<string>();
 
   const handleOpenerBoolChange = () => {
     setOpenerBool(!openerBool);
+  }
+
+  const handleUserChange = (param: React.ChangeEvent<HTMLInputElement>) => {
+    setUsername(param.target.value);
+  }
+
+  const handlePasswordChange = (param: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(param.target.value);
   }
 
   return (
@@ -32,22 +42,26 @@ export default function Home() {
 
           ) : ( // Second Ternary Return Statement
 
-            <div className="grid grid-cols-[45%_55%]">
+            <div className="grid grid-cols-2">
 
               {/* Column 1 (Login Side) */}
-              <div className="min-h-screen bg-black opacity-90 p-36">
-                <h1 className="txtOrange text-6xl juraBold mb-16"> Strike <span className="text-white">Showdown</span></h1>
+              <div className="min-h-screen bg-black opacity-90 px-48 py-32">
 
-                <h3 className="text-3xl text-white jura">Username:</h3>
+                <h1 className="txtOrange text-7xl juraBold mb-12 leading-[90px]"> Strike <span className="text-white">Showdown</span></h1>
 
-                <input type="text" />
+                <h3 className="text-4xl text-white jura">Username:</h3>
 
-                <h3 className="text-3xl text-white jura">Password:</h3>
+                <input type="text" className="w-full my-5 min-h-[76px] jura text-4xl rounded-lg" placeholder="Username/Email" value={username} onChange={handleUserChange} />
 
-                <input type="text" />
+                <h3 className="text-4xl text-white jura">Password:</h3>
 
-                <h3 className="text-3xl txtOrange jura">Forgot Password?</h3>
+                <input type="password" className="w-full my-5 min-h-[76px] jura text-4xl rounded-lg" placeholder="Password" value={password} onChange={handlePasswordChange}/>
 
+                <h3 className="text-3xl txtOrange jura underline hover:cursor-pointer">Forgot Password?</h3>
+
+                <button className="text-4xl text-black min-h-[76px] w-full my-8 juraBold bgOrange rounded-xl"> LOG IN</button>
+
+                <h3 className="text-3xl text-white jura">Don't have an account? <span className="txtOrange underline hover:cursor-pointer">Sign Up</span></h3>
 
               </div>
 
