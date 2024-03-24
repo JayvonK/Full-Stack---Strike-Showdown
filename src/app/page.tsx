@@ -3,11 +3,13 @@
 import Image from "next/image";
 import { useState } from "react";
 import '@/app/css/LoginPage.css'
+import { useRouter } from "next/navigation";
 
 export default function Home() {
   const [openerBool, setOpenerBool] = useState<boolean>(false);
   const [username, setUsername] = useState<string>();
   const [password, setPassword] = useState<string>();
+  const router = useRouter();
 
   const handleOpenerBoolChange = () => {
     setOpenerBool(!openerBool);
@@ -19,6 +21,10 @@ export default function Home() {
 
   const handlePasswordChange = (param: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(param.target.value);
+  }
+
+  const signUpPage = () => {
+    
   }
 
   return (
