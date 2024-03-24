@@ -48,7 +48,7 @@ const ForgotPassword = () => {
 
                                 <input type="text" className="w-full my-5 min-h-[76px] jura text-4xl rounded-lg" placeholder="Enter Username" value={username} onChange={handleUserChange} />
 
-                                <button className="text-4xl text-black min-h-[76px] w-full my-8 juraBold bgOrange rounded-xl" > Continue</button>
+                                <button className="text-4xl text-black min-h-[76px] w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" > Continue</button>
 
                             </div>
 
