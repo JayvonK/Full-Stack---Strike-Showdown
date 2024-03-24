@@ -1,9 +1,9 @@
 'use client'
 
-import Image from "next/image";
 import { useState } from "react";
 import '@/app/css/LoginPage.css'
 import { useRouter } from "next/navigation";
+import LoginNavComponent from "./components/LoginNavComponent";
 
 export default function Home() {
   const [openerBool, setOpenerBool] = useState<boolean>(false);
@@ -23,14 +23,13 @@ export default function Home() {
     setPassword(param.target.value);
   }
 
-  const signUpPage = () => {
-    
+  const ForgotPassword = () => {
+    router.push('/pages/ForgotPassword')
   }
 
   return (
     <div>
       <div className="min-h-screen bgLogin">
-        <img src="" alt="" />
 
         {
           // Start of Ternary
@@ -43,7 +42,6 @@ export default function Home() {
                 <h3 className="text-center text-white jura text-5xl mb-24">Where you’ll be able to create or join 1v1 challenges or practice sessions with other bowlers!</h3>
                 <h3 className="text-center text-white jura txtOrange text-5xl">click to continue...</h3>
               </div>
-
             </div>
 
           ) : ( // Second Ternary Return Statement
@@ -51,25 +49,32 @@ export default function Home() {
             <div className="grid grid-cols-2">
 
               {/* Column 1 (Login Side) */}
-              <div className="min-h-screen bg-black opacity-90 px-48 py-32">
+              <div className="min-h-screen bgBlack">
 
-                <h1 className="txtOrange text-7xl juraBold mb-12 leading-[90px]"> Strike <span className="text-white">Showdown</span></h1>
+                <LoginNavComponent exist={false} onClick={() => {}}/>
 
-                <h3 className="text-4xl text-white jura">Username:</h3>
+                <div className="px-48 pb-32">
 
-                <input type="text" className="w-full my-5 min-h-[76px] jura text-4xl rounded-lg" placeholder="Username/Email" value={username} onChange={handleUserChange} />
+                  <h1 className="txtOrange text-7xl juraBold mb-12 leading-[90px]"> Strike <span className="text-white">Showdown</span></h1>
 
-                <h3 className="text-4xl text-white jura">Password:</h3>
+                  <h3 className="text-4xl text-white jura">Username:</h3>
 
-                <input type="password" className="w-full my-5 min-h-[76px] jura text-4xl rounded-lg" placeholder="Password" value={password} onChange={handlePasswordChange}/>
+                  <input type="text" className="w-full my-5 min-h-[76px] jura text-4xl rounded-lg" placeholder="Username" value={username} onChange={handleUserChange} />
 
-                <h3 className="text-3xl txtOrange jura underline hover:cursor-pointer">Forgot Password?</h3>
+                  <h3 className="text-4xl text-white jura">Password:</h3>
 
-                <button className="text-4xl text-black min-h-[76px] w-full my-8 juraBold bgOrange rounded-xl"> LOG IN</button>
+                  <input type="password" className="w-full my-5 min-h-[76px] jura text-4xl rounded-lg" placeholder="Password" value={password} onChange={handlePasswordChange} />
 
-                <h3 className="text-3xl text-white jura">Don't have an account? <span className="txtOrange underline hover:cursor-pointer">Sign Up</span></h3>
+                  <h3 className="text-3xl txtOrange jura underline hover:cursor-pointer" onClick={ForgotPassword}>Forgot Password?</h3>
+
+                  <button className="text-4xl text-black min-h-[76px] w-full my-8 juraBold bgOrange rounded-xl"> LOG IN</button>
+
+                  <h3 className="text-3xl text-white jura">Don't have an account? <span className="txtOrange underline hover:cursor-pointer">Sign Up</span></h3>
+
+                </div>
 
               </div>
+
 
               {/* Column 2 (Nothing) */}
               <div>
