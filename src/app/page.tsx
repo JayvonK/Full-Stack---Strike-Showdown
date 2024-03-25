@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import LoginNavComponent from "./components/LoginNavComponent";
 import { Toast } from "flowbite-react";
 import { HiCheck, HiExclamation, HiX } from "react-icons/hi";
+import RequiredInputComponent from "./components/RequiredInputComponent";
 
 export default function Home() {
   const [openerBool, setOpenerBool] = useState<boolean>(false);
@@ -13,11 +14,9 @@ export default function Home() {
   const [password, setPassword] = useState<string>('');
   const [usernameClass, setUsernameClass] = useState<string>('');
   const [usernameTitle, setUsernameTitle] = useState<string>('Username:');
-  const [userErrorTxt, setUserErrorTxt] = useState<string>('text-white');
-  const [passwordErrorTxt, setPasswordErrorTxt] = useState<string>('text-white');
+  const [userBorderError, setuserBorderError] = useState<string>('');
+  const [passwordBorderError, setPasswordBorderError] = useState<string>('');
   const [errorMessage, setErrorMessage] = useState<boolean>(false);
-  // const [userEmpty, setUserEmpty] = useState<boolean>(true);
-  // const [passwordEmpty, setPasswordEmpty] = useState<boolean>(true);
   const router = useRouter();
 
   const handleOpenerBoolChange = () => {
@@ -28,15 +27,14 @@ export default function Home() {
     // setUserEmpty(false);
     setUsername(param.target.value);
     setErrorMessage(false);
-    setUserErrorTxt('');
+    setuserBorderError('');
   }
 
   const handlePasswordChange = (param: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(param.target.value);
     setErrorMessage(false);
-    setPasswordErrorTxt('');
+    setPasswordBorderError('');
   }
-
 
   const handleLogin = () => {
     let userData = {
@@ -44,14 +42,16 @@ export default function Home() {
       password: password
     }
 
-    if (username.length === 0 || password.length === 0) {
-      setPasswordErrorTxt('border-red-600 border-2');
-      setUserErrorTxt('border-red-600 border-2');
+    if (username.length === 0 && password.length === 0) {
+      setPasswordBorderError('border-red-600 border-2');
+      setuserBorderError('border-red-600 border-2');
       setErrorMessage(true);
-    } else if (username === undefined) {
-
-    } else if (password === undefined) {
-
+    } else if (username.length === 0) {
+      setuserBorderError('border-red-600 border-2');
+      setErrorMessage(true);
+    } else if (password.length === 0) {
+      setPasswordBorderError('border-red-600 border-2');
+      setErrorMessage(true);
     } else {
       alert('login successful')
     }
@@ -93,19 +93,16 @@ export default function Home() {
                       <Toast.Toggle onClick={() => setErrorMessage(false)} />
                     </Toast>) : (<div></div>)
                 }
-                <LoginNavComponent exist={false} onClick={() => { }} />
+
+                <LoginNavComponent exist={false} onClick={() => {}} />
 
                 <div className="px-48 pb-32">
 
                   <h1 className="txtOrange text-7xl juraBold mb-12 leading-[90px]"> Strike <span className="text-white">Showdown</span></h1>
 
-                  <h3 className={"text-4xl jura text-white"}>Username:</h3>
+                  <RequiredInputComponent title={"Username:"} type={'text'} borderError={userBorderError} placeholder="Enter Username" value={username} onChange={handleUserChange}/>
 
-                  <input type="text" className={"w-full my-5 min-h-[76px] jura text-4xl rounded-lg " + userErrorTxt} placeholder="Username" value={username} onChange={handleUserChange} />
-
-                  <h3 className={"text-4xl jura text-white"}>Password:</h3>
-
-                  <input type="password" className={"w-full my-5 min-h-[76px] jura text-4xl rounded-lg " + passwordErrorTxt} placeholder="Password" value={password} onChange={handlePasswordChange} />
+                  <RequiredInputComponent title={"Password:"} type={'password'} borderError={passwordBorderError} placeholder="Enter Password" value={password} onChange={handlePasswordChange}/>
 
                   <h3 className="text-3xl txtOrange jura underline hover:cursor-pointer hover:text-[#ff9939]" onClick={ForgotPassword}>Forgot Password?</h3>
 
