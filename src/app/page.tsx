@@ -4,15 +4,18 @@ import { useState } from "react";
 import '@/app/css/LoginPage.css'
 import { useRouter } from "next/navigation";
 import LoginNavComponent from "./components/LoginNavComponent";
+import { Toast } from "flowbite-react";
+import { HiCheck, HiExclamation, HiX } from "react-icons/hi";
 
 export default function Home() {
   const [openerBool, setOpenerBool] = useState<boolean>(false);
-  const [username, setUsername] = useState<string>();
-  const [password, setPassword] = useState<string>();
+  const [username, setUsername] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
   const [usernameClass, setUsernameClass] = useState<string>('');
   const [usernameTitle, setUsernameTitle] = useState<string>('Username:');
-  const [userErrorTxt, setUserErrorTxt] = useState<string>('text-white')
-  const [passwordErrorTxt, setPasswordErrorTxt] = useState<string>('text-white')
+  const [userErrorTxt, setUserErrorTxt] = useState<string>('text-white');
+  const [passwordErrorTxt, setPasswordErrorTxt] = useState<string>('text-white');
+  const [errorMessage, setErrorMessage] = useState<boolean>(false);
   // const [userEmpty, setUserEmpty] = useState<boolean>(true);
   // const [passwordEmpty, setPasswordEmpty] = useState<boolean>(true);
   const router = useRouter();
@@ -24,24 +27,34 @@ export default function Home() {
   const handleUserChange = (param: React.ChangeEvent<HTMLInputElement>) => {
     // setUserEmpty(false);
     setUsername(param.target.value);
+    setErrorMessage(false);
+    setUserErrorTxt('');
   }
 
   const handlePasswordChange = (param: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(param.target.value);
+    setErrorMessage(false);
+    setPasswordErrorTxt('');
   }
 
-  const handleEmptyLogin = () => {
-    if(username === undefined && password === undefined){
-      setPasswordErrorTxt('text-red-600');
-      setUserErrorTxt('text-red-600');
-    } else if(username === undefined){
 
-    } else if (password === undefined){
+  const handleLogin = () => {
+    let userData = {
+      username: username,
+      password: password
+    }
+
+    if (username.length === 0 || password.length === 0) {
+      setPasswordErrorTxt('border-red-600 border-2');
+      setUserErrorTxt('border-red-600 border-2');
+      setErrorMessage(true);
+    } else if (username === undefined) {
+
+    } else if (password === undefined) {
 
     } else {
       alert('login successful')
     }
-
   }
 
   const ForgotPassword = () => {
@@ -51,7 +64,6 @@ export default function Home() {
   return (
     <div>
       <div className="min-h-screen bgLogin">
-
         {
           // Start of Ternary
           openerBool ? ( // First Ternary Return Statement
@@ -71,24 +83,33 @@ export default function Home() {
 
               {/* Column 1 (Login Side) */}
               <div className="min-h-screen bgBlack">
-
-                <LoginNavComponent exist={false} onClick={() => {}}/>
+                {
+                  errorMessage ? (
+                    <Toast className="absolute">
+                      <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-red-100 text-red-500 dark:bg-red-800 dark:text-red-200">
+                        <HiX className="h-5 w-5" />
+                      </div>
+                      <div className="ml-3 text-sm text-black">Invalid Username Or Password</div>
+                      <Toast.Toggle onClick={() => setErrorMessage(false)} />
+                    </Toast>) : (<div></div>)
+                }
+                <LoginNavComponent exist={false} onClick={() => { }} />
 
                 <div className="px-48 pb-32">
 
                   <h1 className="txtOrange text-7xl juraBold mb-12 leading-[90px]"> Strike <span className="text-white">Showdown</span></h1>
 
-                  <h3 className={"text-4xl jura " + userErrorTxt}>{usernameTitle}</h3>
+                  <h3 className={"text-4xl jura text-white"}>Username:</h3>
 
-                  <input type="text" className="w-full my-5 min-h-[76px] jura text-4xl rounded-lg border-red-600 border-2" placeholder="Username" value={username} onChange={handleUserChange} />
+                  <input type="text" className={"w-full my-5 min-h-[76px] jura text-4xl rounded-lg " + userErrorTxt} placeholder="Username" value={username} onChange={handleUserChange} />
 
-                  <h3 className={"text-4xl jura " + passwordErrorTxt}>Password:</h3>
+                  <h3 className={"text-4xl jura text-white"}>Password:</h3>
 
-                  <input type="password" className="w-full my-5 min-h-[76px] jura text-4xl rounded-lg" placeholder="Password" value={password} onChange={handlePasswordChange} />
+                  <input type="password" className={"w-full my-5 min-h-[76px] jura text-4xl rounded-lg " + passwordErrorTxt} placeholder="Password" value={password} onChange={handlePasswordChange} />
 
                   <h3 className="text-3xl txtOrange jura underline hover:cursor-pointer hover:text-[#ff9939]" onClick={ForgotPassword}>Forgot Password?</h3>
 
-                  <button className="text-4xl text-black min-h-[76px] w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleEmptyLogin}> LOG IN</button>
+                  <button className="text-4xl text-black min-h-[76px] w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleLogin}> LOG IN</button>
 
                   <h3 className="text-3xl text-white jura">Don't have an account? <span className="txtOrange underline hover:cursor-pointer hover:text-[#ff9939]">Sign Up</span></h3>
 
