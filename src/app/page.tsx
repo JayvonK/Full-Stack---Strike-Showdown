@@ -5,7 +5,7 @@ import '@/app/css/LoginPage.css'
 import { useRouter } from "next/navigation";
 import LoginNavComponent from "./components/LoginNavComponent";
 import { Toast } from "flowbite-react";
-import { HiCheck, HiExclamation, HiX } from "react-icons/hi";
+import {HiX } from "react-icons/hi";
 import RequiredInputComponent from "./components/RequiredInputComponent";
 
 export default function Home() {
