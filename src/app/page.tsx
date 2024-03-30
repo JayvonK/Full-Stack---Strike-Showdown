@@ -7,6 +7,7 @@ import LoginNavComponent from "./components/LoginNavComponent";
 import { Toast } from "flowbite-react";
 import { HiX } from "react-icons/hi";
 import RequiredInputComponent from "./components/RequiredInputComponent";
+import { createAccount } from "@/Data/DataServices";
 
 export default function Home() {
   const [openerBool, setOpenerBool] = useState<boolean>(true);
@@ -42,7 +43,7 @@ export default function Home() {
 
   }
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     let userData = {
       username: username,
       password: password

@@ -59,16 +59,16 @@ const ForgotPassword = () => {
 
                                 <h1 className="txtOrange text-7xl juraBold mb-12 leading-[90px]"> What's your username?</h1>
 
-                                <RequiredInputComponent title="Username:" type='text' borderError={userBorderError} placeholder='Enter Username' value={username} onChange={handleUserChange} maxLength={20}/>
+                                <RequiredInputComponent title="Username:" type='text' borderError={userBorderError} placeholder='Enter Username' value={username} onChange={handleUserChange} maxLength={20} />
 
                                 <button className="text-4xl text-black min-h-[76px] w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleContinue}> Continue</button>
 
                             </div>
 
-                            {/* Column 2 (Nothing) */}
-                            <div>
+                        </div>
 
-                            </div>
+                        {/* Column 2 (Nothing) */}
+                        <div>
 
                         </div>
                     </div>

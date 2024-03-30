@@ -51,7 +51,7 @@ const SignUp = () => {
       setErrorMessage(true);
       setUserBorderError('border-red-600 border-2');
     } else {
-      
+
     }
   }
 
@@ -62,45 +62,58 @@ const SignUp = () => {
     <div>
       <div className="min-h-screen bgLogin">
         <img src="" alt="" />
-        
-          <div className='grid grid-cols-2'>
 
-            <div className="min-h-screen bgBlack">
-              {
-                errorMessage ? (
-                  <Toast className="absolute">
-                    <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-red-100 text-red-500 dark:bg-red-800 dark:text-red-200">
-                      <HiX className="h-5 w-5" />
-                    </div>
-                    <div className="ml-3 text-sm text-black">Invalid Username</div>
-                    <Toast.Toggle onClick={() => setErrorMessage(false)} />
-                  </Toast>) : (<div></div>)
-              }
-              <LoginNavComponent exist={true} onClick={handleBackLogin} />
+        <div className='grid grid-cols-2'>
 
-              {/* Column 1 (Login Side) */}
-              <div className="px-48">
+          <div className="min-h-screen bgBlack">
+            {
+              creatingAccount ? (
+                <>
+                  {
+                    errorMessage ? (
+                      <Toast className="absolute">
+                        <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-red-100 text-red-500 dark:bg-red-800 dark:text-red-200">
+                          <HiX className="h-5 w-5" />
+                        </div>
+                        <div className="ml-3 text-sm text-black">Invalid Username</div>
+                        <Toast.Toggle onClick={() => setErrorMessage(false)} />
+                      </Toast>) : (<div></div>)
+                  }
 
-                <h1 className="txtOrange text-7xl juraBold mb-5 leading-[90px]"> Create Your Account</h1>
+                  <LoginNavComponent exist={true} onClick={handleBackLogin} />
 
-                <RequiredInputComponent title="Username:" type='text' borderError={userBorderError} placeholder='Enter Username' value={username} onChange={handleUserChange} maxLength={5000} />
-                <RequiredInputComponent title="Email:" type='text' borderError={userBorderError} placeholder='Enter Enail' value={email} onChange={handleEmailChange} maxLength={20} />
-                <RequiredInputComponent title="Password:" type='password' borderError={userBorderError} placeholder='Enter Password' value={password} onChange={handlePasswordChange} maxLength={5000} />
-                <RequiredInputComponent title="Verify Password:" type='password' borderError={userBorderError} placeholder='Re-enter Password' value={password2} onChange={handlePassword2Change} maxLength={5000} />
+                  <div className="px-48">
 
-                <button className="text-4xl text-black min-h-[76px] w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleNext}> Next</button>
+                    <h1 className="txtOrange text-7xl juraBold mb-5 leading-[90px]"> Create Your Account</h1>
 
-              </div>
+                    <RequiredInputComponent title="Username:" type='text' borderError={userBorderError} placeholder='Enter Username' value={username} onChange={handleUserChange} maxLength={5000} />
+                    <RequiredInputComponent title="Email:" type='text' borderError={userBorderError} placeholder='Enter Enail' value={email} onChange={handleEmailChange} maxLength={20} />
+                    <RequiredInputComponent title="Password:" type='password' borderError={userBorderError} placeholder='Enter Password' value={password} onChange={handlePasswordChange} maxLength={5000} />
+                    <RequiredInputComponent title="Verify Password:" type='password' borderError={userBorderError} placeholder='Re-enter Password' value={password2} onChange={handlePassword2Change} maxLength={5000} />
 
-              {/* Column 2 (Nothing) */}
-              <div>
+                    <button className="text-4xl text-black min-h-[76px] w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleNext}> Next</button>
 
-              </div>
+                  </div>
+                </>
 
-            </div>
+              ) : (
+                <div>
+
+                </div>
+              )
+            }
+
+
+
           </div>
 
-        
+          {/* Column 2 */}
+          <div>
+
+          </div>
+        </div>
+
+
       </div>
     </div>
   )
