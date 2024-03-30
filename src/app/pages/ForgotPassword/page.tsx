@@ -29,10 +29,8 @@ const ForgotPassword = () => {
         }
     }
 
-
-
     const handleBack = () => {
-        router.back();
+        router.push('/');
     }
 
     return (
@@ -41,7 +39,6 @@ const ForgotPassword = () => {
                 <img src="" alt="" />
                 {
                     <div className='grid grid-cols-2'>
-
 
 
                         <div className="min-h-screen bgBlack">
@@ -58,11 +55,11 @@ const ForgotPassword = () => {
                             <LoginNavComponent exist={true} onClick={handleBack} />
 
                             {/* Column 1 (Login Side) */}
-                            <div className="px-48 pb-32">
+                            <div className="px-48">
 
                                 <h1 className="txtOrange text-7xl juraBold mb-12 leading-[90px]"> What's your username?</h1>
 
-                                <RequiredInputComponent title="Username:" type='text' borderError={userBorderError} placeholder='Enter Username' value={username} onChange={handleUserChange} />
+                                <RequiredInputComponent title="Username:" type='text' borderError={userBorderError} placeholder='Enter Username' value={username} onChange={handleUserChange} maxLength={20}/>
 
                                 <button className="text-4xl text-black min-h-[76px] w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleContinue}> Continue</button>
 

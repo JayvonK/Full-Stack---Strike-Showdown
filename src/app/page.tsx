@@ -5,7 +5,7 @@ import '@/app/css/LoginPage.css'
 import { useRouter } from "next/navigation";
 import LoginNavComponent from "./components/LoginNavComponent";
 import { Toast } from "flowbite-react";
-import {HiX } from "react-icons/hi";
+import { HiX } from "react-icons/hi";
 import RequiredInputComponent from "./components/RequiredInputComponent";
 
 export default function Home() {
@@ -57,8 +57,12 @@ export default function Home() {
     }
   }
 
-  const ForgotPassword = () => {
+  const handleForgotPassword = () => {
     router.push('/pages/ForgotPassword')
+  }
+
+  const handleSignUp = () => {
+    router.push('/pages/SignUp')
   }
 
   return (
@@ -94,21 +98,21 @@ export default function Home() {
                     </Toast>) : (<div></div>)
                 }
 
-                <LoginNavComponent exist={false} onClick={() => {}} />
+                <LoginNavComponent exist={false} onClick={() => { }} />
 
-                <div className="px-48 pb-32">
+                <div className="px-48">
 
                   <h1 className="txtOrange text-7xl juraBold mb-12 leading-[90px]"> Strike <span className="text-white">Showdown</span></h1>
 
-                  <RequiredInputComponent title={"Username:"} type={'text'} borderError={userBorderError} placeholder="Enter Username" value={username} onChange={handleUserChange}/>
+                  <RequiredInputComponent title={"Username:"} type={'text'} borderError={userBorderError} placeholder="Enter Username/Email" value={username} onChange={handleUserChange} maxLength={20} />
 
-                  <RequiredInputComponent title={"Password:"} type={'password'} borderError={passwordBorderError} placeholder="Enter Password" value={password} onChange={handlePasswordChange}/>
+                  <RequiredInputComponent title={"Password:"} type={'password'} borderError={passwordBorderError} placeholder="Enter Password" value={password} onChange={handlePasswordChange} maxLength={524288} />
 
-                  <h3 className="text-3xl txtOrange jura underline hover:cursor-pointer hover:text-[#ff9939]" onClick={ForgotPassword}>Forgot Password?</h3>
+                  <h3 className="text-3xl txtOrange jura underline hover:cursor-pointer hover:text-[#ff9939]" onClick={handleForgotPassword}>Forgot Password?</h3>
 
                   <button className="text-4xl text-black min-h-[76px] w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleLogin}> LOG IN</button>
 
-                  <h3 className="text-3xl text-white jura">Don't have an account? <span className="txtOrange underline hover:cursor-pointer hover:text-[#ff9939]">Sign Up</span></h3>
+                  <h3 className="text-3xl text-white jura">Don't have an account? <span className="txtOrange underline hover:cursor-pointer hover:text-[#ff9939]" onClick={handleSignUp}>Sign Up</span></h3>
 
                 </div>
 
