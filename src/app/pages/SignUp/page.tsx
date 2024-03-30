@@ -11,6 +11,9 @@ import RequiredInputComponent from '@/app/components/RequiredInputComponent';
 const SignUp = () => {
   const [errorMessage, setErrorMessage] = useState<boolean>(false);
   const [username, setUsername] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
+  const [password2, setPassword2] = useState<string>('');
   const [userBorderError, setUserBorderError] = useState<string>('');
   const router = useRouter();
 
@@ -21,25 +24,25 @@ const SignUp = () => {
   }
 
   const handleEmailChange = (param: React.ChangeEvent<HTMLInputElement>) => {
-    setUsername(param.target.value);
+    setEmail(param.target.value);
     setErrorMessage(false);
     setUserBorderError('');
   }
 
   const handlePasswordChange = (param: React.ChangeEvent<HTMLInputElement>) => {
-    setUsername(param.target.value);
+    setPassword(param.target.value);
     setErrorMessage(false);
     setUserBorderError('');
   }
 
   const handlePassword2Change = (param: React.ChangeEvent<HTMLInputElement>) => {
-    setUsername(param.target.value);
+    setPassword2(param.target.value);
     setErrorMessage(false);
     setUserBorderError('');
   }
 
   const handleNext = () => {
-    if (username.length === 0) {
+    if (username.trim() === '' || password.trim() === '' || password2.trim() === '' || email.trim() === '') {
       setErrorMessage(true);
       setUserBorderError('border-red-600 border-2');
     } else {
@@ -77,9 +80,9 @@ const SignUp = () => {
                 <h1 className="txtOrange text-7xl juraBold mb-5 leading-[90px]"> Create Your Account</h1>
 
                 <RequiredInputComponent title="Username:" type='text' borderError={userBorderError} placeholder='Enter Username' value={username} onChange={handleUserChange} maxLength={5000} />
-                <RequiredInputComponent title="Email:" type='text' borderError={userBorderError} placeholder='Enter Enail' value={username} onChange={handleUserChange} maxLength={20} />
-                <RequiredInputComponent title="Password:" type='password' borderError={userBorderError} placeholder='Enter Password' value={username} onChange={handleUserChange} maxLength={5000} />
-                <RequiredInputComponent title="Verify Password:" type='password' borderError={userBorderError} placeholder='Re-enter Password' value={username} onChange={handleUserChange} maxLength={5000} />
+                <RequiredInputComponent title="Email:" type='text' borderError={userBorderError} placeholder='Enter Enail' value={email} onChange={handleEmailChange} maxLength={20} />
+                <RequiredInputComponent title="Password:" type='password' borderError={userBorderError} placeholder='Enter Password' value={password} onChange={handlePasswordChange} maxLength={5000} />
+                <RequiredInputComponent title="Verify Password:" type='password' borderError={userBorderError} placeholder='Re-enter Password' value={password2} onChange={handlePassword2Change} maxLength={5000} />
 
                 <button className="text-4xl text-black min-h-[76px] w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleNext}> Next</button>
 
