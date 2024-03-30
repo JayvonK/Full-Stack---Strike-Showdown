@@ -15,6 +15,11 @@ const SignUp = () => {
   const [email, setEmail] = useState<string>('');
   const [password2, setPassword2] = useState<string>('');
   const [userBorderError, setUserBorderError] = useState<string>('');
+  const [creatingAccount, setCreatingAccount] = useState<boolean>(true);
+  const [doesUserWantStats, setDoesUserWantStats] = useState<boolean>(false);
+  const [answeringSecurity, setAnsweringSecurity] = useState<boolean>(false);
+  const [addingCustomStats, setAddingCustomStats] = useState<boolean>(false);
+  const [addingCustomStats2, setAddingCustomStats2] = useState<boolean>(false);
   const router = useRouter();
 
   const handleUserChange = (param: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,20 +51,19 @@ const SignUp = () => {
       setErrorMessage(true);
       setUserBorderError('border-red-600 border-2');
     } else {
-
+      
     }
   }
 
-  const handleBack = () => {
+  const handleBackLogin = () => {
     router.push('/');
   }
   return (
     <div>
       <div className="min-h-screen bgLogin">
         <img src="" alt="" />
-        {
+        
           <div className='grid grid-cols-2'>
-
 
             <div className="min-h-screen bgBlack">
               {
@@ -72,7 +76,7 @@ const SignUp = () => {
                     <Toast.Toggle onClick={() => setErrorMessage(false)} />
                   </Toast>) : (<div></div>)
               }
-              <LoginNavComponent exist={true} onClick={handleBack} />
+              <LoginNavComponent exist={true} onClick={handleBackLogin} />
 
               {/* Column 1 (Login Side) */}
               <div className="px-48">
@@ -96,7 +100,7 @@ const SignUp = () => {
             </div>
           </div>
 
-        }
+        
       </div>
     </div>
   )
