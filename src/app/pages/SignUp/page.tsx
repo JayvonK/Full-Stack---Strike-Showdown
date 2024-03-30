@@ -95,7 +95,6 @@ const SignUp = () => {
 
                   </div>
                 </>
-
               ) : (
                 <div>
 
