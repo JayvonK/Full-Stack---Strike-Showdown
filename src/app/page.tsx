@@ -3,11 +3,13 @@
 import { useState } from "react";
 import '@/app/css/LoginPage.css'
 import { useRouter } from "next/navigation";
-import LoginNavComponent from "./components/LoginNavComponent";
+import LoginNavComponent from "../components/LoginNavComponent";
 import { Toast } from "flowbite-react";
 import { HiX } from "react-icons/hi";
-import RequiredInputComponent from "./components/RequiredInputComponent";
+import RequiredInputComponent from "../components/RequiredInputComponent";
 import { createAccount } from "@/Data/DataServices";
+import { ToastAction } from "@/components/ui/toast"
+import { useToast } from "@/components/ui/use-toast"
 
 export default function Home() {
   const [openerBool, setOpenerBool] = useState<boolean>(true);
@@ -18,6 +20,8 @@ export default function Home() {
   const [errorMessage, setErrorMessage] = useState<boolean>(false);
   const [notLoggedIn, setNotLoggedIn] = useState<boolean>(true);
   const router = useRouter();
+
+  const { toast } = useToast()
 
   const handleOpenerBoolChange = () => {
     setOpenerBool(!openerBool);
@@ -49,10 +53,15 @@ export default function Home() {
       password: password
     }
 
-    if (username.length === 0 || password.length === 0) {
+    if (username.trim() === "" || password.trim() === "") {
       setPasswordBorderError('border-red-600 border-2');
       setuserBorderError('border-red-600 border-2');
-      setErrorMessage(true);
+      toast({
+        variant: "destructive",
+        title: "Zahid said youre a bitch.",
+        description: "Me personally, I wouldn't take that.",
+        action: <ToastAction altText="Try again">Try again</ToastAction>,
+      })
     } else {
       setNotLoggedIn(false);
     }
@@ -89,16 +98,6 @@ export default function Home() {
               {/* Column 1 (Login Side) */}
               <div className="min-h-screen bgBlack">
 
-                {/* Error Meassage Ternary */}
-                {errorMessage ? (
-                  <Toast className="absolute">
-                    <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-red-100 text-red-500 dark:bg-red-800 dark:text-red-200">
-                      <HiX className="h-5 w-5" />
-                    </div>
-                    <div className="ml-3 text-sm text-black">Invalid Username Or Password</div>
-                    <Toast.Toggle onClick={() => setErrorMessage(false)} />
-                  </Toast>) : (<div></div>)
-                }
 
                 { // Ternary to switch between login and preffered location (This one is login )
                   notLoggedIn ? (

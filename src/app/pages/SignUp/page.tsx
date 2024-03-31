@@ -1,12 +1,12 @@
 'use client'
 
-import LoginNavComponent from '@/app/components/LoginNavComponent';
+import LoginNavComponent from '@/components/LoginNavComponent';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import '@/app/css/LoginPage.css';
 import { Toast } from 'flowbite-react';
 import { HiX } from "react-icons/hi";
-import RequiredInputComponent from '@/app/components/RequiredInputComponent';
+import RequiredInputComponent from '@/components/RequiredInputComponent';
 
 const SignUp = () => {
   const [errorMessage, setErrorMessage] = useState<boolean>(false);
