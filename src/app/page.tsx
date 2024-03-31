@@ -1,5 +1,6 @@
 'use client'
 
+import * as React from "react"
 import { useState } from "react";
 import '@/app/css/LoginPage.css'
 import { useRouter } from "next/navigation";
@@ -8,8 +9,17 @@ import { Toast } from "flowbite-react";
 import { HiX } from "react-icons/hi";
 import RequiredInputComponent from "../components/RequiredInputComponent";
 import { createAccount } from "@/Data/DataServices";
-import { ToastAction } from "@/components/ui/toast"
-import { useToast } from "@/components/ui/use-toast"
+import { ToastAction } from "@/components/ui/toast";
+import { useToast } from "@/components/ui/use-toast";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 export default function Home() {
   const [openerBool, setOpenerBool] = useState<boolean>(true);
@@ -144,67 +154,68 @@ export default function Home() {
 
 
                         <h3 className={"text-4xl jura text-white"}>State</h3>
-                        {/* <label htmlFor="states">ee</label> */}
-                        <select name="states" id="states" className="w-full my-5 min-h-[76px] jura text-4xl">
-                          <option value="" disabled selected>Select State</option>
-                          <option value="N/A">N/A</option>
-                          <option value="">Select a state</option>
-                          <option value="Alabama">Alabama</option>
-                          <option value="Alaska">Alaska</option>
-                          <option value="Arizona">Arizona</option>
-                          <option value="Arkansas">Arkansas</option>
-                          <option value="California">California</option>
-                          <option value="Colorado">Colorado</option>
-                          <option value="Connecticut">Connecticut</option>
-                          <option value="Delaware">Delaware</option>
-                          <option value="District of Columbia">District of Columbia</option>
-                          <option value="Florida">Florida</option>
-                          <option value="Georgia">Georgia</option>
-                          <option value="Hawaii">Hawaii</option>
-                          <option value="Idaho">Idaho</option>
-                          <option value="Illinois">Illinois</option>
-                          <option value="Indiana">Indiana</option>
-                          <option value="Iowa">Iowa</option>
-                          <option value="Kansas">Kansas</option>
-                          <option value="Kentucky">Kentucky</option>
-                          <option value="Louisiana">Louisiana</option>
-                          <option value="Maine">Maine</option>
-                          <option value="Maryland">Maryland</option>
-                          <option value="Massachusetts">Massachusetts</option>
-                          <option value="Michigan">Michigan</option>
-                          <option value="Minnesota">Minnesota</option>
-                          <option value="Mississippi">Mississippi</option>
-                          <option value="Missouri">Missouri</option>
-                          <option value="Montana">Montana</option>
-                          <option value="Nebraska">Nebraska</option>
-                          <option value="Nevada">Nevada</option>
-                          <option value="New Hampshire">New Hampshire</option>
-                          <option value="New Jersey">New Jersey</option>
-                          <option value="New Mexico">New Mexico</option>
-                          <option value="New York">New York</option>
-                          <option value="North Carolina">North Carolina</option>
-                          <option value="North Dakota">North Dakota</option>
-                          <option value="Ohio">Ohio</option>
-                          <option value="Oklahoma">Oklahoma</option>
-                          <option value="Oregon">Oregon</option>
-                          <option value="Pennsylvania">Pennsylvania</option>
-                          <option value="Rhode Island">Rhode Island</option>
-                          <option value="South Carolina">South Carolina</option>
-                          <option value="South Dakota">South Dakota</option>
-                          <option value="Tennessee">Tennessee</option>
-                          <option value="Texas">Texas</option>
-                          <option value="Utah">Utah</option>
-                          <option value="Vermont">Vermont</option>
-                          <option value="Virginia">Virginia</option>
-                          <option value="Washington">Washington</option>
-                          <option value="West Virginia">West Virginia</option>
-                          <option value="Wisconsin">Wisconsin</option>
-                          <option value="Wyoming">Wyoming</option>
-                        </select>
+                        <Select>
+                          <SelectTrigger className="w-full">
+                            <SelectValue placeholder="Select a State" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="N/A">N/A</SelectItem>
+                            <SelectItem value="Alabama">Alabama</SelectItem>
+                            <SelectItem value="Alaska">Alaska</SelectItem>
+                            <SelectItem value="Arizona">Arizona</SelectItem>
+                            <SelectItem value="Arkansas">Arkansas</SelectItem>
+                            <SelectItem value="California">California</SelectItem>
+                            <SelectItem value="Colorado">Colorado</SelectItem>
+                            <SelectItem value="Connecticut">Connecticut</SelectItem>
+                            <SelectItem value="Delaware">Delaware</SelectItem>
+                            <SelectItem value="District of Columbia">District of Columbia</SelectItem>
+                            <SelectItem value="Florida">Florida</SelectItem>
+                            <SelectItem value="Georgia">Georgia</SelectItem>
+                            <SelectItem value="Hawaii">Hawaii</SelectItem>
+                            <SelectItem value="Idaho">Idaho</SelectItem>
+                            <SelectItem value="Illinois">Illinois</SelectItem>
+                            <SelectItem value="Indiana">Indiana</SelectItem>
+                            <SelectItem value="Iowa">Iowa</SelectItem>
+                            <SelectItem value="Kansas">Kansas</SelectItem>
+                            <SelectItem value="Kentucky">Kentucky</SelectItem>
+                            <SelectItem value="Louisiana">Louisiana</SelectItem>
+                            <SelectItem value="Maine">Maine</SelectItem>
+                            <SelectItem value="Maryland">Maryland</SelectItem>
+                            <SelectItem value="Massachusetts">Massachusetts</SelectItem>
+                            <SelectItem value="Michigan">Michigan</SelectItem>
+                            <SelectItem value="Minnesota">Minnesota</SelectItem>
+                            <SelectItem value="Mississippi">Mississippi</SelectItem>
+                            <SelectItem value="Missouri">Missouri</SelectItem>
+                            <SelectItem value="Montana">Montana</SelectItem>
+                            <SelectItem value="Nebraska">Nebraska</SelectItem>
+                            <SelectItem value="Nevada">Nevada</SelectItem>
+                            <SelectItem value="New Hampshire">New Hampshire</SelectItem>
+                            <SelectItem value="New Jersey">New Jersey</SelectItem>
+                            <SelectItem value="New Mexico">New Mexico</SelectItem>
+                            <SelectItem value="New York">New York</SelectItem>
+                            <SelectItem value="North Carolina">North Carolina</SelectItem>
+                            <SelectItem value="North Dakota">North Dakota</SelectItem>
+                            <SelectItem value="Ohio">Ohio</SelectItem>
+                            <SelectItem value="Oklahoma">Oklahoma</SelectItem>
+                            <SelectItem value="Oregon">Oregon</SelectItem>
+                            <SelectItem value="Pennsylvania">Pennsylvania</SelectItem>
+                            <SelectItem value="Rhode Island">Rhode Island</SelectItem>
+                            <SelectItem value="South Carolina">South Carolina</SelectItem>
+                            <SelectItem value="South Dakota">South Dakota</SelectItem>
+                            <SelectItem value="Tennessee">Tennessee</SelectItem>
+                            <SelectItem value="Texas">Texas</SelectItem>
+                            <SelectItem value="Utah">Utah</SelectItem>
+                            <SelectItem value="Vermont">Vermont</SelectItem>
+                            <SelectItem value="Virginia">Virginia</SelectItem>
+                            <SelectItem value="Washington">Washington</SelectItem>
+                            <SelectItem value="West Virginia">West Virginia</SelectItem>
+                            <SelectItem value="Wisconsin">Wisconsin</SelectItem>
+                            <SelectItem value="Wyoming">Wyoming</SelectItem>
+                          </SelectContent>
+                        </Select>
 
 
                         <button className="text-4xl text-black min-h-[76px] w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleLocationConfirm}> Confirm</button>
-
                       </div>
                     </>
                   )}

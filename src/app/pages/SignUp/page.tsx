@@ -20,6 +20,9 @@ const SignUp = () => {
   const [answeringSecurity, setAnsweringSecurity] = useState<boolean>(false);
   const [addingCustomStats, setAddingCustomStats] = useState<boolean>(false);
   const [addingCustomStats2, setAddingCustomStats2] = useState<boolean>(false);
+  const [securityOne, setSecurityOne] = useState<string>('');
+  const [securityTwo, setSecurityTwo] = useState<string>('');
+  const [securityThree, setSecurityThree] = useState<string>('');
   const router = useRouter();
 
   const handleUserChange = (param: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,12 +49,25 @@ const SignUp = () => {
     setUserBorderError('');
   }
 
+  const handleSecurityOneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSecurityOne(e.target.value);
+  }
+
+  const handleSecurityTwoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSecurityTwo(e.target.value);
+  }
+
+  const handleSecurityThreeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSecurityThree(e.target.value);
+  }
+
   const handleNext = () => {
     if (username.trim() === '' || password.trim() === '' || password2.trim() === '' || email.trim() === '') {
       setErrorMessage(true);
       setUserBorderError('border-red-600 border-2');
     } else {
-
+      setAnsweringSecurity(true)
+      setCreatingAccount(false);
     }
   }
 
@@ -69,16 +85,6 @@ const SignUp = () => {
             {
               creatingAccount ? (
                 <>
-                  {
-                    errorMessage ? (
-                      <Toast className="absolute">
-                        <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-red-100 text-red-500 dark:bg-red-800 dark:text-red-200">
-                          <HiX className="h-5 w-5" />
-                        </div>
-                        <div className="ml-3 text-sm text-black">Invalid Username</div>
-                        <Toast.Toggle onClick={() => setErrorMessage(false)} />
-                      </Toast>) : (<div></div>)
-                  }
 
                   <LoginNavComponent exist={true} onClick={handleBackLogin} />
 
@@ -90,6 +96,31 @@ const SignUp = () => {
                     <RequiredInputComponent title="Email:" type='text' borderError={userBorderError} placeholder='Enter Enail' value={email} onChange={handleEmailChange} maxLength={20} />
                     <RequiredInputComponent title="Password:" type='password' borderError={userBorderError} placeholder='Enter Password' value={password} onChange={handlePasswordChange} maxLength={5000} />
                     <RequiredInputComponent title="Verify Password:" type='password' borderError={userBorderError} placeholder='Re-enter Password' value={password2} onChange={handlePassword2Change} maxLength={5000} />
+
+                    <button className="text-4xl text-black min-h-[76px] w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleNext}> Next</button>
+
+                  </div>
+                </>
+              ) : (
+                <div>
+
+                </div>
+              )
+            }
+
+{
+              answeringSecurity ? (
+                <>
+
+                  <LoginNavComponent exist={true} onClick={handleBackLogin} />
+
+                  <div className="px-48">
+
+                    <h1 className="txtOrange text-7xl juraBold mb-5 leading-[90px]"> Security Questions</h1>
+
+                    <RequiredInputComponent title="" type='text' borderError={userBorderError} placeholder='Answer #1' value={securityOne} onChange={handleSecurityOneChange} maxLength={5000} />
+                    <RequiredInputComponent title="" type='text' borderError={userBorderError} placeholder='Answer #2' value={securityTwo} onChange={handleSecurityTwoChange} maxLength={5000} />
+                    <RequiredInputComponent title="" type='text' borderError={userBorderError} placeholder='Answer #3' value={securityThree} onChange={handleSecurityThreeChange} maxLength={5000} />
 
                     <button className="text-4xl text-black min-h-[76px] w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleNext}> Next</button>
 
