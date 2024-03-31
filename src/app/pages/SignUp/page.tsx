@@ -1,12 +1,22 @@
 'use client'
 
-import LoginNavComponent from '@/components/LoginNavComponent';
+import LoginNavComponent from '@/components/PageComponents/LoginNavComponent';
 import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import '@/app/css/LoginPage.css';
 import { Toast } from 'flowbite-react';
 import { HiX } from "react-icons/hi";
-import RequiredInputComponent from '@/components/RequiredInputComponent';
+import RequiredInputComponent from '@/components/PageComponents/RequiredInputComponent';
+import * as React from "react";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 const SignUp = () => {
   const [errorMessage, setErrorMessage] = useState<boolean>(false);
@@ -71,6 +81,11 @@ const SignUp = () => {
     }
   }
 
+  const handleNextOptional = () => {
+    setAnsweringSecurity(false);
+    setDoesUserWantStats(true);
+  }
+
   const handleBackLogin = () => {
     router.push('/');
   }
@@ -108,7 +123,7 @@ const SignUp = () => {
               )
             }
 
-{
+            {
               answeringSecurity ? (
                 <>
 
@@ -118,12 +133,57 @@ const SignUp = () => {
 
                     <h1 className="txtOrange text-7xl juraBold mb-5 leading-[90px]"> Security Questions</h1>
 
+                    {/* Selecting Question 1 */}
+                    <Select>
+                      <SelectTrigger className="w-full jura text-4xl text-white min-h-[40px]">
+                        <SelectValue placeholder="Select a Question" />
+                      </SelectTrigger>
+                      <SelectContent className='text-3xl'>
+                        <SelectGroup>
+                          <SelectLabel>Security Questions</SelectLabel>
+                          <SelectItem value="Favorite Movie?">Favorite Move?</SelectItem>
+                          <SelectItem value="Model Of Your First Car?">Model Of Your First Car?</SelectItem>
+                          <SelectItem value="Name Of First Pet?">Name Of First Pet?</SelectItem>
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
                     <RequiredInputComponent title="" type='text' borderError={userBorderError} placeholder='Answer #1' value={securityOne} onChange={handleSecurityOneChange} maxLength={5000} />
+
+
+                    {/* Selecting Question 2 */}
+                    <Select>
+                      <SelectTrigger className="w-full jura text-4xl text-white min-h-[40px]">
+                        <SelectValue placeholder="Select a Question" />
+                      </SelectTrigger>
+                      <SelectContent className='text-3xl'>
+                        <SelectGroup>
+                          <SelectLabel>Security Questions</SelectLabel>
+                          <SelectItem value="Childhood Best Friend?">Childhood Best Friend?</SelectItem>
+                          <SelectItem value="What's Your Nickname?">What's Your Nickname?</SelectItem>
+                          <SelectItem value="Favorite Food?">Favorite Food?</SelectItem>
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
                     <RequiredInputComponent title="" type='text' borderError={userBorderError} placeholder='Answer #2' value={securityTwo} onChange={handleSecurityTwoChange} maxLength={5000} />
+
+
+                    {/* Selecting Question 3 */}
+                    <Select>
+                      <SelectTrigger className="w-full jura text-4xl text-white min-h-[40px]">
+                        <SelectValue placeholder="Select a Question" />
+                      </SelectTrigger>
+                      <SelectContent className='text-3xl'>
+                        <SelectGroup>
+                          <SelectLabel>Security Questions</SelectLabel>
+                          <SelectItem value="First Person?">First Person You Kissed?</SelectItem>
+                          <SelectItem value="Favorite Cartoon?">Favorite Cartoon?</SelectItem>
+                          <SelectItem value="Favorite Ice Cream?">Favorite Ice Cream?</SelectItem>
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
                     <RequiredInputComponent title="" type='text' borderError={userBorderError} placeholder='Answer #3' value={securityThree} onChange={handleSecurityThreeChange} maxLength={5000} />
 
-                    <button className="text-4xl text-black min-h-[76px] w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleNext}> Next</button>
-
+                    <button className="text-4xl text-black min-h-[76px] w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleNextOptional}> Next</button>
                   </div>
                 </>
               ) : (

@@ -4,10 +4,10 @@ import * as React from "react"
 import { useState } from "react";
 import '@/app/css/LoginPage.css'
 import { useRouter } from "next/navigation";
-import LoginNavComponent from "../components/LoginNavComponent";
+import LoginNavComponent from "../components/PageComponents/LoginNavComponent";
 import { Toast } from "flowbite-react";
 import { HiX } from "react-icons/hi";
-import RequiredInputComponent from "../components/RequiredInputComponent";
+import RequiredInputComponent from "../components/PageComponents/RequiredInputComponent";
 import { createAccount } from "@/Data/DataServices";
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
@@ -29,6 +29,7 @@ export default function Home() {
   const [passwordBorderError, setPasswordBorderError] = useState<string>('');
   const [errorMessage, setErrorMessage] = useState<boolean>(false);
   const [notLoggedIn, setNotLoggedIn] = useState<boolean>(true);
+  const [screenCount, setScreenCount] = useState<number>(0);
   const router = useRouter();
 
   const { toast } = useToast()
@@ -90,7 +91,7 @@ export default function Home() {
       <div className="min-h-screen bgLogin">
         {
           // Start of Ternary For Welcome Screen
-          openerBool && notLoggedIn ? ( // First Ternary Return Statement
+          openerBool ? ( // First Ternary Return Statement
 
             <div className="min-h-screen bg-black opacity-90" onClick={handleOpenerBoolChange}>
               <div className="px-80 pt-60">
@@ -118,9 +119,9 @@ export default function Home() {
 
                         <h1 className="txtOrange text-7xl juraBold mb-12 leading-[90px]"> Strike <span className="text-white">Showdown</span></h1>
 
-                        <RequiredInputComponent title={"Username:"} type={'text'} borderError={userBorderError} placeholder="Username/Email" value={username} onChange={handleUserChange} maxLength={20} />
+                        <RequiredInputComponent title={"Username:"} type={'text'} borderError={userBorderError} placeholder=" Username/Email" value={username} onChange={handleUserChange} maxLength={20} />
 
-                        <RequiredInputComponent title={"Password:"} type={'password'} borderError={passwordBorderError} placeholder="Password" value={password} onChange={handlePasswordChange} maxLength={524288} />
+                        <RequiredInputComponent title={"Password:"} type={'password'} borderError={passwordBorderError} placeholder=" Password" value={password} onChange={handlePasswordChange} maxLength={524288} />
 
                         <h3 className="text-3xl txtOrange jura underline hover:cursor-pointer hover:text-[#ff9939]" onClick={handleForgotPassword}>Forgot Password?</h3>
 
@@ -152,13 +153,12 @@ export default function Home() {
 
                         <h1 className="txtOrange text-7xl juraBold mb-12 leading-[90px]">Your Preferred Location?</h1>
 
-
-                        <h3 className={"text-4xl jura text-white"}>State</h3>
+                        <h3 className="text-4xl jura text-white mb-5">State</h3>
                         <Select>
-                          <SelectTrigger className="w-full">
+                          <SelectTrigger className="w-full jura text-4xl min-h-[76px] bg-white pl-3">
                             <SelectValue placeholder="Select a State" />
                           </SelectTrigger>
-                          <SelectContent>
+                          <SelectContent className="jura text-4xl">
                             <SelectItem value="N/A">N/A</SelectItem>
                             <SelectItem value="Alabama">Alabama</SelectItem>
                             <SelectItem value="Alaska">Alaska</SelectItem>

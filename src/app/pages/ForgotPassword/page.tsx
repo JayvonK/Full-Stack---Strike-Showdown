@@ -1,12 +1,12 @@
 'use client'
 
-import LoginNavComponent from '@/components/LoginNavComponent';
+import LoginNavComponent from '@/components/PageComponents/LoginNavComponent';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import '@/app/css/LoginPage.css';
 import { Toast } from 'flowbite-react';
 import { HiX } from "react-icons/hi";
-import RequiredInputComponent from '@/components/RequiredInputComponent';
+import RequiredInputComponent from '@/components/PageComponents/RequiredInputComponent';
 
 const ForgotPassword = () => {
     const [errorMessage, setErrorMessage] = useState<boolean>(false);
