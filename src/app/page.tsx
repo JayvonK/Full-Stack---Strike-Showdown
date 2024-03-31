@@ -93,7 +93,7 @@ export default function Home() {
           // Start of Ternary For Welcome Screen
           openerBool ? ( // First Ternary Return Statement
 
-            <div className="min-h-screen bg-black opacity-90" onClick={handleOpenerBoolChange}>
+            <div className="min-h-screen bg-black opacity-90 hover:cursor-pointer" onClick={handleOpenerBoolChange}>
               <div className="px-80 pt-60">
                 <h1 className="txtOrange text-center text-8xl juraBold mb-16"> Strike <span className="text-white">Showdown</span></h1>
                 <h2 className="text-center text-white jura txtOrange text-5xl mb-14">the best social app for bowlers</h2>

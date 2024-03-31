@@ -7,6 +7,7 @@ import '@/app/css/LoginPage.css';
 import { Toast } from 'flowbite-react';
 import { HiX } from "react-icons/hi";
 import RequiredInputComponent from '@/components/PageComponents/RequiredInputComponent';
+import { ScrollArea } from "@/components/ui/scroll-area"
 import * as React from "react";
 import {
   Select,
@@ -17,6 +18,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { IUserInfoWithStats } from '@/interfaces/Interfaces';
+import NotRequiredInputComponent from '@/components/PageComponents/NotRequiredInputComponent';
 
 const SignUp = () => {
   const [errorMessage, setErrorMessage] = useState<boolean>(false);
@@ -29,10 +32,20 @@ const SignUp = () => {
   const [doesUserWantStats, setDoesUserWantStats] = useState<boolean>(false);
   const [answeringSecurity, setAnsweringSecurity] = useState<boolean>(false);
   const [addingCustomStats, setAddingCustomStats] = useState<boolean>(false);
-  const [addingCustomStats2, setAddingCustomStats2] = useState<boolean>(false);
+  const [questionOne, setQuestionOne] = useState<string>('');
+  const [questionTwo, setQuestionTwo] = useState<string>('');
+  const [questionThree, setQuestionThree] = useState<string>('');
   const [securityOne, setSecurityOne] = useState<string>('');
   const [securityTwo, setSecurityTwo] = useState<string>('');
   const [securityThree, setSecurityThree] = useState<string>('');
+  const [fullname, setFullname] = useState<string>('');
+  const [prounouns, setPronouns] = useState<string>('');
+  const [bowlingCenter, setBowlingCenter] = useState<string>('');
+  const [average, setAverage] = useState<string>('');
+  const [style, setStyle] = useState<string>('');
+  const [highGame, setHighGame] = useState<string>('');
+  const [hightSeries, setHighSeries] = useState<string>('');
+  const [earnings, setEarnings] = useState<string>('');
   const router = useRouter();
 
   const handleUserChange = (param: React.ChangeEvent<HTMLInputElement>) => {
@@ -71,6 +84,38 @@ const SignUp = () => {
     setSecurityThree(e.target.value);
   }
 
+  const handleFullNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFullname(e.target.value);
+  }
+
+  const handlePronounsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPronouns(e.target.value);
+  }
+
+  const handleBowlingCenterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setBowlingCenter(e.target.value);
+  }
+
+  const handleAverageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setAverage(e.target.value);
+  }
+
+  const handleStyleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setStyle(e.target.value);
+  }
+
+  const handleHighGameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setHighGame(e.target.value);
+  }
+
+  const handleHighSeriesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setHighSeries(e.target.value);
+  }
+
+  const handleEarningsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEarnings(e.target.value);
+  }
+
   const handleNext = () => {
     if (username.trim() === '' || password.trim() === '' || password2.trim() === '' || email.trim() === '') {
       setErrorMessage(true);
@@ -86,9 +131,57 @@ const SignUp = () => {
     setDoesUserWantStats(true);
   }
 
+  const handleAddStats = () => {
+    setAddingCustomStats(true);
+    setDoesUserWantStats(false)
+  }
+
   const handleBackLogin = () => {
     router.push('/');
   }
+
+  const handleBackCreateAcc = () => {
+    setCreatingAccount(true);
+    setAnsweringSecurity(false);
+  }
+
+  const handleBackSecurityQuestions = () => {
+    setAnsweringSecurity(true);
+    setDoesUserWantStats(false);
+  }
+
+  const handleBackOptional = () => {
+    setDoesUserWantStats(false);
+    setAnsweringSecurity(true);
+  }
+
+  const handleCreateWithoutStats = () => {
+    router.push('/');
+  }
+
+  const handleCreateAccountWithStats = () => {
+    let userData: IUserInfoWithStats = {
+      username: username,
+      email: email,
+      password: password,
+      bolwingCenter: bowlingCenter,
+      average: average,
+      style: style,
+      highGame: highGame,
+      highSeries: hightSeries,
+      earnings: earnings,
+      questionOne: questionOne,
+      questionOneAnswer: securityOne,
+      questionTwo: questionTwo,
+      questionTwoAnswer: securityTwo,
+      questionThree: questionThree,
+      questionThreeAnswer: securityThree
+    }
+
+    router.push('/');
+  }
+
+
   return (
     <div>
       <div className="min-h-screen bgLogin">
@@ -127,21 +220,21 @@ const SignUp = () => {
               answeringSecurity ? (
                 <>
 
-                  <LoginNavComponent exist={true} onClick={handleBackLogin} />
+                  <LoginNavComponent exist={true} onClick={handleBackCreateAcc} />
 
                   <div className="px-48">
 
                     <h1 className="txtOrange text-7xl juraBold mb-5 leading-[90px]"> Security Questions</h1>
 
                     {/* Selecting Question 1 */}
-                    <Select>
+                    <Select onValueChange={(e) => setQuestionOne(e)}>
                       <SelectTrigger className="w-full jura text-4xl text-white min-h-[40px]">
                         <SelectValue placeholder="Select a Question" />
                       </SelectTrigger>
                       <SelectContent className='text-3xl'>
                         <SelectGroup>
                           <SelectLabel>Security Questions</SelectLabel>
-                          <SelectItem value="Favorite Movie?">Favorite Move?</SelectItem>
+                          <SelectItem value="Favorite Movie?">Favorite Movie?</SelectItem>
                           <SelectItem value="Model Of Your First Car?">Model Of Your First Car?</SelectItem>
                           <SelectItem value="Name Of First Pet?">Name Of First Pet?</SelectItem>
                         </SelectGroup>
@@ -151,7 +244,7 @@ const SignUp = () => {
 
 
                     {/* Selecting Question 2 */}
-                    <Select>
+                    <Select onValueChange={(e) => setQuestionTwo(e)}>
                       <SelectTrigger className="w-full jura text-4xl text-white min-h-[40px]">
                         <SelectValue placeholder="Select a Question" />
                       </SelectTrigger>
@@ -168,14 +261,14 @@ const SignUp = () => {
 
 
                     {/* Selecting Question 3 */}
-                    <Select>
+                    <Select onValueChange={(e) => setQuestionThree(e)}>
                       <SelectTrigger className="w-full jura text-4xl text-white min-h-[40px]">
                         <SelectValue placeholder="Select a Question" />
                       </SelectTrigger>
                       <SelectContent className='text-3xl'>
                         <SelectGroup>
                           <SelectLabel>Security Questions</SelectLabel>
-                          <SelectItem value="First Person?">First Person You Kissed?</SelectItem>
+                          <SelectItem value="Favorite School Subject?">Favorite School Subject?</SelectItem>
                           <SelectItem value="Favorite Cartoon?">Favorite Cartoon?</SelectItem>
                           <SelectItem value="Favorite Ice Cream?">Favorite Ice Cream?</SelectItem>
                         </SelectGroup>
@@ -191,6 +284,53 @@ const SignUp = () => {
 
                 </div>
               )
+            }
+
+            {
+              doesUserWantStats ? (
+                <>
+                  <LoginNavComponent exist={true} onClick={handleBackOptional} />
+
+                  <div className="px-48">
+
+                    <h1 className="txtOrange text-6xl juraBold mb-14 leading-[76px]"> Do You Want To Add Your Custom Stats & Info To Your Account?</h1>
+
+                    <button className="text-4xl text-black min-h-[76px] w-full my-9 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleAddStats}>Yes</button>
+                    <h1 className='text-4xl w-full text-white jura text-center'>OR</h1>
+                    <button className="text-4xl text-black min-h-[76px] w-full my-9 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleCreateWithoutStats}>No, Create Account</button>
+
+                  </div>
+                </>
+              ) : (<div></div>)
+
+
+            }
+
+            {
+              addingCustomStats ? (
+                <>
+                  <LoginNavComponent exist={true} onClick={handleBackLogin} />
+
+                  <div className="px-48">
+
+                    <h1 className="txtOrange text-7xl juraBold mb-10 leading-[90px]"> Add Your Stats/Info</h1>
+
+                    <ScrollArea className="h-[450px] w-full rounded-md pr-4">
+                      <h1 className='text-4xl jura text-white font-medium'>Stats (Scroll)</h1>
+                      <NotRequiredInputComponent type='text' borderError={userBorderError} placeholder='Full Name' value={fullname} onChange={handleFullNameChange} maxLength={5000} />
+                      <NotRequiredInputComponent type='text' borderError={userBorderError} placeholder='Pronouns' value={prounouns} onChange={handlePronounsChange} maxLength={5000} />
+                      <NotRequiredInputComponent type='text' borderError={userBorderError} placeholder='Main Bowling Center' value={bowlingCenter} onChange={handleBowlingCenterChange} maxLength={5000} />
+                      <NotRequiredInputComponent type='text' borderError={userBorderError} placeholder='Bowling Avg' value={average} onChange={handleAverageChange} maxLength={5000} />
+                      <NotRequiredInputComponent type='text' borderError={userBorderError} placeholder='Bowling Style' value={style} onChange={handleStyleChange} maxLength={5000} />
+                      <NotRequiredInputComponent type='text' borderError={userBorderError} placeholder='High Game' value={highGame} onChange={handleHighGameChange} maxLength={5000} />
+                      <NotRequiredInputComponent type='text' borderError={userBorderError} placeholder='High Series' value={hightSeries} onChange={handleHighSeriesChange} maxLength={5000} />
+                      <NotRequiredInputComponent type='text' borderError={userBorderError} placeholder='$ Earnings $' value={earnings} onChange={handleEarningsChange} maxLength={5000} />
+                    </ScrollArea>
+
+                    <button className="text-4xl text-black min-h-[76px] w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleCreateAccountWithStats}> Next</button>
+
+                  </div>
+                </>) : (<></>)
             }
 
 
