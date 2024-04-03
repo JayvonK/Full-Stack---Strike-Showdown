@@ -5,10 +5,7 @@ import { useState } from "react";
 import '@/app/css/LoginPage.css'
 import { useRouter } from "next/navigation";
 import LoginNavComponent from "../components/PageComponents/LoginNavComponent";
-import { Toast } from "flowbite-react";
-import { HiX } from "react-icons/hi";
 import RequiredInputComponent from "../components/PageComponents/RequiredInputComponent";
-import { createAccount } from "@/Data/DataServices";
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
 import {
@@ -69,7 +66,7 @@ export default function Home() {
       setuserBorderError('border-red-600 border-2');
       toast({
         variant: "destructive",
-        title: "Zahid said youre a bitch.",
+        title: "Error.",
         description: "Me personally, I wouldn't take that.",
         action: <ToastAction altText="Try again">Try again</ToastAction>,
       })
@@ -139,17 +136,6 @@ export default function Home() {
                       <LoginNavComponent exist={true} onClick={handleBack} />
 
                       <div className="px-48">
-
-                        {
-                          errorMessage ? (
-                            <Toast className="absolute">
-                              <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-red-100 text-red-500 dark:bg-red-800 dark:text-red-200">
-                                <HiX className="h-5 w-5" />
-                              </div>
-                              <div className="ml-3 text-sm text-black">Invalid Username Or Password</div>
-                              <Toast.Toggle onClick={() => setErrorMessage(false)} />
-                            </Toast>) : (<div></div>)
-                        }
 
                         <h1 className="txtOrange text-7xl juraBold mb-12 leading-[90px]">Your Preferred Location?</h1>
 
