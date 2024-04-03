@@ -4,10 +4,10 @@ import LoginNavComponent from '@/components/PageComponents/LoginNavComponent';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import '@/app/css/LoginPage.css';
-import { Toast } from 'flowbite-react';
-import { HiX } from "react-icons/hi";
 import RequiredInputComponent from '@/components/PageComponents/RequiredInputComponent';
 import { ScrollArea } from "@/components/ui/scroll-area"
+import { useToast } from '@/components/ui/use-toast';
+import { ToastAction } from "@/components/ui/toast";
 import * as React from "react";
 import {
   Select,
@@ -47,6 +47,7 @@ const SignUp = () => {
   const [hightSeries, setHighSeries] = useState<string>('');
   const [earnings, setEarnings] = useState<string>('');
   const router = useRouter();
+  const { toast } = useToast();
 
   const handleUserChange = (param: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(param.target.value);
@@ -120,6 +121,12 @@ const SignUp = () => {
     if (username.trim() === '' || password.trim() === '' || password2.trim() === '' || email.trim() === '') {
       setErrorMessage(true);
       setUserBorderError('border-red-600 border-2');
+      toast({
+        variant: "destructive",
+        title: "Error.",
+        description: "Me personally, I wouldn't take that.",
+        action: <ToastAction altText="Try again">Try again</ToastAction>,
+      })
     } else {
       setAnsweringSecurity(true)
       setCreatingAccount(false);
@@ -234,9 +241,9 @@ const SignUp = () => {
                       <SelectContent className='text-3xl'>
                         <SelectGroup>
                           <SelectLabel>Security Questions</SelectLabel>
-                          <SelectItem value="Favorite Movie?">Favorite Movie?</SelectItem>
-                          <SelectItem value="Model Of Your First Car?">Model Of Your First Car?</SelectItem>
-                          <SelectItem value="Name Of First Pet?">Name Of First Pet?</SelectItem>
+                          <SelectItem value="What's Your Favorite Movie?">What's Your Favorite Movie?</SelectItem>
+                          <SelectItem value="What's The Model Of Your First Car?">What's The Model Of Your First Car?</SelectItem>
+                          <SelectItem value="Name Of Your First Pet?">Name Of Your First Pet?</SelectItem>
                         </SelectGroup>
                       </SelectContent>
                     </Select>
@@ -251,9 +258,9 @@ const SignUp = () => {
                       <SelectContent className='text-3xl'>
                         <SelectGroup>
                           <SelectLabel>Security Questions</SelectLabel>
-                          <SelectItem value="Childhood Best Friend?">Childhood Best Friend?</SelectItem>
+                          <SelectItem value="Name of Childhood Best Friend?">Name of Childhood Best Friend?</SelectItem>
                           <SelectItem value="What's Your Nickname?">What's Your Nickname?</SelectItem>
-                          <SelectItem value="Favorite Food?">Favorite Food?</SelectItem>
+                          <SelectItem value="What's Your Favorite Food?">What's Your Favorite Food?</SelectItem>
                         </SelectGroup>
                       </SelectContent>
                     </Select>
@@ -268,9 +275,9 @@ const SignUp = () => {
                       <SelectContent className='text-3xl'>
                         <SelectGroup>
                           <SelectLabel>Security Questions</SelectLabel>
-                          <SelectItem value="Favorite School Subject?">Favorite School Subject?</SelectItem>
-                          <SelectItem value="Favorite Cartoon?">Favorite Cartoon?</SelectItem>
-                          <SelectItem value="Favorite Ice Cream?">Favorite Ice Cream?</SelectItem>
+                          <SelectItem value="What's Your Favorite School Subject?">What's Your Favorite School Subject?</SelectItem>
+                          <SelectItem value="What's Your Favorite Cartoon?">What's Your Favorite Cartoon?</SelectItem>
+                          <SelectItem value="What's Your Favorite Ice Cream?">What's Your Favorite Ice Cream?</SelectItem>
                         </SelectGroup>
                       </SelectContent>
                     </Select>
