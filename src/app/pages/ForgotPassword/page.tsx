@@ -103,6 +103,28 @@ const ForgotPassword = () => {
                             )
                         }
 
+{
+                            changePassword ? (
+                            <>
+                                <LoginNavComponent exist={true} onClick={handleBackUsername} />
+
+                                <div className="px-48">
+
+                                    <h1 className="txtOrange text-7xl juraBold mb-12 leading-[90px]"> Answer Security Question</h1>
+
+                                    <RequiredInputComponent title="Username:" type='text' borderError={userBorderError} placeholder='Answer' value={userAnswer} onChange={handleUserChange} maxLength={20} />
+
+                                    <button className="text-4xl text-black min-h-[76px] w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleConfirmAnswer}> Change Password</button>
+
+                                </div>
+                            </>
+
+                            ) : (
+                                <div></div>
+
+                            )
+                        }
+
 
                     </div>
 
