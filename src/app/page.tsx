@@ -101,7 +101,7 @@ export default function Home() {
 
           ) : (  // Second Statement
 
-            <div className="grid grid-cols-2">
+            <div className="grid 2xl:grid-cols-2 xl:grid-cols-[60%_40%] lg:grid-cols-[70%_30%] md:grid-cols-[75%_25%] sm:grid-cols-[85%_15%]">
 
               {/* Column 1 (Login Side) */}
               <div className="min-h-screen bgBlack">
@@ -112,9 +112,9 @@ export default function Home() {
                     <>
                       <LoginNavComponent exist={false} onClick={() => { }} />
 
-                      <div className="px-48">
+                      <div className="2xl:px-48 xl:px-40 lg:px-32 md:px-24 sm:px-16 px-8">
 
-                        <h1 className="txtOrange text-7xl juraBold mb-12 leading-[90px]"> Strike <span className="text-white">Showdown</span></h1>
+                        <h1 className="txtOrange sm:text-7xl text-5xl juraBold mb-12 sm:leading-[90px] leading-[75px]"> Strike <br /> <span className="text-white">Showdown</span></h1>
 
                         <RequiredInputComponent title={"Username:"} type={'text'} borderError={userBorderError} placeholder=" Username/Email" value={username} onChange={handleUserChange} maxLength={20} />
 
