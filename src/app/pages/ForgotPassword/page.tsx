@@ -11,7 +11,7 @@ import { useToast } from "@/components/ui/use-toast";
 const ForgotPassword = () => {
     const questionArray = ["What's Your Favorite Food?", "What's The Model Of Your First Car?", 'Name of Childhood Best Friend?'];
     const [questionCount, setQuestionCount] = useState<number>(1);
-    const [question, setQuestion] = useState<string>(questionArray[0])
+    const [question, setQuestion] = useState<string>(questionArray[0]);
     const [username, setUsername] = useState<string>('');
     const [userAnswer, setUserAnswer] = useState<string>('');
     const [userBorderError, setUserBorderError] = useState<string>('');
@@ -130,7 +130,7 @@ const ForgotPassword = () => {
         <div>
             <div className="min-h-screen bgLogin">
                 <img src="" alt="" />
-                <div className='grid grid-cols-2'>
+                <div className='grid 2xl:grid-cols-2 xl:grid-cols-[60%_40%] lg:grid-cols-[70%_30%] md:grid-cols-[75%_25%] sm:grid-cols-[85%_15%]'>
 
                     <div className="min-h-screen bgBlack">
                         {
@@ -138,13 +138,13 @@ const ForgotPassword = () => {
                                 <>
                                     <LoginNavComponent exist={true} onClick={handleBack} />
 
-                                    <div className="px-48">
+                                    <div className="2xl:px-44 xl:px-40 lg:px-32 md:px-24 sm:px-16 px-8">
 
-                                        <h1 className="txtOrange text-7xl juraBold mb-12 leading-[90px]"> Your Username?</h1>
+                                        <h1 className="txtOrange sm:text-7xl text-5xl juraBold mb-12 leading-[90px]"> Your Username?</h1>
 
                                         <RequiredInputComponent title="Username:" type='text' borderError={userBorderError} placeholder='Enter Username' value={username} onChange={handleUserChange} maxLength={20} />
 
-                                        <button className="text-4xl text-black min-h-[76px] w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleConfirmUser}> Confirm</button>
+                                        <button className="sm:text-4xl text-3xl text-black sm:min-h-[76px] min-h-16 w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleConfirmUser}> Confirm</button>
 
                                     </div>
                                 </>
@@ -160,15 +160,15 @@ const ForgotPassword = () => {
                                 <>
                                     <LoginNavComponent exist={true} onClick={handleBackUsername} />
 
-                                    <div className="px-48">
+                                    <div className="2xl:px-44 xl:px-40 lg:px-32 md:px-24 sm:px-16 px-8">
 
-                                        <h1 className="txtOrange text-7xl juraBold mb-12 leading-[90px]"> Answer Security Question</h1>
+                                        <h1 className="txtOrange sm:text-7xl text-5xl juraBold mb-12 leading-[90px]"> Answer Security Question</h1>
 
                                         <RequiredInputComponent title={question} type='text' borderError={userBorderError} placeholder='Answer' value={userAnswer} onChange={handleUserAnswerChange} maxLength={5000} />
 
-                                        <h3 className="text-3xl txtOrange jura underline hover:cursor-pointer hover:text-[#ff9939]" onClick={handleAnotherQuestion} >Another Question</h3>
+                                        <h3 className="sm:text-3xl text-2xl txtOrange jura underline hover:cursor-pointer hover:text-[#ff9939]" onClick={handleAnotherQuestion} >Another Question</h3>
 
-                                        <button className="text-4xl text-black min-h-[76px] w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleConfirmAnswer}> Continue</button>
+                                        <button className="sm:text-4xl text-3xl text-black sm:min-h-[76px] min-h-16 w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleConfirmAnswer}> Continue</button>
 
                                     </div>
                                 </>
@@ -184,9 +184,9 @@ const ForgotPassword = () => {
                                 <>
                                     <LoginNavComponent exist={true} onClick={handleBackAnswers} />
 
-                                    <div className="px-48">
+                                    <div className="2xl:px-44 xl:px-40 lg:px-32 md:px-24 sm:px-16 px-8">
 
-                                        <h1 className="txtOrange text-7xl juraBold mb-12 leading-[90px]"> Answer Security Question</h1>
+                                        <h1 className="txtOrange sm:text-7xl text-5xl juraBold mb-12 leading-[90px]"> Answer Security Question</h1>
 
                                         <RequiredInputComponent title="New Password" type='password' borderError={passwordBorderError} placeholder='Password' value={passwordOne} onChange={handlePasswordOneChange} maxLength={5000} />
 
@@ -194,7 +194,7 @@ const ForgotPassword = () => {
 
                                         {!passwordsMatch ? (<h1 className='text-2xl jura text-red-600'>Passwords Dont Match</h1>) : (<div></div>)}
 
-                                        <button className="text-4xl text-black min-h-[76px] w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleConfirmPassword}> Change Password</button>
+                                        <button className="sm:text-4xl text-3xl text-black sm:min-h-[76px] min-h-16 w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleConfirmPassword}> Change Password</button>
 
                                     </div>
                                 </>

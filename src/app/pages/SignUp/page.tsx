@@ -194,7 +194,7 @@ const SignUp = () => {
       <div className="min-h-screen bgLogin">
         <img src="" alt="" />
 
-        <div className='grid grid-cols-2'>
+        <div className='grid 2xl:grid-cols-2 xl:grid-cols-[60%_40%] lg:grid-cols-[70%_30%] md:grid-cols-[75%_25%] sm:grid-cols-[85%_15%]'>
 
           <div className="min-h-screen bgBlack">
             {
@@ -203,16 +203,16 @@ const SignUp = () => {
 
                   <LoginNavComponent exist={true} onClick={handleBackLogin} />
 
-                  <div className="px-48">
+                  <div className="2xl:px-44 xl:px-40 lg:px-32 md:px-24 sm:px-16 px-8">
 
-                    <h1 className="txtOrange text-7xl juraBold mb-5 leading-[90px]"> Create Your Account</h1>
+                    <h1 className="txtOrange sm:text-7xl text-5xl juraBold mb-12 sm:leading-[90px] leading-[75px]"> Create Your Account</h1>
 
                     <RequiredInputComponent title="Username:" type='text' borderError={userBorderError} placeholder='Enter Username' value={username} onChange={handleUserChange} maxLength={5000} />
-                    <RequiredInputComponent title="Email:" type='text' borderError={userBorderError} placeholder='Enter Enail' value={email} onChange={handleEmailChange} maxLength={20} />
+                    <RequiredInputComponent title="Email:" type='text' borderError={userBorderError} placeholder='Enter Email' value={email} onChange={handleEmailChange} maxLength={20} />
                     <RequiredInputComponent title="Password:" type='password' borderError={userBorderError} placeholder='Enter Password' value={password} onChange={handlePasswordChange} maxLength={5000} />
                     <RequiredInputComponent title="Verify Password:" type='password' borderError={userBorderError} placeholder='Re-enter Password' value={password2} onChange={handlePassword2Change} maxLength={5000} />
 
-                    <button className="text-4xl text-black min-h-[76px] w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleNext}> Next</button>
+                    <button className="sm:text-4xl text-3xl text-black sm:min-h-[76px] min-h-16 w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleNext}> Next</button>
 
                   </div>
                 </>
@@ -229,16 +229,16 @@ const SignUp = () => {
 
                   <LoginNavComponent exist={true} onClick={handleBackCreateAcc} />
 
-                  <div className="px-48">
+                  <div className="2xl:px-44 xl:px-40 lg:px-32 md:px-24 sm:px-16 px-8">
 
-                    <h1 className="txtOrange text-7xl juraBold mb-5 leading-[90px]"> Security Questions</h1>
+                    <h1 className="txtOrange sm:text-7xl text-5xl juraBold mb-12 sm:leading-[90px] leading-[75px]"> Security Questions</h1>
 
                     {/* Selecting Question 1 */}
                     <Select onValueChange={(e) => setQuestionOne(e)}>
-                      <SelectTrigger className="w-full jura text-4xl text-white min-h-[40px]">
-                        <SelectValue placeholder="Select a Question" />
+                      <SelectTrigger className="w-full jura sm:text-4xl text-3xl text-white min-h-[40px]">
+                        <SelectValue placeholder="Select Question" />
                       </SelectTrigger>
-                      <SelectContent className='text-3xl'>
+                      <SelectContent className='sm:text-3xl text-2xl selectWidth'>
                         <SelectGroup>
                           <SelectLabel>Security Questions</SelectLabel>
                           <SelectItem value="What's Your Favorite Movie?">What's Your Favorite Movie?</SelectItem>
@@ -252,11 +252,11 @@ const SignUp = () => {
 
                     {/* Selecting Question 2 */}
                     <Select onValueChange={(e) => setQuestionTwo(e)}>
-                      <SelectTrigger className="w-full jura text-4xl text-white min-h-[40px]">
-                        <SelectValue placeholder="Select a Question" />
+                      <SelectTrigger className="w-full jura sm:text-4xl text-3xl text-white min-h-[40px]">
+                        <SelectValue placeholder="Select Question" />
                       </SelectTrigger>
-                      <SelectContent className='text-3xl'>
-                        <SelectGroup>
+                      <SelectContent className='sm:text-3xl text-2xl selectWidth'>
+                        <SelectGroup className=''>
                           <SelectLabel>Security Questions</SelectLabel>
                           <SelectItem value="Name of Childhood Best Friend?">Name of Childhood Best Friend?</SelectItem>
                           <SelectItem value="What's Your Nickname?">What's Your Nickname?</SelectItem>
@@ -269,10 +269,10 @@ const SignUp = () => {
 
                     {/* Selecting Question 3 */}
                     <Select onValueChange={(e) => setQuestionThree(e)}>
-                      <SelectTrigger className="w-full jura text-4xl text-white min-h-[40px]">
-                        <SelectValue placeholder="Select a Question" />
+                      <SelectTrigger className="w-full jura sm:text-4xl text-3xl text-white min-h-[40px]">
+                        <SelectValue placeholder="Select Question" />
                       </SelectTrigger>
-                      <SelectContent className='text-3xl'>
+                      <SelectContent className='sm:text-3xl text-2xl selectWidth'>
                         <SelectGroup>
                           <SelectLabel>Security Questions</SelectLabel>
                           <SelectItem value="What's Your Favorite School Subject?">What's Your Favorite School Subject?</SelectItem>
@@ -283,7 +283,7 @@ const SignUp = () => {
                     </Select>
                     <RequiredInputComponent title="" type='text' borderError={userBorderError} placeholder='Answer #3' value={securityThree} onChange={handleSecurityThreeChange} maxLength={5000} />
 
-                    <button className="text-4xl text-black min-h-[76px] w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleNextOptional}> Next</button>
+                    <button className="sm:text-4xl text-3xl text-black sm:min-h-[76px] min-h-16 w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleNextOptional}> Next</button>
                   </div>
                 </>
               ) : (
@@ -298,18 +298,17 @@ const SignUp = () => {
                 <>
                   <LoginNavComponent exist={true} onClick={handleBackOptional} />
 
-                  <div className="px-48">
+                  <div className="2xl:px-44 xl:px-40 lg:px-32 md:px-24 sm:px-16 px-8">
 
-                    <h1 className="txtOrange text-6xl juraBold mb-14 leading-[76px]"> Do You Want To Add Your Custom Stats & Info To Your Account?</h1>
+                    <h1 className="txtOrange sm:text-7xl text-4xl juraBold mb-12 sm:leading-[90px] leading-[75px]"> Do You Want To Add Your Custom Stats & Info To Your Account?</h1>
 
-                    <button className="text-4xl text-black min-h-[76px] w-full my-9 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleAddStats}>Yes</button>
+                    <button className="sm:text-4xl text-3xl text-black sm:min-h-[76px] min-h-16 w-full my-9 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleAddStats}>Yes</button>
                     <h1 className='text-4xl w-full text-white jura text-center'>OR</h1>
-                    <button className="text-4xl text-black min-h-[76px] w-full my-9 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleCreateWithoutStats}>No, Create Account</button>
+                    <button className="sm:text-4xl text-3xl text-black sm:min-h-[76px] min-h-16 w-full my-9 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleCreateWithoutStats}>No, Create Account</button>
 
                   </div>
                 </>
               ) : (<div></div>)
-
 
             }
 
@@ -318,15 +317,15 @@ const SignUp = () => {
                 <>
                   <LoginNavComponent exist={true} onClick={handleBackLogin} />
 
-                  <div className="px-48">
+                  <div className="2xl:px-44 xl:px-40 lg:px-32 md:px-24 sm:px-16 px-8">
 
-                    <h1 className="txtOrange text-7xl juraBold mb-10 leading-[90px]"> Add Your Stats/Info</h1>
+                    <h1 className="txtOrange sm:text-7xl text-5xl juraBold mb-12 sm:leading-[90px] leading-[75px]"> Add Your Stats/Info</h1>
 
                     <ScrollArea className="h-[450px] w-full rounded-md pr-4">
-                      <h1 className='text-4xl jura text-white font-medium'>Stats (Scroll)</h1>
+                      <h1 className='text-4xl jura text-white font-medium'>Stats (Scroll ↓)</h1>
                       <NotRequiredInputComponent type='text' borderError={userBorderError} placeholder='Full Name' value={fullname} onChange={handleFullNameChange} maxLength={5000} />
                       <NotRequiredInputComponent type='text' borderError={userBorderError} placeholder='Pronouns' value={prounouns} onChange={handlePronounsChange} maxLength={5000} />
-                      <NotRequiredInputComponent type='text' borderError={userBorderError} placeholder='Main Bowling Center' value={bowlingCenter} onChange={handleBowlingCenterChange} maxLength={5000} />
+                      <NotRequiredInputComponent type='text' borderError={userBorderError} placeholder='Bowling Center' value={bowlingCenter} onChange={handleBowlingCenterChange} maxLength={5000} />
                       <NotRequiredInputComponent type='text' borderError={userBorderError} placeholder='Bowling Avg' value={average} onChange={handleAverageChange} maxLength={5000} />
                       <NotRequiredInputComponent type='text' borderError={userBorderError} placeholder='Bowling Style' value={style} onChange={handleStyleChange} maxLength={5000} />
                       <NotRequiredInputComponent type='text' borderError={userBorderError} placeholder='High Game' value={highGame} onChange={handleHighGameChange} maxLength={5000} />
@@ -334,7 +333,7 @@ const SignUp = () => {
                       <NotRequiredInputComponent type='text' borderError={userBorderError} placeholder='$ Earnings $' value={earnings} onChange={handleEarningsChange} maxLength={5000} />
                     </ScrollArea>
 
-                    <button className="text-4xl text-black min-h-[76px] w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleCreateAccountWithStats}> Next</button>
+                    <button className="sm:text-4xl text-3xl text-black sm:min-h-[76px] min-h-16 w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleCreateAccountWithStats}> Create Account</button>
 
                   </div>
                 </>) : (<></>)

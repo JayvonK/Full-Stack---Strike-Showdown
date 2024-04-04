@@ -1,9 +1,9 @@
-import { IUserInfo } from "@/interfaces/Interfaces"
+import { IToken, IUserInfo } from "@/interfaces/Interfaces"
 
-const url = 'https://strikeshowdownbackend.azurewebsites.net/api/User/'
+const url = 'https://strikeshowdownbackend.azurewebsites.net/api/'
 
-export const createAccount = async(createdUser: IUserInfo) => {
-    const res = await fetch(url + 'AddUser/', {
+export const Login = async(createdUser: IUserInfo) => {
+    const res = await fetch(url + 'User/Login/', {
         method: 'POST',
         headers: {
             'Content-Type': "application/json"
@@ -16,6 +16,7 @@ export const createAccount = async(createdUser: IUserInfo) => {
         throw new Error(message);
     }
 
-    const data = await res.json();
+    const data: IToken = await res.json();
     console.log(data);
+    return data;
 }
