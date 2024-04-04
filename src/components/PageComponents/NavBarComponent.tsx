@@ -9,7 +9,7 @@ import ProfileIcon from "../../../public/images/Profile.png";
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import Link from 'next/link';
-import "../../app/css/NavBar.css";
+
 
 import "../../app/css/LoginPage.css";
 
