@@ -91,11 +91,11 @@ export default function Home() {
           openerBool ? ( // First Ternary Return Statement
 
             <div className="min-h-screen bg-black opacity-90 hover:cursor-pointer" onClick={handleOpenerBoolChange}>
-              <div className="px-80 pt-60">
-                <h1 className="txtOrange text-center text-8xl juraBold mb-16"> Strike <span className="text-white">Showdown</span></h1>
-                <h2 className="text-center text-white jura txtOrange text-5xl mb-14">the best social app for bowlers</h2>
-                <h3 className="text-center text-white jura text-5xl mb-24">Where you’ll be able to create or join 1v1 challenges or practice sessions with other bowlers!</h3>
-                <h3 className="text-center text-white jura txtOrange text-5xl">click to continue...</h3>
+              <div className="2xl:px-80 xl:px-56 lg:px-36 md:px-24 sm:px-14 px-7 pt-60">
+                <h1 className="txtOrange text-center xl:text-8xl lg:text-7xl sm:text-6xl text-5xl juraBold mb-16"> Strike <span className="text-white">Showdown</span></h1>
+                <h2 className="text-center text-white jura txtOrange xl:text-5xl lg:text-4xl sm:text-3xl text-2xl mb-14">the best social app for bowlers</h2>
+                <h3 className="text-center text-white jura xl:text-5xl lg:text-4xl sm:text-3xl text-2xl mb-24">Where you’ll be able to create or join 1v1 challenges or practice sessions with other bowlers!</h3>
+                <h3 className="text-center text-white jura txtOrange xl:text-5xl lg:text-4xl sm:text-3xl text-2xl pb-10">click to continue...</h3>
               </div>
             </div>
 
@@ -112,7 +112,7 @@ export default function Home() {
                     <>
                       <LoginNavComponent exist={false} onClick={() => { }} />
 
-                      <div className="2xl:px-48 xl:px-40 lg:px-32 md:px-24 sm:px-16 px-8">
+                      <div className="2xl:px-44 xl:px-40 lg:px-32 md:px-24 sm:px-16 px-8">
 
                         <h1 className="txtOrange sm:text-7xl text-5xl juraBold mb-12 sm:leading-[90px] leading-[75px]"> Strike <br /> <span className="text-white">Showdown</span></h1>
 
@@ -120,11 +120,11 @@ export default function Home() {
 
                         <RequiredInputComponent title={"Password:"} type={'password'} borderError={passwordBorderError} placeholder=" Password" value={password} onChange={handlePasswordChange} maxLength={524288} />
 
-                        <h3 className="text-3xl txtOrange jura underline hover:cursor-pointer hover:text-[#ff9939]" onClick={handleForgotPassword}>Forgot Password?</h3>
+                        <h3 className="sm:text-3xl text-2xl txtOrange jura underline hover:cursor-pointer hover:text-[#ff9939]" onClick={handleForgotPassword}>Forgot Password?</h3>
 
-                        <button className="text-4xl text-black min-h-[76px] w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleLogin}> LOG IN</button>
+                        <button className="sm:text-4xl text-3xl text-black sm:min-h-[76px] min-h-16 w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleLogin}> LOG IN</button>
 
-                        <h3 className="text-3xl text-white jura">Don't have an account? <span className="txtOrange underline hover:cursor-pointer hover:text-[#ff9939]" onClick={handleSignUp}>Sign Up</span></h3>
+                        <h3 className="sm:text-3xl text-2xl text-white jura">Don't have an account? <span className="txtOrange underline hover:cursor-pointer hover:text-[#ff9939]" onClick={handleSignUp}>Sign Up</span></h3>
 
                       </div>
                     </>
@@ -135,13 +135,13 @@ export default function Home() {
                     <>
                       <LoginNavComponent exist={true} onClick={handleBack} />
 
-                      <div className="px-48">
+                      <div className="2xl:px-44 xl:px-40 lg:px-32 md:px-24 sm:px-16 px-8">
 
-                        <h1 className="txtOrange text-7xl juraBold mb-12 leading-[90px]">Your Preferred Location?</h1>
+                        <h1 className="txtOrange sm:text-7xl text-5xl juraBold mb-12 sm:leading-[90px] leading-[75px]">Your Preferred Location?</h1>
 
-                        <h3 className="text-4xl jura text-white mb-5">State</h3>
+                        <h3 className="sm:text-4xl text-3xl jura text-white mb-5">State</h3>
                         <Select>
-                          <SelectTrigger className="w-full jura text-4xl min-h-[76px] bg-white pl-3">
+                          <SelectTrigger className="w-full jura sm:text-4xl text-3xl sm:min-h-[76px] min-h-16 bg-white pl-3">
                             <SelectValue placeholder="Select a State" />
                           </SelectTrigger>
                           <SelectContent className="jura text-4xl">
@@ -200,8 +200,7 @@ export default function Home() {
                           </SelectContent>
                         </Select>
 
-
-                        <button className="text-4xl text-black min-h-[76px] w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleLocationConfirm}> Confirm</button>
+                        <button className="sm:text-4xl text-3xl text-black sm:min-h-[76px] min-h-16 w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleLocationConfirm}> Confirm</button>
                       </div>
                     </>
                   )}

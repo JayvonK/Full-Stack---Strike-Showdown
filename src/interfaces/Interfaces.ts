@@ -3,6 +3,10 @@ export interface IUserInfo {
     password: string
 }
 
+export interface IToken {
+    token: string,
+}
+
 export interface IUserInfoWithStats {
     username: string,
     email: string,
