@@ -1,5 +1,5 @@
-export interface IUserInfo {
-    username: string,
+export interface IUserLogin {
+    usernameOrEmail: string,
     password: string
 }
 
@@ -23,5 +23,4 @@ export interface IUserInfoWithStats {
     questionTwoAnswer: string,
     questionThree: string,
     questionThreeAnswer: string,
-
 }
