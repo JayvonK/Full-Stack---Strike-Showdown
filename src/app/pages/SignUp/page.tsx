@@ -20,6 +20,8 @@ import {
 } from "@/components/ui/select"
 import { IUserInfoWithStats } from '@/interfaces/Interfaces';
 import NotRequiredInputComponent from '@/components/PageComponents/NotRequiredInputComponent';
+import { CreateAccountAPI } from '@/Data/DataServices';
+import { useAppContext } from '@/context/Context';
 
 const SignUp = () => {
   const [errorMessage, setErrorMessage] = useState<boolean>(false);
@@ -48,6 +50,7 @@ const SignUp = () => {
   const [earnings, setEarnings] = useState<string>('');
   const router = useRouter();
   const { toast } = useToast();
+  const pageContext = useAppContext();
 
   const handleUserChange = (param: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(param.target.value);
@@ -162,30 +165,78 @@ const SignUp = () => {
     setAnsweringSecurity(true);
   }
 
-  const handleCreateWithoutStats = () => {
-    router.push('/');
-  }
-
-  const handleCreateAccountWithStats = () => {
+  const handleCreateWithoutStats = async () => {
     let userData: IUserInfoWithStats = {
       username: username,
       email: email,
       password: password,
-      bolwingCenter: bowlingCenter,
-      average: average,
-      style: style,
-      highGame: highGame,
-      highSeries: hightSeries,
-      earnings: earnings,
-      questionOne: questionOne,
-      questionOneAnswer: securityOne,
-      questionTwo: questionTwo,
-      questionTwoAnswer: securityTwo,
-      questionThree: questionThree,
-      questionThreeAnswer: securityThree
+      securityQuestion: questionOne,
+      securityQuestionTwo: questionTwo,
+      securityQuestionThree: questionThree,
+      securityAnswer: securityOne,
+      securityAnswerTwo: securityTwo,
+      securityAnswerThree: securityThree,
+      fullName: 'N/A',
+      profileImage: 'N/A',
+      pronouns: 'N/A',
+      wins: 0,
+      loses: 0,
+      style: 'N/A',
+      mainCenter: 'N/A',
+      average: 'N/A',
+      earnings: 'N/A'
     }
 
-    router.push('/');
+    try {
+      let createdUser = await CreateAccountAPI(userData);
+      console.log(createdUser);
+      pageContext.setCreatedAccountBool(true);
+      router.push('/');
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Error, Make Sure You Filled Everything In.",
+        description: "Me personally, I wouldn't take that.",
+        action: <ToastAction altText="Try again">Try again</ToastAction>,
+      })
+    }
+  }
+
+  const handleCreateAccountWithStats = async () => {
+    let userData: IUserInfoWithStats = {
+      username: username,
+      email: email,
+      password: password,
+      securityQuestion: questionOne,
+      securityQuestionTwo: questionTwo,
+      securityQuestionThree: questionThree,
+      securityAnswer: securityOne,
+      securityAnswerTwo: securityTwo,
+      securityAnswerThree: securityThree,
+      fullName: fullname,
+      profileImage: 'N/A',
+      pronouns: prounouns,
+      wins: 0,
+      loses: 0,
+      style: style,
+      mainCenter: bowlingCenter,
+      average: average,
+      earnings: earnings
+    }
+
+    try {
+      let createdUser = await CreateAccountAPI(userData);
+      console.log(createdUser);
+      pageContext.setCreatedAccountBool(true);
+      router.push('/');
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Error, Make Sure You Filled Everything In.",
+        description: "Me personally, I wouldn't take that.",
+        action: <ToastAction altText="Try again">Try again</ToastAction>,
+      })
+    }
   }
 
 

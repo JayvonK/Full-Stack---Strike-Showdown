@@ -1,26 +1,29 @@
 export interface IUserLogin {
-    usernameOrEmail: string,
-    password: string
+  usernameOrEmail: string;
+  password: string;
 }
 
 export interface IToken {
-    token: string,
+  token: string;
 }
 
 export interface IUserInfoWithStats {
-    username: string,
-    email: string,
-    password: string,
-    bolwingCenter: string,
-    average: string,
-    style: string
-    highGame: string,
-    highSeries: string,
-    earnings: string,
-    questionOne: string,
-    questionOneAnswer: string,
-    questionTwo: string,
-    questionTwoAnswer: string,
-    questionThree: string,
-    questionThreeAnswer: string,
+  username: string;
+  email: string;
+  password: string;
+  securityQuestion: string;
+  securityQuestionTwo: string;
+  securityQuestionThree: string;
+  securityAnswer: string;
+  securityAnswerTwo: string;
+  securityAnswerThree: string;
+  fullName: string;
+  profileImage: string;
+  pronouns: string;
+  wins: number;
+  loses: number;
+  style: string;
+  mainCenter: string;
+  average: string;
+  earnings: string;
 }
