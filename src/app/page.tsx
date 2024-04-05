@@ -19,9 +19,9 @@ import {
 } from "@/components/ui/select"
 import { IUserLogin } from "@/interfaces/Interfaces";
 import { LoginAPI } from "@/Data/DataServices";
+import { useAppContext } from "@/context/Context";
 
 export default function Home() {
-  const [openerBool, setOpenerBool] = useState<boolean>(true);
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [userBorderError, setuserBorderError] = useState<string>('');
@@ -31,10 +31,12 @@ export default function Home() {
   const [screenCount, setScreenCount] = useState<number>(0);
   const router = useRouter();
 
+  const pageContext = useAppContext();
+
   const { toast } = useToast()
 
   const handleOpenerBoolChange = () => {
-    setOpenerBool(!openerBool);
+    pageContext.setInitialOpen(false);
   }
 
   const handleUserChange = (param: React.ChangeEvent<HTMLInputElement>) => {
@@ -89,8 +91,6 @@ export default function Home() {
     }
   }
 
-
-
     const handleForgotPassword = () => {
       router.push('/pages/ForgotPassword')
     }
@@ -99,12 +99,30 @@ export default function Home() {
       router.push('/pages/SignUp')
     }
 
+    React.useEffect(() => {
+      if(pageContext.createdAccountBool){
+        toast({
+          variant: "destructive",
+          title: "You've Successfully Created An Account.",
+          description: "Me personally, I wouldn't take that.",
+          action: <ToastAction altText="Try again">Try again</ToastAction>,
+        })
+      } else if(pageContext.changedPasswordBool){
+        toast({
+          variant: "destructive",
+          title: "You've Successfully Changed Your Password",
+          description: "Me personally, I wouldn't take that.",
+          action: <ToastAction altText="Try again">Try again</ToastAction>,
+        })
+      }
+    }, [])
+
     return (
       <div>
         <div className="min-h-screen bgLogin">
           {
             // Start of Ternary For Welcome Screen
-            openerBool ? ( // First Ternary Return Statement
+            pageContext.initialOpen ? ( // First Ternary Return Statement
 
               <div className="min-h-screen bg-black opacity-90 hover:cursor-pointer" onClick={handleOpenerBoolChange}>
                 <div className="2xl:px-80 xl:px-56 lg:px-36 md:px-24 sm:px-14 px-7 pt-60">

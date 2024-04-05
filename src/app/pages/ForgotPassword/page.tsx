@@ -7,6 +7,7 @@ import '@/app/css/LoginPage.css';
 import RequiredInputComponent from '@/components/PageComponents/RequiredInputComponent';
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
+import { useAppContext } from '@/context/Context';
 
 const ForgotPassword = () => {
     const questionArray = ["What's Your Favorite Food?", "What's The Model Of Your First Car?", 'Name of Childhood Best Friend?'];
@@ -25,6 +26,7 @@ const ForgotPassword = () => {
     const [passwordTwo, setPasswordTwo] = useState<string>('');
     const router = useRouter();
     const { toast } = useToast();
+    const pageContext = useAppContext();
 
     const handleUserChange = (param: React.ChangeEvent<HTMLInputElement>) => {
         setUsername(param.target.value);
@@ -74,6 +76,9 @@ const ForgotPassword = () => {
                 description: "Me personally, I wouldn't take that.",
                 action: <ToastAction altText="Try again">Try again</ToastAction>,
             })
+        } else {
+            pageContext.setChangedPasswordBool(true);
+            router.push('/')
         }
     }
 
