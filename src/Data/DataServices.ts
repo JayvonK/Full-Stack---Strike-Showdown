@@ -1,8 +1,8 @@
-import { IToken, IUserInfo } from "@/interfaces/Interfaces"
+import { IToken, IUserLogin } from "@/interfaces/Interfaces"
 
 const url = 'https://strikeshowdownbackend.azurewebsites.net/api/'
 
-export const Login = async(createdUser: IUserInfo) => {
+export const LoginAPI = async(createdUser: IUserLogin) => {
     const res = await fetch(url + 'User/Login/', {
         method: 'POST',
         headers: {
