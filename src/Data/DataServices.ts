@@ -39,7 +39,7 @@ export const CreateAccountAPI = async(createdUser: IUserInfoWithStats) => {
 }
 
 export const VerifyForPasswordAPI = async(UsernameOrEmail: string, question: string, answer: string) => {
-    const promise = await fetch(`${url}User/${UsernameOrEmail}/${question}/${answer}`);
+    const promise = await fetch(`${url}User/GetSecurity/${UsernameOrEmail}/${question}/${answer}`);
     const data = await promise.json();
     return data;
 }
@@ -57,4 +57,10 @@ export const ChangePasswordAPI = async(UsernameOrEmail: string, password: string
     }
     const data = await res.json();
     console.log(data);
+}
+
+export const GetUserAPI = async (UsernameOrEmail: string) => {
+    const promise = await fetch(url + `User/GetUserByUsername/${UsernameOrEmail}`);
+    const data = await promise.json();
+    return data;
 }
