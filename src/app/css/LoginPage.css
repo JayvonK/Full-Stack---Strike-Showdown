@@ -38,3 +38,8 @@
         max-width: 350px;
     }
 }
+
+  
+  .navtext img:hover {
+color: #C37500;
+  }
