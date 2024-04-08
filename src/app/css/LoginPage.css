@@ -36,27 +36,8 @@
     background: linear-gradient(141deg, rgba(55, 55, 55, 0.9) 0%, rgba(0, 0, 0, 0.9) 50%, rgba(31, 31, 31, 0.9) 100%);
 }
 
-.line {
-    border-left: 2px solid white;
-    height: 100%;
+@media screen and (max-width: 600px) {
+    .selectWidth {
+        max-width: 350px;
+    }
 }
-
-.bgFireIcon{
-    background-image: url(../../../public/images/fire-fill.svg);
-    background-size: cover;
-}
-
-.bgWaveIcon{
-    background-image: url(../../../public/images/hand-waving-fill.svg);
-    background-size: cover;
-}
-
-.messageTxt {
-    inline-size: inherit;
-    overflow-wrap: break-word;
-}
-
-  
-  .navtext img:hover {
-color: #C37500;
-  }
