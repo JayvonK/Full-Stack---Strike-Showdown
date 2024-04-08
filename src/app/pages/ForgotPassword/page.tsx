@@ -8,10 +8,10 @@ import RequiredInputComponent from '@/components/PageComponents/RequiredInputCom
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
 import { useAppContext } from '@/context/Context';
-import { VerifyForPasswordAPI } from '@/Data/DataServices';
+import { ChangePasswordAPI, GetUserAPI, VerifyForPasswordAPI } from '@/Data/DataServices';
 
 const ForgotPassword = () => {
-    const questionArray = ["What's Your Favorite Food?", "What's The Model Of Your First Car?", 'Name of Childhood Best Friend?'];
+    const questionArray = ["What's Your Favorite Food", "What's The Model Of Your First Car", 'Name of Childhood Best Friend'];
     const [questionCount, setQuestionCount] = useState<number>(1);
     const [question, setQuestion] = useState<string>(questionArray[0]);
     const [username, setUsername] = useState<string>('');
@@ -57,7 +57,7 @@ const ForgotPassword = () => {
         setPasswordTwo(e.target.value);
     }
 
-    const handleConfirmPassword = () => {
+    const handleConfirmPassword = async () => {
         if (passwordOne.trim() === '' || passwordTwo.trim() === '') {
             setPasswordBorderError('border-red-600 border-2');
             setPassword2BorderError('border-red-600 border-2');
@@ -78,12 +78,22 @@ const ForgotPassword = () => {
                 action: <ToastAction altText="Try again">Try again</ToastAction>,
             })
         } else {
-            pageContext.setChangedPasswordBool(true);
-            router.push('/')
+            try {
+                await ChangePasswordAPI(username, passwordOne);
+                pageContext.setChangedPasswordBool(true);
+                router.push('/')
+            } catch (error) {
+                toast({
+                    variant: "destructive",
+                    title: "Error, Something Went Wrong",
+                    description: "Me personally, I wouldn't take that.",
+                    action: <ToastAction altText="Try again">Try again</ToastAction>,
+                })
+            }
         }
     }
 
-    const handleConfirmUser = () => {
+    const handleConfirmUser = async () => {
         if (username.trim() === '') {
             setUserBorderError('border-red-600 border-2');
             toast({
@@ -93,8 +103,19 @@ const ForgotPassword = () => {
                 action: <ToastAction altText="Try again">Try again</ToastAction>,
             })
         } else {
-            setEnterAnswer(true)
-            setEnterUsername(false);
+            try {
+                let data = await GetUserAPI(username);
+                setEnterAnswer(true)
+                setEnterUsername(false);
+            } catch (error) {
+                setUserBorderError('border-red-600 border-2');
+                toast({
+                    variant: "destructive",
+                    title: "Username Doesn't Exist",
+                    description: "Me personally, I wouldn't take that.",
+                    action: <ToastAction altText="Try again">Try again</ToastAction>,
+                })
+            }
         }
     }
 
@@ -105,8 +126,8 @@ const ForgotPassword = () => {
         } else {
             toast({
                 variant: "destructive",
-                title: "No more questions.",
-                description: "Me personally, I wouldn't take that.",
+                title: "Wrong Answer.",
+                description: "Please correct the correct answer",
                 action: <ToastAction altText="Try again">Try again</ToastAction>,
             })
         }

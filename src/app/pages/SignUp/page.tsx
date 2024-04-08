@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/select"
 import { IUserInfoWithStats } from '@/interfaces/Interfaces';
 import NotRequiredInputComponent from '@/components/PageComponents/NotRequiredInputComponent';
-import { CreateAccountAPI } from '@/Data/DataServices';
+import { CreateAccountAPI, GetUserAPI } from '@/Data/DataServices';
 import { useAppContext } from '@/context/Context';
 
 const SignUp = () => {
@@ -128,7 +128,7 @@ const SignUp = () => {
     setEarnings(e.target.value);
   }
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (username.trim() === '' || password.trim() === '' || password2.trim() === '' || email.trim() === '' || password !== password2) {
       setUserBorderError('border-red-600 border-2');
       toast({
@@ -138,8 +138,21 @@ const SignUp = () => {
         action: <ToastAction altText="Try again">Try again</ToastAction>,
       })
     } else {
-      setAnsweringSecurity(true)
-      setCreatingAccount(false);
+      try {
+        let data = await GetUserAPI(username);
+        if (data !== null) {
+          setUserBorderError('border-red-600 border-2');
+          toast({
+            variant: "destructive",
+            title: "Error. Username Taken",
+            description: "Me personally, I wouldn't take that.",
+            action: <ToastAction altText="Try again">Try again</ToastAction>,
+          })
+        }
+      } catch (error) {
+        setAnsweringSecurity(true);
+        setCreatingAccount(false);
+      }
     }
   }
 
@@ -299,9 +312,9 @@ const SignUp = () => {
                       <SelectContent className='sm:text-3xl text-2xl selectWidth'>
                         <SelectGroup>
                           <SelectLabel>Security Questions</SelectLabel>
-                          <SelectItem value="What's Your Favorite Movie?">What's Your Favorite Movie?</SelectItem>
-                          <SelectItem value="What's The Model Of Your First Car?">What's The Model Of Your First Car?</SelectItem>
-                          <SelectItem value="Name Of Your First Pet?">Name Of Your First Pet?</SelectItem>
+                          <SelectItem value="What's Your Favorite Movie">What's Your Favorite Movie?</SelectItem>
+                          <SelectItem value="What's The Model Of Your First Car">What's The Model Of Your First Car?</SelectItem>
+                          <SelectItem value="Name Of Your First Pet">Name Of Your First Pet?</SelectItem>
                         </SelectGroup>
                       </SelectContent>
                     </Select>
@@ -316,9 +329,9 @@ const SignUp = () => {
                       <SelectContent className='sm:text-3xl text-2xl selectWidth'>
                         <SelectGroup className=''>
                           <SelectLabel>Security Questions</SelectLabel>
-                          <SelectItem value="Name of Childhood Best Friend?">Name of Childhood Best Friend?</SelectItem>
-                          <SelectItem value="What's Your Nickname?">What's Your Nickname?</SelectItem>
-                          <SelectItem value="What's Your Favorite Food?">What's Your Favorite Food?</SelectItem>
+                          <SelectItem value="Name of Childhood Best Friend">Name of Childhood Best Friend?</SelectItem>
+                          <SelectItem value="What's Your Nickname">What's Your Nickname?</SelectItem>
+                          <SelectItem value="What's Your Favorite Food">What's Your Favorite Food?</SelectItem>
                         </SelectGroup>
                       </SelectContent>
                     </Select>
@@ -333,9 +346,9 @@ const SignUp = () => {
                       <SelectContent className='sm:text-3xl text-2xl selectWidth'>
                         <SelectGroup>
                           <SelectLabel>Security Questions</SelectLabel>
-                          <SelectItem value="What's Your Favorite School Subject?">What's Your Favorite School Subject?</SelectItem>
-                          <SelectItem value="What's Your Favorite Cartoon?">What's Your Favorite Cartoon?</SelectItem>
-                          <SelectItem value="What's Your Favorite Ice Cream?">What's Your Favorite Ice Cream?</SelectItem>
+                          <SelectItem value="What's Your Favorite School Subject">What's Your Favorite School Subject?</SelectItem>
+                          <SelectItem value="What's Your Favorite Cartoon">What's Your Favorite Cartoon?</SelectItem>
+                          <SelectItem value="What's Your Favorite Ice Cream">What's Your Favorite Ice Cream?</SelectItem>
                         </SelectGroup>
                       </SelectContent>
                     </Select>
