@@ -8,6 +8,7 @@ import RequiredInputComponent from '@/components/PageComponents/RequiredInputCom
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
 import { useAppContext } from '@/context/Context';
+import { VerifyForPasswordAPI } from '@/Data/DataServices';
 
 const ForgotPassword = () => {
     const questionArray = ["What's Your Favorite Food?", "What's The Model Of Your First Car?", 'Name of Childhood Best Friend?'];
@@ -43,8 +44,8 @@ const ForgotPassword = () => {
     }
 
     const handlePasswordTwoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        
-        if(e.target.value !== passwordOne){
+
+        if (e.target.value !== passwordOne) {
             setPasswordBorderError('border-red-600 border-2');
             setPassword2BorderError('border-red-600 border-2');
             setPasswordsMatch(false);
@@ -57,7 +58,7 @@ const ForgotPassword = () => {
     }
 
     const handleConfirmPassword = () => {
-        if(passwordOne.trim() === '' || passwordTwo.trim() === ''){
+        if (passwordOne.trim() === '' || passwordTwo.trim() === '') {
             setPasswordBorderError('border-red-600 border-2');
             setPassword2BorderError('border-red-600 border-2');
             toast({
@@ -97,9 +98,18 @@ const ForgotPassword = () => {
         }
     }
 
-    const handleConfirmAnswer = () => {
-        setChangePassword(true);
-        setEnterAnswer(false);
+    const handleConfirmAnswer = async () => {
+        if (await VerifyForPasswordAPI(username, question, userAnswer)) {
+            setChangePassword(true);
+            setEnterAnswer(false);
+        } else {
+            toast({
+                variant: "destructive",
+                title: "No more questions.",
+                description: "Me personally, I wouldn't take that.",
+                action: <ToastAction altText="Try again">Try again</ToastAction>,
+            })
+        }
     }
 
     const handleBack = () => {

@@ -37,3 +37,24 @@ export const CreateAccountAPI = async(createdUser: IUserInfoWithStats) => {
     const data = await res.json();
     console.log(data);
 }
+
+export const VerifyForPasswordAPI = async(UsernameOrEmail: string, question: string, answer: string) => {
+    const promise = await fetch(`${url}User/${UsernameOrEmail}/${question}/${answer}`);
+    const data = await promise.json();
+    return data;
+}
+
+export const ChangePasswordAPI = async(UsernameOrEmail: string, password: string ) => {
+    const res = await fetch(url + `User/ForgotPassword/${UsernameOrEmail}/${password}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': "application/json"
+        }
+    });
+    if(!res.ok){
+        const message = "An error message has occured " + res.status;
+        throw new Error(message);
+    }
+    const data = await res.json();
+    console.log(data);
+}
