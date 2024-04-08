@@ -29,7 +29,9 @@ const SignUp = () => {
   const [password, setPassword] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [password2, setPassword2] = useState<string>('');
+  const [passwordsMatch, setPasswordsMatch] = useState<boolean>(true);
   const [userBorderError, setUserBorderError] = useState<string>('');
+  const [passwordBorderError, setPasswordBorderError] = useState<string>('');
   const [creatingAccount, setCreatingAccount] = useState<boolean>(true);
   const [doesUserWantStats, setDoesUserWantStats] = useState<boolean>(false);
   const [answeringSecurity, setAnsweringSecurity] = useState<boolean>(false);
@@ -71,9 +73,15 @@ const SignUp = () => {
   }
 
   const handlePassword2Change = (param: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword2(param.target.value);
-    setErrorMessage(false);
-    setUserBorderError('');
+    if (param.target.value !== password) {
+      setPassword2(param.target.value);
+      setPasswordsMatch(false);
+      setPasswordBorderError('border-red-600 border-2');
+    } else {
+      setPasswordsMatch(true);
+      setPassword2(param.target.value);
+      setPasswordBorderError('');
+    }
   }
 
   const handleSecurityOneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -121,8 +129,7 @@ const SignUp = () => {
   }
 
   const handleNext = () => {
-    if (username.trim() === '' || password.trim() === '' || password2.trim() === '' || email.trim() === '') {
-      setErrorMessage(true);
+    if (username.trim() === '' || password.trim() === '' || password2.trim() === '' || email.trim() === '' || password !== password2) {
       setUserBorderError('border-red-600 border-2');
       toast({
         variant: "destructive",
@@ -186,7 +193,6 @@ const SignUp = () => {
       average: 'N/A',
       earnings: 'N/A'
     }
-
     try {
       let createdUser = await CreateAccountAPI(userData);
       console.log(createdUser);
@@ -260,8 +266,9 @@ const SignUp = () => {
 
                     <RequiredInputComponent title="Username:" type='text' borderError={userBorderError} placeholder='Enter Username' value={username} onChange={handleUserChange} maxLength={5000} />
                     <RequiredInputComponent title="Email:" type='text' borderError={userBorderError} placeholder='Enter Email' value={email} onChange={handleEmailChange} maxLength={20} />
-                    <RequiredInputComponent title="Password:" type='password' borderError={userBorderError} placeholder='Enter Password' value={password} onChange={handlePasswordChange} maxLength={5000} />
-                    <RequiredInputComponent title="Verify Password:" type='password' borderError={userBorderError} placeholder='Re-enter Password' value={password2} onChange={handlePassword2Change} maxLength={5000} />
+                    <RequiredInputComponent title="Password:" type='password' borderError={passwordBorderError} placeholder='Enter Password' value={password} onChange={handlePasswordChange} maxLength={5000} />
+                    <RequiredInputComponent title="Verify Password:" type='password' borderError={passwordBorderError} placeholder='Re-enter Password' value={password2} onChange={handlePassword2Change} maxLength={5000} />
+                    {!passwordsMatch ? (<h1 className='text-2xl jura text-red-600'>Passwords Dont Match</h1>) : (<div></div>)}
 
                     <button className="sm:text-4xl text-3xl text-black sm:min-h-[76px] min-h-16 w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleNext}> Next</button>
 
