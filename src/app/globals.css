@@ -2,6 +2,4 @@
 @tailwind components;
 @tailwind utilities;
 
-.navbarHover:hover {
-    color: rgb(249 115 22) !important;
-}
+
