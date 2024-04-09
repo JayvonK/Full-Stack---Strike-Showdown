@@ -1,4 +1,4 @@
-import { IToken, IUserInfoWithStats, IUserLogin } from "@/interfaces/Interfaces"
+import { IPublicUserData, IToken, IUserInfoWithStats, IUserLogin } from "@/interfaces/Interfaces"
 
 const url = 'https://strikeshowdownbackend.azurewebsites.net/api/'
 
@@ -60,7 +60,7 @@ export const ChangePasswordAPI = async(UsernameOrEmail: string, password: string
 }
 
 export const GetUserAPI = async (UsernameOrEmail: string) => {
-    const promise = await fetch(url + `User/GetUserByUsername/${UsernameOrEmail}`);
-    const data = await promise.json();
+    const promise = await fetch(url + `User/GetUserByUsernameOrEmail/${UsernameOrEmail}`);
+    const data: IPublicUserData = await promise.json();
     return data;
 }
