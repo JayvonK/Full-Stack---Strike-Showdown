@@ -38,6 +38,10 @@
     height: 100%;
 }
 
+.bgFireIcon{
+    background-image: url(../../../public/images/fire-fill.svg);
+}
+
 @media screen and (max-width: 600px) {
     .selectWidth {
         max-width: 350px;
