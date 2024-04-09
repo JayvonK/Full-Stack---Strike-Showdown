@@ -12,7 +12,10 @@
     background-image: url(../../../public/images/Main\ Background\ Img\ Placeholder.jpg);
     background-size: cover;
 }
-
+.friendsPic{
+    height: 46px;
+    width: 49px;
+}
 .txtOrange {
     color: #FF7A00;
 }
@@ -51,6 +54,18 @@
 .messageTxt {
     inline-size: inherit;
     overflow-wrap: break-word;
+}
+
+@media screen and (max-width: 600px) {
+    .selectWidth {
+        max-width: 350px;
+    }
+}
+
+  
+  .navtext img:hover {
+color: #C37500;
+  }
 }
 
 @media screen and (max-width: 600px) {
