@@ -41,6 +41,10 @@
     height: 100%;
 }
 
+.bgFireIcon{
+    background-image: url(../../../public/images/fire-fill.svg);
+}
+
   
   .navtext img:hover {
 color: #C37500;
