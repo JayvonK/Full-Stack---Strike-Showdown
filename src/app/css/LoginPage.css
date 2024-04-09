@@ -12,7 +12,10 @@
     background-image: url(../../../public/images/Main\ Background\ Img\ Placeholder.jpg);
     background-size: cover;
 }
-
+.friendsPic{
+    height: 46px;
+    width: 49px;
+}
 .txtOrange {
     color: #FF7A00;
 }
