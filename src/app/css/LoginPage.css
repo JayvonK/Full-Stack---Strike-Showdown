@@ -43,6 +43,12 @@
 
 .bgFireIcon{
     background-image: url(../../../public/images/fire-fill.svg);
+    background-size: cover;
+}
+
+.bgWaveIcon{
+    background-image: url(../../../public/images/hand-waving-fill.svg);
+    background-size: cover;
 }
 
   

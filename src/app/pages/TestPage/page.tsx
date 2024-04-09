@@ -49,19 +49,37 @@ const TestPage = () => {
 
                 <div className='grid grid-cols-[55%_45%] min-h-[310px] mb-40'>
                     <div className='bg-black rounded-tl-3xl rounded-bl-3xl'>
-                        <div className="grid grid-cols-[20%_80%]">
-                            <div>
-                                <img className='object-cover' src={bowler.src} alt="" /> 
+                        <div className="grid grid-cols-[35%_65%] h-full">
+                            {/* Col 1 */}
+                            <div className='pt-14 pl-14'>
+                                <div className='w-[211px] h-[211px]'>
+                                    <img className='object-cover w-full h-full rounded-full' src={bowler.src} alt="" />
+                                </div>
                             </div>
 
-                            <div>
+                            {/* Col 2 */}
+                            <div className='pt-11 pl-7 pr-14 pb-9'>
+                                <h1 className='jura text-4xl txtOrange align-top mb-1'><span className='bgWaveIcon w-8 h-8 inline-block mr-3 -mb-1'></span>Welcome Back,</h1>
+                                <h1 className='juraBold text-4xl text-white underline mb-6'>KingOfBowling209</h1>
+                                <div className='flex mb-4'>
+                                    <h3 className='text-white jura text-2xl'>Wins: <span className='txtOrange juraBold'>0</span></h3>
+                                    <h3 className='text-white jura text-2xl ml-14'>Win Streak: <span className='txtOrange juraBold'>0</span></h3>
+                                </div>
+
+                                <div className='flex mb-4'>
+                                    <h3 className='text-white jura text-2xl '>Losses: <span className='txtOrange juraBold'>0</span></h3>
+                                     <h3 className='text-white jura text-2xl ml-14'>Average: <span className='txtOrange juraBold'> 190 - 200 Avg</span></h3>
+                                    
+                                </div>
+                               
+                                <h3 className='text-white jura text-2xl'>Style: <span className='txtOrange juraBold'> 2 Handed (Righty)</span></h3>
 
                             </div>
-                            
+
                         </div>
                     </div>
                     <div className='bg-white rounded-tr-3xl rounded-br-3xl py-10 px-16'>
-                        <h1 className='jura text-4xl mb-7'><span className='bgFireIcon w-7 h-7 inline-block mr-5'></span>In the mood for a <span className='juraBold'>challenge</span>? Or <span className='juraBold'>improving</span>?</h1>
+                        <h1 className='jura text-4xl mb-7 align-top'><span className='bgFireIcon w-8 h-8 inline-block mr-3 -mb-1'></span>In the mood for a <span className='juraBold'>challenge</span>? Or <span className='juraBold'>improving</span>?</h1>
                         <button className='bgOrange w-full text-2xl juraBold py-2 rounded-lg hover:bg-[#ff9939] mb-6' onClick={() => setOpenModal(true)}>Add a Post</button>
                         <button className='bgOrange w-full text-2xl juraBold py-2 rounded-lg hover:bg-[#ff9939]' onClick={() => setOpenModal(true)}>Challenge Friends</button>
                     </div>
@@ -77,10 +95,11 @@ const TestPage = () => {
 
 
 
-
-
-                <div className='h-96 bg-black'>
-                    <h1 className='text-white jura'>Available Matches</h1>
+                <div className='max-h-[1200px] bg-black rounded-3xl'>
+                    <div className='flex'>
+                        <h1 className='text-black text-4xl juraBold py-4 px-8 bg-[#FF7A00] max-w-[450px] text-center rounded-tl-3xl mb-6'>Available Matches</h1>
+                        <h1 className='text-white text-4xl jura py-4 px-8 max-w-[450px] text-center ml-6'>Location: <span className='txtOrange'>CA</span></h1>
+                    </div>
 
                     {/* Practice Session Component */}
                     <div className='px-10'>
@@ -96,7 +115,9 @@ const TestPage = () => {
 
                         <div className='flex my-5'>
                             <div className='mr-8'>
-                                <img className='w-[105px] h-[100px] rounded-full object-cover' src={bowler.src} alt="bowler's pfp" />
+                                <div className='w-[105px] h-[105px]'>
+                                    <img className='w-full h-full rounded-full object-cover' src={bowler.src} alt="bowler's pfp" />
+                                </div>
                             </div>
 
                             <div className='grid 2xl:grid-cols-[22%_34%_24%_20%] grid-cols-3 w-full'>
