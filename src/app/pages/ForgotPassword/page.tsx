@@ -9,11 +9,12 @@ import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
 import { useAppContext } from '@/context/Context';
 import { ChangePasswordAPI, GetUserAPI, VerifyForPasswordAPI } from '@/Data/DataServices';
+import { IPublicUserData } from '@/interfaces/Interfaces';
 
 const ForgotPassword = () => {
-    const questionArray = ["What's Your Favorite Food", "What's The Model Of Your First Car", 'Name of Childhood Best Friend'];
+    const [questionArray, setQuestionArray] = useState<string[]>([]);
     const [questionCount, setQuestionCount] = useState<number>(1);
-    const [question, setQuestion] = useState<string>(questionArray[0]);
+    const [question, setQuestion] = useState<string>('');
     const [username, setUsername] = useState<string>('');
     const [userAnswer, setUserAnswer] = useState<string>('');
     const [userBorderError, setUserBorderError] = useState<string>('');
@@ -25,6 +26,7 @@ const ForgotPassword = () => {
     const [passwordsMatch, setPasswordsMatch] = useState<boolean>(true);
     const [passwordOne, setPasswordOne] = useState<string>('');
     const [passwordTwo, setPasswordTwo] = useState<string>('');
+    const [currentUserData, setCurrentUserData] = useState<IPublicUserData | null>(null);
     const router = useRouter();
     const { toast } = useToast();
     const pageContext = useAppContext();
@@ -44,7 +46,6 @@ const ForgotPassword = () => {
     }
 
     const handlePasswordTwoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-
         if (e.target.value !== passwordOne) {
             setPasswordBorderError('border-red-600 border-2');
             setPassword2BorderError('border-red-600 border-2');
@@ -104,9 +105,27 @@ const ForgotPassword = () => {
             })
         } else {
             try {
-                let data = await GetUserAPI(username);
-                setEnterAnswer(true)
-                setEnterUsername(false);
+                let data: IPublicUserData | null = await GetUserAPI(username);
+                if (data !== null) {
+                    let dataQuestionArray: string[] = [];
+                    dataQuestionArray.push(data.securityQuestion);
+                    dataQuestionArray.push(data.securityQuestionTwo);
+                    dataQuestionArray.push(data.securityQuestionThree);
+                    console.log(dataQuestionArray);
+                    setQuestionArray(dataQuestionArray);
+                    setQuestion(dataQuestionArray[0]);
+                    setCurrentUserData(data);
+                    setEnterAnswer(true)
+                    setEnterUsername(false);
+                } else {
+                    setUserBorderError('border-red-600 border-2');
+                    toast({
+                        variant: "destructive",
+                        title: "Username Doesn't Exist",
+                        description: "Me personally, I wouldn't take that.",
+                        action: <ToastAction altText="Try again">Try again</ToastAction>,
+                    })
+                }
             } catch (error) {
                 setUserBorderError('border-red-600 border-2');
                 toast({
@@ -153,13 +172,17 @@ const ForgotPassword = () => {
             toast({
                 variant: "destructive",
                 title: "No more questions.",
-                description: "Me personally, I wouldn't take that.",
+                description: "Press go back a question",
                 action: <ToastAction altText="Try again">Try again</ToastAction>,
             })
         } else {
             setQuestionCount(questionCount + 1);
             setQuestion(questionArray[questionCount])
         }
+    }
+
+    const handleGoBack = () => {
+
     }
 
     return (
@@ -200,7 +223,7 @@ const ForgotPassword = () => {
 
                                         <h1 className="txtOrange sm:text-7xl text-5xl juraBold mb-12 leading-[90px]"> Answer Security Question</h1>
 
-                                        <RequiredInputComponent title={question} type='text' borderError={userBorderError} placeholder='Answer' value={userAnswer} onChange={handleUserAnswerChange} maxLength={5000} />
+                                        <RequiredInputComponent title={question + "?"} type='text' borderError={userBorderError} placeholder='Answer' value={userAnswer} onChange={handleUserAnswerChange} maxLength={5000} />
 
                                         <h3 className="sm:text-3xl text-2xl txtOrange jura underline hover:cursor-pointer hover:text-[#ff9939]" onClick={handleAnotherQuestion} >Another Question</h3>
 

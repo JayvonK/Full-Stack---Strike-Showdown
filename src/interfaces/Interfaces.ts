@@ -27,3 +27,20 @@ export interface IUserInfoWithStats {
   average: string;
   earnings: string;
 }
+
+export interface IPublicUserData {
+  username: string;
+  email: string;
+  securityQuestion: string;
+  securityQuestionTwo: string;
+  securityQuestionThree: string;
+  fullName: string;
+  profileImage: string;
+  pronouns: string;
+  wins: number;
+  loses: number;
+  style: string;
+  mainCenter: string;
+  average: string;
+  earnings: string;
+}
