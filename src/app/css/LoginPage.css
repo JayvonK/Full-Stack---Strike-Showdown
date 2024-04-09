@@ -51,6 +51,11 @@
     background-size: cover;
 }
 
+.messageTxt {
+    inline-size: inherit;
+    overflow-wrap: break-word;
+}
+
   
   .navtext img:hover {
 color: #C37500;
