@@ -48,6 +48,11 @@
     background-size: cover;
 }
 
+.messageTxt {
+    inline-size: inherit;
+    overflow-wrap: break-word;
+}
+
 @media screen and (max-width: 600px) {
     .selectWidth {
         max-width: 350px;
