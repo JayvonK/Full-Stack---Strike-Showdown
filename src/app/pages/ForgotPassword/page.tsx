@@ -111,7 +111,6 @@ const ForgotPassword = () => {
                     dataQuestionArray.push(data.securityQuestion);
                     dataQuestionArray.push(data.securityQuestionTwo);
                     dataQuestionArray.push(data.securityQuestionThree);
-                    console.log(dataQuestionArray);
                     setQuestionArray(dataQuestionArray);
                     setQuestion(dataQuestionArray[0]);
                     setCurrentUserData(data);
