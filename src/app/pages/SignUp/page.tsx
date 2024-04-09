@@ -53,6 +53,7 @@ const SignUp = () => {
   const router = useRouter();
   const { toast } = useToast();
   const pageContext = useAppContext();
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleUserChange = (param: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(param.target.value);
@@ -209,6 +210,7 @@ const SignUp = () => {
     try {
       let createdUser = await CreateAccountAPI(userData);
       console.log(createdUser);
+      setLoading(true);
       pageContext.setCreatedAccountBool(true);
       router.push('/');
     } catch (error) {
@@ -246,6 +248,7 @@ const SignUp = () => {
     try {
       let createdUser = await CreateAccountAPI(userData);
       console.log(createdUser);
+      setLoading(true);
       pageContext.setCreatedAccountBool(true);
       router.push('/');
     } catch (error) {
@@ -374,8 +377,16 @@ const SignUp = () => {
                     <h1 className="txtOrange sm:text-7xl text-4xl juraBold mb-12 sm:leading-[90px] leading-[75px]"> Do You Want To Add Your Custom Stats & Info To Your Account?</h1>
 
                     <button className="sm:text-4xl text-3xl text-black sm:min-h-[76px] min-h-16 w-full my-9 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleAddStats}>Yes</button>
+
                     <h1 className='text-4xl w-full text-white jura text-center'>OR</h1>
-                    <button className="sm:text-4xl text-3xl text-black sm:min-h-[76px] min-h-16 w-full my-9 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleCreateWithoutStats}>No, Create Account</button>
+
+                    {
+                      loading ? (
+                        <button className="sm:text-4xl text-3xl text-black sm:min-h-[76px] min-h-16 w-full my-8 juraBold rounded-xl bg-orange-300"> Creating...</button>
+                      ) : (
+                        <button className="sm:text-4xl text-3xl text-black sm:min-h-[76px] min-h-16 w-full my-9 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleCreateWithoutStats}>No, Create Account</button>
+                      )
+                    }
 
                   </div>
                 </>
@@ -404,7 +415,13 @@ const SignUp = () => {
                       <NotRequiredInputComponent type='text' borderError={userBorderError} placeholder='$ Earnings $' value={earnings} onChange={handleEarningsChange} maxLength={5000} />
                     </ScrollArea>
 
-                    <button className="sm:text-4xl text-3xl text-black sm:min-h-[76px] min-h-16 w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleCreateAccountWithStats}> Create Account</button>
+                    {
+                      loading ? (
+                        <button className="sm:text-4xl text-3xl text-black sm:min-h-[76px] min-h-16 w-full my-8 juraBold rounded-xl bg-orange-300"> Creating...</button>
+                      ) : (
+                        <button className="sm:text-4xl text-3xl text-black sm:min-h-[76px] min-h-16 w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleCreateAccountWithStats}> Create Account</button>
+                      )
+                    }
 
                   </div>
                 </>) : (<></>)
@@ -422,7 +439,7 @@ const SignUp = () => {
 
 
       </div>
-    </div>
+    </div >
   )
 }
 
