@@ -5,31 +5,40 @@ import { useRouter } from 'next/navigation';
 import React, { useEffect } from 'react'
 import '@/app/css/LoginPage.css'
 import bowler from '../../../../public/images/pexels-pavel-danilyuk-7429728.jpg';
-import fireIcon from '../../../../public/images/fire-fill.svg'
+import ken from '../../../../public/images/ken.png';
+import feetsaiah from '../../../../public/images/feetsaiah.png';
+import jacoozi from '../../../../public/images/Jacoozzi (1).png'
+
+
 import { useState } from "react";
 import { useAppContext } from '@/context/Context';
-import { IPublicUserData, IUserInfoWithStats } from '@/interfaces/Interfaces';
+import { IPracticeSession, IPublicUserData, IUserInfoWithStats } from '@/interfaces/Interfaces';
 import { GetUserAPI } from '@/Data/DataServices';
+import PracticePostDummyData from '../../../utils/PracticeSessionsData.json';
+import PracticeSessionComponent from '@/components/PageComponents/PracticeSessionComponent';
 
 const HomePage = () => {
   const [openModal, setOpenModal] = useState(false);
   const [verifiedUserData, setVerifiedUserData] = useState<IPublicUserData>();
+  const [pracitceSessionData, setPracticeSessionData] = useState<IPracticeSession[]>(PracticePostDummyData);
   const pageContext = useAppContext();
   const route = useRouter();
 
+  const handleJoin = () => {
+    setOpenModal(true);
+  }
 
+  // useEffect(() => {
+  //   if(!pageContext.userLoggedIn){
+  //     route.push('/');
+  //   } else {
+  //     const grabUserData = async() => {
+  //       setVerifiedUserData(await GetUserAPI(pageContext.verifiedUser));
+  //     }
 
-  useEffect(() => {
-    if(!pageContext.userLoggedIn){
-      route.push('/');
-    } else {
-      const grabUserData = async() => {
-        setVerifiedUserData(await GetUserAPI(pageContext.verifiedUser));
-      }
-
-      grabUserData();
-    }
-  }, [])
+  //     grabUserData();
+  //   }
+  // }, [])
 
   return (
     <div>
@@ -71,13 +80,13 @@ const HomePage = () => {
                 {/* Col 1 */}
                 <div className='pt-14 pl-14'>
                   <div className='w-[211px] h-[211px]'>
-                    <img className='object-cover w-full h-full rounded-full' src={bowler.src} alt="" />
+                    <img className='object-cover w-full h-full rounded-full' src={"/_next/static/media/pexels-pavel-danilyuk-7429728.06e50af2.jpg"} alt="" />
                   </div>
                 </div>
 
                 {/* Col 2 */}
                 <div className='pt-11 pl-7 pr-14 pb-9'>
-                  <h1 className='jura text-4xl txtOrange align-top mb-6'><span className='bgWaveIcon w-8 h-8 inline-block mr-3 -mb-1'></span>Welcome Back, <span  className='juraBold text-white underline '>{verifiedUserData && verifiedUserData.username}</span></h1>
+                  <h1 className='jura text-4xl txtOrange align-top mb-6'><span className='bgWaveIcon w-8 h-8 inline-block mr-3 -mb-1'></span>Welcome Back, <span className='juraBold text-white underline '>{verifiedUserData && verifiedUserData.username}</span></h1>
                   <div className='flex mb-4'>
                     <h3 className='text-white jura text-2xl'>Wins: <span className='txtOrange juraBold'>{verifiedUserData && verifiedUserData.wins}</span></h3>
                     <h3 className='text-white jura text-2xl ml-14'>Win Streak: <span className='txtOrange juraBold'>0</span></h3>
@@ -86,7 +95,7 @@ const HomePage = () => {
                   <div className='flex mb-4'>
                     <h3 className='text-white jura text-2xl '>Losses: <span className='txtOrange juraBold'>{verifiedUserData && verifiedUserData.loses}</span></h3>
                     <h3 className='text-white jura text-2xl ml-14'>Average: <span className='txtOrange juraBold'> {verifiedUserData && verifiedUserData.average}</span></h3>
-                    {/* <button className='bg-white ' onClick={() => console.log(verifiedUserData)}>click me</button> */}
+                    <button className='bg-white ' onClick={() => console.log(`${jacoozi.src} | ${ken.src} | ${feetsaiah.src} `)}>click me</button>
 
                   </div>
 
@@ -105,74 +114,22 @@ const HomePage = () => {
 
 
 
-          <div className='max-h-[1200px] bg-black rounded-3xl'>
+          <div className='max-h-[1200px] bg-black rounded-3xl overflow-y-auto overflow-x-hidden'>
             <div className='flex'>
               <h1 className='text-black text-4xl juraBold py-4 px-8 bg-[#FF7A00] max-w-[450px] text-center rounded-tl-3xl mb-6'>Available Matches</h1>
               <h1 className='text-white text-4xl jura py-4 px-8 max-w-[450px] text-center ml-6'>Location: <span className='txtOrange'>{pageContext.currentState}</span></h1>
             </div>
 
             {/* Practice Session Component */}
-            <div className='px-10'>
-              <div className='grid grid-cols-2'>
-                <div className='flex juraBold xl:text-3xl text-2xl'>
-                  <h2 className='text-white mr-14'>Practice Session</h2>
-                  <h2 className='txtOrange'>1/3</h2>
+            {
+              pracitceSessionData.map((data, idx) => (
+                <div key={idx}>
+                  <PracticeSessionComponent username={data.username} pfp={data.profileImage} wins={data.wins} avg={data.average} streak={data.streak} style={data.style} location={data.location} time={data.time} join={handleJoin} userClick={handleJoin} description={data.description} currentPpl={data.currentPpl} maxPpl={data.maxPpl} date={data.date}/>
                 </div>
-                <div className='flex justify-end'>
-                  <button className='bgOrange min-w-56 xl:text-3xl text-2xl juraBold py-2 rounded-3xl hover:bg-[#ff9939]' onClick={() => setOpenModal(true)}>Join</button>
-                </div>
-              </div>
-
-              <div className='flex my-5'>
-                <div className='mr-8'>
-                  <div className='w-[105px] h-[105px]'>
-                    <img className='w-full h-full rounded-full object-cover' src={bowler.src} alt="bowler's pfp" />
-                  </div>
-                </div>
-
-                <div className='grid 2xl:grid-cols-[22%_34%_24%_20%] grid-cols-3 w-full'>
-                  <div className='pr-8 xl:text-xl text-lg'>
-                    <h3 className='jura text-white'>Username</h3>
-                    <h3 className='juraBold txtOrange underline cursor-pointer' onClick={() => setOpenModal(true)}>GodOfBowling</h3>
-                  </div>
-                  <div className='pr-8 2xl:block hidden xl:text-xl text-lg'>
-                    <h3 className='jura text-white'>Stats</h3>
-                    <div className='flex'>
-                      <div className='xl:text-xl text-lg'>
-                        <h1 className='juraBold txtOrange'> 150 Wins</h1>
-                        <h1 className='juraBold txtOrange'> 190-200 Avg</h1>
-                      </div>
-                      <div className='flex justify-center px-8'>
-
-                        <div className='line'>
-                        </div>
-
-                      </div>
-                      <div className='xl:text-xl text-lg'>
-                        <h1 className='juraBold txtOrange'> Streak: 4</h1>
-                        <h1 className='juraBold txtOrange'> 1 Handed (Lefty)</h1>
-                      </div>
-                    </div>
-                  </div>
-                  <div className=' pr-8 xl:text-xl text-lg'>
-                    <h3 className='jura text-white'>Location & Date</h3>
-                    <h3 className='juraBold txtOrange'>Paddock Bowl, 3/20/24</h3>
-                  </div>
-                  <div className='xl:text-xl text-lg'>
-                    <h3 className='jura text-white'>Time</h3>
-                    <h3 className='juraBold txtOrange'>11:00 pm - 14:00 pm</h3>
-                  </div>
-                </div>
-              </div>
-
-              <h3 className='jura xl:text-2xl text-xl text-white'><span className='juraBold txtOrange'>Description: </span> Practice Session for working on spare shooting. Mainly single pins like 10 pins or 7 pins. Will be practicing for 4 games maybe more, feel free to join!</h3>
-
-              <hr className='border-white mt-5 mb-8' />
-            </div>
+              ))
+            }
           </div>
         </div>
-
-
       </div>
 
     </div>
