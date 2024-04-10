@@ -11,10 +11,10 @@ const MessagingPage = () => {
 
     return (
         <>
-            <div className='py-16 px-52 grid grid-cols-[30%_70%] h-[85vh]'>
+            <div className='py-16 px-40 grid grid-cols-[30%_70%] h-[85vh]'>
                 <div className='bg-black rounded-3xl px-7 py-7'>
                     <div className='flex justify-between items-center mb-7'>
-                        <h2 className='text-[40px] juraBold text-white ml-8'>Messaging</h2>
+                        <h2 className='text-[40px] juraBold text-white'>Messages</h2>
                         <div className='w-[45px] h-[45px]'>
                             <img className='w-full h-full object-cover hover:cursor-pointer' src={plusIcon.src} alt="" />
                         </div>
@@ -69,7 +69,6 @@ const MessagingPage = () => {
                     <div className='h-full py-5'>
                         <div className='grid grid-cols-2 gap-3'>
                             <div>
-                                <h1 className='inline-block juraBold text-2xl bg-white px-5 py-2 rounded-lg messageTxt'>Nothing Much, You?</h1>
                             </div>
                             <div className=''>
                                 <div className="flex justify-end">
