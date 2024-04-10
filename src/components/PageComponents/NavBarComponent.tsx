@@ -59,12 +59,12 @@ function NavBarComponent() {
   return (
     <Navbar
       fluid
-      className="bg-black !border-black  items-center justify-between       "
+      className="bg-black !border-black    items-center justify-between       "
     >
       <Navbar.Brand as={Link} href="/">
         <img
           src={logo.src}
-          className="mr-3 object-cover h-12 w-12 md:h-20 md:w-20 lg:h-20 lg:w-20  rounded-full border border-white hover:cursor-pointer"
+          className="mr-3 object-cover  h-12 w-12 md:h-20 md:w-20 lg:h-20 lg:w-20  rounded-full border border-white hover:cursor-pointer"
           alt="Flowbite React Logo"
         />
         <h1 className="txtOrange text-center lg:text-4xl md:text-3xl text-2xl juraBold mt-0 md:mt-2 pl-1 md:pl-5 ">
@@ -74,7 +74,7 @@ function NavBarComponent() {
       </Navbar.Brand>
       <Navbar.Toggle className="text-orange-500 !bg-black !border-0 hover:!border-0" />
       <Navbar.Collapse className="hover:!bg-black" style={{ border: 0 }}>
-        <Navbar.Link className="jura hover:brightness-125 hover:cursor-pointer hover:!text-orange-500 text-white item-center ">
+        <Navbar.Link className=" jura hover:brightness-125 hover:cursor-pointer hover:!text-orange-500 text-white item-center ">
           <ToggleButtonInput />
 
           {/* <img
@@ -246,8 +246,6 @@ function NavBarComponent() {
               className="grid grid-flow-col pt-4 pb-4 pr-5   bg-black rounded-2xl w-50"
               style={{ width: 400 }}
             >
-        
-
               <div className="ml-5 ">
                 <div className="grid grid-flow-col auto-cols-max justify-start items-center pb-3 ">
                   <div>
@@ -282,56 +280,58 @@ function NavBarComponent() {
             className="rounded-xl   bg-black  justify-center"
             style={{ width: 592 }}
           >
-             <div
-            className="rounded-xl  flex justify-space bg-black w-50 px-5 grid grid-flow-col auto-cols"
-            style={{ width: 592 }}
-          >
-            <div className="">
-              <h1
-                className=" bg-orange-500 text-3xl  text-center mt-5 rounded-xl   pt-2 pb-2  mb-2 text-black jura"
-                style={{ width: 150 }}
-              >
-                Info
-              </h1>
-              <p className="text-white jura text-xl pt-4">Full Name:</p>
-              <p className="text-orange-500 jura text-2xl ">Timothy Neutron</p>
+            <div
+              className="rounded-xl  flex justify-space bg-black w-50 px-5 grid grid-flow-col auto-cols"
+              style={{ width: 592 }}
+            >
+              <div className="">
+                <h1
+                  className=" bg-orange-500 text-3xl  text-center mt-5 rounded-xl   pt-2 pb-2  mb-2 text-black jura"
+                  style={{ width: 150 }}
+                >
+                  Info
+                </h1>
+                <p className="text-white jura text-xl pt-4">Full Name:</p>
+                <p className="text-orange-500 jura text-2xl ">
+                  Timothy Neutron
+                </p>
 
-              <p className="text-white jura text-xl pt-4 ">Main Center:</p>
+                <p className="text-white jura text-xl pt-4 ">Main Center:</p>
 
-              <p className="overflow-auto text-orange-500 jura text-2xl">
-                Pacific Avenue Bowl{" "}
-              </p>
-            </div>
-            <div className="">
-              <h1
-                className="text-white jura text-3xl  mt-5 rounded-xl   pt-2 pb-2  mb-2 text-black jura"
-                style={{ width: 150 }}
-              >
-                Your Post
-              </h1>
-              <p className="text-white jura text-xl pt-4">Style:</p>
-              <p className="text-orange-500 jura text-2xl">2 Handed (Righty)</p>
-              <p className="text-white jura text-xl pt-4">Average:</p>
-              <p className="text-orange-500 jura text-2xl">192.5 </p>
-            </div>
+                <p className="overflow-auto text-orange-500 jura text-2xl">
+                  Pacific Avenue Bowl{" "}
+                </p>
+              </div>
+              <div className="">
+                <h1
+                  className="text-white jura text-3xl  mt-5 rounded-xl   pt-2 pb-2  mb-2 text-black jura"
+                  style={{ width: 150 }}
+                >
+                  Your Post
+                </h1>
+                <p className="text-white jura text-xl pt-4">Style:</p>
+                <p className="text-orange-500 jura text-2xl">
+                  2 Handed (Righty)
+                </p>
+                <p className="text-white jura text-xl pt-4">Average:</p>
+                <p className="text-orange-500 jura text-2xl">192.5 </p>
+              </div>
             </div>
             <div className=" mt-4 pb-5 pt-4 grid grid-flow-col auto-cols-max px-5 justify-between items-center">
-             <div>
-              <h1 className="text-white text-xl jura">High Game:</h1>
-              <h1 className="text-orange-500 text-2xl jura">250</h1>
-             </div>
-             <div>
-             <h1 className="text-white jura text-xl">High Series:</h1>
-             <h1 className="text-orange-500 text-2xl jura">701</h1>
-             </div>
-             <div className="pr-14 ">
-             <h1 className="text-white jura text-xl">Earnings:</h1>
-             <h1 className="text-orange-500 text-2xl jura">$750</h1>
-             </div>
+              <div>
+                <h1 className="text-white text-xl jura">High Game:</h1>
+                <h1 className="text-orange-500 text-2xl jura">250</h1>
+              </div>
+              <div>
+                <h1 className="text-white jura text-xl">High Series:</h1>
+                <h1 className="text-orange-500 text-2xl jura">701</h1>
+              </div>
+              <div className="pr-14 ">
+                <h1 className="text-white jura text-xl">Earnings:</h1>
+                <h1 className="text-orange-500 text-2xl jura">$750</h1>
+              </div>
             </div>
-        
           </div>
-          
         </Modal.Body>
       </Modal>
     </Navbar>
