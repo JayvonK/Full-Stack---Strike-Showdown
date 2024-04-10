@@ -226,11 +226,11 @@ function NavBarComponent() {
 
           <div className="flex justify-end">
             <Button
-              className="  bg-orange-500  rounded-2xl hover:!bg-orange-500 text-black jura"
+              className="  mt-3 bg-orange-500  rounded-2xl hover:!bg-orange-500 text-black jura"
               style={{ width: 189 }}
               onClick={() => setOpenModal(false)}
             >
-              <h3 className="text-3xl">Close</h3>
+              <h3 className="text-3xl ">Close</h3>
             </Button>
           </div>
         </Modal.Body>
@@ -238,25 +238,24 @@ function NavBarComponent() {
 
       <Modal show={openModal2} onClose={() => setOpenModal2(false)}>
         <Modal.Body>
-          <div className=" mb-5 flex justify-end">
+          <div className=" mb-5 flex justify-end ">
             <div>
-              <img src={ProfilePic2.src} className="pr-2"></img>
+              <img src={ProfilePic2.src} className="pr-4"></img>
             </div>
             <div
               className="grid grid-flow-col pt-4 pb-4 pr-5   bg-black rounded-2xl w-50"
               style={{ width: 400 }}
             >
-              <div></div>
-              <div></div>
+        
 
               <div className="ml-5 ">
                 <div className="grid grid-flow-col auto-cols-max justify-start items-center pb-3 ">
                   <div>
-                    <h1 className="text-white jura text-3xl pb-4 juraBold">
+                    <h1 className="text-white jura text-4xl pb-4 juraBold">
                       KingOfBowling209
                     </h1>
 
-                    <h1 className="text-white jura text-2xl ">He/Him</h1>
+                    <h1 className="text-white jura text-3xl ">He/Him</h1>
                   </div>
                 </div>
 
@@ -280,8 +279,12 @@ function NavBarComponent() {
           </div>
 
           <div
+            className="rounded-xl   bg-black  justify-center"
+            style={{ width: 592 }}
+          >
+             <div
             className="rounded-xl  flex justify-space bg-black w-50 px-5 grid grid-flow-col auto-cols"
-            style={{ width: 600 }}
+            style={{ width: 592 }}
           >
             <div className="">
               <h1
@@ -290,10 +293,10 @@ function NavBarComponent() {
               >
                 Info
               </h1>
-              <p className="text-white jura text-1xl">Full Name:</p>
-              <p className="text-orange-500 jura text-2xl">Timothy Neutron</p>
+              <p className="text-white jura text-xl pt-4">Full Name:</p>
+              <p className="text-orange-500 jura text-2xl ">Timothy Neutron</p>
 
-              <p className="text-white jura text-1xl  ">Main Center:</p>
+              <p className="text-white jura text-xl pt-4 ">Main Center:</p>
 
               <p className="overflow-auto text-orange-500 jura text-2xl">
                 Pacific Avenue Bowl{" "}
@@ -306,12 +309,27 @@ function NavBarComponent() {
               >
                 Your Post
               </h1>
-              <p className="text-white jura text-1.5xl">Style:</p>
+              <p className="text-white jura text-xl pt-4">Style:</p>
               <p className="text-orange-500 jura text-2xl">2 Handed (Righty)</p>
-              <p className="text-white jura text-1.5xl">Average:</p>
+              <p className="text-white jura text-xl pt-4">Average:</p>
               <p className="text-orange-500 jura text-2xl">192.5 </p>
             </div>
-           
+            </div>
+            <div className=" mt-4 pb-5 pt-4 grid grid-flow-col auto-cols-max px-5 justify-between items-center">
+             <div>
+              <h1 className="text-white text-xl jura">High Game:</h1>
+              <h1 className="text-orange-500 text-2xl jura">250</h1>
+             </div>
+             <div>
+             <h1 className="text-white jura text-xl">High Series:</h1>
+             <h1 className="text-orange-500 text-2xl jura">701</h1>
+             </div>
+             <div className="pr-14 ">
+             <h1 className="text-white jura text-xl">Earnings:</h1>
+             <h1 className="text-orange-500 text-2xl jura">$750</h1>
+             </div>
+            </div>
+        
           </div>
           
         </Modal.Body>
