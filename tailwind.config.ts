@@ -76,7 +76,7 @@ const config = {
     },
   },
   plugins: [require("tailwindcss-animate"
-  ),( "flowbite/plugin")],
+  ),( "flowbite/plugin"),["styled-components", { "ssr": true }]],
 } satisfies Config
 
 export default config
