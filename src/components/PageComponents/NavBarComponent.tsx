@@ -14,15 +14,8 @@ import UserMinus from "../../../public/images/UserMinus.png";
 import ProfilePic from "../../../public/images/Ellipse 16.png";
 import ProfilePic2 from "../../../public/images/profilePIc.png";
 import ToggleButtonInput from "@/components/ui/search";
-
-import Image from "next/image";
-
-import { Label, TextInput } from "flowbite-react";
-import { HiMail } from "react-icons/hi";
-
 import "../../app/css/LoginPage.css";
 import { useRouter } from "next/navigation";
-import styles from "@/app/css/Navbar.module.css";
 
 function NavBarComponent() {
   const [search, setsearch] = useState("Submit");
@@ -74,23 +67,8 @@ function NavBarComponent() {
       </Navbar.Brand>
       <Navbar.Toggle className="text-orange-500 !bg-black !border-0 hover:!border-0" />
       <Navbar.Collapse className="hover:!bg-black" style={{ border: 0 }}>
-        <Navbar.Link className=" jura hover:brightness-125 hover:cursor-pointer hover:!text-orange-500 text-white item-center ">
+        <Navbar.Link className=" jura hover:cursor-pointer hover:!text-orange-500 text-white item-center ">
           <ToggleButtonInput />
-
-          {/* <img
-       
-      
-          src={SearchIcon.src}
-          alt=""
-          className="object-cover h-15 w-15 hover:cursor-pointer showcase-menu-social mb-1 "
-        />
-        Search   
-       
-        {/* <input className='rounded-3xl' type="text" name="search" placeholder="Search.."
-         onChange={handleInputChange}
-         onBlur={handleInputBlur}
-         onKeyPress={handleInputKeyPress}
-         autoFocus ></input> */}
         </Navbar.Link>
         <Navbar.Link
           onClick={() => setOpenModal(true)}
@@ -226,11 +204,11 @@ function NavBarComponent() {
 
           <div className="flex justify-end">
             <Button
-              className="  mt-3 bg-orange-500  rounded-2xl hover:!bg-orange-500 text-black jura"
+              className="  mt-3 bg-orange-500 w-20 md:w-36 rounded-xl  md:rounded-2xl  hover:!bg-orange-500 text-black jura"
               style={{ width: 189 }}
               onClick={() => setOpenModal(false)}
             >
-              <h3 className="text-3xl ">Close</h3>
+              <h3 className="md:text-3xl  w-20  md:w-36 rounded-xl  md:rounded-2xl ">Close</h3>
             </Button>
           </div>
         </Modal.Body>
@@ -238,38 +216,39 @@ function NavBarComponent() {
 
       <Modal show={openModal2} onClose={() => setOpenModal2(false)}>
         <Modal.Body>
-          <div className=" mb-5 flex justify-end ">
+          <div className=" mb-5 flex justify-center  md:justify-end ">
             <div>
-              <img src={ProfilePic2.src} className="pr-4"></img>
+              <img src={ProfilePic2.src} className=" mt-5 md:mt-10 md:mt-5 pr-4 h-24 md:h-48"></img>
             </div>
             <div
-              className="grid grid-flow-col pt-4 pb-4 pr-5   bg-black rounded-2xl w-50"
-              style={{ width: 400 }}
+              className="grid grid-flow-col overflow-hidden   bg-black rounded-2xl w-48 justify-center   md:mx-0 md:px-0 md:pt-4 md:pb-4 md:pr-5    md:w-96 md:h-60"
+             
             >
-              <div className="ml-5 ">
-                <div className="grid grid-flow-col auto-cols-max justify-start items-center pb-3 ">
+          
+              <div className=" ml-4 ">
+                <div className="grid grid-flow-col  auto-cols-max justify-start items-center pb-3 ">
                   <div>
-                    <h1 className="text-white jura text-4xl pb-4 juraBold">
+                    <h1 className="text-white pt-3 juraBold text-xl md:text-4xl  pb-0 md:pb-4 juraBold overflow-hidden">
                       KingOfBowling209
                     </h1>
 
-                    <h1 className="text-white jura text-3xl ">He/Him</h1>
+                    <h1 className="text-white jura text-base md:text-3xl ">He/Him</h1>
                   </div>
                 </div>
 
-                <div className="justify-center">
+                <div className=" justify-center">
                   <button
-                    style={{ width: 150 }}
-                    className="  bg-orange-500 mt-5 rounded-2xl pt-2 pb-2  hover:!bg-orange-500 mb-2 text-black jura"
+                    
+                    className="  bg-orange-500 md:mt-5 mr-2    w-20 md:w-36 rounded-xl  md:rounded-2xl pt-2 pb-2  hover:!bg-orange-500 mb-2 text-black jura"
                   >
-                    <h3 className="text-3xl">Edit</h3>
+                    <h3 className="text-base md:text-3xl">Edit</h3>
                   </button>
 
                   <button
-                    style={{ width: 150 }}
-                    className="bg-red-500 ml-10 rounded-2xl pt-2 pb-2  text-black jura"
+                    
+                    className="bg-red-500 md:ml-10    w-20 md:w-36 rounded-xl  md:rounded-2xl pt-2 pb-2  text-black jura"
                   >
-                    <h3 className="text-3xl">Log Out</h3>
+                    <h3 className="text-base md:text-3xl">Log Out</h3>
                   </button>
                 </div>
               </div>

@@ -6,8 +6,6 @@ const HomePage = ({ Component, pageProps }: AppProps) => {
   return (
     <div>
     <NavBarComponent></NavBarComponent>
-
-
     </div>
   )
 }

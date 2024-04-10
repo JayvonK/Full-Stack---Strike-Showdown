@@ -29,7 +29,7 @@ const ToggleButtonInput = () => {
   return isInput ? (
     <form className=' flex jusitfy-start'>
     <input
-    className='px-5 text-3xl'
+    className='px-5 text-3xl '
       type="text"
       value={inputValue}
       onChange={handleInputChange}
