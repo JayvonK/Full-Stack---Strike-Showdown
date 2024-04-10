@@ -12,11 +12,8 @@ const TestPage = () => {
     const [openModal, setOpenModal] = useState(false);
 
 
-
     return (
         <>
-
-
 
             <Modal dismissible show={openModal} onClose={() => setOpenModal(false)}>
                 <Modal.Header>Terms of Service</Modal.Header>
@@ -45,9 +42,11 @@ const TestPage = () => {
 
 
 
-            <div className='bg-gray-500 min-h-screen pt-56 px-52'>
+            <div className='bgLogin min-h-screen pt-56 px-52 pb-20 relative'>
+                <div className='h-full w-full bgHome absolute top-0 left-0 z-10'></div>
 
-                <div className='grid grid-cols-[55%_45%] min-h-[310px] mb-40'>
+                <div className='z-20 relative'>
+                  <div className='grid grid-cols-[55%_45%] min-h-[310px] mb-40'>
                     <div className='bg-black rounded-tl-3xl rounded-bl-3xl'>
                         <div className="grid grid-cols-[35%_65%] h-full">
                             {/* Col 1 */}
@@ -159,7 +158,10 @@ const TestPage = () => {
 
                         <hr className='border-white mt-5 mb-8' />
                     </div>
+                </div>  
                 </div>
+
+                
             </div>
         </>
     )

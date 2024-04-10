@@ -13,6 +13,10 @@
     background-size: cover;
 }
 
+.bgHome {
+    background-color: #292929d7;
+}
+
 .friendsPic {
     height: 46px;
     width: 49px;
