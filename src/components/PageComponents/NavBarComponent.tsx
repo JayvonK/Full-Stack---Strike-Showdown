@@ -1,7 +1,7 @@
 "use client";
 import "@/app/css/Search.css";
 import Link from "next/link";
-import { Navbar } from "flowbite-react";
+import { Navbar , Pagination } from "flowbite-react";
 import { useState } from "react";
 import logo from "../../../public/images/Strike Showdown Logo.png";
 import SearchIcon from "../../../public/images/Search.png";
@@ -17,11 +17,12 @@ import ToggleButtonInput from "@/components/ui/search";
 import "../../app/css/LoginPage.css";
 import { useRouter } from "next/navigation";
 
+
 function NavBarComponent() {
   const [search, setsearch] = useState("Submit");
-
+  const [currentPage, setCurrentPage] = useState(1);
+  const onPageChange = (page: number) => setCurrentPage(page);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const [openModal2, setOpenModal2] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -316,6 +317,13 @@ function NavBarComponent() {
               </div>
             </div>
           </div>
+        </Modal.Body>
+      </Modal>
+      <Modal>
+        <Modal.Body>
+        <div className="flex overflow-x-auto sm:justify-center">
+      <Pagination layout="navigation" currentPage={currentPage} totalPages={100} onPageChange={onPageChange} />
+    </div>
         </Modal.Body>
       </Modal>
     </Navbar>
