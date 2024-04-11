@@ -137,7 +137,7 @@ export default function Home() {
               <div className="2xl:px-80 xl:px-56 lg:px-36 md:px-24 sm:px-14 px-7 pt-60">
                 <h1 className="txtOrange text-center xl:text-8xl lg:text-7xl sm:text-6xl text-5xl juraBold mb-16"> Strike <span className="text-white">Showdown</span></h1>
                 <h2 className="text-center text-white jura txtOrange xl:text-5xl lg:text-4xl sm:text-3xl text-2xl mb-14">the best social app for bowlers</h2>
-                <h3 className="text-center text-white jura xl:text-5xl lg:text-4xl sm:text-3xl text-2xl mb-24">Where you’ll be able to create or join 1v1 challenges or practice sessions with other bowlers!</h3>
+                <h3 className="text-center text-white jura xl:text-5xl lg:text-4xl sm:text-3xl text-2xl mb-24">Where you&apos;ll be able to create or join 1v1 challenges or practice sessions with other bowlers!</h3>
                 <h3 className="text-center text-white jura txtOrange xl:text-5xl lg:text-4xl sm:text-3xl text-2xl pb-10">click to continue...</h3>
               </div>
             </div>
