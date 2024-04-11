@@ -65,7 +65,7 @@ const ForgotPassword = () => {
             toast({
                 variant: "destructive",
                 title: "Error, Enter Your Password.",
-                description: "Me personally, I wouldn't take that.",
+                description: "Cannot be blank",
                 action: <ToastAction altText="Try again">Try again</ToastAction>,
             })
         } else if (passwordTwo !== passwordOne) {
@@ -75,7 +75,7 @@ const ForgotPassword = () => {
             toast({
                 variant: "destructive",
                 title: "Error, Passwords Don't Match.",
-                description: "Me personally, I wouldn't take that.",
+                description: "Make sure they match!",
                 action: <ToastAction altText="Try again">Try again</ToastAction>,
             })
         } else {
@@ -87,7 +87,7 @@ const ForgotPassword = () => {
                 toast({
                     variant: "destructive",
                     title: "Error, Something Went Wrong",
-                    description: "Me personally, I wouldn't take that.",
+                    description: "...",
                     action: <ToastAction altText="Try again">Try again</ToastAction>,
                 })
             }
@@ -100,7 +100,7 @@ const ForgotPassword = () => {
             toast({
                 variant: "destructive",
                 title: "Error.",
-                description: "Me personally, I wouldn't take that.",
+                description: "Username/email cannot be empty",
                 action: <ToastAction altText="Try again">Try again</ToastAction>,
             })
         } else {
@@ -121,7 +121,7 @@ const ForgotPassword = () => {
                     toast({
                         variant: "destructive",
                         title: "Username Doesn't Exist",
-                        description: "Me personally, I wouldn't take that.",
+                        description: "Sorry",
                         action: <ToastAction altText="Try again">Try again</ToastAction>,
                     })
                 }
@@ -130,7 +130,7 @@ const ForgotPassword = () => {
                 toast({
                     variant: "destructive",
                     title: "Username Doesn't Exist",
-                    description: "Me personally, I wouldn't take that.",
+                    description: "Sorry",
                     action: <ToastAction altText="Try again">Try again</ToastAction>,
                 })
             }
