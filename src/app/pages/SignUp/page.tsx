@@ -377,7 +377,7 @@ const SignUp = () => {
             {
               doesUserWantStats ? (
                 <>
-                  <LoginNavComponent exist={true} onClick={handleBackOptional} />
+                  <LoginNavComponent exist={true} onClick={handleBackSecurityQuestions} />
 
                   <div className="2xl:px-44 xl:px-40 lg:px-32 md:px-24 sm:px-16 px-8">
 
