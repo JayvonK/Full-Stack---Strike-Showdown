@@ -189,8 +189,8 @@ const SignUp = () => {
   }
 
   const handleBackOptional = () => {
-    setDoesUserWantStats(false);
-    setAnsweringSecurity(true);
+    setAddingCustomStats(false);
+    setDoesUserWantStats(true)
   }
 
   const handleCreateWithoutStats = async () => {
