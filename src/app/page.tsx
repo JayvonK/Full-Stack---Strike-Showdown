@@ -112,15 +112,15 @@ export default function Home() {
     if (pageContext.createdAccountBool) {
       toast({
         variant: "destructive",
-        title: "You've Successfully Created An Account.",
-        description: "Me personally, I wouldn't take that.",
+        title: "You have Successfully Created An Account.",
+        description: "YAY",
         action: <ToastAction altText="Try again">Try again</ToastAction>,
       })
     } else if (pageContext.changedPasswordBool) {
       toast({
         variant: "destructive",
-        title: "You've Successfully Changed Your Password",
-        description: "Me personally, I wouldn't take that.",
+        title: "You have Successfully Changed Your Password",
+        description: "YAY",
         action: <ToastAction altText="Try again">Try again</ToastAction>,
       })
     }
