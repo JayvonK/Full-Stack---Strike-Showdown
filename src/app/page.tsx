@@ -1,11 +1,11 @@
 'use client'
 
 import * as React from "react"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import '@/app/css/LoginPage.css'
 import { useRouter } from "next/navigation";
 import LoginNavComponent from "../components/PageComponents/LoginNavComponent";
-import RequiredInputComponent from "../components/PageComponents/RequiredInputComponent";
+import RequiredInputComponent from "../components/PageComponents/LoginPage/RequiredInputComponent";
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
 import {
@@ -30,6 +30,7 @@ export default function Home() {
   const [notLoggedIn, setNotLoggedIn] = useState<boolean>(true);
   const [screenCount, setScreenCount] = useState<number>(0);
   const router = useRouter();
+
 
   const pageContext = useAppContext();
 
@@ -60,7 +61,8 @@ export default function Home() {
   }
 
   const handleLocationConfirm = () => {
-    console.log(pageContext.currentState);
+    pageContext.setUserLoggedIn(true);
+    router.push('/pages/HomePage')
   }
 
   const handleLogin = async () => {
@@ -77,11 +79,12 @@ export default function Home() {
         toast({
           variant: "destructive",
           title: "Error.",
-          description: "Me personally, I wouldn't take that.",
+          description: "Username or Password is incorrect",
           action: <ToastAction altText="Try again">Try again</ToastAction>,
         })
       } else {
         setNotLoggedIn(false);
+        pageContext.setVerifiedUser(username);
       }
     } catch (error) {
       setPasswordBorderError('border-red-600 border-2');
@@ -89,7 +92,7 @@ export default function Home() {
       toast({
         variant: "destructive",
         title: "Error.",
-        description: "Me personally, I wouldn't take that.",
+        description: "Username or Password is incorrect",
         action: <ToastAction altText="Try again">Try again</ToastAction>,
       })
     }
@@ -105,7 +108,7 @@ export default function Home() {
     router.push('/pages/SignUp')
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (pageContext.createdAccountBool) {
       toast({
         variant: "destructive",
@@ -184,58 +187,58 @@ export default function Home() {
                             <SelectValue placeholder="Select a State" />
                           </SelectTrigger>
                           <SelectContent className="jura text-4xl">
-                            <SelectItem value="All States">All States</SelectItem>
-                            <SelectItem value="Alabama">Alabama</SelectItem>
-                            <SelectItem value="Alaska">Alaska</SelectItem>
-                            <SelectItem value="Arizona">Arizona</SelectItem>
-                            <SelectItem value="Arkansas">Arkansas</SelectItem>
-                            <SelectItem value="California">California</SelectItem>
-                            <SelectItem value="Colorado">Colorado</SelectItem>
-                            <SelectItem value="Connecticut">Connecticut</SelectItem>
-                            <SelectItem value="Delaware">Delaware</SelectItem>
-                            <SelectItem value="District of Columbia">District of Columbia</SelectItem>
-                            <SelectItem value="Florida">Florida</SelectItem>
-                            <SelectItem value="Georgia">Georgia</SelectItem>
-                            <SelectItem value="Hawaii">Hawaii</SelectItem>
-                            <SelectItem value="Idaho">Idaho</SelectItem>
-                            <SelectItem value="Illinois">Illinois</SelectItem>
-                            <SelectItem value="Indiana">Indiana</SelectItem>
-                            <SelectItem value="Iowa">Iowa</SelectItem>
-                            <SelectItem value="Kansas">Kansas</SelectItem>
-                            <SelectItem value="Kentucky">Kentucky</SelectItem>
-                            <SelectItem value="Louisiana">Louisiana</SelectItem>
-                            <SelectItem value="Maine">Maine</SelectItem>
-                            <SelectItem value="Maryland">Maryland</SelectItem>
-                            <SelectItem value="Massachusetts">Massachusetts</SelectItem>
-                            <SelectItem value="Michigan">Michigan</SelectItem>
-                            <SelectItem value="Minnesota">Minnesota</SelectItem>
-                            <SelectItem value="Mississippi">Mississippi</SelectItem>
-                            <SelectItem value="Missouri">Missouri</SelectItem>
-                            <SelectItem value="Montana">Montana</SelectItem>
-                            <SelectItem value="Nebraska">Nebraska</SelectItem>
-                            <SelectItem value="Nevada">Nevada</SelectItem>
-                            <SelectItem value="New Hampshire">New Hampshire</SelectItem>
-                            <SelectItem value="New Jersey">New Jersey</SelectItem>
-                            <SelectItem value="New Mexico">New Mexico</SelectItem>
-                            <SelectItem value="New York">New York</SelectItem>
-                            <SelectItem value="North Carolina">North Carolina</SelectItem>
-                            <SelectItem value="North Dakota">North Dakota</SelectItem>
-                            <SelectItem value="Ohio">Ohio</SelectItem>
-                            <SelectItem value="Oklahoma">Oklahoma</SelectItem>
-                            <SelectItem value="Oregon">Oregon</SelectItem>
-                            <SelectItem value="Pennsylvania">Pennsylvania</SelectItem>
-                            <SelectItem value="Rhode Island">Rhode Island</SelectItem>
-                            <SelectItem value="South Carolina">South Carolina</SelectItem>
-                            <SelectItem value="South Dakota">South Dakota</SelectItem>
-                            <SelectItem value="Tennessee">Tennessee</SelectItem>
-                            <SelectItem value="Texas">Texas</SelectItem>
-                            <SelectItem value="Utah">Utah</SelectItem>
-                            <SelectItem value="Vermont">Vermont</SelectItem>
-                            <SelectItem value="Virginia">Virginia</SelectItem>
-                            <SelectItem value="Washington">Washington</SelectItem>
-                            <SelectItem value="West Virginia">West Virginia</SelectItem>
-                            <SelectItem value="Wisconsin">Wisconsin</SelectItem>
-                            <SelectItem value="Wyoming">Wyoming</SelectItem>
+                            <SelectItem value="ALL">All States</SelectItem>
+                            <SelectItem value="AL">Alabama</SelectItem>
+                            <SelectItem value="AK">Alaska</SelectItem>
+                            <SelectItem value="AZ">Arizona</SelectItem>
+                            <SelectItem value="AR">Arkansas</SelectItem>
+                            <SelectItem value="CA">California</SelectItem>
+                            <SelectItem value="CO">Colorado</SelectItem>
+                            <SelectItem value="CT">Connecticut</SelectItem>
+                            <SelectItem value="DE">Delaware</SelectItem>
+                            <SelectItem value="DC">District of Columbia</SelectItem>
+                            <SelectItem value="FL">Florida</SelectItem>
+                            <SelectItem value="GA">Georgia</SelectItem>
+                            <SelectItem value="HI">Hawaii</SelectItem>
+                            <SelectItem value="ID">Idaho</SelectItem>
+                            <SelectItem value="IL">Illinois</SelectItem>
+                            <SelectItem value="IN">Indiana</SelectItem>
+                            <SelectItem value="IA">Iowa</SelectItem>
+                            <SelectItem value="KS">Kansas</SelectItem>
+                            <SelectItem value="KY">Kentucky</SelectItem>
+                            <SelectItem value="LA">Louisiana</SelectItem>
+                            <SelectItem value="ME">Maine</SelectItem>
+                            <SelectItem value="MD">Maryland</SelectItem>
+                            <SelectItem value="MA">Massachusetts</SelectItem>
+                            <SelectItem value="MI">Michigan</SelectItem>
+                            <SelectItem value="MN">Minnesota</SelectItem>
+                            <SelectItem value="MS">Mississippi</SelectItem>
+                            <SelectItem value="MO">Missouri</SelectItem>
+                            <SelectItem value="MT">Montana</SelectItem>
+                            <SelectItem value="NE">Nebraska</SelectItem>
+                            <SelectItem value="NV">Nevada</SelectItem>
+                            <SelectItem value="NH">New Hampshire</SelectItem>
+                            <SelectItem value="NJ">New Jersey</SelectItem>
+                            <SelectItem value="NM">New Mexico</SelectItem>
+                            <SelectItem value="NY">New York</SelectItem>
+                            <SelectItem value="NC">North Carolina</SelectItem>
+                            <SelectItem value="ND">North Dakota</SelectItem>
+                            <SelectItem value="OH">Ohio</SelectItem>
+                            <SelectItem value="OK">Oklahoma</SelectItem>
+                            <SelectItem value="OR">Oregon</SelectItem>
+                            <SelectItem value="PA">Pennsylvania</SelectItem>
+                            <SelectItem value="RI">Rhode Island</SelectItem>
+                            <SelectItem value="SC">South Carolina</SelectItem>
+                            <SelectItem value="SD">South Dakota</SelectItem>
+                            <SelectItem value="TN">Tennessee</SelectItem>
+                            <SelectItem value="TX">Texas</SelectItem>
+                            <SelectItem value="UT">Utah</SelectItem>
+                            <SelectItem value="VT">Vermont</SelectItem>
+                            <SelectItem value="VA">Virginia</SelectItem>
+                            <SelectItem value="WA">Washington</SelectItem>
+                            <SelectItem value="WV">West Virginia</SelectItem>
+                            <SelectItem value="WI">Wisconsin</SelectItem>
+                            <SelectItem value="WY">Wyoming</SelectItem>
                           </SelectContent>
                         </Select>
 

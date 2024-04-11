@@ -13,6 +13,14 @@
     background-size: cover;
 }
 
+.bgHome {
+    background-color: #292929d7;
+}
+
+.scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
 .friendsPic {
     height: 46px;
     width: 49px;
@@ -43,12 +51,12 @@
     height: 100%;
 }
 
-.bgFireIcon{
+.bgFireIcon {
     background-image: url(../../../public/images/fire-fill.svg);
     background-size: cover;
 }
 
-.bgWaveIcon{
+.bgWaveIcon {
     background-image: url(../../../public/images/hand-waving-fill.svg);
     background-size: cover;
 }
@@ -63,11 +71,6 @@
         max-width: 350px;
     }
 }
-
-  
-  .navtext img:hover {
-color: #C37500;
-  }
 
 
 .navtext img:hover {
