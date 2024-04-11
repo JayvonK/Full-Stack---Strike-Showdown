@@ -167,7 +167,7 @@ export default function Home() {
 
                         <button className="sm:text-4xl text-3xl text-black sm:min-h-[76px] min-h-16 w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleLogin}> LOG IN</button>
 
-                        <h3 className="sm:text-3xl text-2xl text-white jura">Don't have an account? <span className="txtOrange underline hover:cursor-pointer hover:text-[#ff9939]" onClick={handleSignUp}>Sign Up</span></h3>
+                        <h3 className="sm:text-3xl text-2xl text-white jura">Don&apos;t have an account? <span className="txtOrange underline hover:cursor-pointer hover:text-[#ff9939]" onClick={handleSignUp}>Sign Up</span></h3>
 
                       </div>
                     </>
