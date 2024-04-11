@@ -68,9 +68,15 @@ const SignUp = () => {
   }
 
   const handlePasswordChange = (param: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(param.target.value);
-    setErrorMessage(false);
-    setUserBorderError('');
+    if (password2.trim() !== '' && password2 !== param.target.value) {
+      setPassword(param.target.value);
+      setPasswordsMatch(false);
+      setPasswordBorderError('border-red-600 border-2');
+    } else {
+      setPassword(param.target.value);
+      setErrorMessage(false);
+      setPasswordBorderError('');
+    }
   }
 
   const handlePassword2Change = (param: React.ChangeEvent<HTMLInputElement>) => {
@@ -109,8 +115,8 @@ const SignUp = () => {
     setBowlingCenter(e.target.value);
   }
 
-  const handleAverageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setAverage(e.target.value);
+  const handleAverageChange = (e: string) => {
+    setAverage(e);
   }
 
   const handleStyleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -132,6 +138,7 @@ const SignUp = () => {
   const handleNext = async () => {
     if (username.trim() === '' || password.trim() === '' || password2.trim() === '' || email.trim() === '' || password !== password2) {
       setUserBorderError('border-red-600 border-2');
+      setPasswordBorderError('border-red-600 border-2')
       toast({
         variant: "destructive",
         title: "Error.",
@@ -278,7 +285,7 @@ const SignUp = () => {
 
                   <div className="2xl:px-44 xl:px-40 lg:px-32 md:px-24 sm:px-16 px-8">
 
-                    <h1 className="txtOrange sm:text-7xl text-5xl juraBold mb-12 sm:leading-[90px] leading-[75px]"> Create Your Account</h1>
+                    <h1 className="txtOrange sm:text-7xl text-5xl juraBold mb-8 sm:leading-[90px] leading-[75px]"> Create Your Account</h1>
 
                     <RequiredInputComponent title="Username:" type='text' borderError={userBorderError} placeholder='Enter Username' value={username} onChange={handleUserChange} maxLength={5000} />
                     <RequiredInputComponent title="Email:" type='text' borderError={userBorderError} placeholder='Enter Email' value={email} onChange={handleEmailChange} maxLength={20} />
@@ -397,7 +404,7 @@ const SignUp = () => {
             {
               addingCustomStats ? (
                 <>
-                  <LoginNavComponent exist={true} onClick={handleBackLogin} />
+                  <LoginNavComponent exist={true} onClick={handleBackOptional} />
 
                   <div className="2xl:px-44 xl:px-40 lg:px-32 md:px-24 sm:px-16 px-8">
 
@@ -408,7 +415,24 @@ const SignUp = () => {
                       <NotRequiredInputComponent type='text' borderError={userBorderError} placeholder='Full Name' value={fullname} onChange={handleFullNameChange} maxLength={5000} />
                       <NotRequiredInputComponent type='text' borderError={userBorderError} placeholder='Pronouns' value={prounouns} onChange={handlePronounsChange} maxLength={5000} />
                       <NotRequiredInputComponent type='text' borderError={userBorderError} placeholder='Bowling Center' value={bowlingCenter} onChange={handleBowlingCenterChange} maxLength={5000} />
-                      <NotRequiredInputComponent type='text' borderError={userBorderError} placeholder='Bowling Avg' value={average} onChange={handleAverageChange} maxLength={5000} />
+                      <Select onValueChange={(e) => handleAverageChange(e)} >
+                        <SelectTrigger className="w-full jura sm:text-4xl text-3xl sm:min-h-[76px] min-h-16 bg-white pl-3 my-5">
+                          <SelectValue placeholder="Select a State" />
+                        </SelectTrigger>
+                        <SelectContent className="jura text-4xl">
+                          <SelectItem value="10-20 Avg">All States</SelectItem>
+                          <SelectItem value="10-20 Avg">Alabama</SelectItem>
+                          <SelectItem value="10-20 Avg">Alaska</SelectItem>
+                          <SelectItem value="10-20 Avg">Arizona</SelectItem>
+                          <SelectItem value="10-20 Avg">Arkansas</SelectItem>
+                          <SelectItem value="10-20 Avg">California</SelectItem>
+                          <SelectItem value="10-20 Avg">Colorado</SelectItem>
+                          <SelectItem value="10-20 Avg">Connecticut</SelectItem>
+                          <SelectItem value="10-20 Avg">Delaware</SelectItem>
+                          <SelectItem value="10-20 Avg">District of Columbia</SelectItem>
+
+                        </SelectContent>
+                      </Select>
                       <NotRequiredInputComponent type='text' borderError={userBorderError} placeholder='Bowling Style' value={style} onChange={handleStyleChange} maxLength={5000} />
                       <NotRequiredInputComponent type='text' borderError={userBorderError} placeholder='High Game' value={highGame} onChange={handleHighGameChange} maxLength={5000} />
                       <NotRequiredInputComponent type='text' borderError={userBorderError} placeholder='High Series' value={hightSeries} onChange={handleHighSeriesChange} maxLength={5000} />
