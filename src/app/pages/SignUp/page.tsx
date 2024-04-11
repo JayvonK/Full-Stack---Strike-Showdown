@@ -4,7 +4,7 @@ import LoginNavComponent from '@/components/PageComponents/LoginNavComponent';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import '@/app/css/LoginPage.css';
-import RequiredInputComponent from '@/components/PageComponents/RequiredInputComponent';
+import RequiredInputComponent from '@/components/PageComponents/LoginPage/RequiredInputComponent';
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { useToast } from '@/components/ui/use-toast';
 import { ToastAction } from "@/components/ui/toast";
@@ -19,7 +19,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { IUserInfoWithStats } from '@/interfaces/Interfaces';
-import NotRequiredInputComponent from '@/components/PageComponents/NotRequiredInputComponent';
+import NotRequiredInputComponent from '@/components/PageComponents/LoginPage/NotRequiredInputComponent';
 import { CreateAccountAPI, GetUserAPI } from '@/Data/DataServices';
 import { useAppContext } from '@/context/Context';
 

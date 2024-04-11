@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import '@/app/css/LoginPage.css'
 import { useRouter } from "next/navigation";
 import LoginNavComponent from "../components/PageComponents/LoginNavComponent";
-import RequiredInputComponent from "../components/PageComponents/RequiredInputComponent";
+import RequiredInputComponent from "../components/PageComponents/LoginPage/RequiredInputComponent";
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
 import {

@@ -17,6 +17,10 @@
     background-color: #292929d7;
 }
 
+.scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
 .friendsPic {
     height: 46px;
     width: 49px;

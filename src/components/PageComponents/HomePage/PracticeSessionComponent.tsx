@@ -2,7 +2,7 @@ import React from 'react'
 
 const PracticeSessionComponent = (props: { currentPpl: number, maxPpl: number, username: string, pfp: string, wins: number, avg: string, streak: number, style: string, location: string, date:string, time: string, join: () => void, userClick: () => void, description: string }) => {
   return (
-    <div className='px-10'>
+    <div className='px-14'>
       <div className='grid grid-cols-2'>
         <div className='flex juraBold xl:text-3xl text-2xl'>
           <h2 className='text-white mr-14'>Practice Session</h2>

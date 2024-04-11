@@ -45,9 +45,11 @@ export interface IPublicUserData {
   earnings: string;
 }
 
-export interface IPracticeSession {
+export interface IUserPosts {
+  title: string,
   visibility: boolean;
-  location: string;
+  state: string,
+  locations: string;
   date: string;
   time: string;
   maxPpl: number;
@@ -61,3 +63,4 @@ export interface IPracticeSession {
   style: string;
   streak: number;
 }
+
