@@ -111,14 +111,12 @@ export default function Home() {
   useEffect(() => {
     if (pageContext.createdAccountBool) {
       toast({
-        variant: "destructive",
         title: "You have Successfully Created An Account.",
         description: "YAY",
         action: <ToastAction altText="Try again">Try again</ToastAction>,
       })
     } else if (pageContext.changedPasswordBool) {
       toast({
-        variant: "destructive",
         title: "You have Successfully Changed Your Password",
         description: "YAY",
         action: <ToastAction altText="Try again">Try again</ToastAction>,

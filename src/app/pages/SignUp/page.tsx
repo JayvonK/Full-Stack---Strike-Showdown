@@ -24,13 +24,13 @@ import { CreateAccountAPI, GetUserAPI } from '@/Data/DataServices';
 import { useAppContext } from '@/context/Context';
 
 const SignUp = () => {
-  const [errorMessage, setErrorMessage] = useState<boolean>(false);
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [password2, setPassword2] = useState<string>('');
   const [passwordsMatch, setPasswordsMatch] = useState<boolean>(true);
   const [userBorderError, setUserBorderError] = useState<string>('');
+  const [optionalBorderError, setOptionalBorderError] = useState<string>('');
   const [passwordBorderError, setPasswordBorderError] = useState<string>('');
   const [creatingAccount, setCreatingAccount] = useState<boolean>(true);
   const [doesUserWantStats, setDoesUserWantStats] = useState<boolean>(false);
@@ -57,13 +57,11 @@ const SignUp = () => {
 
   const handleUserChange = (param: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(param.target.value);
-    setErrorMessage(false);
     setUserBorderError('');
   }
 
   const handleEmailChange = (param: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(param.target.value);
-    setErrorMessage(false);
     setUserBorderError('');
   }
 
@@ -74,7 +72,7 @@ const SignUp = () => {
       setPasswordBorderError('border-red-600 border-2');
     } else {
       setPassword(param.target.value);
-      setErrorMessage(false);
+      setPasswordsMatch(true);
       setPasswordBorderError('');
     }
   }
@@ -119,20 +117,33 @@ const SignUp = () => {
     setAverage(e);
   }
 
-  const handleStyleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setStyle(e.target.value);
+  const handleStyleChange = (e: string) => {
+    setStyle(e);
   }
 
   const handleHighGameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setHighGame(e.target.value);
+    if ((Number(e.target.value) || e.target.value === '') && !e.target.value.includes('.') && Number(e.target.value) <= 300) {
+      setHighGame(e.target.value);
+    } else {
+      toast({
+        variant: "destructive",
+        title: "Error ",
+        description: "Your High Game Cannot be over 300",
+        action: <ToastAction altText="Try again">Try again</ToastAction>,
+      })
+    }
   }
 
   const handleHighSeriesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setHighSeries(e.target.value);
+    if ((Number(e.target.value) || e.target.value === '') && !e.target.value.includes('.')) {
+      setHighSeries(e.target.value);
+    }
   }
 
   const handleEarningsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEarnings(e.target.value);
+    if ((Number(e.target.value) || e.target.value === '')) {
+      setEarnings(e.target.value);
+    }
   }
 
   const handleNext = async () => {
@@ -142,7 +153,7 @@ const SignUp = () => {
       toast({
         variant: "destructive",
         title: "Error.",
-        description: "Please fill in your info",
+        description: "Please fill in your info or make sure passwords match",
         action: <ToastAction altText="Try again">Try again</ToastAction>,
       })
     } else {
@@ -165,8 +176,17 @@ const SignUp = () => {
   }
 
   const handleNextOptional = () => {
-    setAnsweringSecurity(false);
-    setDoesUserWantStats(true);
+    if (questionOne.trim() !== '' && questionTwo.trim() !== '' && questionThree.trim() !== '' && securityOne.trim() !== '' && securityTwo.trim() !== '' && securityThree.trim() !== '') {
+      setAnsweringSecurity(false);
+      setDoesUserWantStats(true);
+    } else {
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Make sure you answer all questions",
+        action: <ToastAction altText="Try again">Try again</ToastAction>,
+      })
+    }
   }
 
   const handleAddStats = () => {
@@ -214,20 +234,26 @@ const SignUp = () => {
       average: 'N/A',
       earnings: 'N/A'
     }
-    try {
-      let createdUser = await CreateAccountAPI(userData);
-      console.log(createdUser);
-      setLoading(true);
-      pageContext.setCreatedAccountBool(true);
-      router.push('/');
-    } catch (error) {
-      toast({
-        variant: "destructive",
-        title: "Error",
-        description: " Make Sure You Filled Everything In.",
-        action: <ToastAction altText="Try again">Try again</ToastAction>,
-      })
+
+    if (fullname.trim() === '') {
+
+    } else {
+      try {
+        let createdUser = await CreateAccountAPI(userData);
+        console.log(createdUser);
+        setLoading(true);
+        pageContext.setCreatedAccountBool(true);
+        router.push('/');
+      } catch (error) {
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: "Something went wrong.",
+          action: <ToastAction altText="Try again">Try again</ToastAction>,
+        })
+      }
     }
+
   }
 
   const handleCreateAccountWithStats = async () => {
@@ -251,6 +277,8 @@ const SignUp = () => {
       average: average,
       earnings: earnings
     }
+
+
 
     try {
       let createdUser = await CreateAccountAPI(userData);
@@ -412,31 +440,55 @@ const SignUp = () => {
 
                     <ScrollArea className="h-[450px] w-full rounded-md pr-4">
                       <h1 className='text-4xl jura text-white font-medium'>Stats (Scroll ↓)</h1>
-                      <NotRequiredInputComponent type='text' borderError={userBorderError} placeholder='Full Name' value={fullname} onChange={handleFullNameChange} maxLength={5000} />
-                      <NotRequiredInputComponent type='text' borderError={userBorderError} placeholder='Pronouns' value={prounouns} onChange={handlePronounsChange} maxLength={5000} />
-                      <NotRequiredInputComponent type='text' borderError={userBorderError} placeholder='Bowling Center' value={bowlingCenter} onChange={handleBowlingCenterChange} maxLength={5000} />
+                      <NotRequiredInputComponent type='text' borderError={optionalBorderError} placeholder='Full Name' value={fullname} onChange={handleFullNameChange} maxLength={5000} />
+                      <NotRequiredInputComponent type='text' borderError={optionalBorderError} placeholder='Pronouns' value={prounouns} onChange={handlePronounsChange} maxLength={5000} />
                       <Select onValueChange={(e) => handleAverageChange(e)} >
                         <SelectTrigger className="w-full jura sm:text-4xl text-3xl sm:min-h-[76px] min-h-16 bg-white pl-3 my-5">
-                          <SelectValue placeholder="Select a State" />
+                          <SelectValue placeholder="Select Your Average" />
                         </SelectTrigger>
                         <SelectContent className="jura text-4xl">
-                          <SelectItem value="10-20 Avg">All States</SelectItem>
-                          <SelectItem value="10-20 Avg">Alabama</SelectItem>
-                          <SelectItem value="10-20 Avg">Alaska</SelectItem>
-                          <SelectItem value="10-20 Avg">Arizona</SelectItem>
-                          <SelectItem value="10-20 Avg">Arkansas</SelectItem>
-                          <SelectItem value="10-20 Avg">California</SelectItem>
-                          <SelectItem value="10-20 Avg">Colorado</SelectItem>
-                          <SelectItem value="10-20 Avg">Connecticut</SelectItem>
-                          <SelectItem value="10-20 Avg">Delaware</SelectItem>
-                          <SelectItem value="10-20 Avg">District of Columbia</SelectItem>
-
+                          <SelectItem value="Under 90">Under 90</SelectItem>
+                          <SelectItem value="90-100 Avg">90-100 Avg</SelectItem>
+                          <SelectItem value="100-110 Avg">100-110 Avg</SelectItem>
+                          <SelectItem value="110-120 Avg">110-120 Avg</SelectItem>
+                          <SelectItem value="120-130 Avg">120-130 Avg</SelectItem>
+                          <SelectItem value="130-140 Avg">130-140 Avg</SelectItem>
+                          <SelectItem value="140-150 Avg">140-150 Avg</SelectItem>
+                          <SelectItem value="150-160 Avg">150-160 Avg</SelectItem>
+                          <SelectItem value="160-170 Avg">160-170 Avg</SelectItem>
+                          <SelectItem value="170-180 Avg">170-180 Avg</SelectItem>
+                          <SelectItem value="180-190 Avg">180-190 Avg</SelectItem>
+                          <SelectItem value="190-200 Avg">190-200 Avg</SelectItem>
+                          <SelectItem value="200-210 Avg">200-210 Avg</SelectItem>
+                          <SelectItem value="210-220 Avg">210-220 Avg</SelectItem>
+                          <SelectItem value="220-230 Avg">220-230 Avg</SelectItem>
+                          <SelectItem value="230-240 Avg">230-240 Avg</SelectItem>
+                          <SelectItem value="240-250 Avg">240-250 Avg</SelectItem>
+                          <SelectItem value="250-260 Avg">250-260 Avg</SelectItem>
+                          <SelectItem value="260-270 Avg">260-270 Avg</SelectItem>
+                          <SelectItem value="270-280 Avg">270-280 Avg</SelectItem>
+                          <SelectItem value="280-290 Avg">280-290 Avg</SelectItem>
+                          <SelectItem value="290-300 Avg">290-300 Avg</SelectItem>
                         </SelectContent>
                       </Select>
-                      <NotRequiredInputComponent type='text' borderError={userBorderError} placeholder='Bowling Style' value={style} onChange={handleStyleChange} maxLength={5000} />
-                      <NotRequiredInputComponent type='text' borderError={userBorderError} placeholder='High Game' value={highGame} onChange={handleHighGameChange} maxLength={5000} />
-                      <NotRequiredInputComponent type='text' borderError={userBorderError} placeholder='High Series' value={hightSeries} onChange={handleHighSeriesChange} maxLength={5000} />
-                      <NotRequiredInputComponent type='text' borderError={userBorderError} placeholder='$ Earnings $' value={earnings} onChange={handleEarningsChange} maxLength={5000} />
+                      <NotRequiredInputComponent type='text' borderError={optionalBorderError} placeholder='Bowling Center' value={bowlingCenter} onChange={handleBowlingCenterChange} maxLength={5000} />
+                      <Select onValueChange={(e) => handleStyleChange(e)} >
+                        <SelectTrigger className="w-full jura sm:text-4xl text-3xl sm:min-h-[76px] min-h-16 bg-white pl-3 my-5">
+                          <SelectValue placeholder="Select Your Style" />
+                        </SelectTrigger>
+                        <SelectContent className="jura text-4xl">
+                          <SelectItem value="1 Handed (Left)">1 Handed (Left)</SelectItem>
+                          <SelectItem value="2 Handed (Left)">2 Handed (Left)</SelectItem>
+                          <SelectItem value="1 Handed (Right)">1 Handed (Right)</SelectItem>
+                          <SelectItem value="2 Handed (Right)">2 Handed (Right)</SelectItem>
+                          <SelectItem value="1 Handed (Both)">1 Handed (Both)</SelectItem>
+                          <SelectItem value="2 Handed (Both)">2 Handed (Both)</SelectItem>
+                          <SelectItem value="Hadouken Style">Hadouken Style</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <NotRequiredInputComponent type='text' borderError={optionalBorderError} placeholder='High Game' value={highGame} onChange={handleHighGameChange} maxLength={5000} />
+                      <NotRequiredInputComponent type='text' borderError={optionalBorderError} placeholder='High Series' value={hightSeries} onChange={handleHighSeriesChange} maxLength={5000} />
+                      <NotRequiredInputComponent type='text' borderError={optionalBorderError} placeholder='$ Earnings $' value={earnings} onChange={handleEarningsChange} maxLength={5000} />
                     </ScrollArea>
 
                     {
