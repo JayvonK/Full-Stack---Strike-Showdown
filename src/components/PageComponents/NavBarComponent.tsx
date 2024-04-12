@@ -49,13 +49,14 @@ router.push('/');
       fluid
       className="bg-black !border-black    items-center justify-between       "
     >
-      <Navbar.Brand as={Link} href="/">
+      <Navbar.Brand as={Link} href="/pages/HomePage" >
         <img
           src={logo.src}
           className="mr-3 object-cover  h-12 w-12 md:h-20 md:w-20 lg:h-20 lg:w-20  rounded-full border border-white hover:cursor-pointer"
           alt="Flowbite React Logo"
+          onClick={() => router.push('./pages/HomePage')}
         />
-        <h1 className="txtOrange text-center lg:text-4xl md:text-3xl text-2xl juraBold mt-0 md:mt-2 pl-1 md:pl-5 ">
+        <h1 className="txtOrange text-center lg:text-4xl md:text-3xl text-2xl juraBold mt-0 md:mt-2 pl-1 md:pl-5 " onClick={() => router.push('./pages/HomePage')}>
           {" "}
           Strike <span className="text-white">Showdown</span>
         </h1>
