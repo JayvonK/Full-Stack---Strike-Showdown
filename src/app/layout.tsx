@@ -13,7 +13,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children, }: Readonly<{ children: React.ReactNode; }>) {
   return (
+    
     <html lang="en">
+      <head>
+      <link rel="icon" href="/images/Strike Showdown Logo.png" sizes="any" />
+      </head>
       <body className={inter.className}>
         <AppWrapper>
           {children}

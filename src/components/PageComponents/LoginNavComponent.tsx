@@ -16,7 +16,7 @@ const LoginNavComponent = (props: { exist: boolean, onClick: () => void }) => {
 
                     <div className="px-10 flex justify-between py-5">
 
-                        <img src={logo.src} alt="" className="object-cover h-20 w-20 rounded-full border border-white hover:cursor-pointer" />
+                        <img src={logo.src} alt="" className="object-cover h-20 w-20 rounded-full border border-white hover:cursor-pointer" onClick={logoClick} />
 
                     </div>
 
@@ -24,7 +24,7 @@ const LoginNavComponent = (props: { exist: boolean, onClick: () => void }) => {
 
                     <div className="px-10 flex justify-between py-5">
 
-                        <img src={logo.src} alt="" className="object-cover h-20 w-20 rounded-full border border-white hover:cursor-pointer" />
+                        <img src={logo.src} alt="" className="object-cover h-20 w-20 rounded-full border border-white hover:cursor-pointer" onClick={logoClick} />
 
                         <img src={backArrow.src} alt="" className="object-cover h-20 w-20 hover:cursor-pointer" onClick={props.onClick} />
 

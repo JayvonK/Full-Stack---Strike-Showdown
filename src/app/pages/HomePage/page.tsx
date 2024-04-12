@@ -34,17 +34,16 @@ const HomePage = () => {
     setOpenModal(true);
   }
 
-  // useEffect(() => {
-  //   if(!pageContext.userLoggedIn){
-  //     route.push('/');
-  //   } else {
-  //     const grabUserData = async() => {
-  //       setVerifiedUserData(await GetUserAPI(pageContext.verifiedUser));
-  //     }
-
-  //     grabUserData();
-  //   }
-  // }, [])
+  useEffect(() => {
+    if(!pageContext.userLoggedIn){
+      route.push('/');
+    } else {
+      const grabUserData = async() => {
+        setVerifiedUserData(await GetUserAPI(pageContext.verifiedUser));
+      }
+      grabUserData();
+    }
+  }, [])
 
   return (
     <div>
@@ -89,13 +88,13 @@ const HomePage = () => {
                 {/* Inner Col 1 */}
                 <div className='pt-14 pl-14'>
                   <div className='w-[211px] h-[211px]'>
-                    <img className='object-cover w-full h-full rounded-full' src='/images/pexels-pavel-danilyuk-7429728.jpg' alt="" />
+                    <img className='object-cover w-full h-full rounded-full' src='/images/blankpfp.png' alt="" />
                   </div>
                 </div>
 
                 {/*Inner Col 2 */}
                 <div className='pt-11 pl-7 pr-14 pb-9'>
-                  <h1 className='jura text-4xl txtOrange align-top mb-6'><span className='bgWaveIcon w-8 h-8 inline-block mr-3 -mb-1'></span>Welcome Back, <span className='juraBold text-white underline '>{verifiedUserData && verifiedUserData.username}</span></h1>
+                  <h1 className='jura text-4xl txtOrange align-top mb-6'><span className='bgWaveIcon w-8 h-8 inline-block mr-3 -mb-1'></span>Welcome, <span className='juraBold text-white '>{verifiedUserData && verifiedUserData.username}</span></h1>
                   <div className='flex mb-4'>
                     <h3 className='text-white jura text-2xl'>Wins: <span className='txtOrange juraBold'>{verifiedUserData && verifiedUserData.wins}</span></h3>
                     <h3 className='text-white jura text-2xl ml-14'>Win Streak: <span className='txtOrange juraBold'>0</span></h3>

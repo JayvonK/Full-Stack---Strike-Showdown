@@ -1,14 +1,25 @@
 'use client'
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import '@/app/css/LoginPage.css';
 import plusIcon from '../../../../public/images/plus-bold.svg';
 import closeIcon from '../../../../public/images/x-bold.svg';
 import profile from '../../../../public/images/Profile.png';
 import planeIcon from '../../../../public/images/paper-plane-tilt-fill.svg'
 import NavBarComponent from '@/components/PageComponents/NavBarComponent';
+import { useAppContext } from '@/context/Context';
+import { useRouter } from 'next/navigation';
 
 const MessagingPage = () => {
+
+    const route = useRouter()
+    const pageContext = useAppContext();
+
+    useEffect(() => {
+        if (!pageContext.userLoggedIn) {
+            route.push('/');
+        }
+    }, [])
 
     return (
         <>
