@@ -268,23 +268,20 @@ const SignUp = () => {
       highSeries: 'N/A'
     }
 
-    if (fullname.trim() === '') {
 
-    } else {
-      try {
-        let createdUser = await CreateAccountAPI(userData);
-        console.log(createdUser);
-        setLoading(true);
-        pageContext.setCreatedAccountBool(true);
-        router.push('/');
-      } catch (error) {
-        toast({
-          variant: "destructive",
-          title: "Error",
-          description: "Something went wrong.",
-          action: <ToastAction altText="Try again">Try again</ToastAction>,
-        })
-      }
+    try {
+      let createdUser = await CreateAccountAPI(userData);
+      console.log(createdUser);
+      setLoading(true);
+      pageContext.setCreatedAccountBool(true);
+      router.push('/');
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Something went wrong.",
+        action: <ToastAction altText="Try again">Try again</ToastAction>,
+      })
     }
 
   }
