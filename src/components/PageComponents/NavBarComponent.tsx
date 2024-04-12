@@ -12,6 +12,7 @@ import ProfileIcon from "../../../public/images/Profile.png";
 import ToggleButtonInput from "@/components/ui/search";
 import "../../app/css/LoginPage.css";
 import { useRouter } from "next/navigation";
+import { useAppContext } from "@/context/Context";
 
 function NavBarComponent() {
   const [showModal, setShowModal2] = useState(false);
@@ -28,51 +29,20 @@ function NavBarComponent() {
   const [isOpen, setIsOpen] = useState(false);
   const [isInput, setIsInput] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState<string>("");
-const pageContext = useAppContext();
-
-const customTheme: CustomFlowbiteTheme = {
-  navbar: {
-    base: "border-gray-200 bg-white px-2 py-2.5 dark:border-gray-700 dark:bg-gray-800 sm:px-4",
-    rounded: {
-      on: "rounded",
-      off: "rounded-none"
-    },
-    bordered: {
-      on: "border",
-      off: "border-0"
-    },
-    inner: {
-      base: "mx-auto flex flex-wrap items-center justify-between"
-    },
-    brand: {
-      base: "flex items-center"
-    },
-    collapse: {
-      base: "w-full md:block md:w-auto",
-      list: "mt-4 flex flex-col rounded-lg p-4 md:mt-0 md:flex-row md:space-x-4 md:border-0 md:bg-white md:text-sm md:font-medium md:dark:bg-gray-800",
-      hidden: {
-        on: "!block",
-        off: "!hidden"
-      },
-      toggle: {
-        base: "ml-3 inline-flex items-center rounded-lg p-2 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600 md:hidden",
-        icon: "h-6 w-6 shrink-0"
-      }
-    },
-    link: {
-      base: "block py-2 pl-3 pr-4 text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:border-0 md:p-0 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:bg-transparent md:dark:hover:text-white",
-      active: {
-        on: "bg-blue-700 md:bg-transparent md:text-blue-700",
-        off: ""
-      },
-      disabled: {
-        on: "text-gray-400 hover:cursor-not-allowed dark:text-gray-600",
-        off: ""
-      }
-    },
-    breakpoint: "lg"
+const pageContext = useAppContext()
+  const handleLogOut = () =>{
+pageContext.setUserLoggedIn(false);
+router.push('/');
   }
-};
+
+  const handleInputKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      setIsInput(false);
+      // You can also handle the submission of the input value here
+      console.log("Input Value:", inputValue);
+    }
+  };
+
   const router = useRouter();
   return (
     <Navbar
@@ -93,14 +63,10 @@ const customTheme: CustomFlowbiteTheme = {
 
         </h1>
       </Navbar.Brand>
-      <Navbar.Toggle className=" !bg-black hover:border-slate-950 hover:!border-0 text-orange-500 "style={{ border: 0, borderColor: 'black' }} />
-      <Navbar.Collapse className="lg:!flex lg:!justify-end">
-        <Navbar.Link className=" jura border-b-0 border-transparent hover:cursor-pointer hover:!text-orange-500  item-center ">
-
-
-        <ToggleButtonInput/>
-       
-         
+      <Navbar.Toggle className="text-orange-500 !bg-black !border-0 hover:!border-0" />
+      <Navbar.Collapse className="hover:!bg-black" style={{ border: 0 }}>
+        <Navbar.Link className=" jura hover:cursor-pointer hover:!text-orange-500 text-white item-center ">
+          <ToggleButtonInput  />
         </Navbar.Link>
         <div className="flex  items-center">
         <Navbar.Link
@@ -265,15 +231,13 @@ const customTheme: CustomFlowbiteTheme = {
               className="  mt-3 bg-orange-500  w-20 md:w-36 rounded-xl  md:rounded-2xl  hover:!bg-orange-500 text-black jura"
               onClick={() => setOpenModal(false)}
             >
-              <h3 className=" text-base  md:text-3xl    md:w-36 rounded-xl  md:rounded-2xl ">
-                Close
-              </h3>
+              <h3 className=" text-base  md:text-3xl   md:w-36 rounded-xl  md:rounded-2xl ">Close</h3>
             </Button>
           </div>
         </Modal.Body>
       </Modal>
       {/* BEGINNING OF PROFILE MODULE */}
-      <Modal show={openModal2} onClose={() => setOpenModal2(false)}>
+      <Modal dismissible show={openModal2} onClose={() => setOpenModal2(false)}>
         <Modal.Body>
           <div className=" mb-5 flex justify-center  md:justify-end ">
             <div>
@@ -302,7 +266,7 @@ const customTheme: CustomFlowbiteTheme = {
                     <h3 className="text-base md:text-3xl">Edit</h3>
                   </button>
 
-                  <button className="bg-red-500 md:ml-10    w-20 md:w-36 rounded-xl  md:rounded-2xl pt-2 pb-2  text-black jura">
+                  <button onClick={handleLogOut} className="bg-red-500 md:ml-10    w-20 md:w-36 rounded-xl  md:rounded-2xl pt-2 pb-2  text-black jura">
                     <h3 className="text-base md:text-3xl">Log Out</h3>
                   </button>
                 </div>
@@ -394,6 +358,7 @@ const customTheme: CustomFlowbiteTheme = {
   );
 
 }
+
 
 
 export default NavBarComponent;
