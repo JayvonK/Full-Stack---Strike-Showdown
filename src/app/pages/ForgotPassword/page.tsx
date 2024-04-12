@@ -19,7 +19,6 @@ const ForgotPassword = () => {
     const [userAnswer, setUserAnswer] = useState<string>('');
     const [userBorderError, setUserBorderError] = useState<string>('');
     const [passwordBorderError, setPasswordBorderError] = useState<string>('');
-    const [password2BorderError, setPassword2BorderError] = useState<string>('');
     const [enterUsername, setEnterUsername] = useState<boolean>(true);
     const [enterAnswer, setEnterAnswer] = useState<boolean>(false);
     const [changePassword, setChangePassword] = useState<boolean>(false);
@@ -41,27 +40,31 @@ const ForgotPassword = () => {
     }
 
     const handlePasswordOneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setPasswordOne(e.target.value);
-        setPasswordBorderError('');
+        if (e.target.value !== passwordTwo && passwordTwo.trim() !== '') {
+            setPasswordBorderError('border-red-600 border-2');
+            setPasswordsMatch(false);
+        } else {
+            setPasswordOne(e.target.value);
+            setPasswordBorderError('');
+            setPasswordsMatch(true);
+        }
     }
 
     const handlePasswordTwoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.value !== passwordOne) {
             setPasswordBorderError('border-red-600 border-2');
-            setPassword2BorderError('border-red-600 border-2');
             setPasswordsMatch(false);
         } else {
+            setPasswordTwo(e.target.value);
             setPasswordBorderError('');
-            setPassword2BorderError('');
             setPasswordsMatch(true);
         }
-        setPasswordTwo(e.target.value);
+        
     }
 
     const handleConfirmPassword = async () => {
         if (passwordOne.trim() === '' || passwordTwo.trim() === '') {
             setPasswordBorderError('border-red-600 border-2');
-            setPassword2BorderError('border-red-600 border-2');
             toast({
                 variant: "destructive",
                 title: "Error, Enter Your Password.",
@@ -70,7 +73,6 @@ const ForgotPassword = () => {
             })
         } else if (passwordTwo !== passwordOne) {
             setPasswordBorderError('border-red-600 border-2');
-            setPassword2BorderError('border-red-600 border-2');
             setPasswordsMatch(false);
             toast({
                 variant: "destructive",
@@ -248,7 +250,7 @@ const ForgotPassword = () => {
 
                                         <RequiredInputComponent title="New Password" type='password' borderError={passwordBorderError} placeholder='Password' value={passwordOne} onChange={handlePasswordOneChange} maxLength={5000} />
 
-                                        <RequiredInputComponent title="Verify Password" type='password' borderError={password2BorderError} placeholder='Verify Pasword' value={passwordTwo} onChange={handlePasswordTwoChange} maxLength={5000} />
+                                        <RequiredInputComponent title="Verify Password" type='password' borderError={passwordBorderError} placeholder='Verify Pasword' value={passwordTwo} onChange={handlePasswordTwoChange} maxLength={5000} />
 
                                         {!passwordsMatch ? (<h1 className='text-2xl jura text-red-600'>Passwords Dont Match</h1>) : (<div></div>)}
 
