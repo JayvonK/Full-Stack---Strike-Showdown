@@ -16,6 +16,7 @@ import ProfilePic2 from "../../../public/images/profilePIc.png";
 import ToggleButtonInput from "@/components/ui/search";
 import "../../app/css/LoginPage.css";
 import { useRouter } from "next/navigation";
+import { useAppContext } from "@/context/Context";
 
 function NavBarComponent() {
   const [showModal, setShowModal2] = useState(false);
@@ -34,6 +35,10 @@ function NavBarComponent() {
   const [isInput, setIsInput] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState<string>("");
 const pageContext = useAppContext()
+  const handleLogOut = () =>{
+pageContext.setUserLoggedIn(false);
+router.push('/');
+  }
 
   const handleInputKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
@@ -208,15 +213,13 @@ const pageContext = useAppContext()
               className="  mt-3 bg-orange-500  w-20 md:w-36 rounded-xl  md:rounded-2xl  hover:!bg-orange-500 text-black jura"
               onClick={() => setOpenModal(false)}
             >
-              <h3 className=" text-base  md:text-3xl    md:w-36 rounded-xl  md:rounded-2xl ">
-                Close
-              </h3>
+              <h3 className=" text-base  md:text-3xl   md:w-36 rounded-xl  md:rounded-2xl ">Close</h3>
             </Button>
           </div>
         </Modal.Body>
       </Modal>
       {/* BEGINNING OF PROFILE MODULE */}
-      <Modal show={openModal2} onClose={() => setOpenModal2(false)}>
+      <Modal dismissible show={openModal2} onClose={() => setOpenModal2(false)}>
         <Modal.Body>
           <div className=" mb-5 flex justify-center  md:justify-end ">
             <div>
@@ -245,7 +248,7 @@ const pageContext = useAppContext()
                     <h3 className="text-base md:text-3xl">Edit</h3>
                   </button>
 
-                  <button className="bg-red-500 md:ml-10    w-20 md:w-36 rounded-xl  md:rounded-2xl pt-2 pb-2  text-black jura">
+                  <button onClick={handleLogOut} className="bg-red-500 md:ml-10    w-20 md:w-36 rounded-xl  md:rounded-2xl pt-2 pb-2  text-black jura">
                     <h3 className="text-base md:text-3xl">Log Out</h3>
                   </button>
                 </div>
@@ -336,5 +339,6 @@ const pageContext = useAppContext()
     </Navbar>
   );
 }
+
 
 export default NavBarComponent;
