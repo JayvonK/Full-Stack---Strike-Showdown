@@ -83,6 +83,8 @@ export default function Home() {
           action: <ToastAction altText="Try again">Try again</ToastAction>,
         })
       } else {
+        setuserBorderError('');
+        setPasswordBorderError('');
         setNotLoggedIn(false);
         pageContext.setVerifiedUser(username);
       }
@@ -115,12 +117,14 @@ export default function Home() {
         description: "YAY",
         action: <ToastAction altText="Try again">Try again</ToastAction>,
       })
+      pageContext.setCreatedAccountBool(false);
     } else if (pageContext.changedPasswordBool) {
       toast({
         title: "You have Successfully Changed Your Password",
         description: "YAY",
         action: <ToastAction altText="Try again">Try again</ToastAction>,
       })
+      pageContext.setChangedPasswordBool(false);
     }
   }, [])
 

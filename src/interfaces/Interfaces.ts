@@ -26,6 +26,8 @@ export interface IUserInfoWithStats {
   mainCenter: string;
   average: string;
   earnings: string;
+  highGame: string;
+  highSeries: string;
 }
 
 export interface IPublicUserData {
@@ -43,12 +45,14 @@ export interface IPublicUserData {
   mainCenter: string;
   average: string;
   earnings: string;
+  highGame: string;
+  highSeries: string;
 }
 
 export interface IUserPosts {
-  title: string,
+  title: string;
   visibility: boolean;
-  state: string,
+  state: string;
   locations: string;
   date: string;
   time: string;
@@ -63,4 +67,3 @@ export interface IUserPosts {
   style: string;
   streak: number;
 }
-

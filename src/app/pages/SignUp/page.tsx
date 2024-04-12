@@ -30,6 +30,7 @@ const SignUp = () => {
   const [password2, setPassword2] = useState<string>('');
   const [passwordsMatch, setPasswordsMatch] = useState<boolean>(true);
   const [userBorderError, setUserBorderError] = useState<string>('');
+  const [emailBorderError, setEmailBorderError] = useState<string>('');
   const [optionalBorderError, setOptionalBorderError] = useState<string>('');
   const [passwordBorderError, setPasswordBorderError] = useState<string>('');
   const [creatingAccount, setCreatingAccount] = useState<boolean>(true);
@@ -48,7 +49,7 @@ const SignUp = () => {
   const [average, setAverage] = useState<string>('');
   const [style, setStyle] = useState<string>('');
   const [highGame, setHighGame] = useState<string>('');
-  const [hightSeries, setHighSeries] = useState<string>('');
+  const [highSeries, setHighSeries] = useState<string>('');
   const [earnings, setEarnings] = useState<string>('');
   const router = useRouter();
   const { toast } = useToast();
@@ -62,7 +63,7 @@ const SignUp = () => {
 
   const handleEmailChange = (param: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(param.target.value);
-    setUserBorderError('');
+    setEmailBorderError('');
   }
 
   const handlePasswordChange = (param: React.ChangeEvent<HTMLInputElement>) => {
@@ -147,8 +148,17 @@ const SignUp = () => {
   }
 
   const handleNext = async () => {
-    if (username.trim() === '' || password.trim() === '' || password2.trim() === '' || email.trim() === '' || password !== password2) {
+    if (username.trim() === '' || password.trim() === '' || password2.trim() === '' || email.trim() === '') {
       setUserBorderError('border-red-600 border-2');
+      setPasswordBorderError('border-red-600 border-2');
+      setEmailBorderError('border-red-600 border-2');
+      toast({
+        variant: "destructive",
+        title: "Error.",
+        description: "Please fill in your info or make sure passwords match",
+        action: <ToastAction altText="Try again">Try again</ToastAction>,
+      })
+    } else if (password !== password2) {
       setPasswordBorderError('border-red-600 border-2')
       toast({
         variant: "destructive",
@@ -169,8 +179,24 @@ const SignUp = () => {
           })
         }
       } catch (error) {
-        setAnsweringSecurity(true);
-        setCreatingAccount(false);
+        try {
+          let data = await GetUserAPI(email);
+          if (data !== null) {
+            setEmailBorderError('border-red-600 border-2');
+            toast({
+              variant: "destructive",
+              title: "Error. Username Taken",
+              description: "Username or email is already taken",
+              action: <ToastAction altText="Try again">Try again</ToastAction>,
+            })
+          }
+        } catch (error) {
+          setQuestionOne('');
+          setQuestionTwo('');
+          setQuestionThree('');
+          setAnsweringSecurity(true);
+          setCreatingAccount(false);
+        }
       }
     }
   }
@@ -183,7 +209,7 @@ const SignUp = () => {
       toast({
         variant: "destructive",
         title: "Error",
-        description: "Make sure you answer all questions",
+        description: "Make sure you select and answer all questions",
         action: <ToastAction altText="Try again">Try again</ToastAction>,
       })
     }
@@ -205,10 +231,15 @@ const SignUp = () => {
 
   const handleBackSecurityQuestions = () => {
     setAnsweringSecurity(true);
+    setQuestionOne('');
+    setQuestionTwo('');
+    setQuestionThree('');
     setDoesUserWantStats(false);
   }
 
   const handleBackOptional = () => {
+    setStyle('');
+    setAverage('');
     setAddingCustomStats(false);
     setDoesUserWantStats(true)
   }
@@ -232,7 +263,9 @@ const SignUp = () => {
       style: 'N/A',
       mainCenter: 'N/A',
       average: 'N/A',
-      earnings: 'N/A'
+      earnings: 'N/A',
+      highGame: 'N/A',
+      highSeries: 'N/A'
     }
 
     if (fullname.trim() === '') {
@@ -275,25 +308,36 @@ const SignUp = () => {
       style: style,
       mainCenter: bowlingCenter,
       average: average,
-      earnings: earnings
+      earnings: earnings,
+      highGame: highGame,
+      highSeries: highSeries
     }
 
-
-
-    try {
-      let createdUser = await CreateAccountAPI(userData);
-      console.log(createdUser);
-      setLoading(true);
-      pageContext.setCreatedAccountBool(true);
-      router.push('/');
-    } catch (error) {
+    if (fullname.trim() === '' || prounouns.trim() === '' || style.trim() === '' || bowlingCenter.trim() === '' || average.trim() === '' || earnings.trim() === '' || highGame.trim() === '' || highSeries.trim() === '') {
       toast({
         variant: "destructive",
-        title: "Error ",
-        description: "Make Sure You Filled Everything In.",
+        title: "Error",
+        description: "Please make sure none of your stats/info is empty",
         action: <ToastAction altText="Try again">Try again</ToastAction>,
       })
+    } else {
+      try {
+        let createdUser = await CreateAccountAPI(userData);
+        console.log(createdUser);
+        setLoading(true);
+        pageContext.setCreatedAccountBool(true);
+        router.push('/');
+      } catch (error) {
+        toast({
+          variant: "destructive",
+          title: "Error ",
+          description: "Make Sure You Filled Everything In.",
+          action: <ToastAction altText="Try again">Try again</ToastAction>,
+        })
+      }
     }
+
+
   }
 
 
@@ -316,7 +360,7 @@ const SignUp = () => {
                     <h1 className="txtOrange sm:text-7xl text-5xl juraBold mb-8 sm:leading-[90px] leading-[75px]"> Create Your Account</h1>
 
                     <RequiredInputComponent title="Username:" type='text' borderError={userBorderError} placeholder='Enter Username' value={username} onChange={handleUserChange} maxLength={5000} />
-                    <RequiredInputComponent title="Email:" type='text' borderError={userBorderError} placeholder='Enter Email' value={email} onChange={handleEmailChange} maxLength={20} />
+                    <RequiredInputComponent title="Email:" type='text' borderError={emailBorderError} placeholder='Enter Email' value={email} onChange={handleEmailChange} maxLength={20} />
                     <RequiredInputComponent title="Password:" type='password' borderError={passwordBorderError} placeholder='Enter Password' value={password} onChange={handlePasswordChange} maxLength={5000} />
                     <RequiredInputComponent title="Verify Password:" type='password' borderError={passwordBorderError} placeholder='Re-enter Password' value={password2} onChange={handlePassword2Change} maxLength={5000} />
                     {!passwordsMatch ? (<h1 className='text-2xl jura text-red-600'>Passwords Dont Match</h1>) : (<div></div>)}
@@ -356,7 +400,7 @@ const SignUp = () => {
                         </SelectGroup>
                       </SelectContent>
                     </Select>
-                    <RequiredInputComponent title="" type='text' borderError={userBorderError} placeholder='Answer #1' value={securityOne} onChange={handleSecurityOneChange} maxLength={5000} />
+                    <RequiredInputComponent title="" type='text' borderError={''} placeholder='Answer #1' value={securityOne} onChange={handleSecurityOneChange} maxLength={5000} />
 
 
                     {/* Selecting Question 2 */}
@@ -369,11 +413,11 @@ const SignUp = () => {
                           <SelectLabel>Security Questions</SelectLabel>
                           <SelectItem value="Name of Childhood Best Friend">Name of Childhood Best Friend?</SelectItem>
                           <SelectItem value="What's Your Nickname">What&apos;s Your Nickname?</SelectItem>
-                          <SelectItem value="What&'s Your Favorite Food">What&apos;s Your Favorite Food?</SelectItem>
+                          <SelectItem value="What's Your Favorite Food">What&apos;s Your Favorite Food?</SelectItem>
                         </SelectGroup>
                       </SelectContent>
                     </Select>
-                    <RequiredInputComponent title="" type='text' borderError={userBorderError} placeholder='Answer #2' value={securityTwo} onChange={handleSecurityTwoChange} maxLength={5000} />
+                    <RequiredInputComponent title="" type='text' borderError={''} placeholder='Answer #2' value={securityTwo} onChange={handleSecurityTwoChange} maxLength={5000} />
 
 
                     {/* Selecting Question 3 */}
@@ -390,7 +434,7 @@ const SignUp = () => {
                         </SelectGroup>
                       </SelectContent>
                     </Select>
-                    <RequiredInputComponent title="" type='text' borderError={userBorderError} placeholder='Answer #3' value={securityThree} onChange={handleSecurityThreeChange} maxLength={5000} />
+                    <RequiredInputComponent title="" type='text' borderError={''} placeholder='Answer #3' value={securityThree} onChange={handleSecurityThreeChange} maxLength={5000} />
 
                     <button className="sm:text-4xl text-3xl text-black sm:min-h-[76px] min-h-16 w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleNextOptional}> Next</button>
                   </div>
@@ -487,7 +531,7 @@ const SignUp = () => {
                         </SelectContent>
                       </Select>
                       <NotRequiredInputComponent type='text' borderError={optionalBorderError} placeholder='High Game' value={highGame} onChange={handleHighGameChange} maxLength={5000} />
-                      <NotRequiredInputComponent type='text' borderError={optionalBorderError} placeholder='High Series' value={hightSeries} onChange={handleHighSeriesChange} maxLength={5000} />
+                      <NotRequiredInputComponent type='text' borderError={optionalBorderError} placeholder='High Series' value={highSeries} onChange={handleHighSeriesChange} maxLength={5000} />
                       <NotRequiredInputComponent type='text' borderError={optionalBorderError} placeholder='$ Earnings $' value={earnings} onChange={handleEarningsChange} maxLength={5000} />
                     </ScrollArea>
 

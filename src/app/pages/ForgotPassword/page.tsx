@@ -8,8 +8,8 @@ import RequiredInputComponent from '@/components/PageComponents/LoginPage/Requir
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
 import { useAppContext } from '@/context/Context';
-import { ChangePasswordAPI, GetUserAPI, VerifyForPasswordAPI } from '@/Data/DataServices';
-import { IPublicUserData } from '@/interfaces/Interfaces';
+import { ChangePasswordAPI, GetUserAPI, LoginAPI, VerifyForPasswordAPI } from '@/Data/DataServices';
+import { IPublicUserData, IUserLogin } from '@/interfaces/Interfaces';
 
 const ForgotPassword = () => {
     const [questionArray, setQuestionArray] = useState<string[]>([]);
@@ -43,6 +43,7 @@ const ForgotPassword = () => {
         if (e.target.value !== passwordTwo && passwordTwo.trim() !== '') {
             setPasswordBorderError('border-red-600 border-2');
             setPasswordsMatch(false);
+            setPasswordOne(e.target.value);
         } else {
             setPasswordOne(e.target.value);
             setPasswordBorderError('');
@@ -54,12 +55,13 @@ const ForgotPassword = () => {
         if (e.target.value !== passwordOne) {
             setPasswordBorderError('border-red-600 border-2');
             setPasswordsMatch(false);
+            setPasswordTwo(e.target.value);
         } else {
             setPasswordTwo(e.target.value);
             setPasswordBorderError('');
             setPasswordsMatch(true);
         }
-        
+
     }
 
     const handleConfirmPassword = async () => {
@@ -82,17 +84,34 @@ const ForgotPassword = () => {
             })
         } else {
             try {
-                await ChangePasswordAPI(username, passwordOne);
-                pageContext.setChangedPasswordBool(true);
-                router.push('/')
+                let userData: IUserLogin = {
+                    usernameOrEmail: username,
+                    password: passwordOne
+                }
+                const data = await LoginAPI(userData);
+                if (data !== null) {
+                    toast({
+                        variant: "destructive",
+                        title: "Error",
+                        description: "You Cannot Enter A Password That You Previously Had",
+                        action: <ToastAction altText="Try again">Try again</ToastAction>,
+                    })
+                }
             } catch (error) {
-                toast({
-                    variant: "destructive",
-                    title: "Error, Something Went Wrong",
-                    description: "...",
-                    action: <ToastAction altText="Try again">Try again</ToastAction>,
-                })
+                try {
+                    await ChangePasswordAPI(username, passwordOne);
+                    pageContext.setChangedPasswordBool(true);
+                    router.push('/')
+                } catch (error) {
+                    toast({
+                        variant: "destructive",
+                        title: "Error, Something Went Wrong",
+                        description: "...",
+                        action: <ToastAction altText="Try again">Try again</ToastAction>,
+                    })
+                }
             }
+
         }
     }
 
@@ -140,17 +159,28 @@ const ForgotPassword = () => {
     }
 
     const handleConfirmAnswer = async () => {
-        if (await VerifyForPasswordAPI(username, question, userAnswer)) {
-            setChangePassword(true);
-            setEnterAnswer(false);
-        } else {
+        try {
+            const data = await VerifyForPasswordAPI(username, question, userAnswer)
+            if (data) {
+                setChangePassword(true);
+                setEnterAnswer(false);
+            } else {
+                toast({
+                    variant: "destructive",
+                    title: "Wrong Answer.",
+                    description: "Please enter the correct answer",
+                    action: <ToastAction altText="Try again">Try again</ToastAction>,
+                })
+            }
+        } catch (error) {
             toast({
                 variant: "destructive",
                 title: "Wrong Answer.",
-                description: "Please correct the correct answer",
+                description: "Please enter the correct answer",
                 action: <ToastAction altText="Try again">Try again</ToastAction>,
             })
         }
+
     }
 
     const handleBack = () => {
@@ -158,6 +188,7 @@ const ForgotPassword = () => {
     }
 
     const handleBackUsername = () => {
+        setQuestionCount(1);
         setEnterUsername(true);
         setEnterAnswer(false);
     }
@@ -172,8 +203,8 @@ const ForgotPassword = () => {
         if (questionCount >= questionArray.length) {
             toast({
                 variant: "destructive",
-                title: "No more questions.",
-                description: "Press go back a question",
+                title: "No more questions",
+                description: "Answer the question if you can",
                 action: <ToastAction altText="Try again">Try again</ToastAction>,
             })
         } else {
