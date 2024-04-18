@@ -135,10 +135,10 @@ export default function Home() {
 
             <div className="min-h-screen bg-black opacity-90 hover:cursor-pointer" onClick={handleOpenerBoolChange}>
               <div className="2xl:px-80 xl:px-56 lg:px-36 md:px-24 sm:px-14 px-7 pt-60">
-                <h1 className="txtOrange text-center xl:text-8xl lg:text-7xl sm:text-6xl text-5xl juraBold mb-16"> Strike <span className="text-white">Showdown</span></h1>
-                <h2 className="text-center text-white jura txtOrange xl:text-5xl lg:text-4xl sm:text-3xl text-2xl mb-14">the best social app for bowlers</h2>
-                <h3 className="text-center text-white jura xl:text-5xl lg:text-4xl sm:text-3xl text-2xl mb-24">Where you&apos;ll be able to create or join 1v1 challenges or practice sessions with other bowlers!</h3>
-                <h3 className="text-center text-white jura txtOrange xl:text-5xl lg:text-4xl sm:text-3xl text-2xl pb-10">click to continue...</h3>
+                <h1 className="txtOrange text-center lg:text-7xl sm:text-6xl text-5xl juraBold mb-16"> Strike <span className="text-white">Showdown</span></h1>
+                <h2 className="text-center text-white jura txtOrange lg:text-4xl sm:text-3xl text-2xl mb-14">the best social app for bowlers</h2>
+                <h3 className="text-center text-white jura lg:text-4xl sm:text-3xl text-2xl mb-24">Where you&apos;ll be able to create or join 1v1 challenges or practice sessions with other bowlers!</h3>
+                <h3 className="text-center text-white jura txtOrange lg:text-4xl sm:text-3xl text-2xl pb-10">click to continue...</h3>
               </div>
             </div>
 
@@ -165,7 +165,7 @@ export default function Home() {
 
                         <h3 className="sm:text-3xl text-2xl txtOrange jura underline hover:cursor-pointer hover:text-[#ff9939]" onClick={handleForgotPassword}>Forgot Password?</h3>
 
-                        <button className="sm:text-4xl text-3xl text-black sm:min-h-[76px] min-h-16 w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleLogin}> LOG IN</button>
+                        <button className="sm:text-4xl text-3xl text-black sm:min-h-16 min-h-16 w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleLogin}> LOG IN</button>
 
                         <h3 className="sm:text-3xl text-2xl text-white jura">Don&apos;t have an account? <span className="txtOrange underline hover:cursor-pointer hover:text-[#ff9939]" onClick={handleSignUp}>Sign Up</span></h3>
 
@@ -183,7 +183,7 @@ export default function Home() {
 
                         <h3 className="sm:text-4xl text-3xl jura text-white mb-5">State</h3>
                         <Select onValueChange={(e) => handleStateChange(e)}>
-                          <SelectTrigger className="w-full jura sm:text-4xl text-3xl sm:min-h-[76px] min-h-16 bg-white pl-3">
+                          <SelectTrigger className="w-full jura sm:text-4xl text-3xl sm:min-h-16 min-h-16 bg-white pl-3">
                             <SelectValue placeholder="Select a State" />
                           </SelectTrigger>
                           <SelectContent className="jura text-4xl">
@@ -242,7 +242,7 @@ export default function Home() {
                           </SelectContent>
                         </Select>
 
-                        <button className="sm:text-4xl text-3xl text-black sm:min-h-[76px] min-h-16 w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleLocationConfirm}> Confirm</button>
+                        <button className="sm:text-4xl text-3xl text-black sm:min-h-16 min-h-16 w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleLocationConfirm}> Confirm</button>
                       </div>
                     </>
                   )}

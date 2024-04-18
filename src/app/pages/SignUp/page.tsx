@@ -357,7 +357,7 @@ const SignUp = () => {
                     <h1 className="txtOrange sm:text-7xl text-5xl juraBold mb-8 sm:leading-[90px] leading-[75px]"> Create Your Account</h1>
 
                     <RequiredInputComponent title="Username:" type='text' borderError={userBorderError} placeholder='Enter Username' value={username} onChange={handleUserChange} maxLength={5000} />
-                    <RequiredInputComponent title="Email:" type='text' borderError={emailBorderError} placeholder='Enter Email' value={email} onChange={handleEmailChange} maxLength={20} />
+                    <RequiredInputComponent title="Email:" type='email' borderError={emailBorderError} placeholder='Enter Email' value={email} onChange={handleEmailChange} maxLength={5000} />
                     <RequiredInputComponent title="Password:" type='password' borderError={passwordBorderError} placeholder='Enter Password' value={password} onChange={handlePasswordChange} maxLength={5000} />
                     <RequiredInputComponent title="Verify Password:" type='password' borderError={passwordBorderError} placeholder='Re-enter Password' value={password2} onChange={handlePassword2Change} maxLength={5000} />
                     {!passwordsMatch ? (<h1 className='text-2xl jura text-red-600'>Passwords Dont Match</h1>) : (<div></div>)}
