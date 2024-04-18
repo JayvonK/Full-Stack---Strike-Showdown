@@ -231,7 +231,7 @@ const ForgotPassword = () => {
 
                                     <div className="2xl:px-44 xl:px-40 lg:px-32 md:px-24 sm:px-16 px-8">
 
-                                        <h1 className="txtOrange sm:text-7xl text-5xl juraBold mb-12 leading-[90px]"> Your Username?</h1>
+                                        <h1 className="txtOrange sm:text-6xl text-5xl juraBold mb-12 leading-[90px]"> Your Username?</h1>
 
                                         <RequiredInputComponent title="Username:" type='text' borderError={userBorderError} placeholder='Enter Username' value={username} onChange={handleUserChange} maxLength={20} />
 
@@ -253,7 +253,7 @@ const ForgotPassword = () => {
 
                                     <div className="2xl:px-44 xl:px-40 lg:px-32 md:px-24 sm:px-16 px-8">
 
-                                        <h1 className="txtOrange sm:text-7xl text-5xl juraBold mb-12 leading-[90px]"> Answer Security Question</h1>
+                                        <h1 className="txtOrange sm:text-6xl text-5xl juraBold mb-12 leading-[90px]"> Answer Security Question</h1>
 
                                         <RequiredInputComponent title={question + "?"} type='text' borderError={userBorderError} placeholder='Answer' value={userAnswer} onChange={handleUserAnswerChange} maxLength={5000} />
 

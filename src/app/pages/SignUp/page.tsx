@@ -354,7 +354,7 @@ const SignUp = () => {
 
                   <div className="2xl:px-44 xl:px-40 lg:px-32 md:px-24 sm:px-16 px-8">
 
-                    <h1 className="txtOrange sm:text-7xl text-5xl juraBold mb-8 sm:leading-[90px] leading-[75px]"> Create Your Account</h1>
+                    <h1 className="txtOrange sm:text-6xl text-5xl juraBold mb-8 sm:leading-[90px] leading-[75px]"> Create Your Account</h1>
 
                     <RequiredInputComponent title="Username:" type='text' borderError={userBorderError} placeholder='Enter Username' value={username} onChange={handleUserChange} maxLength={5000} />
                     <RequiredInputComponent title="Email:" type='email' borderError={emailBorderError} placeholder='Enter Email' value={email} onChange={handleEmailChange} maxLength={5000} />
@@ -381,7 +381,7 @@ const SignUp = () => {
 
                   <div className="2xl:px-44 xl:px-40 lg:px-32 md:px-24 sm:px-16 px-8">
 
-                    <h1 className="txtOrange sm:text-7xl text-5xl juraBold mb-12 sm:leading-[90px] leading-[75px]"> Security Questions</h1>
+                    <h1 className="txtOrange sm:text-6xl text-5xl juraBold mb-12 sm:leading-[90px] leading-[75px]"> Security Questions</h1>
 
                     {/* Selecting Question 1 */}
                     <Select onValueChange={(e) => setQuestionOne(e)}>
@@ -450,7 +450,7 @@ const SignUp = () => {
 
                   <div className="2xl:px-44 xl:px-40 lg:px-32 md:px-24 sm:px-16 px-8">
 
-                    <h1 className="txtOrange sm:text-7xl text-4xl juraBold mb-12 sm:leading-[90px] leading-[75px]"> Do You Want To Add Your Custom Stats & Info To Your Account?</h1>
+                    <h1 className="txtOrange sm:text-6xl text-4xl juraBold mb-12 sm:leading-[90px] leading-[75px]"> Do You Want To Add Your Custom Stats & Info To Your Account?</h1>
 
                     <button className="sm:text-4xl text-3xl text-black sm:min-h-[76px] min-h-16 w-full my-9 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleAddStats}>Yes</button>
 
@@ -477,7 +477,7 @@ const SignUp = () => {
 
                   <div className="2xl:px-44 xl:px-40 lg:px-32 md:px-24 sm:px-16 px-8">
 
-                    <h1 className="txtOrange sm:text-7xl text-5xl juraBold mb-12 sm:leading-[90px] leading-[75px]"> Add Your Stats/Info</h1>
+                    <h1 className="txtOrange sm:text-6xl text-5xl juraBold mb-12 sm:leading-[90px] leading-[75px]"> Add Your Stats/Info</h1>
 
                     <ScrollArea className="h-[450px] w-full rounded-md pr-4">
                       <h1 className='text-4xl jura text-white font-medium'>Stats (Scroll ↓)</h1>
