@@ -33,10 +33,10 @@ const SignUp = () => {
   const [emailBorderError, setEmailBorderError] = useState<string>('');
   const [optionalBorderError, setOptionalBorderError] = useState<string>('');
   const [passwordBorderError, setPasswordBorderError] = useState<string>('');
-  const [creatingAccount, setCreatingAccount] = useState<boolean>(true);
+  const [creatingAccount, setCreatingAccount] = useState<boolean>(false);
   const [doesUserWantStats, setDoesUserWantStats] = useState<boolean>(false);
   const [answeringSecurity, setAnsweringSecurity] = useState<boolean>(false);
-  const [addingCustomStats, setAddingCustomStats] = useState<boolean>(false);
+  const [addingCustomStats, setAddingCustomStats] = useState<boolean>(true);
   const [questionOne, setQuestionOne] = useState<string>('');
   const [questionTwo, setQuestionTwo] = useState<string>('');
   const [questionThree, setQuestionThree] = useState<string>('');
@@ -324,8 +324,6 @@ const SignUp = () => {
         })
       }
     }
-
-
   }
 
 
@@ -334,7 +332,7 @@ const SignUp = () => {
       <div className="min-h-screen bgLogin">
         <img src="" alt="" />
 
-        <div className='grid 2xl:grid-cols-2 xl:grid-cols-[60%_40%] lg:grid-cols-[70%_30%] md:grid-cols-[75%_25%] sm:grid-cols-[85%_15%]'>
+        <div className={addingCustomStats ? 'grid xl:grid-cols-[75%_25%] lg:grid-cols-[90%_10%] grid-cols-1' : 'grid 2xl:grid-cols-2 xl:grid-cols-[60%_40%] lg:grid-cols-[70%_30%] md:grid-cols-[75%_25%] sm:grid-cols-[85%_15%]'}>
 
           <div className="min-h-screen bgBlack">
             {
@@ -353,9 +351,9 @@ const SignUp = () => {
                       <RequiredInputComponent title="Verify Password:" type='password' borderError={passwordBorderError} placeholder='Re-enter Password' value={password2} onChange={handlePassword2Change} maxLength={5000} />
                       {!passwordsMatch ? (<h1 className='text-2xl jura text-red-600'>Passwords Dont Match</h1>) : (<div></div>)}
 
-                      <button type='submit' className="sm:text-4xl text-3xl text-black sm:min-h-[76px] min-h-16 w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]"> Next</button>
+                      <button type='submit' className=" text-3xl text-black sm:min-h-16 min-h-12 w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]"> Next</button>
                     </form>
-                    
+
                   </div>
                 </>
               ) : (
@@ -377,7 +375,7 @@ const SignUp = () => {
 
                     {/* Selecting Question 1 */}
                     <Select onValueChange={(e) => setQuestionOne(e)}>
-                      <SelectTrigger className="w-full jura sm:text-4xl text-3xl text-white min-h-[40px]">
+                      <SelectTrigger className="w-full jura  text-3xl text-white min-h-[40px]">
                         <SelectValue placeholder="Select Question" />
                       </SelectTrigger>
                       <SelectContent className='sm:text-3xl text-2xl selectWidth'>
@@ -394,7 +392,7 @@ const SignUp = () => {
 
                     {/* Selecting Question 2 */}
                     <Select onValueChange={(e) => setQuestionTwo(e)}>
-                      <SelectTrigger className="w-full jura sm:text-4xl text-3xl text-white min-h-[40px]">
+                      <SelectTrigger className="w-full jura  text-3xl text-white min-h-[40px]">
                         <SelectValue placeholder="Select Question" />
                       </SelectTrigger>
                       <SelectContent className='sm:text-3xl text-2xl selectWidth'>
@@ -411,7 +409,7 @@ const SignUp = () => {
 
                     {/* Selecting Question 3 */}
                     <Select onValueChange={(e) => setQuestionThree(e)}>
-                      <SelectTrigger className="w-full jura sm:text-4xl text-3xl text-white min-h-[40px]">
+                      <SelectTrigger className="w-full jura  text-3xl text-white min-h-[40px]">
                         <SelectValue placeholder="Select Question" />
                       </SelectTrigger>
                       <SelectContent className='sm:text-3xl text-2xl selectWidth'>
@@ -425,7 +423,7 @@ const SignUp = () => {
                     </Select>
                     <RequiredInputComponent title="" type='text' borderError={''} placeholder='Answer #3' value={securityThree} onChange={handleSecurityThreeChange} maxLength={5000} />
 
-                    <button className="sm:text-4xl text-3xl text-black sm:min-h-[76px] min-h-16 w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleNextOptional}> Next</button>
+                    <button className=" text-3xl text-black sm:min-h-16 min-h-12 w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleNextOptional}> Next</button>
                   </div>
                 </>
               ) : (
@@ -444,15 +442,15 @@ const SignUp = () => {
 
                     <h1 className="txtOrange sm:text-6xl text-4xl juraBold mb-12 sm:leading-[75px]"> Do You Want To Add Your Custom Stats & Info To Your Account?</h1>
 
-                    <button className="sm:text-4xl text-3xl text-black sm:min-h-[76px] min-h-16 w-full my-9 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleAddStats}>Yes</button>
+                    <button className=" text-3xl text-black sm:min-h-16 min-h-12 w-full my-9 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleAddStats}>Yes</button>
 
                     <h1 className='text-4xl w-full text-white jura text-center'>OR</h1>
 
                     {
                       loading ? (
-                        <button className="sm:text-4xl text-3xl text-black sm:min-h-[76px] min-h-16 w-full my-8 juraBold rounded-xl bg-orange-300"> Creating...</button>
+                        <button className=" text-3xl text-black sm:min-h-16 min-h-12 w-full my-8 juraBold rounded-xl bg-orange-300"> Creating...</button>
                       ) : (
-                        <button className="sm:text-4xl text-3xl text-black sm:min-h-[76px] min-h-16 w-full my-9 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleCreateWithoutStats}>No, Create Account</button>
+                        <button className=" text-3xl text-black sm:min-h-16 min-h-12 w-full my-9 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleCreateWithoutStats}>No, Create Account</button>
                       )
                     }
 
@@ -469,66 +467,72 @@ const SignUp = () => {
 
                   <div className="2xl:px-44 xl:px-40 lg:px-32 md:px-24 sm:px-16 px-8">
 
-                    <h1 className="txtOrange sm:text-6xl text-5xl juraBold mb-12 sm:leading-[75px]"> Add Your Stats/Info</h1>
+                    <h1 className="txtOrange sm:text-6xl text-5xl juraBold mb-12 sm:leading-[75px]"> Add Your Stats & Info</h1>
 
-                    <ScrollArea className="h-[450px] w-full rounded-md pr-4">
-                      <h1 className='text-4xl jura text-white font-medium'>Stats (Scroll ↓)</h1>
-                      <NotRequiredInputComponent type='text' borderError={optionalBorderError} placeholder='Full Name' value={fullname} onChange={handleFullNameChange} maxLength={5000} />
-                      <NotRequiredInputComponent type='text' borderError={optionalBorderError} placeholder='Pronouns' value={prounouns} onChange={handlePronounsChange} maxLength={5000} />
-                      <Select onValueChange={(e) => handleAverageChange(e)} >
-                        <SelectTrigger className="w-full jura sm:text-4xl text-3xl sm:min-h-[76px] min-h-16 bg-white pl-3 my-5">
-                          <SelectValue placeholder="Select Your Average" />
-                        </SelectTrigger>
-                        <SelectContent className="jura text-4xl">
-                          <SelectItem value="Under 90">Under 90</SelectItem>
-                          <SelectItem value="90-100 Avg">90-100 Avg</SelectItem>
-                          <SelectItem value="100-110 Avg">100-110 Avg</SelectItem>
-                          <SelectItem value="110-120 Avg">110-120 Avg</SelectItem>
-                          <SelectItem value="120-130 Avg">120-130 Avg</SelectItem>
-                          <SelectItem value="130-140 Avg">130-140 Avg</SelectItem>
-                          <SelectItem value="140-150 Avg">140-150 Avg</SelectItem>
-                          <SelectItem value="150-160 Avg">150-160 Avg</SelectItem>
-                          <SelectItem value="160-170 Avg">160-170 Avg</SelectItem>
-                          <SelectItem value="170-180 Avg">170-180 Avg</SelectItem>
-                          <SelectItem value="180-190 Avg">180-190 Avg</SelectItem>
-                          <SelectItem value="190-200 Avg">190-200 Avg</SelectItem>
-                          <SelectItem value="200-210 Avg">200-210 Avg</SelectItem>
-                          <SelectItem value="210-220 Avg">210-220 Avg</SelectItem>
-                          <SelectItem value="220-230 Avg">220-230 Avg</SelectItem>
-                          <SelectItem value="230-240 Avg">230-240 Avg</SelectItem>
-                          <SelectItem value="240-250 Avg">240-250 Avg</SelectItem>
-                          <SelectItem value="250-260 Avg">250-260 Avg</SelectItem>
-                          <SelectItem value="260-270 Avg">260-270 Avg</SelectItem>
-                          <SelectItem value="270-280 Avg">270-280 Avg</SelectItem>
-                          <SelectItem value="280-290 Avg">280-290 Avg</SelectItem>
-                          <SelectItem value="290-300 Avg">290-300 Avg</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      <NotRequiredInputComponent type='text' borderError={optionalBorderError} placeholder='Bowling Center' value={bowlingCenter} onChange={handleBowlingCenterChange} maxLength={5000} />
-                      <Select onValueChange={(e) => handleStyleChange(e)} >
-                        <SelectTrigger className="w-full jura sm:text-4xl text-3xl sm:min-h-[76px] min-h-16 bg-white pl-3 my-5">
-                          <SelectValue placeholder="Select Your Style" />
-                        </SelectTrigger>
-                        <SelectContent className="jura text-4xl">
-                          <SelectItem value="1 Handed (Left)">1 Handed (Left)</SelectItem>
-                          <SelectItem value="2 Handed (Left)">2 Handed (Left)</SelectItem>
-                          <SelectItem value="1 Handed (Right)">1 Handed (Right)</SelectItem>
-                          <SelectItem value="2 Handed (Right)">2 Handed (Right)</SelectItem>
-                          <SelectItem value="1 Handed (Both)">1 Handed (Both)</SelectItem>
-                          <SelectItem value="2 Handed (Both)">2 Handed (Both)</SelectItem>
-                          <SelectItem value="Hadouken Style">Hadouken Style</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      <NotRequiredInputComponent type='text' borderError={optionalBorderError} placeholder='High Game' value={highGame} onChange={handleHighGameChange} maxLength={5000} />
-                      <NotRequiredInputComponent type='text' borderError={optionalBorderError} placeholder='High Series' value={highSeries} onChange={handleHighSeriesChange} maxLength={5000} />
-                      <NotRequiredInputComponent type='text' borderError={optionalBorderError} placeholder='$ Earnings $' value={earnings} onChange={handleEarningsChange} maxLength={5000} />
-                    </ScrollArea>
+                    <div className='grid sm:grid-cols-2 grid-cols-1 sm:gap-16'>
+                      <div>
+                        <NotRequiredInputComponent title='Full Name:' type='text' borderError={optionalBorderError} placeholder='Full Name' value={fullname} onChange={handleFullNameChange} maxLength={5000} />
+                        <NotRequiredInputComponent title='Pronouns:' type='text' borderError={optionalBorderError} placeholder='Pronouns' value={prounouns} onChange={handlePronounsChange} maxLength={5000} />
+                        <h3 className={"text-3xl jura text-white"}>Select Average</h3>
+                        <Select onValueChange={(e) => handleAverageChange(e)} >
+                          <SelectTrigger className="w-full jura text-3xl sm:min-h-16 min-h-12 bg-white pl-3 my-5">
+                            <SelectValue placeholder="Average" />
+                          </SelectTrigger>
+                          <SelectContent className="jura text-4xl">
+                            <SelectItem value="Under 90">Under 90</SelectItem>
+                            <SelectItem value="90-100 Avg">90-100 Avg</SelectItem>
+                            <SelectItem value="100-110 Avg">100-110 Avg</SelectItem>
+                            <SelectItem value="110-120 Avg">110-120 Avg</SelectItem>
+                            <SelectItem value="120-130 Avg">120-130 Avg</SelectItem>
+                            <SelectItem value="130-140 Avg">130-140 Avg</SelectItem>
+                            <SelectItem value="140-150 Avg">140-150 Avg</SelectItem>
+                            <SelectItem value="150-160 Avg">150-160 Avg</SelectItem>
+                            <SelectItem value="160-170 Avg">160-170 Avg</SelectItem>
+                            <SelectItem value="170-180 Avg">170-180 Avg</SelectItem>
+                            <SelectItem value="180-190 Avg">180-190 Avg</SelectItem>
+                            <SelectItem value="190-200 Avg">190-200 Avg</SelectItem>
+                            <SelectItem value="200-210 Avg">200-210 Avg</SelectItem>
+                            <SelectItem value="210-220 Avg">210-220 Avg</SelectItem>
+                            <SelectItem value="220-230 Avg">220-230 Avg</SelectItem>
+                            <SelectItem value="230-240 Avg">230-240 Avg</SelectItem>
+                            <SelectItem value="240-250 Avg">240-250 Avg</SelectItem>
+                            <SelectItem value="250-260 Avg">250-260 Avg</SelectItem>
+                            <SelectItem value="260-270 Avg">260-270 Avg</SelectItem>
+                            <SelectItem value="270-280 Avg">270-280 Avg</SelectItem>
+                            <SelectItem value="280-290 Avg">280-290 Avg</SelectItem>
+                            <SelectItem value="290-300 Avg">290-300 Avg</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <NotRequiredInputComponent title='Bowling Center' type='text' borderError={optionalBorderError} placeholder='Bowling Center' value={bowlingCenter} onChange={handleBowlingCenterChange} maxLength={5000} />
+                      </div>
+
+                      <div>
+                      <h3 className={"text-3xl jura text-white"}>Select A Style</h3>
+                        <Select onValueChange={(e) => handleStyleChange(e)} >
+                          <SelectTrigger className="w-full jura text-3xl sm:min-h-16 min-h-12 bg-white pl-3 my-5">
+                            <SelectValue placeholder="Styles" />
+                          </SelectTrigger>
+                          <SelectContent className="jura text-4xl">
+                            <SelectItem value="1 Handed (Left)">1 Handed (Left)</SelectItem>
+                            <SelectItem value="2 Handed (Left)">2 Handed (Left)</SelectItem>
+                            <SelectItem value="1 Handed (Right)">1 Handed (Right)</SelectItem>
+                            <SelectItem value="2 Handed (Right)">2 Handed (Right)</SelectItem>
+                            <SelectItem value="1 Handed (Both)">1 Handed (Both)</SelectItem>
+                            <SelectItem value="2 Handed (Both)">2 Handed (Both)</SelectItem>
+                            <SelectItem value="Hadouken Style">Hadouken Style</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <NotRequiredInputComponent title='High Game' type='text' borderError={optionalBorderError} placeholder='High Game' value={highGame} onChange={handleHighGameChange} maxLength={5000} />
+                        <NotRequiredInputComponent title='High Series' type='text' borderError={optionalBorderError} placeholder='High Series' value={highSeries} onChange={handleHighSeriesChange} maxLength={5000} />
+                        <NotRequiredInputComponent title='Earnings' type='text' borderError={optionalBorderError} placeholder='$ Earnings $' value={earnings} onChange={handleEarningsChange} maxLength={5000} />
+                      </div>
+                    </div>
 
                     {
                       loading ? (
-                        <button className="sm:text-4xl text-3xl text-black sm:min-h-[76px] min-h-16 w-full my-8 juraBold rounded-xl bg-orange-300"> Creating...</button>
+                        <button className=" text-3xl text-black sm:min-h-16 min-h-12 w-full my-8 juraBold rounded-xl bg-orange-300"> Creating...</button>
                       ) : (
-                        <button className="sm:text-4xl text-3xl text-black sm:min-h-[76px] min-h-16 w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleCreateAccountWithStats}> Create Account</button>
+                        <button className=" text-3xl text-black sm:min-h-16 min-h-12 w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleCreateAccountWithStats}> Create Account</button>
                       )
                     }
 
@@ -544,6 +548,7 @@ const SignUp = () => {
           <div>
 
           </div>
+
         </div>
 
 
