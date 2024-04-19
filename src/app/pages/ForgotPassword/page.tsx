@@ -235,7 +235,7 @@ const ForgotPassword = () => {
 
                                         <RequiredInputComponent title="Username:" type='text' borderError={userBorderError} placeholder='Enter Username' value={username} onChange={handleUserChange} maxLength={20} />
 
-                                        <button className="sm:text-4xl text-3xl text-black sm:min-h-[76px] min-h-16 w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleConfirmUser}> Confirm</button>
+                                        <button className="sm:text-4xl text-3xl text-black sm:min-h-[76px] min-h-14 w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleConfirmUser}> Confirm</button>
 
                                     </div>
                                 </>
@@ -259,7 +259,7 @@ const ForgotPassword = () => {
 
                                         <h3 className="sm:text-3xl text-2xl txtOrange jura underline hover:cursor-pointer hover:text-[#ff9939]" onClick={handleAnotherQuestion} >Another Question</h3>
 
-                                        <button className="sm:text-4xl text-3xl text-black sm:min-h-[76px] min-h-16 w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleConfirmAnswer}> Continue</button>
+                                        <button className="sm:text-4xl text-3xl text-black sm:min-h-[76px] min-h-14 w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleConfirmAnswer}> Continue</button>
 
                                     </div>
                                 </>
@@ -285,7 +285,7 @@ const ForgotPassword = () => {
 
                                         {!passwordsMatch ? (<h1 className='text-2xl jura text-red-600'>Passwords Dont Match</h1>) : (<div></div>)}
 
-                                        <button className="sm:text-4xl text-3xl text-black sm:min-h-[76px] min-h-16 w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleConfirmPassword}> Change Password</button>
+                                        <button className="sm:text-4xl text-3xl text-black sm:min-h-[76px] min-h-14 w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleConfirmPassword}> Change Password</button>
 
                                     </div>
                                 </>

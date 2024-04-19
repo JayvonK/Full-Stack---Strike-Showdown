@@ -140,19 +140,19 @@ export default function Home() {
 
                   <div className="2xl:px-44 xl:px-40 lg:px-32 md:px-24 sm:px-16 px-8">
 
-                    <h1 className="txtOrange sm:text-6xl text-5xl juraBold mb-12 sm:leading-[75px]"> Strike <br /> <span className="text-white">Showdown</span></h1>
+                    <h1 className="txtOrange sm:text-6xl text-5xl juraBold mb-20 sm:leading-[75px]"> Strike <br /> <span className="text-white">Showdown</span></h1>
 
                     <form onSubmit={(e) => handleLogin(e)}>
 
-                      <RequiredInputComponent title={"Username:"} type={'text'} borderError={userBorderError} placeholder=" Username/Email" value={username} onChange={handleUserChange} maxLength={20} />
+                      <RequiredInputComponent title={"Username:"} type={'text'} borderError={userBorderError} placeholder="Username/Email" value={username} onChange={handleUserChange} maxLength={20} />
 
-                      <RequiredInputComponent title={"Password:"} type={'password'} borderError={passwordBorderError} placeholder=" Password" value={password} onChange={handlePasswordChange} maxLength={524288} />
+                      <RequiredInputComponent title={"Password:"} type={'password'} borderError={passwordBorderError} placeholder="Password" value={password} onChange={handlePasswordChange} maxLength={524288} />
 
-                      <h3 className=" text-3xl txtOrange jura underline hover:cursor-pointer hover:text-[#ff9939]" onClick={handleForgotPassword}>Forgot Password?</h3>
+                      <h3 className=" text-2xl txtOrange jura underline hover:cursor-pointer hover:text-[#ff9939] my-2" onClick={handleForgotPassword}>Forgot Password?</h3>
 
-                      <button type="submit" className="text-3xl text-black sm:min-h-16 min-h-16 w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]"> LOG IN</button>
+                      <button type="submit" className="text-3xl text-black sm:min-h-14 min-h-14 w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]"> LOG IN</button>
 
-                      <h3 className="text-3xl text-white jura">Don&apos;t have an account? <span className="txtOrange underline hover:cursor-pointer hover:text-[#ff9939]" onClick={handleSignUp}>Sign Up</span></h3>
+                      <h3 className="text-2xl text-white jura my-2">Don&apos;t have an account? <span className="txtOrange underline hover:cursor-pointer hover:text-[#ff9939]" onClick={handleSignUp}>Sign Up</span></h3>
                     </form>
 
                   </div>

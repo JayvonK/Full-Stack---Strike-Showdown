@@ -22,6 +22,13 @@ import { IUserInfoWithStats } from '@/interfaces/Interfaces';
 import NotRequiredInputComponent from '@/components/PageComponents/LoginPage/NotRequiredInputComponent';
 import { CreateAccountAPI, GetUserAPI } from '@/Data/DataServices';
 import { useAppContext } from '@/context/Context';
+import question from '../../../../public/images/question.svg';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 
 const SignUp = () => {
   const [username, setUsername] = useState<string>('');
@@ -31,12 +38,11 @@ const SignUp = () => {
   const [passwordsMatch, setPasswordsMatch] = useState<boolean>(true);
   const [userBorderError, setUserBorderError] = useState<string>('');
   const [emailBorderError, setEmailBorderError] = useState<string>('');
-  const [optionalBorderError, setOptionalBorderError] = useState<string>('');
   const [passwordBorderError, setPasswordBorderError] = useState<string>('');
-  const [creatingAccount, setCreatingAccount] = useState<boolean>(true);
+  const [creatingAccount, setCreatingAccount] = useState<boolean>(false);
   const [doesUserWantStats, setDoesUserWantStats] = useState<boolean>(false);
   const [answeringSecurity, setAnsweringSecurity] = useState<boolean>(false);
-  const [addingCustomStats, setAddingCustomStats] = useState<boolean>(false);
+  const [addingCustomStats, setAddingCustomStats] = useState<boolean>(true);
   const [questionOne, setQuestionOne] = useState<string>('');
   const [questionTwo, setQuestionTwo] = useState<string>('');
   const [questionThree, setQuestionThree] = useState<string>('');
@@ -55,6 +61,8 @@ const SignUp = () => {
   const { toast } = useToast();
   const pageContext = useAppContext();
   const [loading, setLoading] = useState<boolean>(false);
+  const [toolTipOpen, setToolTipOpen] = useState<boolean>(false);
+  const [toolTipOpen2, setToolTipOpen2] = useState<boolean>(false);
 
   const handleUserChange = (param: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(param.target.value);
@@ -351,71 +359,71 @@ const SignUp = () => {
                     <form onSubmit={handleNext}>
                       <RequiredInputComponent title="Username:" type='text' borderError={userBorderError} placeholder='Enter Username' value={username} onChange={handleUserChange} maxLength={5000} />
                       <RequiredInputComponent title="Email:" type='email' borderError={emailBorderError} placeholder='Enter Email' value={email} onChange={handleEmailChange} maxLength={5000} />
-                      <h3 className="sm:text-4xl text-3xl jura text-white mb-5">State</h3>
-                        <Select required onValueChange={(e) => handleStateChange(e)}>
-                          <SelectTrigger className="w-full jura sm:text-4xl text-3xl sm:min-h-16 min-h-16 bg-white pl-3">
-                            <SelectValue placeholder="Select a State" />
-                          </SelectTrigger>
-                          <SelectContent className="jura text-4xl">
-                            <SelectItem value="ALL">All States</SelectItem>
-                            <SelectItem value="AL">Alabama</SelectItem>
-                            <SelectItem value="AK">Alaska</SelectItem>
-                            <SelectItem value="AZ">Arizona</SelectItem>
-                            <SelectItem value="AR">Arkansas</SelectItem>
-                            <SelectItem value="CA">California</SelectItem>
-                            <SelectItem value="CO">Colorado</SelectItem>
-                            <SelectItem value="CT">Connecticut</SelectItem>
-                            <SelectItem value="DE">Delaware</SelectItem>
-                            <SelectItem value="DC">District of Columbia</SelectItem>
-                            <SelectItem value="FL">Florida</SelectItem>
-                            <SelectItem value="GA">Georgia</SelectItem>
-                            <SelectItem value="HI">Hawaii</SelectItem>
-                            <SelectItem value="ID">Idaho</SelectItem>
-                            <SelectItem value="IL">Illinois</SelectItem>
-                            <SelectItem value="IN">Indiana</SelectItem>
-                            <SelectItem value="IA">Iowa</SelectItem>
-                            <SelectItem value="KS">Kansas</SelectItem>
-                            <SelectItem value="KY">Kentucky</SelectItem>
-                            <SelectItem value="LA">Louisiana</SelectItem>
-                            <SelectItem value="ME">Maine</SelectItem>
-                            <SelectItem value="MD">Maryland</SelectItem>
-                            <SelectItem value="MA">Massachusetts</SelectItem>
-                            <SelectItem value="MI">Michigan</SelectItem>
-                            <SelectItem value="MN">Minnesota</SelectItem>
-                            <SelectItem value="MS">Mississippi</SelectItem>
-                            <SelectItem value="MO">Missouri</SelectItem>
-                            <SelectItem value="MT">Montana</SelectItem>
-                            <SelectItem value="NE">Nebraska</SelectItem>
-                            <SelectItem value="NV">Nevada</SelectItem>
-                            <SelectItem value="NH">New Hampshire</SelectItem>
-                            <SelectItem value="NJ">New Jersey</SelectItem>
-                            <SelectItem value="NM">New Mexico</SelectItem>
-                            <SelectItem value="NY">New York</SelectItem>
-                            <SelectItem value="NC">North Carolina</SelectItem>
-                            <SelectItem value="ND">North Dakota</SelectItem>
-                            <SelectItem value="OH">Ohio</SelectItem>
-                            <SelectItem value="OK">Oklahoma</SelectItem>
-                            <SelectItem value="OR">Oregon</SelectItem>
-                            <SelectItem value="PA">Pennsylvania</SelectItem>
-                            <SelectItem value="RI">Rhode Island</SelectItem>
-                            <SelectItem value="SC">South Carolina</SelectItem>
-                            <SelectItem value="SD">South Dakota</SelectItem>
-                            <SelectItem value="TN">Tennessee</SelectItem>
-                            <SelectItem value="TX">Texas</SelectItem>
-                            <SelectItem value="UT">Utah</SelectItem>
-                            <SelectItem value="VT">Vermont</SelectItem>
-                            <SelectItem value="VA">Virginia</SelectItem>
-                            <SelectItem value="WA">Washington</SelectItem>
-                            <SelectItem value="WV">West Virginia</SelectItem>
-                            <SelectItem value="WI">Wisconsin</SelectItem>
-                            <SelectItem value="WY">Wyoming</SelectItem>
-                          </SelectContent>
-                        </Select>
+                      <h3 className="text-3xl jura text-white">Preferred Location</h3>
+                      <Select required onValueChange={(e) => handleStateChange(e)}>
+                        <SelectTrigger className="w-full jura text-3xl sm:min-h-43 min-h-12 bg-white pl-3 mb-4 mt-2">
+                          <SelectValue placeholder="States" />
+                        </SelectTrigger>
+                        <SelectContent className="jura text-3xl">
+                          <SelectItem value="ALL">All States</SelectItem>
+                          <SelectItem value="AL">Alabama</SelectItem>
+                          <SelectItem value="AK">Alaska</SelectItem>
+                          <SelectItem value="AZ">Arizona</SelectItem>
+                          <SelectItem value="AR">Arkansas</SelectItem>
+                          <SelectItem value="CA">California</SelectItem>
+                          <SelectItem value="CO">Colorado</SelectItem>
+                          <SelectItem value="CT">Connecticut</SelectItem>
+                          <SelectItem value="DE">Delaware</SelectItem>
+                          <SelectItem value="DC">District of Columbia</SelectItem>
+                          <SelectItem value="FL">Florida</SelectItem>
+                          <SelectItem value="GA">Georgia</SelectItem>
+                          <SelectItem value="HI">Hawaii</SelectItem>
+                          <SelectItem value="ID">Idaho</SelectItem>
+                          <SelectItem value="IL">Illinois</SelectItem>
+                          <SelectItem value="IN">Indiana</SelectItem>
+                          <SelectItem value="IA">Iowa</SelectItem>
+                          <SelectItem value="KS">Kansas</SelectItem>
+                          <SelectItem value="KY">Kentucky</SelectItem>
+                          <SelectItem value="LA">Louisiana</SelectItem>
+                          <SelectItem value="ME">Maine</SelectItem>
+                          <SelectItem value="MD">Maryland</SelectItem>
+                          <SelectItem value="MA">Massachusetts</SelectItem>
+                          <SelectItem value="MI">Michigan</SelectItem>
+                          <SelectItem value="MN">Minnesota</SelectItem>
+                          <SelectItem value="MS">Mississippi</SelectItem>
+                          <SelectItem value="MO">Missouri</SelectItem>
+                          <SelectItem value="MT">Montana</SelectItem>
+                          <SelectItem value="NE">Nebraska</SelectItem>
+                          <SelectItem value="NV">Nevada</SelectItem>
+                          <SelectItem value="NH">New Hampshire</SelectItem>
+                          <SelectItem value="NJ">New Jersey</SelectItem>
+                          <SelectItem value="NM">New Mexico</SelectItem>
+                          <SelectItem value="NY">New York</SelectItem>
+                          <SelectItem value="NC">North Carolina</SelectItem>
+                          <SelectItem value="ND">North Dakota</SelectItem>
+                          <SelectItem value="OH">Ohio</SelectItem>
+                          <SelectItem value="OK">Oklahoma</SelectItem>
+                          <SelectItem value="OR">Oregon</SelectItem>
+                          <SelectItem value="PA">Pennsylvania</SelectItem>
+                          <SelectItem value="RI">Rhode Island</SelectItem>
+                          <SelectItem value="SC">South Carolina</SelectItem>
+                          <SelectItem value="SD">South Dakota</SelectItem>
+                          <SelectItem value="TN">Tennessee</SelectItem>
+                          <SelectItem value="TX">Texas</SelectItem>
+                          <SelectItem value="UT">Utah</SelectItem>
+                          <SelectItem value="VT">Vermont</SelectItem>
+                          <SelectItem value="VA">Virginia</SelectItem>
+                          <SelectItem value="WA">Washington</SelectItem>
+                          <SelectItem value="WV">West Virginia</SelectItem>
+                          <SelectItem value="WI">Wisconsin</SelectItem>
+                          <SelectItem value="WY">Wyoming</SelectItem>
+                        </SelectContent>
+                      </Select>
                       <RequiredInputComponent title="Password:" type='password' borderError={passwordBorderError} placeholder='Enter Password' value={password} onChange={handlePasswordChange} maxLength={5000} />
                       <RequiredInputComponent title="Verify Password:" type='password' borderError={passwordBorderError} placeholder='Re-enter Password' value={password2} onChange={handlePassword2Change} maxLength={5000} />
                       {!passwordsMatch ? (<h1 className='text-2xl jura text-red-600'>Passwords Dont Match</h1>) : (<div></div>)}
 
-                      <button type='submit' className=" text-3xl text-black sm:min-h-16 min-h-12 w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]"> Next</button>
+                      <button type='submit' className=" text-3xl text-black sm:min-h-14 min-h-12 w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]"> Next</button>
                     </form>
 
                   </div>
@@ -487,7 +495,7 @@ const SignUp = () => {
                     </Select>
                     <RequiredInputComponent title="" type='text' borderError={''} placeholder='Answer #3' value={securityThree} onChange={handleSecurityThreeChange} maxLength={5000} />
 
-                    <button className=" text-3xl text-black sm:min-h-16 min-h-12 w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleNextOptional}> Next</button>
+                    <button className=" text-3xl text-black sm:min-h-14 min-h-12 w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleNextOptional}> Next</button>
                   </div>
                 </>
               ) : (
@@ -506,15 +514,15 @@ const SignUp = () => {
 
                     <h1 className="txtOrange sm:text-6xl text-4xl juraBold mb-12 sm:leading-[75px]"> Do You Want To Add Your Custom Stats & Info To Your Account?</h1>
 
-                    <button className=" text-3xl text-black sm:min-h-16 min-h-12 w-full my-9 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleAddStats}>Yes</button>
+                    <button className=" text-3xl text-black sm:min-h-14 min-h-12 w-full my-9 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleAddStats}>Yes</button>
 
                     <h1 className='text-4xl w-full text-white jura text-center'>OR</h1>
 
                     {
                       loading ? (
-                        <button className=" text-3xl text-black sm:min-h-16 min-h-12 w-full my-8 juraBold rounded-xl bg-orange-300"> Creating...</button>
+                        <button className=" text-3xl text-black sm:min-h-14 min-h-12 w-full my-8 juraBold rounded-xl bg-orange-300"> Creating...</button>
                       ) : (
-                        <button className=" text-3xl text-black sm:min-h-16 min-h-12 w-full my-9 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleCreateWithoutStats}>No, Create Account</button>
+                        <button className=" text-3xl text-black sm:min-h-14 min-h-12 w-full my-9 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleCreateWithoutStats}>No, Create Account</button>
                       )
                     }
 
@@ -535,11 +543,21 @@ const SignUp = () => {
 
                     <div className='grid sm:grid-cols-2 grid-cols-1 sm:gap-16'>
                       <div>
-                        <NotRequiredInputComponent title='Full Name:' type='text' borderError={optionalBorderError} placeholder='Full Name' value={fullname} onChange={handleFullNameChange} maxLength={5000} />
-                        <NotRequiredInputComponent title='Pronouns:' type='text' borderError={optionalBorderError} placeholder='Pronouns' value={prounouns} onChange={handlePronounsChange} maxLength={5000} />
-                        <h3 className="text-3xl jura text-white">Select Average</h3>
+                        <NotRequiredInputComponent title='Full Name' type='text' borderError={''} placeholder='Full Name' value={fullname} onChange={handleFullNameChange} maxLength={5000} info='Enter Your Full Name. e.g Booger Barth Truth' />
+                        <NotRequiredInputComponent title='Pronouns' type='text' borderError={''} placeholder='Pronouns' value={prounouns} onChange={handlePronounsChange} maxLength={5000} info='Enter Your Pronounse. e.g He/Him' />
+                        <div className='flex'>
+                          <h3 className={"text-3xl jura text-white pr-2"}>Select Average</h3>
+                          <TooltipProvider>
+                            <Tooltip open={toolTipOpen}>
+                              <TooltipTrigger onFocus={() => setToolTipOpen(true)} onBlur={() => setToolTipOpen(false)}><img src={question.src} alt="" /></TooltipTrigger>
+                              <TooltipContent>
+                                <p>Select your bowling average from one of the options in the dropdown. e.g 190-200 Avg</p>
+                              </TooltipContent>
+                            </Tooltip>
+                          </TooltipProvider>
+                        </div>
                         <Select onValueChange={(e) => handleAverageChange(e)} >
-                          <SelectTrigger className="w-full jura text-3xl sm:min-h-16 min-h-12 bg-white pl-3 my-5 text-gray-400">
+                          <SelectTrigger className="w-full jura text-3xl sm:min-h-14 min-h-12 bg-white pl-3 my-5 text-gray-400">
                             <SelectValue placeholder="Average" />
                           </SelectTrigger>
                           <SelectContent className="jura text-4xl">
@@ -567,58 +585,68 @@ const SignUp = () => {
                             <SelectItem value="290-300 Avg">290-300 Avg</SelectItem>
                           </SelectContent>
                         </Select>
-                        <NotRequiredInputComponent title='Bowling Center' type='text' borderError={optionalBorderError} placeholder='Bowling Center' value={bowlingCenter} onChange={handleBowlingCenterChange} maxLength={5000} />
+                        <NotRequiredInputComponent title='Bowling Center' type='text' borderError={''} placeholder='Bowling Center' value={bowlingCenter} onChange={handleBowlingCenterChange} maxLength={5000} info='Enter the bowling center where you bowl the most, or represent the most. e.g Reno Bowl' />
                       </div>
 
                       <div>
-                      <h3 className={"text-3xl jura text-white"}>Select A Style</h3>
+                        <div className='flex'>
+                          <h3 className={"text-3xl jura text-white pr-2"}>Select Style</h3>
+                          <TooltipProvider>
+                            <Tooltip open={toolTipOpen2}>
+                              <TooltipTrigger onFocus={() => setToolTipOpen2(true)} onBlur={() => setToolTipOpen2(false)}><img src={question.src} alt="" /></TooltipTrigger>
+                              <TooltipContent>
+                                <p>Select your bowling style from one of the options in the dropdown. e.g 2 handed (Right)</p>
+                              </TooltipContent>
+                            </Tooltip>
+                          </TooltipProvider>
+                        </div>
                         <Select onValueChange={(e) => handleStyleChange(e)} >
-                          <SelectTrigger className="w-full jura text-3xl sm:min-h-16 min-h-12 bg-white pl-3 my-5 text-gray-400">
-                            <SelectValue placeholder="Styles" />
-                          </SelectTrigger>
-                          <SelectContent className="jura text-4xl">
-                            <SelectItem value="1 Handed (Left)">1 Handed (Left)</SelectItem>
-                            <SelectItem value="2 Handed (Left)">2 Handed (Left)</SelectItem>
-                            <SelectItem value="1 Handed (Right)">1 Handed (Right)</SelectItem>
-                            <SelectItem value="2 Handed (Right)">2 Handed (Right)</SelectItem>
-                            <SelectItem value="1 Handed (Both)">1 Handed (Both)</SelectItem>
-                            <SelectItem value="2 Handed (Both)">2 Handed (Both)</SelectItem>
-                            <SelectItem value="Hadouken Style">Hadouken Style</SelectItem>
-                          </SelectContent>
-                        </Select>
-                        <NotRequiredInputComponent title='High Game' type='text' borderError={optionalBorderError} placeholder='High Game' value={highGame} onChange={handleHighGameChange} maxLength={5000} />
-                        <NotRequiredInputComponent title='High Series' type='text' borderError={optionalBorderError} placeholder='High Series' value={highSeries} onChange={handleHighSeriesChange} maxLength={5000} />
-                        <NotRequiredInputComponent title='Earnings' type='text' borderError={optionalBorderError} placeholder='$ Earnings $' value={earnings} onChange={handleEarningsChange} maxLength={5000} />
-                      </div>
+                        <SelectTrigger className="w-full jura text-3xl sm:min-h-14 min-h-12 bg-white pl-3 my-5 text-gray-400">
+                          <SelectValue placeholder="Styles" />
+                        </SelectTrigger>
+                        <SelectContent className="jura text-4xl">
+                          <SelectItem value="1 Handed (Left)">1 Handed (Left)</SelectItem>
+                          <SelectItem value="2 Handed (Left)">2 Handed (Left)</SelectItem>
+                          <SelectItem value="1 Handed (Right)">1 Handed (Right)</SelectItem>
+                          <SelectItem value="2 Handed (Right)">2 Handed (Right)</SelectItem>
+                          <SelectItem value="1 Handed (Both)">1 Handed (Both)</SelectItem>
+                          <SelectItem value="2 Handed (Both)">2 Handed (Both)</SelectItem>
+                          <SelectItem value="Hadouken Style">Hadouken Style</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <NotRequiredInputComponent title='High Game' type='text' borderError={''} placeholder='High Game' value={highGame} onChange={handleHighGameChange} maxLength={5000} info='Enter in your highest game that you bowled (Max 300). e.g 275' />
+                      <NotRequiredInputComponent title='High Series' type='text' borderError={''} placeholder='High Series' value={highSeries} onChange={handleHighSeriesChange} maxLength={5000} info='Enter in your highest seires that you bowled out of three games or more (1st game score + 2nd game score + 3rd game score). e.g 777' />
+                      <NotRequiredInputComponent title='Earnings' type='text' borderError={''} placeholder='$ Earnings $' value={earnings} onChange={handleEarningsChange} maxLength={5000} info='Enter how much money you have made from bowling tournaments $$$' />
                     </div>
-
-                    {
-                      loading ? (
-                        <button className=" text-3xl text-black sm:min-h-16 min-h-12 w-full my-8 juraBold rounded-xl bg-orange-300"> Creating...</button>
-                      ) : (
-                        <button className=" text-3xl text-black sm:min-h-16 min-h-12 w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleCreateAccountWithStats}> Create Account</button>
-                      )
-                    }
-
                   </div>
-                </>) : (<></>)
+
+                  {
+                    loading ? (
+                      <button className=" text-3xl text-black sm:min-h-14 min-h-12 w-full my-8 juraBold rounded-xl bg-orange-300"> Creating...</button>
+                    ) : (
+                      <button className=" text-3xl text-black sm:min-h-14 min-h-12 w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleCreateAccountWithStats}> Create Account</button>
+                    )
+                  }
+
+                </div>
+          </>) : (<></>)
             }
 
 
 
-          </div>
+        </div>
 
-          {/* Column 2 */}
-          <div>
-
-          </div>
+        {/* Column 2 */}
+        <div>
 
         </div>
 
-
       </div>
-    </div >
-  )
+
+
+    </div>
+      </div >
+      )
 }
 
 export default SignUp
