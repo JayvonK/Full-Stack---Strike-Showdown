@@ -28,6 +28,7 @@ export interface IUserInfoWithStats {
   earnings: string;
   highGame: string;
   highSeries: string;
+  streak: number;
 }
 
 export interface IPublicUserData {
@@ -47,6 +48,7 @@ export interface IPublicUserData {
   earnings: string;
   highGame: string;
   highSeries: string;
+  streak: number;
 }
 
 export interface IUserPosts {

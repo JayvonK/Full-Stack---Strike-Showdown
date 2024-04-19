@@ -25,7 +25,6 @@ const ForgotPassword = () => {
     const [passwordsMatch, setPasswordsMatch] = useState<boolean>(true);
     const [passwordOne, setPasswordOne] = useState<string>('');
     const [passwordTwo, setPasswordTwo] = useState<string>('');
-    const [currentUserData, setCurrentUserData] = useState<IPublicUserData | null>(null);
     const router = useRouter();
     const { toast } = useToast();
     const pageContext = useAppContext();
@@ -134,7 +133,6 @@ const ForgotPassword = () => {
                     dataQuestionArray.push(data.securityQuestionThree);
                     setQuestionArray(dataQuestionArray);
                     setQuestion(dataQuestionArray[0]);
-                    setCurrentUserData(data);
                     setEnterAnswer(true)
                     setEnterUsername(false);
                 } else {

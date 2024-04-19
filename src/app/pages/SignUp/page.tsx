@@ -268,7 +268,8 @@ const SignUp = () => {
       average: 'N/A',
       earnings: 'N/A',
       highGame: 'N/A',
-      highSeries: 'N/A'
+      highSeries: 'N/A',
+      streak: 0
     }
 
     try {
@@ -309,9 +310,9 @@ const SignUp = () => {
       average: average.trim() === '' ? 'N/A' : average,
       earnings: earnings.trim() === '' ? 'N/A' : earnings,
       highGame: highGame.trim() === '' ? 'N/A' : highGame,
-      highSeries: highSeries.trim() === '' ? 'N/A' : highSeries
+      highSeries: highSeries.trim() === '' ? 'N/A' : highSeries,
+      streak: 0
     }
-
   
       try {
         let createdUser = await CreateAccountAPI(userData);
@@ -323,12 +324,11 @@ const SignUp = () => {
         toast({
           variant: "destructive",
           title: "Error ",
-          description: "Make Sure You Filled Everything In.",
+          description: "Something went wrong",
           action: <ToastAction altText="Try again">Try again</ToastAction>,
         })
       }
   }
-
 
   return (
     <div>
