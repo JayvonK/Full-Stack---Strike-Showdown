@@ -33,10 +33,10 @@ const SignUp = () => {
   const [emailBorderError, setEmailBorderError] = useState<string>('');
   const [optionalBorderError, setOptionalBorderError] = useState<string>('');
   const [passwordBorderError, setPasswordBorderError] = useState<string>('');
-  const [creatingAccount, setCreatingAccount] = useState<boolean>(false);
+  const [creatingAccount, setCreatingAccount] = useState<boolean>(true);
   const [doesUserWantStats, setDoesUserWantStats] = useState<boolean>(false);
   const [answeringSecurity, setAnsweringSecurity] = useState<boolean>(false);
-  const [addingCustomStats, setAddingCustomStats] = useState<boolean>(true);
+  const [addingCustomStats, setAddingCustomStats] = useState<boolean>(false);
   const [questionOne, setQuestionOne] = useState<string>('');
   const [questionTwo, setQuestionTwo] = useState<string>('');
   const [questionThree, setQuestionThree] = useState<string>('');
