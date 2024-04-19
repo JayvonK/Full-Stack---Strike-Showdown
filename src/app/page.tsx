@@ -26,9 +26,6 @@ export default function Home() {
   const [password, setPassword] = useState<string>('');
   const [userBorderError, setuserBorderError] = useState<string>('');
   const [passwordBorderError, setPasswordBorderError] = useState<string>('');
-  const [errorMessage, setErrorMessage] = useState<boolean>(false);
-  const [notLoggedIn, setNotLoggedIn] = useState<boolean>(true);
-  const [screenCount, setScreenCount] = useState<number>(0);
   const router = useRouter();
 
 
@@ -42,27 +39,12 @@ export default function Home() {
 
   const handleUserChange = (param: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(param.target.value);
-    setErrorMessage(false);
     setuserBorderError('');
   }
 
   const handlePasswordChange = (param: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(param.target.value);
-    setErrorMessage(false);
     setPasswordBorderError('');
-  }
-
-  const handleStateChange = (e: string) => {
-    pageContext.setCurrentState(e);
-  }
-
-  const handleBack = () => {
-    setNotLoggedIn(true);
-  }
-
-  const handleLocationConfirm = () => {
-    pageContext.setUserLoggedIn(true);
-    router.push('/pages/HomePage')
   }
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -87,8 +69,9 @@ export default function Home() {
         } else {
           setuserBorderError('');
           setPasswordBorderError('');
-          setNotLoggedIn(false);
           pageContext.setVerifiedUser(username);
+          pageContext.setUserLoggedIn(true);
+          router.push('/pages/HomePage')
         }
       }
     } catch (error) {
@@ -152,118 +135,38 @@ export default function Home() {
               {/* Column 1 (Login Side) */}
               <div className="min-h-screen bgBlack">
 
+                <>
+                  <LoginNavComponent exist={false} onClick={() => { }} />
 
-                { // Ternary to switch between login and preffered location (This one is login )
-                  notLoggedIn ? (
-                    <>
-                      <LoginNavComponent exist={false} onClick={() => { }} />
+                  <div className="2xl:px-44 xl:px-40 lg:px-32 md:px-24 sm:px-16 px-8">
 
-                      <div className="2xl:px-44 xl:px-40 lg:px-32 md:px-24 sm:px-16 px-8">
+                    <h1 className="txtOrange sm:text-6xl text-5xl juraBold mb-12 sm:leading-[75px]"> Strike <br /> <span className="text-white">Showdown</span></h1>
 
-                        <h1 className="txtOrange sm:text-6xl text-5xl juraBold mb-12 sm:leading-[75px]"> Strike <br /> <span className="text-white">Showdown</span></h1>
+                    <form onSubmit={(e) => handleLogin(e)}>
 
-                        <form onSubmit={(e) => handleLogin(e)}>
+                      <RequiredInputComponent title={"Username:"} type={'text'} borderError={userBorderError} placeholder=" Username/Email" value={username} onChange={handleUserChange} maxLength={20} />
 
-                          <RequiredInputComponent title={"Username:"} type={'text'} borderError={userBorderError} placeholder=" Username/Email" value={username} onChange={handleUserChange} maxLength={20} />
+                      <RequiredInputComponent title={"Password:"} type={'password'} borderError={passwordBorderError} placeholder=" Password" value={password} onChange={handlePasswordChange} maxLength={524288} />
 
-                          <RequiredInputComponent title={"Password:"} type={'password'} borderError={passwordBorderError} placeholder=" Password" value={password} onChange={handlePasswordChange} maxLength={524288} />
+                      <h3 className=" text-3xl txtOrange jura underline hover:cursor-pointer hover:text-[#ff9939]" onClick={handleForgotPassword}>Forgot Password?</h3>
 
-                          <h3 className=" text-3xl txtOrange jura underline hover:cursor-pointer hover:text-[#ff9939]" onClick={handleForgotPassword}>Forgot Password?</h3>
+                      <button type="submit" className="text-3xl text-black sm:min-h-16 min-h-16 w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]"> LOG IN</button>
 
-                          <button type="submit" className="text-3xl text-black sm:min-h-16 min-h-16 w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]"> LOG IN</button>
+                      <h3 className="text-3xl text-white jura">Don&apos;t have an account? <span className="txtOrange underline hover:cursor-pointer hover:text-[#ff9939]" onClick={handleSignUp}>Sign Up</span></h3>
+                    </form>
 
-                          <h3 className="text-3xl text-white jura">Don&apos;t have an account? <span className="txtOrange underline hover:cursor-pointer hover:text-[#ff9939]" onClick={handleSignUp}>Sign Up</span></h3>
-                        </form>
-
-
-
-                      </div>
-                    </>
-
-                  ) : ( // Ternary to switch between login page and preffered location (This one is preffered location)
-
-                    <>
-                      <LoginNavComponent exist={true} onClick={handleBack} />
-
-                      <div className="2xl:px-44 xl:px-40 lg:px-32 md:px-24 sm:px-16 px-8">
-
-                        <h1 className="txtOrange sm:text-6xl text-5xl juraBold mb-12 sm:leading-[75px]">Your Preferred Location?</h1>
-
-                        <h3 className="sm:text-4xl text-3xl jura text-white mb-5">State</h3>
-                        <Select onValueChange={(e) => handleStateChange(e)}>
-                          <SelectTrigger className="w-full jura sm:text-4xl text-3xl sm:min-h-16 min-h-16 bg-white pl-3">
-                            <SelectValue placeholder="Select a State" />
-                          </SelectTrigger>
-                          <SelectContent className="jura text-4xl">
-                            <SelectItem value="ALL">All States</SelectItem>
-                            <SelectItem value="AL">Alabama</SelectItem>
-                            <SelectItem value="AK">Alaska</SelectItem>
-                            <SelectItem value="AZ">Arizona</SelectItem>
-                            <SelectItem value="AR">Arkansas</SelectItem>
-                            <SelectItem value="CA">California</SelectItem>
-                            <SelectItem value="CO">Colorado</SelectItem>
-                            <SelectItem value="CT">Connecticut</SelectItem>
-                            <SelectItem value="DE">Delaware</SelectItem>
-                            <SelectItem value="DC">District of Columbia</SelectItem>
-                            <SelectItem value="FL">Florida</SelectItem>
-                            <SelectItem value="GA">Georgia</SelectItem>
-                            <SelectItem value="HI">Hawaii</SelectItem>
-                            <SelectItem value="ID">Idaho</SelectItem>
-                            <SelectItem value="IL">Illinois</SelectItem>
-                            <SelectItem value="IN">Indiana</SelectItem>
-                            <SelectItem value="IA">Iowa</SelectItem>
-                            <SelectItem value="KS">Kansas</SelectItem>
-                            <SelectItem value="KY">Kentucky</SelectItem>
-                            <SelectItem value="LA">Louisiana</SelectItem>
-                            <SelectItem value="ME">Maine</SelectItem>
-                            <SelectItem value="MD">Maryland</SelectItem>
-                            <SelectItem value="MA">Massachusetts</SelectItem>
-                            <SelectItem value="MI">Michigan</SelectItem>
-                            <SelectItem value="MN">Minnesota</SelectItem>
-                            <SelectItem value="MS">Mississippi</SelectItem>
-                            <SelectItem value="MO">Missouri</SelectItem>
-                            <SelectItem value="MT">Montana</SelectItem>
-                            <SelectItem value="NE">Nebraska</SelectItem>
-                            <SelectItem value="NV">Nevada</SelectItem>
-                            <SelectItem value="NH">New Hampshire</SelectItem>
-                            <SelectItem value="NJ">New Jersey</SelectItem>
-                            <SelectItem value="NM">New Mexico</SelectItem>
-                            <SelectItem value="NY">New York</SelectItem>
-                            <SelectItem value="NC">North Carolina</SelectItem>
-                            <SelectItem value="ND">North Dakota</SelectItem>
-                            <SelectItem value="OH">Ohio</SelectItem>
-                            <SelectItem value="OK">Oklahoma</SelectItem>
-                            <SelectItem value="OR">Oregon</SelectItem>
-                            <SelectItem value="PA">Pennsylvania</SelectItem>
-                            <SelectItem value="RI">Rhode Island</SelectItem>
-                            <SelectItem value="SC">South Carolina</SelectItem>
-                            <SelectItem value="SD">South Dakota</SelectItem>
-                            <SelectItem value="TN">Tennessee</SelectItem>
-                            <SelectItem value="TX">Texas</SelectItem>
-                            <SelectItem value="UT">Utah</SelectItem>
-                            <SelectItem value="VT">Vermont</SelectItem>
-                            <SelectItem value="VA">Virginia</SelectItem>
-                            <SelectItem value="WA">Washington</SelectItem>
-                            <SelectItem value="WV">West Virginia</SelectItem>
-                            <SelectItem value="WI">Wisconsin</SelectItem>
-                            <SelectItem value="WY">Wyoming</SelectItem>
-                          </SelectContent>
-                        </Select>
-
-                        <button className="sm:text-4xl text-3xl text-black sm:min-h-16 min-h-16 w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleLocationConfirm}> Confirm</button>
-                      </div>
-                    </>
-                  )}
+                  </div>
+                </>
               </div>
-              {/* Column 2 (Nothing) */}
-              <div>
-
-              </div>
-
             </div>
-          )
-        }
+
+          )}
       </div>
+      {/* Column 2 (Nothing) */}
+      <div>
+
+      </div>
+
     </div>
-  );
+  )
 }

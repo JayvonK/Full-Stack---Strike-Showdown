@@ -15,7 +15,8 @@
         "wins": 32,
         "average": "160-170 Avg" ,
         "style": "1 Handed (Left)",
-        "streak": 1
+        "streak": 1,
+        "deleted": false
     },
     {
         "title": "Practice Session",
@@ -33,7 +34,8 @@
         "wins": 22,
         "average": "190-200 Avg" ,
         "style": "Hadouken Style",
-        "streak": 9
+        "streak": 9,
+        "deleted": false
     },
     {
         "title": "1v1 Challenge",
@@ -51,7 +53,8 @@
         "wins": 40,
         "average": "180-190 Avg" ,
         "style": "1 Handed (Right)",
-        "streak": 12
+        "streak": 12,
+        "deleted": false
     },
     {
         "title": "Practice Session",
@@ -69,6 +72,7 @@
         "wins": 19,
         "average": "110-120 Avg" ,
         "style": "2 Handed (Right)",
-        "streak": 3
+        "streak": 3,
+        "deleted": false
     }
 ]

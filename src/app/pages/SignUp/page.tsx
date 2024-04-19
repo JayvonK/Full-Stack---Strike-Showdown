@@ -66,6 +66,10 @@ const SignUp = () => {
     setEmailBorderError('');
   }
 
+  const handleStateChange = (e: string) => {
+    pageContext.setCurrentState(e);
+  }
+
   const handlePasswordChange = (param: React.ChangeEvent<HTMLInputElement>) => {
     if (password2.trim() !== '' && password2 !== param.target.value) {
       setPassword(param.target.value);
@@ -347,6 +351,66 @@ const SignUp = () => {
                     <form onSubmit={handleNext}>
                       <RequiredInputComponent title="Username:" type='text' borderError={userBorderError} placeholder='Enter Username' value={username} onChange={handleUserChange} maxLength={5000} />
                       <RequiredInputComponent title="Email:" type='email' borderError={emailBorderError} placeholder='Enter Email' value={email} onChange={handleEmailChange} maxLength={5000} />
+                      <h3 className="sm:text-4xl text-3xl jura text-white mb-5">State</h3>
+                        <Select required onValueChange={(e) => handleStateChange(e)}>
+                          <SelectTrigger className="w-full jura sm:text-4xl text-3xl sm:min-h-16 min-h-16 bg-white pl-3">
+                            <SelectValue placeholder="Select a State" />
+                          </SelectTrigger>
+                          <SelectContent className="jura text-4xl">
+                            <SelectItem value="ALL">All States</SelectItem>
+                            <SelectItem value="AL">Alabama</SelectItem>
+                            <SelectItem value="AK">Alaska</SelectItem>
+                            <SelectItem value="AZ">Arizona</SelectItem>
+                            <SelectItem value="AR">Arkansas</SelectItem>
+                            <SelectItem value="CA">California</SelectItem>
+                            <SelectItem value="CO">Colorado</SelectItem>
+                            <SelectItem value="CT">Connecticut</SelectItem>
+                            <SelectItem value="DE">Delaware</SelectItem>
+                            <SelectItem value="DC">District of Columbia</SelectItem>
+                            <SelectItem value="FL">Florida</SelectItem>
+                            <SelectItem value="GA">Georgia</SelectItem>
+                            <SelectItem value="HI">Hawaii</SelectItem>
+                            <SelectItem value="ID">Idaho</SelectItem>
+                            <SelectItem value="IL">Illinois</SelectItem>
+                            <SelectItem value="IN">Indiana</SelectItem>
+                            <SelectItem value="IA">Iowa</SelectItem>
+                            <SelectItem value="KS">Kansas</SelectItem>
+                            <SelectItem value="KY">Kentucky</SelectItem>
+                            <SelectItem value="LA">Louisiana</SelectItem>
+                            <SelectItem value="ME">Maine</SelectItem>
+                            <SelectItem value="MD">Maryland</SelectItem>
+                            <SelectItem value="MA">Massachusetts</SelectItem>
+                            <SelectItem value="MI">Michigan</SelectItem>
+                            <SelectItem value="MN">Minnesota</SelectItem>
+                            <SelectItem value="MS">Mississippi</SelectItem>
+                            <SelectItem value="MO">Missouri</SelectItem>
+                            <SelectItem value="MT">Montana</SelectItem>
+                            <SelectItem value="NE">Nebraska</SelectItem>
+                            <SelectItem value="NV">Nevada</SelectItem>
+                            <SelectItem value="NH">New Hampshire</SelectItem>
+                            <SelectItem value="NJ">New Jersey</SelectItem>
+                            <SelectItem value="NM">New Mexico</SelectItem>
+                            <SelectItem value="NY">New York</SelectItem>
+                            <SelectItem value="NC">North Carolina</SelectItem>
+                            <SelectItem value="ND">North Dakota</SelectItem>
+                            <SelectItem value="OH">Ohio</SelectItem>
+                            <SelectItem value="OK">Oklahoma</SelectItem>
+                            <SelectItem value="OR">Oregon</SelectItem>
+                            <SelectItem value="PA">Pennsylvania</SelectItem>
+                            <SelectItem value="RI">Rhode Island</SelectItem>
+                            <SelectItem value="SC">South Carolina</SelectItem>
+                            <SelectItem value="SD">South Dakota</SelectItem>
+                            <SelectItem value="TN">Tennessee</SelectItem>
+                            <SelectItem value="TX">Texas</SelectItem>
+                            <SelectItem value="UT">Utah</SelectItem>
+                            <SelectItem value="VT">Vermont</SelectItem>
+                            <SelectItem value="VA">Virginia</SelectItem>
+                            <SelectItem value="WA">Washington</SelectItem>
+                            <SelectItem value="WV">West Virginia</SelectItem>
+                            <SelectItem value="WI">Wisconsin</SelectItem>
+                            <SelectItem value="WY">Wyoming</SelectItem>
+                          </SelectContent>
+                        </Select>
                       <RequiredInputComponent title="Password:" type='password' borderError={passwordBorderError} placeholder='Enter Password' value={password} onChange={handlePasswordChange} maxLength={5000} />
                       <RequiredInputComponent title="Verify Password:" type='password' borderError={passwordBorderError} placeholder='Re-enter Password' value={password2} onChange={handlePassword2Change} maxLength={5000} />
                       {!passwordsMatch ? (<h1 className='text-2xl jura text-red-600'>Passwords Dont Match</h1>) : (<div></div>)}
@@ -473,9 +537,9 @@ const SignUp = () => {
                       <div>
                         <NotRequiredInputComponent title='Full Name:' type='text' borderError={optionalBorderError} placeholder='Full Name' value={fullname} onChange={handleFullNameChange} maxLength={5000} />
                         <NotRequiredInputComponent title='Pronouns:' type='text' borderError={optionalBorderError} placeholder='Pronouns' value={prounouns} onChange={handlePronounsChange} maxLength={5000} />
-                        <h3 className={"text-3xl jura text-white"}>Select Average</h3>
+                        <h3 className="text-3xl jura text-white">Select Average</h3>
                         <Select onValueChange={(e) => handleAverageChange(e)} >
-                          <SelectTrigger className="w-full jura text-3xl sm:min-h-16 min-h-12 bg-white pl-3 my-5">
+                          <SelectTrigger className="w-full jura text-3xl sm:min-h-16 min-h-12 bg-white pl-3 my-5 text-gray-400">
                             <SelectValue placeholder="Average" />
                           </SelectTrigger>
                           <SelectContent className="jura text-4xl">
@@ -509,7 +573,7 @@ const SignUp = () => {
                       <div>
                       <h3 className={"text-3xl jura text-white"}>Select A Style</h3>
                         <Select onValueChange={(e) => handleStyleChange(e)} >
-                          <SelectTrigger className="w-full jura text-3xl sm:min-h-16 min-h-12 bg-white pl-3 my-5">
+                          <SelectTrigger className="w-full jura text-3xl sm:min-h-16 min-h-12 bg-white pl-3 my-5 text-gray-400">
                             <SelectValue placeholder="Styles" />
                           </SelectTrigger>
                           <SelectContent className="jura text-4xl">

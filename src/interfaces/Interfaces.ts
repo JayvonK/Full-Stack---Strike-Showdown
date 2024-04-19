@@ -51,19 +51,19 @@ export interface IPublicUserData {
 
 export interface IUserPosts {
   title: string;
-  visibility: boolean;
+  visibility: boolean; 
   state: string;
   locations: string;
-  date: string;
-  time: string;
+  date: string; 
+  time: string; 
   maxPpl: number;
   currentPpl: number;
-  description: string;
-  isFinished: boolean;
-  username: string;
-  profileImage: string;
-  wins: number;
-  average: string;
-  style: string;
-  streak: number;
+  description: string; 
+  isFinished: boolean; 
+  username: string; 
+  profileImage: string; 
+  wins: number; 
+  average: string; 
+  style: string; 
+  streak: number; 
 }
