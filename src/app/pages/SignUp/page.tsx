@@ -50,7 +50,7 @@ const SignUp = () => {
   const [securityTwo, setSecurityTwo] = useState<string>('');
   const [securityThree, setSecurityThree] = useState<string>('');
   const [fullname, setFullname] = useState<string>('');
-  const [prounouns, setPronouns] = useState<string>('');
+  const [pronouns, setPronouns] = useState<string>('');
   const [bowlingCenter, setBowlingCenter] = useState<string>('');
   const [average, setAverage] = useState<string>('');
   const [style, setStyle] = useState<string>('');
@@ -271,7 +271,6 @@ const SignUp = () => {
       highSeries: 'N/A'
     }
 
-
     try {
       let createdUser = await CreateAccountAPI(userData);
       console.log(createdUser);
@@ -300,27 +299,20 @@ const SignUp = () => {
       securityAnswer: securityOne,
       securityAnswerTwo: securityTwo,
       securityAnswerThree: securityThree,
-      fullName: fullname,
+      fullName: fullname.trim() === '' ? 'N/A' : fullname,
       profileImage: 'N/A',
-      pronouns: prounouns,
+      pronouns: pronouns.trim() === '' ? 'N/A' : pronouns,
       wins: 0,
       loses: 0,
-      style: style,
-      mainCenter: bowlingCenter,
-      average: average,
-      earnings: earnings,
-      highGame: highGame,
-      highSeries: highSeries
+      style: style.trim() === '' ? 'N/A' : style,
+      mainCenter: bowlingCenter.trim() === '' ? 'N/A' : bowlingCenter,
+      average: average.trim() === '' ? 'N/A' : average,
+      earnings: earnings.trim() === '' ? 'N/A' : earnings,
+      highGame: highGame.trim() === '' ? 'N/A' : highGame,
+      highSeries: highSeries.trim() === '' ? 'N/A' : highSeries
     }
 
-    if (fullname.trim() === '' || prounouns.trim() === '' || style.trim() === '' || bowlingCenter.trim() === '' || average.trim() === '' || earnings.trim() === '' || highGame.trim() === '' || highSeries.trim() === '') {
-      toast({
-        variant: "destructive",
-        title: "Error",
-        description: "Please make sure none of your stats/info is empty",
-        action: <ToastAction altText="Try again">Try again</ToastAction>,
-      })
-    } else {
+  
       try {
         let createdUser = await CreateAccountAPI(userData);
         console.log(createdUser);
@@ -335,7 +327,6 @@ const SignUp = () => {
           action: <ToastAction altText="Try again">Try again</ToastAction>,
         })
       }
-    }
   }
 
 
@@ -544,7 +535,7 @@ const SignUp = () => {
                     <div className='grid sm:grid-cols-2 grid-cols-1 sm:gap-16'>
                       <div>
                         <NotRequiredInputComponent title='Full Name' type='text' borderError={''} placeholder='Full Name' value={fullname} onChange={handleFullNameChange} maxLength={5000} info='Enter Your Full Name. e.g Booger Barth Truth' />
-                        <NotRequiredInputComponent title='Pronouns' type='text' borderError={''} placeholder='Pronouns' value={prounouns} onChange={handlePronounsChange} maxLength={5000} info='Enter Your Pronounse. e.g He/Him' />
+                        <NotRequiredInputComponent title='Pronouns' type='text' borderError={''} placeholder='Pronouns' value={pronouns} onChange={handlePronounsChange} maxLength={5000} info='Enter Your Pronounse. e.g He/Him' />
                         <div className='flex'>
                           <h3 className={"text-3xl jura text-white pr-2"}>Select Average</h3>
                           <TooltipProvider>
@@ -557,7 +548,7 @@ const SignUp = () => {
                           </TooltipProvider>
                         </div>
                         <Select onValueChange={(e) => handleAverageChange(e)} >
-                          <SelectTrigger className="w-full jura text-3xl sm:min-h-14 min-h-12 bg-white pl-3 my-5 text-gray-400">
+                          <SelectTrigger className="w-full jura text-3xl sm:min-h-14 min-h-12 bg-white pl-3 my-5">
                             <SelectValue placeholder="Average" />
                           </SelectTrigger>
                           <SelectContent className="jura text-4xl">
@@ -601,7 +592,7 @@ const SignUp = () => {
                           </TooltipProvider>
                         </div>
                         <Select onValueChange={(e) => handleStyleChange(e)} >
-                        <SelectTrigger className="w-full jura text-3xl sm:min-h-14 min-h-12 bg-white pl-3 my-5 text-gray-400">
+                        <SelectTrigger className="w-full jura text-3xl sm:min-h-14 min-h-12 bg-white pl-3 my-5 ">
                           <SelectValue placeholder="Styles" />
                         </SelectTrigger>
                         <SelectContent className="jura text-4xl">
