@@ -39,10 +39,10 @@ const SignUp = () => {
   const [userBorderError, setUserBorderError] = useState<string>('');
   const [emailBorderError, setEmailBorderError] = useState<string>('');
   const [passwordBorderError, setPasswordBorderError] = useState<string>('');
-  const [creatingAccount, setCreatingAccount] = useState<boolean>(false);
+  const [creatingAccount, setCreatingAccount] = useState<boolean>(true);
   const [doesUserWantStats, setDoesUserWantStats] = useState<boolean>(false);
   const [answeringSecurity, setAnsweringSecurity] = useState<boolean>(false);
-  const [addingCustomStats, setAddingCustomStats] = useState<boolean>(true);
+  const [addingCustomStats, setAddingCustomStats] = useState<boolean>(false);
   const [questionOne, setQuestionOne] = useState<string>('');
   const [questionTwo, setQuestionTwo] = useState<string>('');
   const [questionThree, setQuestionThree] = useState<string>('');
@@ -63,6 +63,7 @@ const SignUp = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [toolTipOpen, setToolTipOpen] = useState<boolean>(false);
   const [toolTipOpen2, setToolTipOpen2] = useState<boolean>(false);
+  const [location, setLocation] = useState<string>('');
 
   const handleUserChange = (param: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(param.target.value);
@@ -74,8 +75,8 @@ const SignUp = () => {
     setEmailBorderError('');
   }
 
-  const handleStateChange = (e: string) => {
-    pageContext.setCurrentState(e);
+  const handleLocationChange = (e: string) => {
+    setLocation(e);
   }
 
   const handlePasswordChange = (param: React.ChangeEvent<HTMLInputElement>) => {
@@ -204,7 +205,8 @@ const SignUp = () => {
     }
   }
 
-  const handleNextOptional = () => {
+  const handleNextOptional = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     if (questionOne.trim() !== '' && questionTwo.trim() !== '' && questionThree.trim() !== '' && securityOne.trim() !== '' && securityTwo.trim() !== '' && securityThree.trim() !== '') {
       setAnsweringSecurity(false);
       setDoesUserWantStats(true);
@@ -252,6 +254,7 @@ const SignUp = () => {
       username: username,
       email: email,
       password: password,
+      location: location,
       securityQuestion: questionOne,
       securityQuestionTwo: questionTwo,
       securityQuestionThree: questionThree,
@@ -293,6 +296,7 @@ const SignUp = () => {
     let userData: IUserInfoWithStats = {
       username: username,
       email: email,
+      location: location,
       password: password,
       securityQuestion: questionOne,
       securityQuestionTwo: questionTwo,
@@ -351,7 +355,7 @@ const SignUp = () => {
                       <RequiredInputComponent title="Username:" type='text' borderError={userBorderError} placeholder='Enter Username' value={username} onChange={handleUserChange} maxLength={5000} />
                       <RequiredInputComponent title="Email:" type='email' borderError={emailBorderError} placeholder='Enter Email' value={email} onChange={handleEmailChange} maxLength={5000} />
                       <h3 className="text-3xl jura text-white">Preferred Location</h3>
-                      <Select required onValueChange={(e) => handleStateChange(e)}>
+                      <Select required onValueChange={(e) => handleLocationChange(e)}>
                         <SelectTrigger className="w-full jura text-3xl sm:min-h-43 min-h-12 bg-white pl-3 mb-4 mt-2">
                           <SelectValue placeholder="States" />
                         </SelectTrigger>
@@ -439,7 +443,7 @@ const SignUp = () => {
                     {/* Selecting Question 1 */}
                     <form onSubmit={handleNextOptional}>
 
-                      <Select onValueChange={(e) => setQuestionOne(e)}>
+                      <Select required onValueChange={(e) => setQuestionOne(e)}>
                         <SelectTrigger className="w-full jura  text-3xl text-white min-h-[40px]">
                           <SelectValue placeholder="Select Question" />
                         </SelectTrigger>
@@ -456,7 +460,7 @@ const SignUp = () => {
 
 
                       {/* Selecting Question 2 */}
-                      <Select onValueChange={(e) => setQuestionTwo(e)}>
+                      <Select required onValueChange={(e) => setQuestionTwo(e)}>
                         <SelectTrigger className="w-full jura  text-3xl text-white min-h-[40px]">
                           <SelectValue placeholder="Select Question" />
                         </SelectTrigger>
@@ -473,7 +477,7 @@ const SignUp = () => {
 
 
                       {/* Selecting Question 3 */}
-                      <Select onValueChange={(e) => setQuestionThree(e)}>
+                      <Select required onValueChange={(e) => setQuestionThree(e)}>
                         <SelectTrigger className="w-full jura  text-3xl text-white min-h-[40px]">
                           <SelectValue placeholder="Select Question" />
                         </SelectTrigger>
@@ -489,7 +493,7 @@ const SignUp = () => {
                       <RequiredInputComponent title="" type='text' borderError={''} placeholder='Answer #3' value={securityThree} onChange={handleSecurityThreeChange} maxLength={5000} />
 
                       <button type='submit' className=" text-3xl text-black sm:min-h-14 min-h-12 w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]"> Next</button>
-                      
+
                     </form>
 
                   </div>

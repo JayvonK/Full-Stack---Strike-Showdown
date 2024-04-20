@@ -10,6 +10,7 @@ export interface IToken {
 export interface IUserInfoWithStats {
   username: string;
   email: string;
+  location: string;
   password: string;
   securityQuestion: string;
   securityQuestionTwo: string;
@@ -34,6 +35,7 @@ export interface IUserInfoWithStats {
 export interface IPublicUserData {
   username: string;
   email: string;
+  location: string;
   securityQuestion: string;
   securityQuestionTwo: string;
   securityQuestionThree: string;

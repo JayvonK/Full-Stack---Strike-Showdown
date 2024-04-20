@@ -123,7 +123,7 @@ const HomePage = () => {
           <div className='max-h-[1200px] bg-black rounded-3xl overflow-y-auto overflow-x-hidden scrollbar'>
             <div className='flex'>
               <h1 className='text-black text-4xl juraBold py-4 px-8 bg-[#FF7A00] max-w-[450px] text-center rounded-tl-3xl mb-6'>Available Matches</h1>
-              <h1 className='text-white text-4xl jura py-4 px-8 max-w-[450px] text-center ml-6'>Location: <span className='txtOrange'>{pageContext.currentState}</span></h1>
+              <h1 className='text-white text-4xl jura py-4 px-8 max-w-[450px] text-center ml-6'>Location: <span className='txtOrange'>{verifiedUserData && verifiedUserData.location}</span></h1>
             </div>
             
             {

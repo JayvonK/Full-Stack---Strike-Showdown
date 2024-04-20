@@ -34,13 +34,13 @@ export const CreateAccountAPI = async(createdUser: IUserInfoWithStats) => {
         const message = "An error message has occured " + res.status;
         throw new Error(message);
     }
-    const data = await res.json();
+    const data:IUserInfoWithStats = await res.json();
     console.log(data);
 }
 
 export const VerifyForPasswordAPI = async(UsernameOrEmail: string, question: string, answer: string) => {
     const promise = await fetch(`${url}User/GetSecurity/${UsernameOrEmail}/${question}/${answer}`);
-    const data = await promise.json();
+    const data: boolean = await promise.json();
     return data;
 }
 
