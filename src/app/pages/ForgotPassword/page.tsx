@@ -60,19 +60,11 @@ const ForgotPassword = () => {
             setPasswordBorderError('');
             setPasswordsMatch(true);
         }
-
     }
 
-    const handleConfirmPassword = async () => {
-        if (passwordOne.trim() === '' || passwordTwo.trim() === '') {
-            setPasswordBorderError('border-red-600 border-2');
-            toast({
-                variant: "destructive",
-                title: "Error, Enter Your Password.",
-                description: "Cannot be blank",
-                action: <ToastAction altText="Try again">Try again</ToastAction>,
-            })
-        } else if (passwordTwo !== passwordOne) {
+    const handleConfirmPassword = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        if (passwordTwo !== passwordOne) {
             setPasswordBorderError('border-red-600 border-2');
             setPasswordsMatch(false);
             toast({
@@ -110,41 +102,23 @@ const ForgotPassword = () => {
                     })
                 }
             }
-
         }
     }
 
-    const handleConfirmUser = async () => {
-        if (username.trim() === '') {
-            setUserBorderError('border-red-600 border-2');
-            toast({
-                variant: "destructive",
-                title: "Error.",
-                description: "Username/email cannot be empty",
-                action: <ToastAction altText="Try again">Try again</ToastAction>,
-            })
-        } else {
-            try {
-                let data: IPublicUserData | null = await GetUserAPI(username);
-                if (data !== null) {
-                    let dataQuestionArray: string[] = [];
-                    dataQuestionArray.push(data.securityQuestion);
-                    dataQuestionArray.push(data.securityQuestionTwo);
-                    dataQuestionArray.push(data.securityQuestionThree);
-                    setQuestionArray(dataQuestionArray);
-                    setQuestion(dataQuestionArray[0]);
-                    setEnterAnswer(true)
-                    setEnterUsername(false);
-                } else {
-                    setUserBorderError('border-red-600 border-2');
-                    toast({
-                        variant: "destructive",
-                        title: "Username Doesn't Exist",
-                        description: "Sorry",
-                        action: <ToastAction altText="Try again">Try again</ToastAction>,
-                    })
-                }
-            } catch (error) {
+    const handleConfirmUser = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        try {
+            let data: IPublicUserData | null = await GetUserAPI(username);
+            if (data !== null) {
+                let dataQuestionArray: string[] = [];
+                dataQuestionArray.push(data.securityQuestion);
+                dataQuestionArray.push(data.securityQuestionTwo);
+                dataQuestionArray.push(data.securityQuestionThree);
+                setQuestionArray(dataQuestionArray);
+                setQuestion(dataQuestionArray[0]);
+                setEnterAnswer(true)
+                setEnterUsername(false);
+            } else {
                 setUserBorderError('border-red-600 border-2');
                 toast({
                     variant: "destructive",
@@ -153,10 +127,19 @@ const ForgotPassword = () => {
                     action: <ToastAction altText="Try again">Try again</ToastAction>,
                 })
             }
+        } catch (error) {
+            setUserBorderError('border-red-600 border-2');
+            toast({
+                variant: "destructive",
+                title: "Username Doesn't Exist",
+                description: "Sorry",
+                action: <ToastAction altText="Try again">Try again</ToastAction>,
+            })
         }
     }
 
-    const handleConfirmAnswer = async () => {
+    const handleConfirmAnswer = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
         try {
             const data = await VerifyForPasswordAPI(username, question, userAnswer)
             if (data) {
@@ -231,9 +214,13 @@ const ForgotPassword = () => {
 
                                         <h1 className="txtOrange sm:text-6xl text-5xl juraBold mb-12 leading-[90px]"> Your Username?</h1>
 
-                                        <RequiredInputComponent title="Username:" type='text' borderError={userBorderError} placeholder='Enter Username' value={username} onChange={handleUserChange} maxLength={20} />
+                                        <form onSubmit={handleConfirmUser}>
 
-                                        <button className="sm:text-4xl text-3xl text-black sm:min-h-[76px] min-h-14 w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleConfirmUser}> Confirm</button>
+                                            <RequiredInputComponent title="Username:" type='text' borderError={userBorderError} placeholder='Enter Username' value={username} onChange={handleUserChange} maxLength={20} />
+
+                                            <button type='submit' className="sm:text-4xl text-3xl text-black sm:min-h-[76px] min-h-14 w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]"> Confirm</button>
+
+                                        </form>
 
                                     </div>
                                 </>
@@ -253,11 +240,14 @@ const ForgotPassword = () => {
 
                                         <h1 className="txtOrange sm:text-6xl text-5xl juraBold mb-12 leading-[90px]"> Answer Security Question</h1>
 
-                                        <RequiredInputComponent title={question + "?"} type='text' borderError={userBorderError} placeholder='Answer' value={userAnswer} onChange={handleUserAnswerChange} maxLength={5000} />
+                                        <form onSubmit={handleConfirmAnswer}>
 
-                                        <h3 className="sm:text-3xl text-2xl txtOrange jura underline hover:cursor-pointer hover:text-[#ff9939]" onClick={handleAnotherQuestion} >Another Question</h3>
+                                            <RequiredInputComponent title={question + "?"} type='text' borderError={userBorderError} placeholder='Answer' value={userAnswer} onChange={handleUserAnswerChange} maxLength={5000} />
 
-                                        <button className="sm:text-4xl text-3xl text-black sm:min-h-[76px] min-h-14 w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleConfirmAnswer}> Continue</button>
+                                            <h3 className="sm:text-3xl text-2xl txtOrange jura underline hover:cursor-pointer hover:text-[#ff9939]" onClick={handleAnotherQuestion} >Another Question</h3>
+
+                                            <button type='submit' className="sm:text-4xl text-3xl text-black sm:min-h-[76px] min-h-14 w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]"> Continue</button>
+                                        </form>
 
                                     </div>
                                 </>
@@ -277,13 +267,16 @@ const ForgotPassword = () => {
 
                                         <h1 className="txtOrange sm:text-7xl text-5xl juraBold mb-12 leading-[90px]"> Answer Security Question</h1>
 
-                                        <RequiredInputComponent title="New Password" type='password' borderError={passwordBorderError} placeholder='Password' value={passwordOne} onChange={handlePasswordOneChange} maxLength={5000} />
+                                        <form onSubmit={handleConfirmPassword}>
+                                            <RequiredInputComponent title="New Password" type='password' borderError={passwordBorderError} placeholder='Password' value={passwordOne} onChange={handlePasswordOneChange} maxLength={5000} />
 
-                                        <RequiredInputComponent title="Verify Password" type='password' borderError={passwordBorderError} placeholder='Verify Pasword' value={passwordTwo} onChange={handlePasswordTwoChange} maxLength={5000} />
+                                            <RequiredInputComponent title="Verify Password" type='password' borderError={passwordBorderError} placeholder='Verify Pasword' value={passwordTwo} onChange={handlePasswordTwoChange} maxLength={5000} />
 
-                                        {!passwordsMatch ? (<h1 className='text-2xl jura text-red-600'>Passwords Dont Match</h1>) : (<div></div>)}
+                                            {!passwordsMatch ? (<h1 className='text-2xl jura text-red-600'>Passwords Dont Match</h1>) : (<div></div>)}
 
-                                        <button className="sm:text-4xl text-3xl text-black sm:min-h-[76px] min-h-14 w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleConfirmPassword}> Change Password</button>
+                                            <button type='submit' className="sm:text-4xl text-3xl text-black sm:min-h-[76px] min-h-14 w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" > Change Password</button>
+
+                                        </form>
 
                                     </div>
                                 </>

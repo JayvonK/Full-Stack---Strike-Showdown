@@ -313,21 +313,21 @@ const SignUp = () => {
       highSeries: highSeries.trim() === '' ? 'N/A' : highSeries,
       streak: 0
     }
-  
-      try {
-        let createdUser = await CreateAccountAPI(userData);
-        console.log(createdUser);
-        setLoading(true);
-        pageContext.setCreatedAccountBool(true);
-        router.push('/');
-      } catch (error) {
-        toast({
-          variant: "destructive",
-          title: "Error ",
-          description: "Something went wrong",
-          action: <ToastAction altText="Try again">Try again</ToastAction>,
-        })
-      }
+
+    try {
+      let createdUser = await CreateAccountAPI(userData);
+      console.log(createdUser);
+      setLoading(true);
+      pageContext.setCreatedAccountBool(true);
+      router.push('/');
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Error ",
+        description: "Something went wrong",
+        action: <ToastAction altText="Try again">Try again</ToastAction>,
+      })
+    }
   }
 
   return (
@@ -437,56 +437,61 @@ const SignUp = () => {
                     <h1 className="txtOrange sm:text-6xl text-5xl juraBold mb-12 sm:leading-[75px]"> Security Questions</h1>
 
                     {/* Selecting Question 1 */}
-                    <Select onValueChange={(e) => setQuestionOne(e)}>
-                      <SelectTrigger className="w-full jura  text-3xl text-white min-h-[40px]">
-                        <SelectValue placeholder="Select Question" />
-                      </SelectTrigger>
-                      <SelectContent className='sm:text-3xl text-2xl selectWidth'>
-                        <SelectGroup>
-                          <SelectLabel>Security Questions</SelectLabel>
-                          <SelectItem value="What's Your Favorite Movie">What&apos;s Your Favorite Movie?</SelectItem>
-                          <SelectItem value="What's The Model Of Your First Car">What&apos;s The Model Of Your First Car?</SelectItem>
-                          <SelectItem value="Name Of Your First Pet">Name Of Your First Pet?</SelectItem>
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
-                    <RequiredInputComponent title="" type='text' borderError={''} placeholder='Answer #1' value={securityOne} onChange={handleSecurityOneChange} maxLength={5000} />
+                    <form onSubmit={handleNextOptional}>
+
+                      <Select onValueChange={(e) => setQuestionOne(e)}>
+                        <SelectTrigger className="w-full jura  text-3xl text-white min-h-[40px]">
+                          <SelectValue placeholder="Select Question" />
+                        </SelectTrigger>
+                        <SelectContent className='sm:text-3xl text-2xl selectWidth'>
+                          <SelectGroup>
+                            <SelectLabel>Security Questions</SelectLabel>
+                            <SelectItem value="What's Your Favorite Movie">What&apos;s Your Favorite Movie?</SelectItem>
+                            <SelectItem value="What's The Model Of Your First Car">What&apos;s The Model Of Your First Car?</SelectItem>
+                            <SelectItem value="Name Of Your First Pet">Name Of Your First Pet?</SelectItem>
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                      <RequiredInputComponent title="" type='text' borderError={''} placeholder='Answer #1' value={securityOne} onChange={handleSecurityOneChange} maxLength={5000} />
 
 
-                    {/* Selecting Question 2 */}
-                    <Select onValueChange={(e) => setQuestionTwo(e)}>
-                      <SelectTrigger className="w-full jura  text-3xl text-white min-h-[40px]">
-                        <SelectValue placeholder="Select Question" />
-                      </SelectTrigger>
-                      <SelectContent className='sm:text-3xl text-2xl selectWidth'>
-                        <SelectGroup className=''>
-                          <SelectLabel>Security Questions</SelectLabel>
-                          <SelectItem value="Name of Childhood Best Friend">Name of Childhood Best Friend?</SelectItem>
-                          <SelectItem value="What's Your Nickname">What&apos;s Your Nickname?</SelectItem>
-                          <SelectItem value="What's Your Favorite Food">What&apos;s Your Favorite Food?</SelectItem>
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
-                    <RequiredInputComponent title="" type='text' borderError={''} placeholder='Answer #2' value={securityTwo} onChange={handleSecurityTwoChange} maxLength={5000} />
+                      {/* Selecting Question 2 */}
+                      <Select onValueChange={(e) => setQuestionTwo(e)}>
+                        <SelectTrigger className="w-full jura  text-3xl text-white min-h-[40px]">
+                          <SelectValue placeholder="Select Question" />
+                        </SelectTrigger>
+                        <SelectContent className='sm:text-3xl text-2xl selectWidth'>
+                          <SelectGroup className=''>
+                            <SelectLabel>Security Questions</SelectLabel>
+                            <SelectItem value="Name of Childhood Best Friend">Name of Childhood Best Friend?</SelectItem>
+                            <SelectItem value="What's Your Nickname">What&apos;s Your Nickname?</SelectItem>
+                            <SelectItem value="What's Your Favorite Food">What&apos;s Your Favorite Food?</SelectItem>
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                      <RequiredInputComponent title="" type='text' borderError={''} placeholder='Answer #2' value={securityTwo} onChange={handleSecurityTwoChange} maxLength={5000} />
 
 
-                    {/* Selecting Question 3 */}
-                    <Select onValueChange={(e) => setQuestionThree(e)}>
-                      <SelectTrigger className="w-full jura  text-3xl text-white min-h-[40px]">
-                        <SelectValue placeholder="Select Question" />
-                      </SelectTrigger>
-                      <SelectContent className='sm:text-3xl text-2xl selectWidth'>
-                        <SelectGroup>
-                          <SelectLabel>Security Questions</SelectLabel>
-                          <SelectItem value="What's Your Favorite School Subject">What&apos;s Your Favorite School Subject?</SelectItem>
-                          <SelectItem value="What's Your Favorite Cartoon">What&apos;s Your Favorite Cartoon?</SelectItem>
-                          <SelectItem value="What's Your Favorite Ice Cream">What&apos;s Your Favorite Ice Cream?</SelectItem>
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
-                    <RequiredInputComponent title="" type='text' borderError={''} placeholder='Answer #3' value={securityThree} onChange={handleSecurityThreeChange} maxLength={5000} />
+                      {/* Selecting Question 3 */}
+                      <Select onValueChange={(e) => setQuestionThree(e)}>
+                        <SelectTrigger className="w-full jura  text-3xl text-white min-h-[40px]">
+                          <SelectValue placeholder="Select Question" />
+                        </SelectTrigger>
+                        <SelectContent className='sm:text-3xl text-2xl selectWidth'>
+                          <SelectGroup>
+                            <SelectLabel>Security Questions</SelectLabel>
+                            <SelectItem value="What's Your Favorite School Subject">What&apos;s Your Favorite School Subject?</SelectItem>
+                            <SelectItem value="What's Your Favorite Cartoon">What&apos;s Your Favorite Cartoon?</SelectItem>
+                            <SelectItem value="What's Your Favorite Ice Cream">What&apos;s Your Favorite Ice Cream?</SelectItem>
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                      <RequiredInputComponent title="" type='text' borderError={''} placeholder='Answer #3' value={securityThree} onChange={handleSecurityThreeChange} maxLength={5000} />
 
-                    <button className=" text-3xl text-black sm:min-h-14 min-h-12 w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleNextOptional}> Next</button>
+                      <button type='submit' className=" text-3xl text-black sm:min-h-14 min-h-12 w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]"> Next</button>
+                      
+                    </form>
+
                   </div>
                 </>
               ) : (
@@ -592,52 +597,52 @@ const SignUp = () => {
                           </TooltipProvider>
                         </div>
                         <Select onValueChange={(e) => handleStyleChange(e)} >
-                        <SelectTrigger className="w-full jura text-3xl sm:min-h-14 min-h-12 bg-white pl-3 my-5 ">
-                          <SelectValue placeholder="Styles" />
-                        </SelectTrigger>
-                        <SelectContent className="jura text-4xl">
-                          <SelectItem value="1 Handed (Left)">1 Handed (Left)</SelectItem>
-                          <SelectItem value="2 Handed (Left)">2 Handed (Left)</SelectItem>
-                          <SelectItem value="1 Handed (Right)">1 Handed (Right)</SelectItem>
-                          <SelectItem value="2 Handed (Right)">2 Handed (Right)</SelectItem>
-                          <SelectItem value="1 Handed (Both)">1 Handed (Both)</SelectItem>
-                          <SelectItem value="2 Handed (Both)">2 Handed (Both)</SelectItem>
-                          <SelectItem value="Hadouken Style">Hadouken Style</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      <NotRequiredInputComponent title='High Game' type='text' borderError={''} placeholder='High Game' value={highGame} onChange={handleHighGameChange} maxLength={5000} info='Enter in your highest game that you bowled (Max 300). e.g 275' />
-                      <NotRequiredInputComponent title='High Series' type='text' borderError={''} placeholder='High Series' value={highSeries} onChange={handleHighSeriesChange} maxLength={5000} info='Enter in your highest seires that you bowled out of three games or more (1st game score + 2nd game score + 3rd game score). e.g 777' />
-                      <NotRequiredInputComponent title='Earnings' type='text' borderError={''} placeholder='$ Earnings $' value={earnings} onChange={handleEarningsChange} maxLength={5000} info='Enter how much money you have made from bowling tournaments $$$' />
+                          <SelectTrigger className="w-full jura text-3xl sm:min-h-14 min-h-12 bg-white pl-3 my-5 ">
+                            <SelectValue placeholder="Styles" />
+                          </SelectTrigger>
+                          <SelectContent className="jura text-4xl">
+                            <SelectItem value="1 Handed (Left)">1 Handed (Left)</SelectItem>
+                            <SelectItem value="2 Handed (Left)">2 Handed (Left)</SelectItem>
+                            <SelectItem value="1 Handed (Right)">1 Handed (Right)</SelectItem>
+                            <SelectItem value="2 Handed (Right)">2 Handed (Right)</SelectItem>
+                            <SelectItem value="1 Handed (Both)">1 Handed (Both)</SelectItem>
+                            <SelectItem value="2 Handed (Both)">2 Handed (Both)</SelectItem>
+                            <SelectItem value="Hadouken Style">Hadouken Style</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <NotRequiredInputComponent title='High Game' type='text' borderError={''} placeholder='High Game' value={highGame} onChange={handleHighGameChange} maxLength={5000} info='Enter in your highest game that you bowled (Max 300). e.g 275' />
+                        <NotRequiredInputComponent title='High Series' type='text' borderError={''} placeholder='High Series' value={highSeries} onChange={handleHighSeriesChange} maxLength={5000} info='Enter in your highest seires that you bowled out of three games or more (1st game score + 2nd game score + 3rd game score). e.g 777' />
+                        <NotRequiredInputComponent title='Earnings' type='text' borderError={''} placeholder='$ Earnings $' value={earnings} onChange={handleEarningsChange} maxLength={5000} info='Enter how much money you have made from bowling tournaments $$$' />
+                      </div>
                     </div>
+
+                    {
+                      loading ? (
+                        <button className=" text-3xl text-black sm:min-h-14 min-h-12 w-full my-8 juraBold rounded-xl bg-orange-300"> Creating...</button>
+                      ) : (
+                        <button className=" text-3xl text-black sm:min-h-14 min-h-12 w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleCreateAccountWithStats}> Create Account</button>
+                      )
+                    }
+
                   </div>
-
-                  {
-                    loading ? (
-                      <button className=" text-3xl text-black sm:min-h-14 min-h-12 w-full my-8 juraBold rounded-xl bg-orange-300"> Creating...</button>
-                    ) : (
-                      <button className=" text-3xl text-black sm:min-h-14 min-h-12 w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]" onClick={handleCreateAccountWithStats}> Create Account</button>
-                    )
-                  }
-
-                </div>
-          </>) : (<></>)
+                </>) : (<></>)
             }
 
 
 
+          </div>
+
+          {/* Column 2 */}
+          <div>
+
+          </div>
+
         </div>
 
-        {/* Column 2 */}
-        <div>
-
-        </div>
 
       </div>
-
-
-    </div>
-      </div >
-      )
+    </div >
+  )
 }
 
 export default SignUp
