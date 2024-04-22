@@ -31,7 +31,7 @@ export default function Home() {
 
   const pageContext = useAppContext();
 
-  const { toast } = useToast()
+  const { toast } = useToast();
 
   const handleOpenerBoolChange = () => {
     pageContext.setInitialOpen(false);

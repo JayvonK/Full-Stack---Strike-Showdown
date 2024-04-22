@@ -3,7 +3,7 @@ import NavBarComponent from '@/components/PageComponents/NavBarComponent';
 import { Navbar, Button, Modal } from 'flowbite-react';
 import { useRouter } from 'next/navigation';
 import React, { useEffect } from 'react'
-import '@/app/css/LoginPage.css'
+import '@/app/css/LoginPage.css';
 import postsData from '../../../utils/PostData.json';
 import bowler from '../../../../public/images/pexels-pavel-danilyuk-7429728.jpg'
 import {
@@ -12,21 +12,33 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
-
+} from "@/components/ui/select";
+import { ToastAction } from "@/components/ui/toast";
+import { useToast } from "@/components/ui/use-toast";
 
 import { useState } from "react";
 import { useAppContext } from '@/context/Context';
-import { IPublicUserData, IUserInfoWithStats, IUserPosts } from '@/interfaces/Interfaces';
-import { GetUserAPI } from '@/Data/DataServices';
+import { ICreatePost, IPublicUserData, IUserInfoWithStats, IUserPosts } from '@/interfaces/Interfaces';
+import { CreatePostAPI, GetUserAPI } from '@/Data/DataServices';
 import PracticePostDummyData from '../../../utils/PostData.json';
 import PracticeSessionComponent from '@/components/PageComponents/HomePage/PracticeSessionComponent';
 import MatchComponent from '@/components/PageComponents/HomePage/MatchComponent';
 
 const HomePage = () => {
+  const { toast } = useToast();
   const [openModal, setOpenModal] = useState(false);
   const [verifiedUserData, setVerifiedUserData] = useState<IPublicUserData>();
   const [pracitceSessionData, setPracticeSessionData] = useState<(IUserPosts)[]>(postsData);
+  const [visibility, setVisibility] = useState<boolean>(true);
+  const [state, setState] = useState<string>('');
+  const [locations, setLocations] = useState<string>('');
+  const [date, setDate] = useState<string>('');
+  const [startTime, setStartTime] = useState<string>('');
+  const [endTime, setEndTime] = useState<string>('');
+  const [maxPpl, setMaxPpl] = useState<number>(0);
+  const [currentPpl, setCurrentPpl] = useState<number>(0);
+  const [description, setDescription] = useState<string>('');
+  const [isFinished, setIsFinished] = useState<boolean>(false);
   const pageContext = useAppContext();
   const route = useRouter();
 
@@ -34,36 +46,75 @@ const HomePage = () => {
     setOpenModal(true);
   }
 
-  useEffect(() => {
-    if(!pageContext.userLoggedIn){
-      route.push('/');
-    } else {
-      const grabUserData = async() => {
-        setVerifiedUserData(await GetUserAPI(pageContext.verifiedUser));
-      }
-      grabUserData();
+
+  const createPracticeSession = async () =>{
+    let PostData: ICreatePost = {
+      title: 'Practice Session',
+      visibility: true,
+      state: state,
+      locations: locations,
+      date: date,
+      time: startTime + '-' + endTime,
+      maxPpl: maxPpl,
+      currentPpl: currentPpl,
+      description: description,
+      isFinished: false
     }
-  }, [])
+
+    try {
+      const data = await CreatePostAPI(PostData, pageContext.verifiedUser);
+      setOpenModal(false);
+      toast({
+        title: "Your Post Was Created!.",
+        description: "Yayy",
+      })
+    } catch (error) {
+      
+    }
+  }
+
+  const create1v1Challenge = async () => {
+    let PostData: ICreatePost = {
+      title: '1v1 Challenge',
+      visibility: true,
+      state: state,
+      locations: locations,
+      date: '',
+      time: '',
+      maxPpl: 0,
+      currentPpl: 0,
+      description: description,
+      isFinished: false
+    }
+  }
+
+  // useEffect(() => {
+  //   if(!pageContext.userLoggedIn){
+  //     route.push('/');
+  //   } else {
+  //     const grabUserData = async() => {
+  //       setVerifiedUserData(await GetUserAPI(pageContext.verifiedUser));
+  //     }
+  //     grabUserData();
+  //   }
+  // }, [])
 
   return (
     <div>
       <NavBarComponent />
-
-
-
       <Modal dismissible show={openModal} onClose={() => setOpenModal(false)}>
         <Modal.Header>Terms of Service</Modal.Header>
         <Modal.Body>
           <div className="space-y-6">
-            <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-              With less than a month to go before the European Union enacts new consumer privacy laws for its citizens,
-              companies around the world are updating their terms of service agreements to comply.
-            </p>
-            <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-              The European Union&apos;s General Data Protection Regulation (G.D.P.R.) goes into effect on May 25 and is meant
-              to ensure a common set of data rights in the European Union. It requires organizations to notify users as
-              soon as possible of high-risk data breaches that could personally affect them.
-            </p>
+            <h1>Create Practice Session</h1>
+            <input type="text" value={"public"} />
+            <input type="text" placeholder='locations' />
+            <input type="text" placeholder='date' />
+            <input type="text" placeholder='starts at' />
+            <input type="text" placeholder='ends at' />
+            <input type="text" placeholder='maxppl' />
+            <input type="text" placeholder='currentppl' />
+            <input type="text" placeholder='description' />
           </div>
         </Modal.Body>
         <Modal.Footer>
@@ -125,7 +176,7 @@ const HomePage = () => {
               <h1 className='text-black text-4xl juraBold py-4 px-8 bg-[#FF7A00] max-w-[450px] text-center rounded-tl-3xl mb-6'>Available Matches</h1>
               <h1 className='text-white text-4xl jura py-4 px-8 max-w-[450px] text-center ml-6'>Location: <span className='txtOrange'>{verifiedUserData && verifiedUserData.location}</span></h1>
             </div>
-            
+
             {
               pracitceSessionData.map((data, idx) => (
                 <div key={idx}>

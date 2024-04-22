@@ -71,3 +71,16 @@ export interface IUserPosts {
   style: string; 
   streak: number; 
 }
+
+export interface ICreatePost{
+  title: string;
+  visibility: boolean; 
+  state: string;
+  locations: string;
+  date: string; 
+  time: string; 
+  maxPpl: number;
+  currentPpl: number;
+  description: string; 
+  isFinished: boolean; 
+}

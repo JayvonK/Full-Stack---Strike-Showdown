@@ -1,4 +1,4 @@
-import { IPublicUserData, IToken, IUserInfoWithStats, IUserLogin } from "@/interfaces/Interfaces"
+import { ICreatePost, IPublicUserData, IToken, IUserInfoWithStats, IUserLogin } from "@/interfaces/Interfaces"
 
 const url = 'https://strikeshowdownbackend.azurewebsites.net/api/'
 
@@ -62,5 +62,21 @@ export const ChangePasswordAPI = async(UsernameOrEmail: string, password: string
 export const GetUserAPI = async (UsernameOrEmail: string) => {
     const promise = await fetch(url + `User/GetUserByUsernameOrEmail/${UsernameOrEmail}`);
     const data: IPublicUserData = await promise.json();
+    return data;
+}
+
+export const CreatePostAPI = async (Post: ICreatePost, publisher: string) => {
+    const res = await fetch(url + 'Match/AddMatch/' + publisher, {
+        method: 'POST',
+        headers: {
+            'Content-Type': "application/json"
+        },
+        body: JSON.stringify(Post)
+    })
+    if(!res.ok){
+        const message = "An error message has occured " + res.status;
+        throw new Error(message);
+    }
+    const data = res.json();
     return data;
 }
