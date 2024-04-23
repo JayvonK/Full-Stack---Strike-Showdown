@@ -22,7 +22,7 @@ export interface IUserInfoWithStats {
   profileImage: string;
   pronouns: string;
   wins: number;
-  loses: number;
+  losses: number;
   style: string;
   mainCenter: string;
   average: string;
@@ -44,7 +44,7 @@ export interface IPublicUserData {
   profileImage: string;
   pronouns: string;
   wins: number;
-  loses: number;
+  losses: number;
   style: string;
   mainCenter: string;
   average: string;

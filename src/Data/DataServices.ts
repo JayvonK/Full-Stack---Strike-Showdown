@@ -65,6 +65,22 @@ export const GetUserAPI = async (UsernameOrEmail: string) => {
     return data;
 }
 
+export const UpdateUserAPI = async (username: string, userData: IPublicUserData) => {
+    const res = await fetch(url  + 'User/UpdateUser/' + username, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': "application/json"
+        },
+        body: JSON.stringify(userData)
+    })
+    if(!res.ok){
+        const message = "Ann error message has occured " + res.status;
+        throw new Error(message);
+    }
+    const data = await res.json();
+    return data;
+}
+
 export const CreatePostAPI = async (Post: ICreatePost, publisher: string) => {
     const res = await fetch(url + 'Match/AddMatch/' + publisher, {
         method: 'POST',
@@ -77,6 +93,13 @@ export const CreatePostAPI = async (Post: ICreatePost, publisher: string) => {
         const message = "An error message has occured " + res.status;
         throw new Error(message);
     }
-    const data = res.json();
+    const data = await res.json();
     return data;
 }
+
+export const GetPublicMatchesAPI = async () => {
+    const promise = await fetch(url + 'Match/GetPublicMatches');
+    const data = await promise.json();
+    return data;
+}
+
