@@ -1,6 +1,7 @@
 [
     {
         "id": 0,
+        "userID": 1,
         "title": "Practice Session",
         "visibility": true,
         "state": "CA",
@@ -21,6 +22,7 @@
     },
     {
         "id": 1,
+        "userID": 2,
         "title": "Practice Session",
         "visibility": true,
         "state": "CA",
@@ -41,6 +43,7 @@
     },
     {
         "id": 2,
+        "userID": 3,
         "title": "1v1 Challenge",
         "visibility": true,
         "state": "CA",
@@ -61,6 +64,7 @@
     },
     {
         "id": 3,
+        "userID": 4,
         "title": "Practice Session",
         "visibility": true,
         "state": "CA",

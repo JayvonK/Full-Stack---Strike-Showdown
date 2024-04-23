@@ -56,6 +56,7 @@ export interface IPublicUserData {
 
 export interface IUserPosts {
   id: number;
+  userID: number;
   title: string;
   visibility: boolean; 
   state: string;
