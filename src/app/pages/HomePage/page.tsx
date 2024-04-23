@@ -88,16 +88,16 @@ const HomePage = () => {
     }
   }
 
-  useEffect(() => {
-    if(!pageContext.userLoggedIn){
-      route.push('/');
-    } else {
-      const grabUserData = async() => {
-        setVerifiedUserData(await GetUserAPI(pageContext.verifiedUser));
-      }
-      grabUserData();
-    }
-  }, [])
+  // useEffect(() => {
+  //   if(!pageContext.userLoggedIn){
+  //     route.push('/');
+  //   } else {
+  //     const grabUserData = async() => {
+  //       setVerifiedUserData(await GetUserAPI(pageContext.verifiedUser));
+  //     }
+  //     grabUserData();
+  //   }
+  // }, [])
 
   return (
     <div>
@@ -138,9 +138,11 @@ const HomePage = () => {
 
                 {/* Inner Col 1 */}
                 <div className='pt-14 pl-14'>
-                  <div className='w-[211px] h-[211px]'>
-                    <img className='object-cover w-full h-full rounded-full' src='/images/blankpfp.png' alt="" />
+                  <div className='min-w-full'>
+                    <img className='object-cover w-full h-full rounded-full' src={verifiedUserData ? verifiedUserData.profileImage : "/images/blankpfp.png"} alt="" />
                   </div>
+                  {verifiedUserData && verifiedUserData.profileImage === '/images/blankpfp.png' ? (<p className='jura text-gray-500 text-center text-xl pt-2 pb-4'>Click to add PFP</p>) : (<div></div>)}
+
                 </div>
 
                 {/*Inner Col 2 */}

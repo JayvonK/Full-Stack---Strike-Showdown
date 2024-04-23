@@ -262,7 +262,7 @@ const SignUp = () => {
       securityAnswerTwo: securityTwo,
       securityAnswerThree: securityThree,
       fullName: 'N/A',
-      profileImage: 'N/A',
+      profileImage: '/images/blankpfp.png',
       pronouns: 'N/A',
       wins: 0,
       losses: 0,
@@ -305,7 +305,7 @@ const SignUp = () => {
       securityAnswerTwo: securityTwo,
       securityAnswerThree: securityThree,
       fullName: fullname.trim() === '' ? 'N/A' : fullname,
-      profileImage: 'N/A',
+      profileImage: '/images/blankpfp.png',
       pronouns: pronouns.trim() === '' ? 'N/A' : pronouns,
       wins: 0,
       losses: 0,
@@ -420,7 +420,6 @@ const SignUp = () => {
 
                       <button type='submit' className=" text-3xl text-black sm:min-h-14 min-h-12 w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]"> Next</button>
                     </form>
-
                   </div>
                 </>
               ) : (
