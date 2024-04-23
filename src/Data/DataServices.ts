@@ -1,4 +1,4 @@
-import { ICreatePost, IPublicUserData, IToken, IUserInfoWithStats, IUserLogin } from "@/interfaces/Interfaces"
+import { ICreatePost, IPublicUserData, IToken, IUserInfoWithStats, IUserLogin, IUserPosts } from "@/interfaces/Interfaces"
 
 const url = 'https://strikeshowdownbackend.azurewebsites.net/api/'
 
@@ -91,6 +91,22 @@ export const CreatePostAPI = async (Post: ICreatePost, publisher: string) => {
     })
     if(!res.ok){
         const message = "An error message has occured " + res.status;
+        throw new Error(message);
+    }
+    const data = await res.json();
+    return data;
+}
+
+export const UpdateMatchAPI = async (match: IUserPosts) => {
+    const res = await fetch(url  + 'Match/UpdateMatch/' + match, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': "application/json"
+        },
+        body: JSON.stringify(match)
+    })
+    if(!res.ok){
+        const message = "Ann error message has occured " + res.status;
         throw new Error(message);
     }
     const data = await res.json();

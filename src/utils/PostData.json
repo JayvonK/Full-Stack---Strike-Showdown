@@ -1,5 +1,6 @@
 [
     {
+        "id": 0,
         "title": "Practice Session",
         "visibility": true,
         "state": "CA",
@@ -19,6 +20,7 @@
         "deleted": false
     },
     {
+        "id": 1,
         "title": "Practice Session",
         "visibility": true,
         "state": "CA",
@@ -38,6 +40,7 @@
         "deleted": false
     },
     {
+        "id": 2,
         "title": "1v1 Challenge",
         "visibility": true,
         "state": "CA",
@@ -57,6 +60,7 @@
         "deleted": false
     },
     {
+        "id": 3,
         "title": "Practice Session",
         "visibility": true,
         "state": "CA",
