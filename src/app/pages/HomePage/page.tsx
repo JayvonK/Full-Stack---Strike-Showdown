@@ -88,16 +88,16 @@ const HomePage = () => {
     }
   }
 
-  // useEffect(() => {
-  //   if(!pageContext.userLoggedIn){
-  //     route.push('/');
-  //   } else {
-  //     const grabUserData = async() => {
-  //       setVerifiedUserData(await GetUserAPI(pageContext.verifiedUser));
-  //     }
-  //     grabUserData();
-  //   }
-  // }, [])
+  useEffect(() => {
+    if(!pageContext.userLoggedIn){
+      route.push('/');
+    } else {
+      const grabUserData = async() => {
+        setVerifiedUserData(await GetUserAPI(pageContext.verifiedUser));
+      }
+      grabUserData();
+    }
+  }, [])
 
   return (
     <div>
@@ -152,7 +152,7 @@ const HomePage = () => {
                   </div>
 
                   <div className='flex mb-4'>
-                    <h3 className='text-white jura text-2xl '>Losses: <span className='txtOrange juraBold'>{verifiedUserData && verifiedUserData.loses}</span></h3>
+                    <h3 className='text-white jura text-2xl '>Losses: <span className='txtOrange juraBold'>{verifiedUserData && verifiedUserData.losses}</span></h3>
                     <h3 className='text-white jura text-2xl ml-14'>Average: <span className='txtOrange juraBold'> {verifiedUserData && verifiedUserData.average}</span></h3>
                     {/* <button className='bg-white ' onClick={() => console.log(`${bowler.src}`)}>click me</button> */}
                   </div>
