@@ -12,14 +12,7 @@ const InboxModalComponent = () => {
         setActiveTab(tab);
       };
   return (
-
-    <Modal
-show={showModal}
-onClose={() => setShowModal2(false)}
-size="md"
-popup
-className="bg-white rounded-lg shadow-lg w-full max-w-md mx-4 sm:mx-0"
->
+<>
 <div className="px-6 py-4 border-b">
   <div className="flex justify-center">
     <button
@@ -65,7 +58,7 @@ className="bg-white rounded-lg shadow-lg w-full max-w-md mx-4 sm:mx-0"
     Close
   </button>
 </div>
-</Modal>
+</>
   )
 }
 

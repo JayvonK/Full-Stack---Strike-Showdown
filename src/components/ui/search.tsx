@@ -29,7 +29,7 @@ const ToggleButtonInput = () => {
   return isInput ? (
     <form className=' flex jusitfy-start'>
     <input
-    className='px-5 text-3xl '
+    className='px-5 hoverInput text-3xl '
       type="text"
       value={inputValue}
       onChange={handleInputChange}
@@ -49,13 +49,13 @@ const ToggleButtonInput = () => {
     
   ) : (
 
-    <div  className=" !border-transparent hover:!border-transparent !bg-transparent jura hover:brightness-125 hover:cursor-pointer hover:!text-orange-500 text-white item-center "
+    <div  className=" transitionInput !border-transparent hover:!border-transparent !bg-transparent jura hover:brightness-125 hover:cursor-pointer hover:!text-orange-500 text-white item-center "
     onClick={handleButtonClick}
   >
      <img
       src={SearchIcon.src}
       alt="Search Icon"
-      className=" object-cover h-15 w-15 hover:cursor-pointer  showcase-menu-social mb-1"></img><h1>Search</h1></div>
+      className=" object-cover h-15 w-15 hover:cursor-pointer  mb-1"></img><h1>Search</h1></div>
     
   );
 };

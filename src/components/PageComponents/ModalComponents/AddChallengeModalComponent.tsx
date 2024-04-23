@@ -23,13 +23,10 @@ const [location3Search, setLocation3] = useState<string>("");
       >
         Add Challenge
       </button>
-      <Modal show={isOpen} onClose={closeModal}>
-        <Modal.Header>
-          <h3 className="text-lg font-medium leading-6 text-gray-900">
+   
+        <h3 className="text-lg font-medium leading-6 text-gray-900">
             Add Challenge
           </h3>
-        </Modal.Header>
-        <Modal.Body>
           <div className="mt-4">
             <label htmlFor="visibility" className="block text-sm font-medium text-gray-700">
               Visibility
@@ -91,8 +88,7 @@ const [location3Search, setLocation3] = useState<string>("");
               />
             </div>
           </div>
-        </Modal.Body>
-        <Modal.Footer>
+      
           <button
             type="button"
             className="inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
@@ -107,8 +103,7 @@ const [location3Search, setLocation3] = useState<string>("");
           >
             Close
           </button>
-        </Modal.Footer>
-      </Modal>
+    
     </>
   );
 }

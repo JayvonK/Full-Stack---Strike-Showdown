@@ -1,20 +1,20 @@
- input[type=text] {
+.hoverInput {
     width: 130px;
   position:fixed;
-    -webkit-transition: width 0.4s ease-in-out;
     transition: width 0.4s ease-in-out;
     border:transparent;
     outline: none;
-
   }
-  
   /* When the input field gets focus, change its width to 100% */
-   input[type=text]:focus {
+ .hoverInput:focus {
     width: 30%;
     height: 70px;
     border-radius: 30px;
    border:transparent;
    color: black;
    outline: none;
-  
+  }
+
+  .transitionInput{
+    transition: linear 0.4s
   }

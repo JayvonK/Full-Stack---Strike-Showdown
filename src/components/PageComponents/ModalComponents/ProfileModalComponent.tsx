@@ -1,9 +1,8 @@
 
 import React, { useState } from 'react'
 import { Modal } from 'flowbite-react';
-import ProfilePic2 from "../../../public/images/profilePIc.png";
-// import { useAppContext } from "@/context/Context";
-import { useRouter } from 'next/router';
+import ProfilePic2 from "../../../../public/images/profilePIc.png";
+import { useRouter } from 'next/navigation';
 const ProfileModalComponent = () => {
     const router = useRouter();
     const [openModal2, setOpenModal2] = useState(false);
@@ -13,8 +12,7 @@ const ProfileModalComponent = () => {
     //     router.push('/');
         }
   return (
-<Modal dismissible show={openModal2} onClose={() => setOpenModal2(false)}>
-<Modal.Body>
+<>
   <div className=" mb-5 flex justify-center  md:justify-end ">
     <div>
       <img
@@ -116,9 +114,7 @@ const ProfileModalComponent = () => {
       </div>
     </div>
   </div>
-</Modal.Body>
-</Modal>
-
+  </>
   )
 }
 
