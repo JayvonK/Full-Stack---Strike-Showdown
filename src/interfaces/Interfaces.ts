@@ -33,6 +33,7 @@ export interface IUserInfoWithStats {
 }
 
 export interface IPublicUserData {
+  id: number;
   username: string;
   email: string;
   location: string;
