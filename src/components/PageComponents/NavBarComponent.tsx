@@ -4,25 +4,20 @@
 
 import "@/app/css/Search.css";
 import Link from "next/link";
-
 import { Pagination } from "flowbite-react";
 import { Navbar, Dropdown, Avatar } from "flowbite-react";
-
-
 import { useState } from "react";
 import logo from "../../../public/images/Strike Showdown Logo.png";
 import FriendsIcon from "../../../public/images/Property 1=Default (1).png";
 import InboxIcon from "../../../public/images/Inbox.png";
 import MessageIcon from "../../../public/images/Message.png";
 import ProfileIcon from "../../../public/images/Profile.png";
-import UserMinus from "../../../public/images/UserMinus.png";
-import ProfilePic from "../../../public/images/Ellipse 16.png";
-import ProfilePic2 from "../../../public/images/profilePIc.png";
 import ToggleButtonInput from "@/components/ui/search";
 import "../../app/css/LoginPage.css";
 import { useRouter } from "next/navigation";
 import { useAppContext } from "@/context/Context";
-import AddChallengeModalComponent from "./ModalComponents/AddChallengeModalComopenet";
+import AddChallengeModalComponent from "./ModalComponents/AddChallengeModalComponent";
+import InboxModalComponent from "./ModalComponents/InboxModalComponent";
 
 function NavBarComponent() {
   const [showModal, setShowModal2] = useState(false);
@@ -52,10 +47,9 @@ const pageContext = useAppContext()
   return (
     <Navbar
       fluid
-      className="bg-black !border-black pr-0 lg:!pr-32  items-center     "
-      className="bg-black !border-black pr-0 lg:!pr-32  items-center     "
+      className="bg-black  !border-black pr-0 lg:!pr-32  !pl-52 items-center     "
     >
-      <Navbar.Brand as={Link} href="/pages/HomePage" >
+      <Navbar.Brand  as={Link} href="/">
         <img
           src={logo.src}
           className="mr-3 object-cover   h-12 w-12 md:h-20 md:w-20 lg:h-20 lg:w-20  rounded-full border border-white hover:cursor-pointer"
@@ -74,7 +68,7 @@ const pageContext = useAppContext()
       <Navbar.Toggle className="text-orange-500 !bg-black !border-0 hover:!border-0" />
       <Navbar.Collapse className="hover:!bg-black" style={{ border: 0 }}>
         <Navbar.Link className=" jura hover:cursor-pointer hover:!text-orange-500 text-white item-center ">
-          <ToggleButtonInput  />
+          <ToggleButtonInput />
         </Navbar.Link>
         <Navbar.Link
           onClick={() => setIsModalOpen(true)}
