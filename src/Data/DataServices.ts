@@ -124,3 +124,9 @@ export const GetPublicMatchesByStateAPI = async (state: string) => {
     const data = await promise.json();
     return data;
 }
+
+export const GetMatchesByID = async (id: number) => {
+    const promise = await fetch(url + 'Match/GetMatchesByID/' + id);
+    const data = await promise.json();
+    return data;
+}
