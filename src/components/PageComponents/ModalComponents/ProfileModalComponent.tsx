@@ -4,7 +4,7 @@ import { Modal } from 'flowbite-react';
 import "../../../app/css/LoginPage.css";
 import ProfilePic2 from "../../../../public/images/profilePIc.png";
 import { useRouter } from 'next/navigation';
-const ProfileModalComponent = (props:{userName:string, proNouns:string, fullName:string, mainCenter:string, }) => {
+const ProfileModalComponent = (props:{userName:string, proNouns:string, fullName:string, mainCenter:string, average:string, highGames:string, highSeries:string, earnings:string, style:string }) => {
     const router = useRouter();
     const [openModal2, setOpenModal2] = useState(false);
     // const pageContext = useAppContext();
@@ -60,7 +60,7 @@ const ProfileModalComponent = (props:{userName:string, proNouns:string, fullName
           Full Name:
         </p>
         <p className="text-orange-500 text-sm jura md:text-2xl ">
-          Timothy Neutron
+          {props.fullName}
         </p>
 
         <p className="text-white jura text-xs md:text-xl pt-4 ">
@@ -68,50 +68,51 @@ const ProfileModalComponent = (props:{userName:string, proNouns:string, fullName
         </p>
 
         <p className="overflow-auto text-orange-500 text-sm jura md:text-2xl">
-          Pacific Avenue Bowl{" "}
+        {props.mainCenter}
         </p>
       </div>
       <div className="">
-        <h1 className="text-white jura text-xs md:text-xl  md:text-3xl  mt-5 rounded-xl   pt-2 pb-2  mb-2 jura">
+        <h1 className="text-white jura text-xs  md:text-3xl  mt-5 rounded-xl   pt-2 pb-2  mb-2 jura">
           Your Post
         </h1>
         <p className="text-white jura text-xs md:text-xl pt-4">
           Style:
         </p>
         <p className="text-orange-500 text-sm jura md:text-2xl">
-          2 Handed (Righty)
+          {props.style}
         </p>
         <p className="text-white jura text-xs md:text-xl pt-4">
           Average:
         </p>
         <p className="text-orange-500 text-sm jura md:text-2xl">
-          192.5{" "}
+          {props.average}
         </p>
       </div>
     </div>
     <div className=" mt-4 pb-5 pt-4 grid grid-flow-col auto-cols-max px-5 justify-between items-center">
       <div>
-        <h1 className="text-white text-xs md:text-xl jura">
+        <h1 className="text-white text-xs md:text-xl jura text-center">
           High Game:
         </h1>
-        <h1 className="text-orange-500 text-sm jura md:text-2xl">
-          250
+       
+        <h1 className="text-orange-500 text-sm jura md:text-2xl text-center">
+         {props.highGames}
         </h1>
       </div>
       <div>
-        <h1 className="text-white jura text-xs md:text-xl">
+        <h1 className="text-white jura text-xs md:text-xl text-center">
           High Series:
         </h1>
-        <h1 className="text-orange-500 text-sm jura md:text-2xl">
-          701
+        <h1 className="text-orange-500 text-sm jura md:text-2xl text-center">
+        {props.highSeries}
         </h1>
       </div>
       <div className="pr-14 ">
-        <h1 className="text-white jura text-xs md:text-xl">
+        <h1 className="text-white jura text-xs md:text-xl text-center">
           Earnings:
         </h1>
-        <h1 className="text-orange-500 text-sm jura md:text-2xl">
-          $750
+        <h1 className="text-orange-500 text-sm jura md:text-2xl text-center">
+        ${props.earnings}
         </h1>
       </div>
     </div>

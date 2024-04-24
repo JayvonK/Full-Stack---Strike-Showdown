@@ -54,43 +54,7 @@ const FriendsModalComponent = () => {
               </button>
             </div>
           </div>
-          
-{/* second profile */}
-         {/* <div
-            className="grid grid-flow-col p-4 w-80  justify-evenly bg-black rounded-2xl w-50 "
-          >
-            <div className="">
-              <img src={ProfilePic.src}></img>
-            </div>
-            <div className="ml-5">
-              <div className="grid grid-flow-col auto-cols-max justify-start items-center pb-3 ">
-                <div>
-                  <img
-                    onClick={() => {}}
-                    src={UserMinus.src}
-                    className="pr-2"
-                  ></img>
-                </div>
-                <div>
-                  <h1 className="text-white jura text-xl ">BowlerDude2</h1>
-                </div>
-              </div>
-              <button
-                style={{ width: 150 }}
-                className=" bg-orange-500  hover:!bg-orange-500 mb-2 text-black jura"
-              >
-                <h3 className="text-1xl">Challenge</h3>
-              </button>
-              <br></br>
-              <button
-                style={{ width: 150 }}
-                className=" bg-orange-500   hover:!bg-orange-500 text-black jura"
-              >
-                <h3 className="text-1xl">Message</h3>
-              </button>
-            </div>
-            
-          </div>  */}
+      
           </div>
 
           <div className="flex justify-end px-10 py-10">

@@ -6,8 +6,14 @@ import React from 'react'
 import "../../../app/css/LoginPage.css";
 
 const InboxModalComponent = () => {
+  
     const [showModal, setOpenModal] = useState(false);
     const [activeTab, setActiveTab] = useState('Inbox');
+    const [activeTabContext, setActiveTabContent] = useState('Matches');
+const handleContextChange = (tab:any) =>{
+  setActiveTabContent(tab)
+}
+
     const handleTabChange = (tab:any) => {
         setActiveTab(tab);
       };
@@ -47,9 +53,18 @@ const InboxModalComponent = () => {
     </button>
   </div>
 </div>
-<div className="px-40 py-40 ">
-  <h2 className="text-center text-3xl jura">No Notifications</h2>
-</div>
+{/* {`text-center text-3xl jura ${
+        activeTab === 'Inbox'
+          ? <div className="px-40 py-40 " onClick={() => handleContextChange('Inbox')}>
+          <h2 className="text-center text-3xl jura"  >ff</h2>
+        </div> : <div className="px-40 py-40 " onClick={() => handleContextChange('Session')}>
+          <h2 className="text-center text-3xl jura"  >ff</h2>
+        </div> 
+      }`} */}
+ <div className="px-40 py-40 "  onClick={() => handleTabChange('Sessions')}>
+  <h2 className= "text-center text-3xl jura " >No Notifications</h2>
+</div> 
+
 <div className="flex justify-end py-7 px-7">
             <Button
               className=" border-color outline-none   mt-3 bg-orange-500  w-20 md:w-36 rounded-xl  md:rounded-lg  hover:!bg-orange-500 text-black jura"
@@ -59,6 +74,8 @@ const InboxModalComponent = () => {
               <h3 className=" text-base  md:text-3xl  ">Close</h3>
             </Button>
           </div>
+          
+
 </>
   )
 }

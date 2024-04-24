@@ -6,7 +6,7 @@ import { useState } from "react";
 import FriendsModalComponent from '@/components/PageComponents/ModalComponents/FriendsModalComponent';
 import InboxModalComponent from '@/components/PageComponents/ModalComponents/InboxModalComponent';
 import ProfileModalComponent from '@/components/PageComponents/ModalComponents/ProfileModalComponent';
-import AddChallengeModalComponent from '@/components/PageComponents/ModalComponents/AddChallengeModalComponent';
+
 function page() {
     const [openModal, setOpenModal] = useState(true);
   return (
@@ -16,8 +16,8 @@ function page() {
       <Modal dismissible show={openModal} onClose={() => setOpenModal(false)}>
 
        {/* <FriendsModalComponent/>  */}
-     {/* <InboxModalComponent/>  */}
-      <ProfileModalComponent userName={'Tommy201'} proNouns={'Salmon'} fullName={''} mainCenter={''} /> 
+     <InboxModalComponent/> 
+      {/* <ProfileModalComponent userName={'Tommy201'} proNouns={'Salmon'} fullName={'alphaMale'} mainCenter={'Packed Man'} average={'1000'} highGames={'911'} highSeries={'111'} earnings={'4'} style={'quadruple handroll'} />  */}
      {/* <AddChallengeModalComponent/> */}
 
       </Modal>
