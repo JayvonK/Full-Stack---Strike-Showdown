@@ -23,6 +23,7 @@ import { CreatePostAPI, GetUserAPI } from '@/Data/DataServices';
 import PracticePostDummyData from '../../../utils/PostData.json';
 import PracticeSessionComponent from '@/components/PageComponents/HomePage/PracticeSessionComponent';
 import MatchComponent from '@/components/PageComponents/HomePage/MatchComponent';
+import AddChallengeModal from '@/components/PageComponents/HomePage/AddMatchModal';
 
 const HomePage = () => {
   const { toast } = useToast();
@@ -39,6 +40,10 @@ const HomePage = () => {
   const [currentPpl, setCurrentPpl] = useState<number>(0);
   const [description, setDescription] = useState<string>('');
   const [isFinished, setIsFinished] = useState<boolean>(false);
+  const [addingChallengeBool, setAddingChallengeBool] = useState<boolean>(true);
+  const [locationOne, setLocationOne] = useState<string>('');
+  const [locationTwo, setLocationTwo] = useState<string>('');
+  const [locationThree, setLocationThree] = useState<string>('');
   const pageContext = useAppContext();
   const route = useRouter();
 
@@ -46,8 +51,31 @@ const HomePage = () => {
     setOpenModal(true);
   }
 
+  const handleCloseModal = () => {
+    setOpenModal(false)
+  }
 
-  const createPracticeSession = async () =>{
+  const handleVisibilityChange = (e: string) => {
+    e === 'Public' ? setVisibility(true) : setVisibility(false);
+  }
+
+  const handleLocationOneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLocationOne(e.target.value);
+  }
+
+  const handleLocationTwoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLocationTwo(e.target.value);
+  }
+
+  const handleLocationThreeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLocationThree(e.target.value);
+  }
+
+  const handleDescriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setDescription(e.target.value);
+  }
+
+  const createPracticeSession = async () => {
     let PostData: ICreatePost = {
       title: 'Practice Session',
       visibility: true,
@@ -69,7 +97,7 @@ const HomePage = () => {
         description: "Yayy",
       })
     } catch (error) {
-      
+
     }
   }
 
@@ -88,6 +116,7 @@ const HomePage = () => {
     }
   }
 
+
   // useEffect(() => {
   //   if(!pageContext.userLoggedIn){
   //     route.push('/');
@@ -102,27 +131,8 @@ const HomePage = () => {
   return (
     <div>
       <NavBarComponent />
-      <Modal dismissible show={openModal} onClose={() => setOpenModal(false)}>
-        <Modal.Header>Terms of Service</Modal.Header>
-        <Modal.Body>
-          <div className="space-y-6">
-            <h1>Create Practice Session</h1>
-            <input type="text" value={"public"} />
-            <input type="text" placeholder='locations' />
-            <input type="text" placeholder='date' />
-            <input type="text" placeholder='starts at' />
-            <input type="text" placeholder='ends at' />
-            <input type="text" placeholder='maxppl' />
-            <input type="text" placeholder='currentppl' />
-            <input type="text" placeholder='description' />
-          </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={() => setOpenModal(false)}>I accept</Button>
-          <Button color="gray" onClick={() => setOpenModal(false)}>
-            Decline
-          </Button>
-        </Modal.Footer>
+      <Modal className='bg-black' show={openModal} size={'4xl'} onClose={() => setOpenModal(false)}>
+        <AddChallengeModal addingChallengeBool={addingChallengeBool} create1v1Challenge={create1v1Challenge} createPracticeSession={createPracticeSession} handleVisibilityChange={handleVisibilityChange} visibility={visibility} handleLocationOneChange={handleLocationOneChange} locationOne={locationOne} handleLocationTwoChange={handleLocationTwoChange} locationTwo={locationTwo} handleLocationThreeChange={handleLocationThreeChange} locationThree={locationThree} handleDescriptionChange={handleDescriptionChange} description={description} handleCloseModal={handleCloseModal}/>
       </Modal>
 
 
@@ -142,7 +152,6 @@ const HomePage = () => {
                     <img className='object-cover w-full h-full rounded-full' src={verifiedUserData ? verifiedUserData.profileImage : "/images/blankpfp.png"} alt="" />
                   </div>
                   {verifiedUserData && verifiedUserData.profileImage === '/images/blankpfp.png' ? (<p className='jura text-gray-500 text-center text-xl pt-2 pb-4'>Click to add PFP</p>) : (<div></div>)}
-
                 </div>
 
                 {/*Inner Col 2 */}
