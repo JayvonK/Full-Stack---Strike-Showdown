@@ -177,7 +177,7 @@ const HomePage = () => {
         <AddChallengeModal addingChallengeBool={addingChallengeBool} create1v1Challenge={create1v1Challenge} createPracticeSession={createPracticeSession} handleVisibilityChange={handleVisibilityChange} visibility={visibility} handleLocationOneChange={handleLocationOneChange} locationOne={locationOne} handleLocationTwoChange={handleLocationTwoChange} locationTwo={locationTwo} handleLocationThreeChange={handleLocationThreeChange} locationThree={locationThree} handleDescriptionChange={handleDescriptionChange} description={description} handleCloseModal={handleCloseModal} />
       </Modal>
 
-      <div className='bgLogin min-h-screen pt-12 2xl:px-44 lg:px-32 sm:px-14 px-6 pb-20 relative'>
+      <div className='bgLogin min-h-screen pt-12 2xl:px-44 lg:px-28 sm:px-14 px-6 pb-20 relative'>
         <div className='h-full w-full bgHome absolute top-0 left-0 z-10'></div>
 
         <div className='z-20 relative'>
@@ -190,7 +190,7 @@ const HomePage = () => {
                   <img className='object-cover w-full aspect-auto rounded-full' src={verifiedUserData ? verifiedUserData.profileImage : "/images/blankpfp.png"} alt="" />
                 </div>
 
-                <div className='pl-10'>
+                <div className='pl-10 xl:block hidden'>
                   <h1 className='jura text-4xl txtOrange mb-6 breakWordStyle'><span className='bgWaveIcon w-8 h-8 inline-block mr-3 -mb-1'></span>Welcome, <span className='juraBold text-white '>{verifiedUserData && verifiedUserData.username}</span></h1>
                   <h3 className='text-white jura text-2xl mb-2 mr-10 inline-block'>Wins: <span className='txtOrange juraBold'>{verifiedUserData && verifiedUserData.wins}</span></h3>
                   <h3 className='text-white jura text-2xl mb-2 mr-10 inline-block'>Losses: <span className='txtOrange juraBold'>{verifiedUserData && verifiedUserData.losses}</span></h3>
@@ -200,15 +200,13 @@ const HomePage = () => {
                 </div>
               </div>
 
-              {/* <div className='hidden'>
+              <div className='xl:hidden'>
                 <h3 className='text-white jura text-2xl mb-2 mr-10 inline-block'>Wins: <span className='txtOrange juraBold'>{verifiedUserData && verifiedUserData.wins}</span></h3>
                 <h3 className='text-white jura text-2xl mb-2 mr-10 inline-block'>Losses: <span className='txtOrange juraBold'>{verifiedUserData && verifiedUserData.losses}</span></h3>
                 <h3 className='text-white jura text-2xl mb-2 mr-10 inline-block'>Streak: <span className='txtOrange juraBold'>{verifiedUserData && verifiedUserData.streak}</span></h3>
-
-                <h3 className='text-white jura text-2xl mb-2 mr-10 inline-block'>Average: <span className='txtOrange juraBold'> {averageStatFormat(verifiedUserData && verifiedUserData.average)}</span></h3>
-
+                <h3 className='text-white jura text-2xl mb-2 mr-10 inline-block'>Avg: <span className='txtOrange juraBold'> {averageStatFormat(verifiedUserData && verifiedUserData.average)}</span></h3>
                 <h3 className='text-white jura text-2xl mr- inline-block'>Style: <span className='txtOrange juraBold'> {verifiedUserData && verifiedUserData.style}</span></h3>
-              </div> */}
+              </div>
 
             </div>
 
