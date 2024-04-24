@@ -4,18 +4,38 @@ import { Navbar, Pagination,Modal,Button } from "flowbite-react";
 import { useState } from "react";
 import React from 'react'
 import "../../../app/css/LoginPage.css";
-
+import ProfilePic from "../../../../public/images/Ellipse 16.png";
 const InboxModalComponent = () => {
   
     const [showModal, setOpenModal] = useState(false);
     const [activeTab, setActiveTab] = useState('Inbox');
-    const [activeTabContext, setActiveTabContent] = useState('Matches');
+    const [activeTabContext1, setactiveTabContext1] = useState(1);
+    const [activeTabContext2, setactiveTabContext2] = useState(2);
+    const [activeTabContext3, setactiveTabContext3] = useState(3);
+    const [tabOneActive, setTabOneActive] = useState(true);
+    const [tabTwoActive, setTabTwoActive] = useState(false);
+    const [tabThreeActive, setTabThreeActive] = useState(false);
+
+
 const handleContextChange = (tab:any) =>{
-  setActiveTabContent(tab)
+ // setActiveTabContent(tab)
 }
 
     const handleTabChange = (tab:any) => {
-        setActiveTab(tab);
+        if(tab == "Inbox"){
+          setTabOneActive(true)
+          setTabTwoActive(false)
+          setTabThreeActive(false)
+        }else if (tab == "Sessions"){
+          setTabOneActive(false)
+          setTabTwoActive(true)
+          setTabThreeActive(false)
+        }else{
+          setTabOneActive(false)
+          setTabTwoActive(false)
+          setTabThreeActive(true)
+        }
+        setActiveTab(tab)
       };
   return (
 <>
@@ -53,16 +73,11 @@ const handleContextChange = (tab:any) =>{
     </button>
   </div>
 </div>
-{/* {`text-center text-3xl jura ${
-        activeTab === 'Inbox'
-          ? <div className="px-40 py-40 " onClick={() => handleContextChange('Inbox')}>
-          <h2 className="text-center text-3xl jura"  >ff</h2>
-        </div> : <div className="px-40 py-40 " onClick={() => handleContextChange('Session')}>
-          <h2 className="text-center text-3xl jura"  >ff</h2>
-        </div> 
-      }`} */}
  <div className="px-40 py-40 "  onClick={() => handleTabChange('Sessions')}>
-  <h2 className= "text-center text-3xl jura " >No Notifications</h2>
+      {tabOneActive &&  <div className="bg-black grid-cols-2 rounded-lg  px-5 py-5"> <img className="h-20" alt="" src={ProfilePic.src} /> <div> <h2 className= "text-center text-3xl jura " >hhd</h2></div></div>}
+      {tabTwoActive &&   <h2 className= "text-center text-3xl jura " >Tab 2</h2>}
+      {tabThreeActive &&   <h2 className= "text-center text-3xl jura " >Tab 3</h2>}
+
 </div> 
 
 <div className="flex justify-end py-7 px-7">
