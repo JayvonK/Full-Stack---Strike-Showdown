@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Modal, Pagination } from 'flowbite-react';
+import { Modal, Pagination,Button } from 'flowbite-react';
+import "../../../app/css/LoginPage.css";
 
 export default function AddChallengeModalComponent() {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,6 +17,7 @@ const [location3Search, setLocation3] = useState<string>("");
 
   return (
     <>
+    <div className='px-10 py-10'>
       <button
         type="button"
         onClick={openModal}
@@ -27,6 +29,7 @@ const [location3Search, setLocation3] = useState<string>("");
         <h3 className="text-lg font-medium leading-6 text-gray-900">
             Add Challenge
           </h3>
+          <div className='bg-black rounded-lg px-10 py-10'>
           <div className="mt-4">
             <label htmlFor="visibility" className="block text-sm font-medium text-gray-700">
               Visibility
@@ -66,44 +69,47 @@ const [location3Search, setLocation3] = useState<string>("");
             className="rounded-lg  lg:w-40 lexendFontLight text-black px-1"
           ></input>
             </div>
-            <button
-              type="button"
-              className="mt-2 inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            <Button
+              className=" h-10  mt-3 bg-orange-500  w-20 md:w-36 rounded-xl  md:rounded-lg  hover:!bg-orange-500 text-black jura"
             >
-              Add more
-            </button>
+              <h3 className=" text-base  md:text-xl   md:w-36 rounded-xl  md:rounded-lg ">Add More</h3>
+            </Button>
           </div>
 
           <div className="mt-4">
-            <label htmlFor="description" className="block text-sm font-medium text-gray-700">
+            <h1 className="block jura text-2xl  font-medium text-white">
               Description
-            </label>
+            </h1>
             <div className="mt-1">
               <textarea
-                id="description"
-                name="description"
-                rows={3}
-                className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md"
+              
+                className="shadow-sm focus:ring-indigo-500 jura focus:border-indigo-500 mt-1 block w-full text-base lg:text-lg border-gray-300 rounded-md"
                 placeholder="Add your description."
               />
             </div>
           </div>
-      
-          <button
-            type="button"
-            className="inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
-            onClick={closeModal}
-          >
-            Confirm
-          </button>
-          <button
-            type="button"
-            className="ml-2 inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
-            onClick={closeModal}
-          >
-            Close
-          </button>
-    
+          </div>
+      <div className='flex  justify-end px-5 py-5'>
+         <div>
+         
+         <Button
+              className=" mr-5  mt-3 bg-orange-500  w-20 md:w-36 rounded-xl  md:rounded-lg hover:!bg-orange-500 text-black jura"
+              
+             
+            >
+              <h3 className=" text-base  md:text-3xl   md:w-36 rounded-xl  md:rounded-lg ">Confirm</h3>
+            </Button>
+         </div>
+          <div>
+          <Button
+              className="  mt-3 bg-orange-500  w-20 md:w-36 rounded-xl  md:rounded-lg  hover:!bg-orange-500 text-black jura"
+            >
+              <h3 className=" text-base  md:text-3xl   md:w-36 rounded-xl  md:rounded-lg ">Close</h3>
+            </Button>
+          </div>
+          </div>
+          </div>
+        
     </>
   );
 }

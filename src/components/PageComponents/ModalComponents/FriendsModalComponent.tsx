@@ -3,21 +3,25 @@ import UserMinus from "../../../../public/images/UserMinus.png";
 import ProfilePic from "../../../../public/images/Ellipse 16.png";
 import { useState } from 'react';
 import { Modal, Button} from 'flowbite-react';
+import "../../../app/css/LoginPage.css";
 const FriendsModalComponent = () => {
     const [openModal, setOpenModal] = useState(false);
   return (
   <>
-          <h3
-            className=" mb-6   text-base md:text-3xl md:w-36   w-20 rounded-xl  md:rounded-2xl  bg-orange-500   hover:!bg-orange-500 text-center text-black jura px-4 pt-3 pb-3"
+  <div className='px-10 pt-10'>
+  <h3
+            className=" mb-6   text-base md:text-3xl md:w-36   w-20 rounded-xl  md:rounded-lg  bg-orange-500   hover:!bg-orange-500 text-center text-black jura px-4 pt-3 pb-3"
             
           >
             Friends
           </h3>
-<div className="flex flex-wrap">
- {/* THIS STILL NEEDS TO BE FIXEDDDDDD STILL NEED TO MAKE IT AUTO COLS */}
+  </div>
+         
+<div className=" flex flex-col items-start px-10 py-10">
+
           <div
-            className="mb-5 grid grid-flow-col p-4  justify-evenly bg-black rounded-2xl w-50"
-            style={{ width: 300 }}
+            className="mb-5 grid grid-flow-col p-4 w-80  justify-evenly bg-black rounded-2xl w-50"
+            
           >
             <div className="">
               <img src={ProfilePic.src}></img>
@@ -51,10 +55,9 @@ const FriendsModalComponent = () => {
             </div>
           </div>
           
-
-          <div
-            className="grid grid-flow-col p-4  justify-evenly bg-black rounded-2xl w-50 "
-            style={{ width: 300 }}
+{/* second profile */}
+         {/* <div
+            className="grid grid-flow-col p-4 w-80  justify-evenly bg-black rounded-2xl w-50 "
           >
             <div className="">
               <img src={ProfilePic.src}></img>
@@ -87,10 +90,10 @@ const FriendsModalComponent = () => {
               </button>
             </div>
             
-          </div>
+          </div>  */}
           </div>
 
-          <div className="flex justify-end">
+          <div className="flex justify-end px-10 py-10">
             <Button
               className="  mt-3 bg-orange-500  w-20 md:w-36 rounded-xl  md:rounded-2xl  hover:!bg-orange-500 text-black jura"
               
