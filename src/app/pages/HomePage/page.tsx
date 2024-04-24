@@ -19,7 +19,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { useState } from "react";
 import { useAppContext } from '@/context/Context';
 import { ICreatePost, IPublicUserData, IUserInfoWithStats, IUserPosts } from '@/interfaces/Interfaces';
-import { CreatePostAPI, GetUserAPI } from '@/Data/DataServices';
+import { CreatePostAPI, GetPublicMatchesByStateAPI, GetUserAPI } from '@/Data/DataServices';
 import PracticePostDummyData from '../../../utils/PostData.json';
 import PracticeSessionComponent from '@/components/PageComponents/HomePage/PracticeSessionComponent';
 import MatchComponent from '@/components/PageComponents/HomePage/MatchComponent';
@@ -29,7 +29,7 @@ const HomePage = () => {
   const { toast } = useToast();
   const [openModal, setOpenModal] = useState(false);
   const [verifiedUserData, setVerifiedUserData] = useState<IPublicUserData>();
-  const [pracitceSessionData, setPracticeSessionData] = useState<(IUserPosts)[]>(postsData);
+  const [matchData, setMatchData] = useState<(IUserPosts)[]>(postsData);
   const [visibility, setVisibility] = useState<boolean>(true);
   const [state, setState] = useState<string>('');
   const [locations, setLocations] = useState<string>('');
@@ -46,6 +46,18 @@ const HomePage = () => {
   const [locationThree, setLocationThree] = useState<string>('');
   const pageContext = useAppContext();
   const route = useRouter();
+
+  const locationFormat = (locArr: string[]) => {
+    let newArr: string[] = []
+    locArr.forEach((loc, idx) => {
+      if(idx !== locArr.length - 1){
+        newArr.push(locArr[idx] + ', ')
+      } else {
+        newArr.push(locArr[idx]);
+      }
+    })
+    return newArr.join();
+  }
 
   const handleJoin = () => {
     setOpenModal(true);
@@ -117,16 +129,18 @@ const HomePage = () => {
   }
 
 
-  // useEffect(() => {
-  //   if(!pageContext.userLoggedIn){
-  //     route.push('/');
-  //   } else {
-  //     const grabUserData = async() => {
-  //       setVerifiedUserData(await GetUserAPI(pageContext.verifiedUser));
-  //     }
-  //     grabUserData();
-  //   }
-  // }, [])
+  useEffect(() => {
+    if(!pageContext.userLoggedIn){
+      route.push('/');
+    } else {
+      const grabUserData = async() => {
+        const userData = await GetUserAPI(pageContext.verifiedUser);
+        setVerifiedUserData(userData);
+        setMatchData(await GetPublicMatchesByStateAPI(userData.location));
+      }
+      grabUserData();
+    }
+  }, [])
 
   return (
     <div>
@@ -189,7 +203,7 @@ const HomePage = () => {
             </div>
 
             {
-              pracitceSessionData.map((data, idx) => (
+              matchData.map((data, idx) => (
                 <div key={idx}>
                   {
                     data.title === 'Practice Session' ? (
