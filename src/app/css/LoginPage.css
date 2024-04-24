@@ -61,7 +61,7 @@
     background-size: cover;
 }
 
-.messageTxt {
+.breakWordStyle {
     inline-size: inherit;
     overflow-wrap: break-word;
 }
@@ -83,3 +83,10 @@
         max-width: 350px;
     }
 }
+
+@media screen and (max-width: 450px) {
+    .text-sm {
+        font-size: 12px;
+    }
+}
+
