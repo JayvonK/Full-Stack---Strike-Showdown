@@ -3,7 +3,7 @@
 import LoginNavComponent from '@/components/PageComponents/LoginNavComponent';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import '@/app/css/LoginPage.css';
+import '@/app/css/LoginPageAndHome.css';
 import RequiredInputComponent from '@/components/PageComponents/LoginPage/RequiredInputComponent';
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { useToast } from '@/components/ui/use-toast';

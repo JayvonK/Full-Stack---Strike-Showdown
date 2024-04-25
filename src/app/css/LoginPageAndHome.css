@@ -66,12 +66,15 @@
     overflow-wrap: break-word;
 }
 
-@media screen and (max-width: 600px) {
-    .selectWidth {
-        max-width: 350px;
+.recentWinnerCols {
+        grid-template-columns: 50% 50%;
+    }
+
+@media screen and (max-width: 1160px) {
+    .recentWinnerCols {
+        grid-template-columns: 100%;
     }
 }
-
 
 .navtext img:hover {
     color: #C37500;

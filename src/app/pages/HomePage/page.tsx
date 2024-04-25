@@ -3,7 +3,7 @@ import NavBarComponent from '@/components/PageComponents/NavBarComponent';
 import { Navbar, Button, Modal } from 'flowbite-react';
 import { useRouter } from 'next/navigation';
 import React, { useEffect } from 'react'
-import '@/app/css/LoginPage.css';
+import '@/app/css/LoginPageAndHome.css';
 import postsData from '../../../utils/PostData.json';
 import bowler from '../../../../public/images/pexels-pavel-danilyuk-7429728.jpg';
 import {
@@ -25,6 +25,7 @@ import PracticeSessionComponent from '@/components/PageComponents/HomePage/Pract
 import MatchComponent from '@/components/PageComponents/HomePage/MatchComponent';
 import AddChallengeModal from '@/components/PageComponents/HomePage/AddMatchModal';
 import RecentWinnerComponent from '@/components/PageComponents/HomePage/RecentWinnerComponent';
+import NewNavBarComponent from '@/components/PageComponents/NewNavBarComponent';
 
 const HomePage = () => {
   const fakeUserData: IPublicUserData = {
@@ -172,49 +173,76 @@ const HomePage = () => {
 
   return (
     <div>
-      <NavBarComponent />
+      <NewNavBarComponent />
       <Modal className='bg-black' show={openModal} size={'4xl'} onClose={() => setOpenModal(false)}>
         <AddChallengeModal addingChallengeBool={addingChallengeBool} create1v1Challenge={create1v1Challenge} createPracticeSession={createPracticeSession} handleVisibilityChange={handleVisibilityChange} visibility={visibility} handleLocationOneChange={handleLocationOneChange} locationOne={locationOne} handleLocationTwoChange={handleLocationTwoChange} locationTwo={locationTwo} handleLocationThreeChange={handleLocationThreeChange} locationThree={locationThree} handleDescriptionChange={handleDescriptionChange} description={description} handleCloseModal={handleCloseModal} />
       </Modal>
 
-      <div className='bgLogin min-h-screen pt-12 2xl:px-44 lg:px-28 sm:px-14 px-6 pb-20 relative'>
+      <div className='bgLogin min-h-screen pt-12 2xl:px-44 xl:px-36 lg:px-24 sm:px-14 px-6 pb-20 relative'>
         <div className='h-full w-full bgHome absolute top-0 left-0 z-10'></div>
 
         <div className='z-20 relative'>
-          <div className='grid lg:grid-cols-[55%_45%] min-h-[310px] mb-10'>
+
+          <div className='grid lg:grid-cols-[55%_45%] xl:min-h-[310px] mb-10'>
 
             {/* Col 1 */}
             <div className='bg-black lg:rounded-tl-3xl lg:rounded-bl-3xl lg:rounded-none rounded-3xl'>
-              <div className="grid grid-cols-[30%_70%] p-10">
+
+              <div className="grid grid-cols-[30%_70%] xl:px-10 xl:py-10 lg:px-8 lg:py-8 px-10 py-10">
                 <div className='w-full flex items-center'>
                   <img className='object-cover w-full aspect-auto rounded-full' src={verifiedUserData ? verifiedUserData.profileImage : "/images/blankpfp.png"} alt="" />
                 </div>
 
-                <div className='pl-10 xl:block hidden'>
-                  <h1 className='jura text-4xl txtOrange mb-6 breakWordStyle'><span className='bgWaveIcon w-8 h-8 inline-block mr-3 -mb-1'></span>Welcome, <span className='juraBold text-white '>{verifiedUserData && verifiedUserData.username}</span></h1>
-                  <h3 className='text-white jura text-2xl mb-2 mr-10 inline-block'>Wins: <span className='txtOrange juraBold'>{verifiedUserData && verifiedUserData.wins}</span></h3>
-                  <h3 className='text-white jura text-2xl mb-2 mr-10 inline-block'>Losses: <span className='txtOrange juraBold'>{verifiedUserData && verifiedUserData.losses}</span></h3>
-                  <h3 className='text-white jura text-2xl mb-2 mr-10 inline-block'>Streak: <span className='txtOrange juraBold'>{verifiedUserData && verifiedUserData.streak}</span></h3>
-                  <h3 className='text-white jura text-2xl mb-2 mr-10 inline-block'>Avg: <span className='txtOrange juraBold'> {averageStatFormat(verifiedUserData && verifiedUserData.average)}</span></h3>
-                  <h3 className='text-white jura text-2xl mr- inline-block'>Style: <span className='txtOrange juraBold'> {verifiedUserData && verifiedUserData.style}</span></h3>
+                <div>
+                  <h1 className='jura xl:text-4xl lg:text-3xl text-4xl txtOrange mb-6 breakWordStyle xl:pl-10 lg:pl-6 pl-10'><span className='bgWaveIcon w-8 h-8 inline-block mr-3 -mb-1'></span>Welcome, <span className='juraBold text-white'>{verifiedUserData && verifiedUserData.username}</span></h1>
+
+                  <div className='xl:pl-10 lg:pl-6 pl-10'>
+
+                    <div className='xl:hidden lg:flex justify-between hidden'>
+                      <h3 className='text-white jura xl:text-2xl text-xl mb-2 mr-10 inline-block'>Wins: <span className='txtOrange juraBold'>{verifiedUserData && verifiedUserData.wins}</span></h3>
+                      <h3 className='text-white jura xl:text-2xl text-xl mb-2 2xl:mr-10 inline-block'>Losses: <span className='txtOrange juraBold'>{verifiedUserData && verifiedUserData.losses}</span></h3>
+                    </div>
+
+                    <h3 className='text-white jura xl:text-2xl lg:text-xl text-2xl mb-2 mr-10 xl:inline-block lg:hidden inline-block'>Wins: <span className='txtOrange juraBold'>{verifiedUserData && verifiedUserData.wins}</span></h3>
+                    <h3 className='text-white jura xl:text-2xl lg:text-xl text-2xl mb-2 2xl:mr-10 lg:mr-0 mr-10 xl:inline-block lg:hidden inline-block'>Losses: <span className='txtOrange juraBold'>{verifiedUserData && verifiedUserData.losses}</span></h3>
+                    <h3 className='text-white jura xl:text-2xl lg:text-xl text-2xl mb-2 mr-10 xl:inline-block lg:hidden inline-block'>Streak: <span className='txtOrange juraBold'>{verifiedUserData && verifiedUserData.streak}</span></h3>
+                    <h3 className='text-white jura xl:text-2xl lg:text-xl text-2xl mb-2 2xl:mr-10 lg:mr-0 mr-10 xl:inline-block lg:hidden inline-block'>Avg: <span className='txtOrange juraBold'> {averageStatFormat(verifiedUserData && verifiedUserData.average)}</span></h3>
+
+                    <div className='xl:hidden lg:flex justify-between hidden'>
+                      <h3 className='text-white jura xl:text-2xl text-xl mb-2 mr-10 inline-block'>Streak: <span className='txtOrange juraBold'>{verifiedUserData && verifiedUserData.streak}</span></h3>
+                      <h3 className='text-white jura xl:text-2xl text-xl mb-2 2xl:mr-10 inline-block'>Avg: <span className='txtOrange juraBold'> {averageStatFormat(verifiedUserData && verifiedUserData.average)}</span></h3>
+                    </div>
+
+                    <h3 className='text-white jura xl:text-2xl text-xl inline-block'>Style: <span className='txtOrange juraBold'> {verifiedUserData && verifiedUserData.style}</span></h3>
+                  </div>
+
                 </div>
               </div>
 
-              <div className='xl:hidden'>
-                <h3 className='text-white jura text-2xl mb-2 mr-10 inline-block'>Wins: <span className='txtOrange juraBold'>{verifiedUserData && verifiedUserData.wins}</span></h3>
-                <h3 className='text-white jura text-2xl mb-2 mr-10 inline-block'>Losses: <span className='txtOrange juraBold'>{verifiedUserData && verifiedUserData.losses}</span></h3>
-                <h3 className='text-white jura text-2xl mb-2 mr-10 inline-block'>Streak: <span className='txtOrange juraBold'>{verifiedUserData && verifiedUserData.streak}</span></h3>
-                <h3 className='text-white jura text-2xl mb-2 mr-10 inline-block'>Avg: <span className='txtOrange juraBold'> {averageStatFormat(verifiedUserData && verifiedUserData.average)}</span></h3>
-                <h3 className='text-white jura text-2xl mr- inline-block'>Style: <span className='txtOrange juraBold'> {verifiedUserData && verifiedUserData.style}</span></h3>
+              <div className='hidden pl-10 pr-20 pb-10'>
+                <div className='flex justify-between'>
+                  <h3 className='text-white jura text-2xl mb-2 inline-block'>Wins: <span className='txtOrange juraBold'>{verifiedUserData && verifiedUserData.wins}</span></h3>
+                  <h3 className='text-white jura text-2xl mb-2 inline-block'>Losses: <span className='txtOrange juraBold'>{verifiedUserData && verifiedUserData.losses}</span></h3>
+                </div>
+                <div className='flex justify-between'>
+                  <h3 className='text-white jura text-2xl mb-2 inline-block'>Streak: <span className='txtOrange juraBold'>{verifiedUserData && verifiedUserData.streak}</span></h3>
+                  <h3 className='text-white jura text-2xl mb-2 inline-block'>Avg: <span className='txtOrange juraBold'> {averageStatFormat(verifiedUserData && verifiedUserData.average)}</span></h3>
+                </div>
+                <h3 className='text-white jura text-2xl inline-block'>Style: <span className='txtOrange juraBold'> {verifiedUserData && verifiedUserData.style}</span></h3>
               </div>
-
             </div>
 
             {/* Col 2 */}
-            <div className='bg-white lg:rounded-tr-3xl lg:rounded-br-3xl lg:rounded-none rounded-3xl p-9 lg:mt-0 mt-8'>
-              <h1 className='jura text-4xl mb-7 align-top'><span className='bgFireIcon w-8 h-8 inline-block mr-3 -mb-1'></span>In the mood for a <span className='juraBold'>challenge</span>? Or <span className='juraBold'>improving</span>?</h1>
-              <button className='bgOrange w-full text-2xl juraBold py-2 rounded-lg hover:bg-[#ff9939] mb-6' onClick={() => setOpenModal(true)}>Add a Post</button>
-              <button className='bgOrange w-full text-2xl juraBold py-2 rounded-lg hover:bg-[#ff9939]' onClick={() => setOpenModal(true)}>Challenge Friends</button>
+            <div className='bg-white lg:rounded-tr-3xl lg:rounded-br-3xl lg:rounded-none rounded-3xl xl:p-10 lg:p-8 p-10 lg:mt-0 mt-8 flex flex-col justify-around'>
+              <div>
+                <h1 className='jura 2xl:text-4xl lg:text-3xl text-4xl mb-7 align-top'><span className='bgFireIcon w-8 h-8 inline-block mr-3 -mb-1'></span>In the mood for a <span className='juraBold'>challenge</span>? Or <span className='juraBold'>improving</span>?</h1>
+              </div>
+
+              <div>
+                <button className='bgOrange w-full xl:text-2xl lg:text-xl text-2xl juraBold py-2 rounded-lg hover:bg-[#ff9939] xl:mb-6 lg:mb-4 mb-6' onClick={() => setOpenModal(true)}>Add a Post</button>
+                <button className='bgOrange w-full xl:text-2xl lg:text-xl text-2xl juraBold py-2 rounded-lg hover:bg-[#ff9939]' onClick={() => setOpenModal(true)}>Challenge Friends</button>
+              </div>
+
             </div>
           </div>
 
@@ -253,14 +281,10 @@ const HomePage = () => {
             </div>
 
             <div className='grid grid-cols-2 justify-between px-10 pt-7'>
-              <div>
-                <RecentWinnerComponent pfp='/images/blankpfp.png' />
-                <RecentWinnerComponent pfp='/images/blankpfp.png' />
-              </div>
-              <div className='flex flex-col items-end'>
-                <RecentWinnerComponent pfp='/images/blankpfp.png' />
-                <RecentWinnerComponent pfp='/images/blankpfp.png' />
-              </div>
+                <RecentWinnerComponent pfp='/images/blankpfp.png' idx={0} />
+                <RecentWinnerComponent pfp='/images/blankpfp.png' idx={1} />
+                <RecentWinnerComponent pfp='/images/blankpfp.png' idx={2}/>
+                <RecentWinnerComponent pfp='/images/blankpfp.png' idx={3}/>
             </div>
           </div>
         </div>

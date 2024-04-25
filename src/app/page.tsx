@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { useEffect, useState } from "react";
-import '@/app/css/LoginPage.css'
+import '@/app/css/LoginPageAndHome.css'
 import { useRouter } from "next/navigation";
 import LoginNavComponent from "../components/PageComponents/LoginNavComponent";
 import RequiredInputComponent from "../components/PageComponents/LoginPage/RequiredInputComponent";
