@@ -38,7 +38,7 @@ collapse: {
     off: ""
   },
   toggle: {
-    base: "inline-flex items-center rounded-lg p-2 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600 md:hidden",
+    base: "inline-flex items-center rounded-lg p-2 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600 lg:hidden",
     icon: "h-6 w-6 shrink-0"
   }
  }
@@ -75,9 +75,9 @@ collapse: {
       <Navbar.Collapse className="">
         <Navbar.Link className=" jura border-b-0 border-transparent hover:cursor-pointer hover:!text-orange-500  item-center ">
 
-        {/* <Flowbite theme={{theme: customTheme  }}> */}
+
         <ToggleButtonInput/>
-    {/* </Flowbite> */}
+ 
          
         </Navbar.Link>
         <Navbar.Link
@@ -86,11 +86,13 @@ collapse: {
           as={Link}
           href=""
         >
+          <div className="flex justify-center">
           <img
             src={FriendsIcon.src}
             alt=""
-            className="object-cover  justify-center friendsPic   h-14 w-16 mb-1  showcase-menu-social"
+            className="object-cover  justify-center friendsPic     mb-1  "
           />
+          </div>
           Friends
         </Navbar.Link>
         <Navbar.Link
@@ -102,39 +104,47 @@ collapse: {
           <img
             src={InboxIcon.src}
             alt=""
-            className="object-cover h-15  mb-1  "
+            className="object-cover h-10  mb-1  "
           />
           Inbox
          
         </Navbar.Link>
+        <div className="flex  items-center">
+       
         <Navbar.Link
           className="jura  border-b-0 border-transparent hover:brightness-125 hover:cursor-pointer hover:!text-orange-500 text-white "
-         
-         
-         
         >
-          {" "}
+     
+          <div className="flex justify-center">
           <img
           onClick={() =>router.push('/pages/MessagingPage')}
             src={MessageIcon.src}
             alt=""
-            className="object-cover lg:!pl-2 h-13 mb-1 sm:!px-0"
+            className="object-cover  h-10  mb-1 sm:!px-0"
           />
+          </div>
+          <div>
+          <h1 className="text-center">
           Message
+          </h1>
+          </div>
         </Navbar.Link>
+        </div>
         <Navbar.Link
           onClick={() => setIsModalOpen(true)}
           className="jura  border-b-0 border-transparent hover:brightness-125 hover:cursor-pointer hover:!text-orange-500 text-white  sm:mr-0 lg:mr-20 "
           href="#"
         >
-          {" "}
+          <div className="flex justify-center">
           <img
             src={ProfileIcon.src}
             alt=""
-            className="object-cover   h-15 hover:cursor-pointer mb-1 friendsPic "
+            className="object-cover   h-10 hover:cursor-pointer mb-1  "
           />
+          </div>
           Profile
         </Navbar.Link>
+      
       </Navbar.Collapse>
     
     </Navbar>

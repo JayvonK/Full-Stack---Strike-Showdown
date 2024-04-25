@@ -42,9 +42,9 @@ const handleContextChange = (tab:any) =>{
 <div className="px-6 py-10 ">
   <div className="flex justify-evenly">
     <button
-      className={`tab-button px-4 py-2 rounded focus:outline-none jura text-3xl ${
+      className={`tab-button px-4 w-48 py-2 rounded focus:outline-none jura text-3xl ${
         activeTab === 'Inbox'
-          ? 'bg-orange-500  '
+          ? 'bg-orange-500   '
           : ' text-black'
       }`}
       onClick={() => handleTabChange('Inbox')}
@@ -52,7 +52,7 @@ const handleContextChange = (tab:any) =>{
       Inbox
     </button>
     <button
-      className={`tab-button px-4 py-2 rounded focus:outline-none jura text-3xl ${
+      className={`tab-button px-4 py-2 w-48 rounded focus:outline-none jura text-3xl ${
         activeTab === 'Matches'
           ? 'bg-orange-500 '
           : ' text-black '
@@ -62,7 +62,7 @@ const handleContextChange = (tab:any) =>{
       Matches
     </button>
     <button
-      className={`tab-button px-4 py-2 rounded focus:outline-none jura text-3xl ${
+      className={`tab-button px-4 py-2 w-48 rounded focus:outline-none jura text-3xl ${
         activeTab === 'Sessions'
           ? 'bg-orange-500  '
           : ' text-black'
@@ -73,8 +73,8 @@ const handleContextChange = (tab:any) =>{
     </button>
   </div>
 </div>
- <div className="px-40 py-40 "  onClick={() => handleTabChange('Sessions')}>
-      {tabOneActive &&  <div className="bg-black grid-cols-2 rounded-lg  px-5 py-5"> <img className="h-20" alt="" src={ProfilePic.src} /> <div> <h2 className= "text-center text-3xl jura " >hhd</h2></div></div>}
+ <div className=" py-40 "  onClick={() => handleTabChange('Sessions')}>
+      {tabOneActive &&  <div className="bg-black flex justify-start rounded-lg mx-8  px-5 py-5"> <img className="h-20" alt="" src={ProfilePic.src} /> <div> <h2 className= "text-center text-3xl jura text-white" >hhd</h2><h2 className= "text-center text-3xl jura text-white" >hhd</h2></div></div>}
       {tabTwoActive &&   <h2 className= "text-center text-3xl jura " >Tab 2</h2>}
       {tabThreeActive &&   <h2 className= "text-center text-3xl jura " >Tab 3</h2>}
 

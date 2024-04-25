@@ -55,7 +55,7 @@ const ToggleButtonInput = () => {
      <img
       src={SearchIcon.src}
       alt="Search Icon"
-      className=" object-cover h-15 w-15 hover:cursor-pointer  mb-1"></img><h1>Search</h1></div>
+      className=" object-cover h-10 hover:cursor-pointer  mb-1"></img><h1>Search</h1></div>
     
   );
 };
