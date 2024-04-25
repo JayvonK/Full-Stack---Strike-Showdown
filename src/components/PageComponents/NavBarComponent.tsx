@@ -29,30 +29,59 @@ function NavBarComponent() {
   const [inputValue, setInputValue] = useState<string>("");
 const pageContext = useAppContext();
 
-const customTheme = {
-  collapse: {
-    base: "w-full lg:block lg:w-auto",
-    list: "mt-4 flex flex-col lg:mt-0 lg:flex-row lg:space-x-8 lg:text-sm lg:font-medium",
-    hidden: {
-      on: "hidden",
-      off: ""
+const customTheme: CustomFlowbiteTheme = {
+  navbar: {
+    base: "border-gray-200 bg-white px-2 py-2.5 dark:border-gray-700 dark:bg-gray-800 sm:px-4",
+    rounded: {
+      on: "rounded",
+      off: "rounded-none"
     },
-    toggle: {
-      base: "inline-flex items-center rounded-lg p-2 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600 sm:flex md:flex lg:flex xl:hidden",
-      icon: "h-6 w-6 shrink-0"
-    }
+    bordered: {
+      on: "border",
+      off: "border-0"
+    },
+    inner: {
+      base: "mx-auto flex flex-wrap items-center justify-between"
+    },
+    brand: {
+      base: "flex items-center"
+    },
+    collapse: {
+      base: "w-full md:block md:w-auto",
+      list: "mt-4 flex flex-col rounded-lg p-4 md:mt-0 md:flex-row md:space-x-4 md:border-0 md:bg-white md:text-sm md:font-medium md:dark:bg-gray-800",
+      hidden: {
+        on: "!block",
+        off: "!hidden"
+      },
+      toggle: {
+        base: "ml-3 inline-flex items-center rounded-lg p-2 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600 md:hidden",
+        icon: "h-6 w-6 shrink-0"
+      }
+    },
+    link: {
+      base: "block py-2 pl-3 pr-4 text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:border-0 md:p-0 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:bg-transparent md:dark:hover:text-white",
+      active: {
+        on: "bg-blue-700 md:bg-transparent md:text-blue-700",
+        off: ""
+      },
+      disabled: {
+        on: "text-gray-400 hover:cursor-not-allowed dark:text-gray-600",
+        off: ""
+      }
+    },
+    breakpoint: "lg"
   }
-}
+};
   const router = useRouter();
   return (
     <Navbar
       fluid
-      className="bg-black  !border-black pr-0 lg:!pr-32  lg:!pl-52 items-center     " theme={customTheme}
+      className="bg-black  !border-black pr-0 xl:!pr-32 xl:!pl-52 items-center     " theme={customTheme}
     >
       <Navbar.Brand  as={Link} href="/">
         <img
           src={logo.src}
-          className="mr-3 object-cover   h-12 w-12 md:h-20 md:w-20 lg:h-20 lg:w-20  rounded-full border border-white hover:cursor-pointer"
+          className="mr-3 object-cover   h-12 w-12 md:h-14 md:w-14 xl:h-20 xl:w-20  rounded-full border border-white hover:cursor-pointer"
        
           alt="Flowbite React Logo"
           onClick={() => router.push('./pages/HomePage')}
@@ -64,7 +93,7 @@ const customTheme = {
         </h1>
       </Navbar.Brand>
       <Navbar.Toggle className=" !bg-black hover:border-slate-950 hover:!border-0 text-orange-500 "style={{ border: 0, borderColor: 'black' }} />
-      <Navbar.Collapse className="">
+      <Navbar.Collapse className="lg:!flex lg:!justify-end">
         <Navbar.Link className=" jura border-b-0 border-transparent hover:cursor-pointer hover:!text-orange-500  item-center ">
 
 
@@ -81,7 +110,7 @@ const customTheme = {
           href=""
         >
            
-          <div className="flex lg:justify-center">
+          <div className="flex justify-center">
           <img
             src={FriendsIcon.src}
             alt=""
@@ -98,7 +127,7 @@ const customTheme = {
           
         >
           {" "}
-          <div className="flex lg:justify-center">
+          <div className="flex justify-center">
           <img
             src={InboxIcon.src}
             alt=""
@@ -111,10 +140,10 @@ const customTheme = {
        
         <div className="flex  items-center">
         <Navbar.Link
-          className="jura  border-b-0 border-transparent hover:brightness-125 hover:cursor-pointer hover:!text-orange-500 text-white "
+          className="jura   border-b-0 border-transparent hover:brightness-125 hover:cursor-pointer hover:!text-orange-500 text-white "
         >
      
-          <div className="flex lg:justify-center">
+          <div className="flex md:justify-center lg:justify-center">
           <img
           onClick={() =>router.push('/pages/MessagingPage')}
             src={MessageIcon.src}
@@ -135,7 +164,7 @@ const customTheme = {
           className="jura  border-b-0 border-transparent hover:brightness-125 hover:cursor-pointer hover:!text-orange-500 text-white  sm:mr-0 lg:mr-20 "
           href="#"
         >
-          <div className="flex lg:justify-center">
+          <div className="flex justify-center">
           <img
             src={ProfileIcon.src}
             alt=""
