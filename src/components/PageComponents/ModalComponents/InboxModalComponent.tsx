@@ -73,8 +73,8 @@ const handleContextChange = (tab:any) =>{
     </button>
   </div>
 </div>
- <div className=" py-40 "  onClick={() => handleTabChange('Sessions')}>
-      {tabOneActive &&  <div className="bg-black flex justify-start rounded-lg mx-8  px-5 py-5"> <img className="h-20" alt="" src={ProfilePic.src} /> <div> <h2 className= "text-center text-3xl jura text-white" >hhd</h2><h2 className= "text-center text-3xl jura text-white" >hhd</h2></div></div>}
+ <div className="  "  onClick={() => handleTabChange('Sessions')}>
+      {tabOneActive &&  <div className="bg-black flex justify-start rounded-lg mx-8  px-5 py-2"> <img className="h-20" alt="" src={ProfilePic.src} /> <div className="pl-10 "> <h2 className= "text-center text-xl pb-2 jura text-white" ><h1></h1> has accepted your friend request</h2><button className= "text-center text-xl bg-orange-500 rounded-lg jura px-2" >View Friends</button></div></div>}
       {tabTwoActive &&   <h2 className= "text-center text-3xl jura " >Tab 2</h2>}
       {tabThreeActive &&   <h2 className= "text-center text-3xl jura " >Tab 3</h2>}
 
