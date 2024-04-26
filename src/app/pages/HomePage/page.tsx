@@ -34,16 +34,16 @@ const HomePage = () => {
     setOpenModal(true);
   }
 
-  // useEffect(() => {
-  //   if(!pageContext.userLoggedIn){
-  //     route.push('/');
-  //   } else {
-  //     const grabUserData = async() => {
-  //       setVerifiedUserData(await GetUserAPI(pageContext.verifiedUser));
-  //     }
-  //     grabUserData();
-  //   }
-  // }, [])
+  useEffect(() => {
+    if(!pageContext.userLoggedIn){
+      route.push('/');
+    } else {
+      const grabUserData = async() => {
+        setVerifiedUserData(await GetUserAPI(pageContext.verifiedUser));
+      }
+      grabUserData();
+    }
+  }, [])
 
   return (
     <div>

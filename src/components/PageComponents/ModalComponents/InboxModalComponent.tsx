@@ -9,9 +9,6 @@ const InboxModalComponent = () => {
   
     const [showModal, setOpenModal] = useState(false);
     const [activeTab, setActiveTab] = useState('Inbox');
-    const [activeTabContext1, setactiveTabContext1] = useState(1);
-    const [activeTabContext2, setactiveTabContext2] = useState(2);
-    const [activeTabContext3, setactiveTabContext3] = useState(3);
     const [tabOneActive, setTabOneActive] = useState(true);
     const [tabTwoActive, setTabTwoActive] = useState(false);
     const [tabThreeActive, setTabThreeActive] = useState(false);
