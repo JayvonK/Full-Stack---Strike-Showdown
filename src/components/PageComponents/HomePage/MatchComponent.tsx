@@ -14,11 +14,11 @@ const MatchComponent = (props: { challenge: () => void, title: string, pfp: stri
     const array = props.locations.split(",");
 
     return (
-        <div className='px-10'>
+        <div className='md:px-10 sm:px-8 px-4'>
             <div className='flex justify-between'>
-                <h2 className='text-white juraBold xl:text-3xl text-2xl mr-14'>{props.title}</h2>
+                <h2 className='text-white juraBold xl:text-3xl sm:text-2xl text-lg md:mr-10 mr-5'>{props.title}</h2>
                 <div className='flex justify-end'>
-                    <button className='bgOrange md:min-w-56 xl:text-3xl text-2xl juraBold md:py-2 py-1 md:px-0 px-4 rounded-3xl hover:bg-[#ff9939]' onClick={props.challenge}>Challenge</button>
+                    <button className='bgOrange md:min-w-56 xl:text-3xl sm:text-2xl text-lg juraBold md:py-2 py-1 md:px-0 sm:px-10 px-4 sm:rounded-3xl rounded-xl hover:bg-[#ff9939]' onClick={props.challenge}>Challenge</button>
                 </div>
             </div>
 
@@ -66,7 +66,7 @@ const MatchComponent = (props: { challenge: () => void, title: string, pfp: stri
                             <SelectContent>
                                 {
                                     array.map((location, idx) => (
-                                        <SelectItem key={idx} className='xl:text-xl sm:text-lg text-sm' value={location}>{location}</SelectItem>
+                                        <SelectItem key={idx} className='xl:text-xl sm:text-lg text-sm pl-2' value={location}>{location}</SelectItem>
                                     ))
                                 }
                             </SelectContent>
@@ -78,7 +78,7 @@ const MatchComponent = (props: { challenge: () => void, title: string, pfp: stri
                     <div className='flex justify-between pr-2'>
                         <div>
                             <div className='pr-8 xl:text-xl sm:text-lg text-sm'>
-                                <h3 className='jura text-white -mb-2'>Username:</h3>
+                                <h3 className='jura text-white sm:-mb-2 mb-0'>Username:</h3>
                                 <h3 className='juraBold txtOrange underline cursor-pointer' onClick={props.challenge}>{props.username}</h3>
                             </div>
                         </div>
@@ -86,7 +86,7 @@ const MatchComponent = (props: { challenge: () => void, title: string, pfp: stri
                             <div className='xl:text-xl sm:text-lg text-sm'>
                                 <h3 className='jura text-white md:mb-1 mb-0'>Pick Location</h3>
                                 <Select>
-                                    <SelectTrigger className="min-w-44 xl:text-xl sm:text-lg text-sm bg-white pl-3 py-0">
+                                    <SelectTrigger className="sm:min-w-44 xl:text-xl sm:text-lg text-sm bg-white sm:pl-3 pl-2 py-0 sm:h-10 h-6">
                                         <SelectValue placeholder="Location" />
                                     </SelectTrigger>
                                     <SelectContent>
@@ -102,13 +102,13 @@ const MatchComponent = (props: { challenge: () => void, title: string, pfp: stri
                     </div>
 
                     <div className='xl:text-xl sm:text-lg text-sm mt-3'>
-                        <h3 className='jura text-white -mb-2'>Location & Date:</h3>
+                        <h3 className='jura text-white sm:-mb-2 mb-0'>Location & Date:</h3>
                         <h3 className='juraBold txtOrange'>{props.locations}</h3>
                     </div>
                 </div>
             </div>
 
-            <h3 className='jura xl:text-2xl text-xl text-white'><span className='juraBold txtOrange'>Description: </span> {props.description}</h3>
+            <h3 className='jura xl:text-2xl md:text-xl sm:text-lg text-sm text-white'><span className='juraBold txtOrange'>Description: </span> {props.description}</h3>
 
             <hr className='border-white mt-5 mb-8' />
         </div>

@@ -87,6 +87,14 @@ const HomePage = () => {
     return avg.split("Avg")[0];
   }
 
+  const handleTrueChallengeBool = () => {
+    setAddingChallengeBool(true);
+  }
+
+  const handleFalseChallengeBool = () => {
+    setAddingChallengeBool(false);
+  }
+
   const handleJoin = () => {
     setOpenModal(true);
   }
@@ -175,7 +183,7 @@ const HomePage = () => {
     <div>
       <NewNavBarComponent />
       <Modal className='bg-black' show={openModal} size={'4xl'} onClose={() => setOpenModal(false)}>
-        <AddChallengeModal addingChallengeBool={addingChallengeBool} create1v1Challenge={create1v1Challenge} createPracticeSession={createPracticeSession} handleVisibilityChange={handleVisibilityChange} visibility={visibility} handleLocationOneChange={handleLocationOneChange} locationOne={locationOne} handleLocationTwoChange={handleLocationTwoChange} locationTwo={locationTwo} handleLocationThreeChange={handleLocationThreeChange} locationThree={locationThree} handleDescriptionChange={handleDescriptionChange} description={description} handleCloseModal={handleCloseModal} />
+        <AddChallengeModal addingChallengeBool={addingChallengeBool} handleTrueChallengeBool={handleTrueChallengeBool} handleFalseChallengeBool={handleFalseChallengeBool} create1v1Challenge={create1v1Challenge} createPracticeSession={createPracticeSession} handleVisibilityChange={handleVisibilityChange} visibility={visibility} handleLocationOneChange={handleLocationOneChange} locationOne={locationOne} handleLocationTwoChange={handleLocationTwoChange} locationTwo={locationTwo} handleLocationThreeChange={handleLocationThreeChange} locationThree={locationThree} handleDescriptionChange={handleDescriptionChange} description={description} handleCloseModal={handleCloseModal} />
       </Modal>
 
       <div className='bgLogin min-h-screen pt-12 2xl:px-44 xl:px-36 lg:px-24 sm:px-14 px-6 pb-20 relative'>
@@ -186,34 +194,34 @@ const HomePage = () => {
           <div className='grid lg:grid-cols-[55%_45%] xl:min-h-[310px] mb-10'>
 
             {/* Col 1 */}
-            <div className='bg-black lg:rounded-tl-3xl lg:rounded-bl-3xl lg:rounded-none rounded-3xl'>
+            <div className='bg-black lg:rounded-tl-3xl lg:rounded-bl-3xl lg:rounded-none sm:rounded-3xl rounded-xl'>
 
-              <div className="grid grid-cols-[30%_70%] xl:px-10 xl:py-10 lg:px-8 lg:py-8 px-10 py-10">
+              <div className="grid grid-cols-[30%_70%] xl:px-10 xl:py-10 lg:px-8 lg:py-8 md:px-10 md:py-10 sm:px-8 sm:py-8 px-4 py-4">
                 <div className='w-full flex items-center'>
                   <img className='object-cover w-full aspect-auto rounded-full' src={verifiedUserData ? verifiedUserData.profileImage : "/images/blankpfp.png"} alt="" />
                 </div>
 
                 <div>
-                  <h1 className='jura xl:text-4xl lg:text-3xl text-4xl txtOrange mb-6 breakWordStyle xl:pl-10 lg:pl-6 pl-10'><span className='bgWaveIcon w-8 h-8 inline-block mr-3 -mb-1'></span>Welcome, <span className='juraBold text-white'>{verifiedUserData && verifiedUserData.username}</span></h1>
+                  <h1 className='jura xl:text-4xl lg:text-3xl sm:text-4xl text-2xl txtOrange mb-6 breakWordStyle xl:pl-10 lg:pl-6 md:pl-10 sm:pl-8 pl-4'><span className='bgWaveIcon w-8 h-8 inline-block mr-3 -mb-1'></span>Welcome, <span className='juraBold text-white'>{verifiedUserData && verifiedUserData.username}</span></h1>
 
-                  <div className='xl:pl-10 lg:pl-6 pl-10'>
+                  <div className='xl:pl-10 lg:pl-6 md:pl-10 sm:pl-8 pl-4'>
 
                     <div className='xl:hidden lg:flex justify-between hidden'>
                       <h3 className='text-white jura xl:text-2xl text-xl mb-2 mr-10 inline-block'>Wins: <span className='txtOrange juraBold'>{verifiedUserData && verifiedUserData.wins}</span></h3>
                       <h3 className='text-white jura xl:text-2xl text-xl mb-2 2xl:mr-10 inline-block'>Losses: <span className='txtOrange juraBold'>{verifiedUserData && verifiedUserData.losses}</span></h3>
                     </div>
 
-                    <h3 className='text-white jura xl:text-2xl lg:text-xl text-2xl mb-2 mr-10 xl:inline-block lg:hidden inline-block'>Wins: <span className='txtOrange juraBold'>{verifiedUserData && verifiedUserData.wins}</span></h3>
-                    <h3 className='text-white jura xl:text-2xl lg:text-xl text-2xl mb-2 2xl:mr-10 lg:mr-0 mr-10 xl:inline-block lg:hidden inline-block'>Losses: <span className='txtOrange juraBold'>{verifiedUserData && verifiedUserData.losses}</span></h3>
-                    <h3 className='text-white jura xl:text-2xl lg:text-xl text-2xl mb-2 mr-10 xl:inline-block lg:hidden inline-block'>Streak: <span className='txtOrange juraBold'>{verifiedUserData && verifiedUserData.streak}</span></h3>
-                    <h3 className='text-white jura xl:text-2xl lg:text-xl text-2xl mb-2 2xl:mr-10 lg:mr-0 mr-10 xl:inline-block lg:hidden inline-block'>Avg: <span className='txtOrange juraBold'> {averageStatFormat(verifiedUserData && verifiedUserData.average)}</span></h3>
+                    <h3 className='text-white jura xl:text-2xl lg:text-xl sm:text-2xl text-lg mb-2 sm:mr-10 mr-8 xl:inline-block lg:hidden inline-block'>Wins: <span className='txtOrange juraBold'>{verifiedUserData && verifiedUserData.wins}</span></h3>
+                    <h3 className='text-white jura xl:text-2xl lg:text-xl sm:text-2xl text-lg mb-2 2xl:mr-10 lg:mr-0 md:mr-10 xl:inline-block lg:hidden inline-block'>Losses: <span className='txtOrange juraBold'>{verifiedUserData && verifiedUserData.losses}</span></h3>
+                    <h3 className='text-white jura xl:text-2xl lg:text-xl sm:text-2xl text-lg mb-2 mr-10 xl:inline-block lg:hidden sm:inline-block hidden'>Streak: <span className='txtOrange juraBold'>{verifiedUserData && verifiedUserData.streak}</span></h3>
+                    <h3 className='text-white jura xl:text-2xl lg:text-xl sm:text-2xl text-lg mb-2 2xl:mr-10 lg:mr-0 md:mr-10 xl:inline-block lg:hidden sm:inline-block hidden'>Avg: <span className='txtOrange juraBold'> {averageStatFormat(verifiedUserData && verifiedUserData.average)}</span></h3>
 
                     <div className='xl:hidden lg:flex justify-between hidden'>
                       <h3 className='text-white jura xl:text-2xl text-xl mb-2 mr-10 inline-block'>Streak: <span className='txtOrange juraBold'>{verifiedUserData && verifiedUserData.streak}</span></h3>
                       <h3 className='text-white jura xl:text-2xl text-xl mb-2 2xl:mr-10 inline-block'>Avg: <span className='txtOrange juraBold'> {averageStatFormat(verifiedUserData && verifiedUserData.average)}</span></h3>
                     </div>
 
-                    <h3 className='text-white jura xl:text-2xl text-xl inline-block'>Style: <span className='txtOrange juraBold'> {verifiedUserData && verifiedUserData.style}</span></h3>
+                    <h3 className='text-white jura xl:text-2xl lg:text-xl sm:text-2xl text-lg sm:inline-block hidden'>Style: <span className='txtOrange juraBold'> {verifiedUserData && verifiedUserData.style}</span></h3>
                   </div>
 
                 </div>
@@ -233,22 +241,22 @@ const HomePage = () => {
             </div>
 
             {/* Col 2 */}
-            <div className='bg-white lg:rounded-tr-3xl lg:rounded-br-3xl lg:rounded-none rounded-3xl xl:p-10 lg:p-8 p-10 lg:mt-0 mt-8 flex flex-col justify-around'>
+            <div className='bg-white lg:rounded-tr-3xl lg:rounded-br-3xl lg:rounded-none sm:rounded-3xl rounded-xl xl:p-10 lg:p-8 md:p-10 sm:p-8 p-4 lg:mt-0 mt-8 flex flex-col justify-around'>
               <div>
-                <h1 className='jura 2xl:text-4xl lg:text-3xl text-4xl mb-7 align-top'><span className='bgFireIcon w-8 h-8 inline-block mr-3 -mb-1'></span>In the mood for a <span className='juraBold'>challenge</span>? Or <span className='juraBold'>improving</span>?</h1>
+                <h1 className='jura 2xl:text-4xl lg:text-3xl sm:text-4xl text-2xl mb-7 align-top'><span className='bgFireIcon sm:w-8 sm:h-8 w-6 h-6 inline-block sm:mr-3 mr-2 -mb-1'></span>In the mood for a <span className='juraBold'>challenge</span>? Or <span className='juraBold'>improving</span>?</h1>
               </div>
 
               <div>
-                <button className='bgOrange w-full xl:text-2xl lg:text-xl text-2xl juraBold py-2 rounded-lg hover:bg-[#ff9939] xl:mb-6 lg:mb-4 mb-6' onClick={() => setOpenModal(true)}>Add a Post</button>
-                <button className='bgOrange w-full xl:text-2xl lg:text-xl text-2xl juraBold py-2 rounded-lg hover:bg-[#ff9939]' onClick={() => setOpenModal(true)}>Challenge Friends</button>
+                <button className='bgOrange w-full xl:text-2xl lg:text-xl sm:text-2xl text-lg juraBold sm:py-2 py-1 rounded-lg hover:bg-[#ff9939] xl:mb-6 lg:mb-4 sm:mb-6 mb-3' onClick={() => setOpenModal(true)}>Add a Post</button>
+                <button className='bgOrange w-full xl:text-2xl lg:text-xl sm:text-2xl text-lg juraBold sm:py-2 py-1 rounded-lg hover:bg-[#ff9939]' onClick={() => setOpenModal(true)}>Challenge Friends</button>
               </div>
 
             </div>
           </div>
 
-          <div className='min-h-[500px] max-h-[1200px] bg-black rounded-3xl overflow-y-auto overflow-x-hidden scrollbar mb-10'>
+          <div className='min-h-[500px] max-h-[1200px] bg-black sm:rounded-3xl rounded-xl overflow-y-auto overflow-x-hidden scrollbar mb-10'>
             <div className='flex'>
-              <h1 className='text-black xl:text-4xl text-3xl juraBold py-4 px-8 bg-[#FF7A00] max-w-[450px] text-center rounded-tl-3xl mb-12'>Available Matches</h1>
+              <h1 className='text-black xl:text-4xl text-3xl juraBold py-4 px-8 bg-[#FF7A00] max-w-[450px] text-center sm:rounded-tl-3xl rounded-tl-xl mb-12'>Available Matches</h1>
               <h1 className='text-white xl:text-4xl text-3xl jura py-4 px-8 max-w-[450px] text-center ml-6'>Location: <span className='txtOrange'>{verifiedUserData && verifiedUserData.location}</span></h1>
             </div>
 
@@ -275,9 +283,9 @@ const HomePage = () => {
 
           </div>
 
-          <div className='min-h-[500px] max-h-[1200px] bg-black rounded-3xl overflow-y-auto overflow-x-hidden scrollbar'>
+          <div className='min-h-[500px] max-h-[1200px] bg-black sm:rounded-3xl rounded-xl overflow-y-auto overflow-x-hidden scrollbar'>
             <div className='flex'>
-              <h1 className='text-black xl:text-4xl text-3xl juraBold py-4 px-8 bg-[#FF7A00] max-w-[450px] text-center rounded-tl-3xl mb-6'>Recent Winners</h1>
+              <h1 className='text-black xl:text-4xl text-3xl juraBold py-4 px-8 bg-[#FF7A00] max-w-[450px] text-center sm:rounded-tl-3xl rounded-tl-xl mb-6'>Recent Winners</h1>
             </div>
 
             <div className='grid grid-cols-2 justify-between px-10 pt-7'>

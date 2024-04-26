@@ -1,20 +1,37 @@
 import React from 'react'
 
-const MessagingBubbleComponent = (props: {isSender: boolean, delivered: boolean}) => {
+const MessagingBubbleComponent = (props: { isSender: boolean, delivered: boolean }) => {
     return (
-        <div className='grid grid-cols-2 gap-3'>
-            <div>
-                <h1 className='inline-block juraBold text-2xl bg-white px-5 py-2 rounded-lg breakWordStyle'>Nothing Much, You?</h1>
-            </div>
-            <div className=''>
-                <div className="flex justify-end">
-                    <h1 className='inline-block juraBold text-2xl bg-[#FF7A00] px-5 py-2 rounded-lg max-w-full breakWordStyle'>What&apos;s up?</h1>
-                </div>
-                <div className='flex justify-end'>
-                    <p className='text-[#BFBFBF] jura text-xl py-2'>Delivered</p>
-                </div>
-            </div>
-        </div>
+        <>
+            {
+                props.isSender ? (
+                    <div className='grid grid-cols-[30%_70%] '>
+                        <div>
+                        </div>
+
+                        <div className=''>
+                            <div className="flex justify-end">
+                                <h1 className='juraBold sm:text-2xl text-lg bg-[#FF7A00] sm:px-5 sm:py-2 px-3 py-1 rounded-lg max-w-full break-words'>What&ap</h1>
+                            </div>
+                            <div className='flex justify-end'>
+                                <p className='text-[#BFBFBF] jura sm:text-xl text-base sm:py-2 py-1'>Delivered</p>
+                            </div>
+                        </div>
+                    </div>
+                ) : (
+                    <div className='grid grid-cols-[70%_30%] '>
+                        <div className='flex'>
+                            <h1 className='juraBold sm:text-2xl text-lg bg-white sm:px-5 sm:py-2 px-3 py-1 rounded-lg break-words'>j2 2qp oj2q?</h1>
+                        </div>
+
+                        <div className=''>
+
+                        </div>
+                    </div>
+                )
+            }
+            
+        </>
     )
 }
 
