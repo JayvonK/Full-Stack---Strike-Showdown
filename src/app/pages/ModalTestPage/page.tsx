@@ -21,7 +21,7 @@ function page() {
      {/* <InboxModalComponent/>  */}
       {/* <ProfileModalComponent userName={'Tommy201'} proNouns={'Salmon'} fullName={'alphaMale'} mainCenter={'Packed Man'} average={'1000'} highGames={'911'} highSeries={'111'} earnings={'4'} style={'quadruple handroll'} />  */}
 {/* <JoinSessionModalComponent/> */}
-<ViewProfileModalComponent userName={'e'} proNouns={'r'} record={'r'} mainCenter={'r'} average={'r'} highGames={'r'} highSeries={'r'} earnings={'r'} style={'r'}/>
+<ViewProfileModalComponent userName={'Briaaa'} proNouns={'hers/she'} record={'15'} mainCenter={'267'} average={'150'} highGames={'140'} highSeries={'100'} earnings={'2000'} style={'Righty'}/>
 
 
       </Modal>

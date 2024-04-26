@@ -54,7 +54,7 @@ const ViewProfileModalComponent = (props:{userName:string, proNouns:string, reco
     </div>
     </div>
   <div className='lg:px-5 lg:pb-5  '>
-    <div className="rounded-xl   bg-black  justify-center px-2 py-2 mx-5 lg:mx-0 mb-5  lg:px-10 lg:">
+    <div className="rounded-xl   bg-black  justify-center px-2 py-2 mx-5  mb-5  lg:px-10 lg:">
       <div className="rounded-xl   justify-space bg-black w-50  grid grid-flow-col auto-cols">
         <div className="">
           <h1 className=" bg-orange-500   text-center mt-5   text-base md:text-3xl md:w-40   w-20  rounded-lg      pt-2 pb-2  mb-2 text-black jura">
