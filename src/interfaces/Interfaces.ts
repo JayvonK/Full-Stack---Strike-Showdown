@@ -7,6 +7,12 @@ export interface IToken {
   token: string;
 }
 
+interface IIinvitedUser {
+  iD: number;
+  userId: number;
+  publisherName: string
+}
+
 export interface IUserInfoWithStats {
   username: string;
   email: string;
@@ -73,6 +79,7 @@ export interface IUserPosts {
   average: string; 
   style: string; 
   streak: number; 
+  invitedUsers: IIinvitedUser[];
 }
 
 export interface ICreatePost{
@@ -86,4 +93,5 @@ export interface ICreatePost{
   currentPpl: number;
   description: string; 
   isFinished: boolean; 
+  invitedUsers: string[];
 }

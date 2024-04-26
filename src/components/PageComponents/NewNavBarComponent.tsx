@@ -14,7 +14,7 @@ const NewNavBarComponent = () => {
     return (
         <div className='w-full bg-black 2xl:px-44 xl:px-36 lg:px-24 sm:px-14 px-6 py-6 flex justify-between'>
             <div>
-                <div className='flex' onClick={() => route.push('/pages/HomePage')}>
+                <div className='flex hover:cursor-pointer' onClick={() => route.push('/pages/HomePage')}>
                     <img className='aspect-auto lg:w-[75px] w-16 rounded-full outline-white outline' src="/images/Strike Showdown Logo.png" alt="" />
                     <div className='flex items-center'>
                         <h1 className='juraBold txtOrange 2xl:text-5xl text-4xl 2xl:ml-10 ml-6 items-end md:block hidden'>Strike <span className='text-white'>Showdown</span></h1>

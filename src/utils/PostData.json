@@ -18,7 +18,13 @@
         "average": "160-170 Avg" ,
         "style": "1 Handed (Left)",
         "streak": 1,
-        "deleted": false
+        "invitedUsers": [
+            {
+                "iD": 3,
+                "userId": 0,
+                "publisherName": ""
+            }
+        ]
     },
     {
         "id": 1,
@@ -39,7 +45,13 @@
         "average": "190-200 Avg" ,
         "style": "Hadouken Style",
         "streak": 9,
-        "deleted": false
+        "invitedUsers": [
+            {
+                "iD": 2,
+                "userId": 0,
+                "publisherName": ""
+            }
+        ]
     },
     {
         "id": 2,
@@ -60,7 +72,13 @@
         "average": "180-190 Avg" ,
         "style": "1 Handed (Right)",
         "streak": 12,
-        "deleted": false
+        "invitedUsers": [
+            {
+                "iD": 0,
+                "userId": 0,
+                "publisherName": ""
+            }
+        ]
     },
     {
         "id": 3,
@@ -81,6 +99,12 @@
         "average": "110-120 Avg" ,
         "style": "2 Handed (Right)",
         "streak": 3,
-        "deleted": false
+        "invitedUsers": [
+            {
+                "iD": 1,
+                "userId": 0,
+                "publisherName": ""
+            }
+        ]
     }
 ]

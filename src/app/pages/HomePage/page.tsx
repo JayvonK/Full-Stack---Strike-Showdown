@@ -69,6 +69,7 @@ const HomePage = () => {
   const [locationOne, setLocationOne] = useState<string>('');
   const [locationTwo, setLocationTwo] = useState<string>('');
   const [locationThree, setLocationThree] = useState<string>('');
+  const [invitedUsersArr, setInvitedUsersArray] = useState<string[]>([])
   const pageContext = useAppContext();
   const route = useRouter();
 
@@ -148,7 +149,8 @@ const HomePage = () => {
       maxPpl: maxPpl,
       currentPpl: currentPpl,
       description: description,
-      isFinished: false
+      isFinished: false,
+      invitedUsers: invitedUsersArr,
     }
 
     try {
@@ -174,7 +176,8 @@ const HomePage = () => {
       maxPpl: 0,
       currentPpl: 0,
       description: description,
-      isFinished: false
+      isFinished: false,
+      invitedUsers: invitedUsersArr
     }
   }
 
@@ -280,9 +283,9 @@ const HomePage = () => {
                   <div key={idx}>
                     {
                       data.title === 'Practice Session' ? (
-                        <PracticeSessionComponent username={data.username} pfp={data.profileImage} wins={data.wins} avg={data.average} streak={data.streak} style={data.style} location={data.locations} time={data.time} join={handleJoin} userClick={handleJoin} description={data.description} currentPpl={data.currentPpl} maxPpl={data.maxPpl} date={data.date} />
+                        <PracticeSessionComponent data={data} join={() => {}} userClick={() => {}}/>
                       ) : (
-                        <MatchComponent challenge={handleJoin} title={data.title} pfp={data.profileImage} username={data.username} wins={data.wins} streak={data.streak} avg={data.average} style={data.style} locations={data.locations} description={data.description} />
+                        <MatchComponent challenge={handleJoin} data={data} />
                       )
                     }
 
@@ -302,7 +305,7 @@ const HomePage = () => {
               <h1 className='text-black xl:text-4xl text-3xl juraBold py-4 px-8 bg-[#FF7A00] max-w-[450px] text-center sm:rounded-tl-3xl rounded-tl-xl mb-6'>Recent Winners</h1>
             </div>
 
-            <div className='grid grid-cols-2 justify-between px-10 pt-7'>
+            <div className='grid lg:grid-cols-2 grid-cols-1 justify-between px-10 pt-7'>
               <RecentWinnerComponent pfp='/images/blankpfp.png' idx={0} />
               <RecentWinnerComponent pfp='/images/blankpfp.png' idx={1} />
               <RecentWinnerComponent pfp='/images/blankpfp.png' idx={2} />
