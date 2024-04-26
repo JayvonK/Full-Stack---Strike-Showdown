@@ -69,6 +69,7 @@ const HomePage = () => {
   const [locationOne, setLocationOne] = useState<string>('');
   const [locationTwo, setLocationTwo] = useState<string>('');
   const [locationThree, setLocationThree] = useState<string>('');
+  const [invitedUsers, setInvitedUsers] = useState<string>('');
   const [invitedUsersArr, setInvitedUsersArray] = useState<string[]>([])
   const pageContext = useAppContext();
   const route = useRouter();
@@ -103,7 +104,7 @@ const HomePage = () => {
 
   const handleCloseModal = () => {
     setOpenModal(false);
-    date ? alert(format(date, "PPP")) : "date dont exist";
+    // date ? alert(format(date, "MM/dd/yy")) : "date dont exist";
   }
 
   const handleVisibilityChange = (e: string) => {
@@ -135,43 +136,58 @@ const HomePage = () => {
   }
 
   const handleMaxPplChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setDescription(e.target.value);
+    if (Number(e.target.value)) {
+      setMaxPpl(Number(e.target.value));
+    }
   }
 
-  const createPracticeSession = async () => {
+  const handleInvitedUsersChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInvitedUsers(e.target.value);
+  }
+
+  const createPracticeSession = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
     let PostData: ICreatePost = {
       title: 'Practice Session',
-      visibility: true,
-      state: state,
-      locations: locations,
-      date: date ? format(date, "PPP") : "",
+      isVisible: visibility,
+      state: verifiedUserData.location,
+      locations: locationOne,
+      date: date ? format(date, "MM/dd/yy") : "",
       time: startTime + '-' + endTime,
       maxPpl: maxPpl,
       currentPpl: currentPpl,
       description: description,
       isFinished: false,
-      invitedUsers: invitedUsersArr,
+      invitedUsers: [],
     }
 
     try {
       const data = await CreatePostAPI(PostData, pageContext.verifiedUser);
       setOpenModal(false);
+      setMatchData(await GetPublicMatchesByStateAPI(verifiedUserData.location))
       toast({
         title: "Your Post Was Created!.",
         description: "Yayy",
       })
     } catch (error) {
-
+      toast({
+        variant: 'destructive',
+        title: "Something went wrong.",
+        description: "Uh Oh",
+      })
     }
   }
 
-  const create1v1Challenge = async () => {
+  const create1v1Challenge = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
     let PostData: ICreatePost = {
       title: '1v1 Challenge',
-      visibility: true,
-      state: state,
+      isVisible: visibility,
+      state: verifiedUserData.location,
       locations: locations,
-      date: format(placeholderDate, "PPP"),
+      date: format(placeholderDate, "MM/dd/yy"),
       time: '',
       maxPpl: 0,
       currentPpl: 0,
@@ -181,19 +197,19 @@ const HomePage = () => {
     }
   }
 
-  // useEffect(() => {
-  //   if (!pageContext.userLoggedIn) {
-  //     route.push('/');
-  //   } else {
-  //     const grabUserData = async () => {
-  //       const userData = await GetUserAPI(pageContext.verifiedUser);
-  //       setVerifiedUserData(userData);
-  //       setMatchData(await GetPublicMatchesByStateAPI(userData.location));
-  //       console.log(locationFormat(['Pac bowl', '400 bowl', '209 bowl']));
-  //     }
-  //     grabUserData();
-  //   }
-  // }, [])
+  useEffect(() => {
+    if (!pageContext.userLoggedIn) {
+      route.push('/');
+    } else {
+      const grabUserData = async () => {
+        const userData = await GetUserAPI(pageContext.verifiedUser);
+        setVerifiedUserData(userData);
+        setMatchData(await GetPublicMatchesByStateAPI(userData.location));
+        console.log(locationFormat(['Pac bowl', '400 bowl', '209 bowl']));
+      }
+      grabUserData();
+    }
+  }, [])
 
 
   return (
@@ -283,7 +299,7 @@ const HomePage = () => {
                   <div key={idx}>
                     {
                       data.title === 'Practice Session' ? (
-                        <PracticeSessionComponent data={data} join={() => {}} userClick={() => {}}/>
+                        <PracticeSessionComponent data={data} join={() => { }} userClick={() => { }} />
                       ) : (
                         <MatchComponent challenge={handleJoin} data={data} />
                       )

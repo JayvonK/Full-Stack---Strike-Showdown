@@ -84,7 +84,7 @@ export interface IUserPosts {
 
 export interface ICreatePost{
   title: string;
-  visibility: boolean; 
+  isVisible: boolean; 
   state: string;
   locations: string;
   date: string; 

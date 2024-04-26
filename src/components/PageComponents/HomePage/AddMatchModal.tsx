@@ -15,7 +15,7 @@ import {
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Dispatch, SetStateAction, useState } from "react"
 
-const AddMatchModal = (props: { addingChallengeBool: boolean, handleFalseChallengeBool: () => void, handleTrueChallengeBool: () => void, create1v1Challenge: () => void, createPracticeSession: () => void, handleVisibilityChange: (e: string) => void, visibility: boolean, handleLocationOneChange: (e: React.ChangeEvent<HTMLInputElement>) => void, locationOne: string, handleLocationTwoChange: (e: React.ChangeEvent<HTMLInputElement>) => void, locationTwo: string, handleLocationThreeChange: (e: React.ChangeEvent<HTMLInputElement>) => void, locationThree: string, handleDescriptionChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void, description: string, handleCloseModal: () => void, handleTimeStartChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleTimeEndChange: (e: React.ChangeEvent<HTMLInputElement>) => void, setDate: React.Dispatch<SetStateAction<Date | undefined>>, handleMaxPplChange: (e: React.ChangeEvent<HTMLInputElement>) => void, timeStart: string, timeEnd: string, date: Date | undefined, maxPpl: string }) => {
+const AddMatchModal = (props: { addingChallengeBool: boolean, handleFalseChallengeBool: () => void, handleTrueChallengeBool: () => void, create1v1Challenge: (e: React.FormEvent<HTMLFormElement>) => void, createPracticeSession: (e: React.FormEvent<HTMLFormElement>) => void, handleVisibilityChange: (e: string) => void, visibility: boolean, handleLocationOneChange: (e: React.ChangeEvent<HTMLInputElement>) => void, locationOne: string, handleLocationTwoChange: (e: React.ChangeEvent<HTMLInputElement>) => void, locationTwo: string, handleLocationThreeChange: (e: React.ChangeEvent<HTMLInputElement>) => void, locationThree: string, handleDescriptionChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void, description: string, handleCloseModal: () => void, handleTimeStartChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleTimeEndChange: (e: React.ChangeEvent<HTMLInputElement>) => void, setDate: React.Dispatch<SetStateAction<Date | undefined>>, handleMaxPplChange: (e: React.ChangeEvent<HTMLInputElement>) => void, timeStart: string, timeEnd: string, date: Date | undefined, maxPpl: string }) => {
 
     return (
         <>
@@ -64,15 +64,15 @@ const AddMatchModal = (props: { addingChallengeBool: boolean, handleFalseChallen
                         <div className={!props.addingChallengeBool ? 'grid grid-cols-2 gap-x-60' : 'hidden'}>
                             <div>
                                 <h3 className='jura text-white text-2xl'>Location:</h3>
-                                <input type="text" onChange={props.handleLocationOneChange} value={props.locationOne} placeholder='Location' className="w-full jura text-2xl h-10 bg-white pl-2 mb-2 mt-2 rounded-sm" />
+                                <input required type="text" onChange={props.handleLocationOneChange} value={props.locationOne} placeholder='Location' className="w-full jura text-2xl h-10 bg-white pl-2 mb-2 mt-2 rounded-sm" />
                             </div>
 
                             <div>
                                 <h3 className='jura text-white text-2xl'>Time:</h3>
                                 <div className='flex justify-between items-center'>
-                                    <input type="text" onChange={props.handleLocationOneChange} value={props.timeStart} placeholder='Start' className="w-full jura text-2xl h-10 bg-white pl-2 mb-2 mt-2 rounded-sm" />
+                                    <input required type="text" onChange={props.handleTimeStartChange} value={props.timeStart} placeholder='Start' className="w-full jura text-2xl h-10 bg-white pl-2 mb-2 mt-2 rounded-sm" />
                                     <p className='px-8 inline-block text-white'>-</p>
-                                    <input type="text" onChange={props.handleLocationOneChange} value={props.timeEnd} placeholder='End' className="w-full jura text-2xl h-10 bg-white pl-2 mb-2 mt-2 rounded-sm" />
+                                    <input required type="text" onChange={props.handleTimeEndChange} value={props.timeEnd} placeholder='End' className="w-full jura text-2xl h-10 bg-white pl-2 mb-2 mt-2 rounded-sm" />
                                 </div>
                             </div>
 
@@ -99,7 +99,6 @@ const AddMatchModal = (props: { addingChallengeBool: boolean, handleFalseChallen
                                             onValueChange={(value) => 
                                                 props.setDate(addDays(new Date(), parseInt(value)))
                                             }
-                                            required
                                         >
                                             <SelectTrigger className="text-xl">
                                                 <SelectValue placeholder="Select" />
@@ -112,7 +111,7 @@ const AddMatchModal = (props: { addingChallengeBool: boolean, handleFalseChallen
                                             </SelectContent>
                                         </Select>
                                         <div className="rounded-md border">
-                                            <Calendar mode="single" selected={props.date} onSelect={props.setDate} />
+                                            <Calendar required mode="single" selected={props.date} onSelect={props.setDate} />
                                         </div>
                                     </PopoverContent>
                                 </Popover>
@@ -120,7 +119,7 @@ const AddMatchModal = (props: { addingChallengeBool: boolean, handleFalseChallen
 
                             <div>
                                 <h3 className='jura text-white text-2xl'>Max PPL:</h3>
-                                <input type="text" onChange={props.handleLocationOneChange} value={props.locationOne} placeholder='0' className="w-full jura text-2xl h-10 bg-white pl-2 mb-2 mt-2 rounded-sm" />
+                                <input required type="text" onChange={props.handleMaxPplChange} value={props.maxPpl} placeholder='0' className="w-full jura text-2xl h-10 bg-white pl-2 mb-2 mt-2 rounded-sm" />
                             </div>
                         </div>
 
