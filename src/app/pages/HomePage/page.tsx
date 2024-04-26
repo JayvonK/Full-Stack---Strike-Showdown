@@ -1,6 +1,7 @@
 'use client'
 import NavBarComponent from '@/components/PageComponents/NavBarComponent';
 import { Navbar, Button, Modal } from 'flowbite-react';
+import { format } from 'date-fns'
 import { useRouter } from 'next/navigation';
 import React, { useEffect } from 'react'
 import '@/app/css/LoginPageAndHome.css';
@@ -49,7 +50,7 @@ const HomePage = () => {
     highSeries: '800',
     streak: 5
   }
-
+  const placeholderDate = new Date();
   const { toast } = useToast();
   const [openModal, setOpenModal] = useState(false);
   const [verifiedUserData, setVerifiedUserData] = useState<IPublicUserData>(fakeUserData);
@@ -57,7 +58,7 @@ const HomePage = () => {
   const [visibility, setVisibility] = useState<boolean>(true);
   const [state, setState] = useState<string>('');
   const [locations, setLocations] = useState<string>('');
-  const [date, setDate] = useState<string>('');
+  const [date, setDate] = useState<Date | undefined>();
   const [startTime, setStartTime] = useState<string>('');
   const [endTime, setEndTime] = useState<string>('');
   const [maxPpl, setMaxPpl] = useState<number>(0);
@@ -100,7 +101,8 @@ const HomePage = () => {
   }
 
   const handleCloseModal = () => {
-    setOpenModal(false)
+    setOpenModal(false);
+    date ? alert(format(date, "PPP")) : "date dont exist";
   }
 
   const handleVisibilityChange = (e: string) => {
@@ -123,13 +125,25 @@ const HomePage = () => {
     setDescription(e.target.value);
   }
 
+  const handleTimeStartChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setStartTime(e.target.value);
+  }
+
+  const handleTimeEndChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEndTime(e.target.value);
+  }
+
+  const handleMaxPplChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setDescription(e.target.value);
+  }
+
   const createPracticeSession = async () => {
     let PostData: ICreatePost = {
       title: 'Practice Session',
       visibility: true,
       state: state,
       locations: locations,
-      date: date,
+      date: date ? format(date, "PPP") : "",
       time: startTime + '-' + endTime,
       maxPpl: maxPpl,
       currentPpl: currentPpl,
@@ -155,7 +169,7 @@ const HomePage = () => {
       visibility: true,
       state: state,
       locations: locations,
-      date: '',
+      date: format(placeholderDate, "PPP"),
       time: '',
       maxPpl: 0,
       currentPpl: 0,
@@ -163,7 +177,6 @@ const HomePage = () => {
       isFinished: false
     }
   }
-
 
   // useEffect(() => {
   //   if (!pageContext.userLoggedIn) {
@@ -179,11 +192,12 @@ const HomePage = () => {
   //   }
   // }, [])
 
+
   return (
     <div>
       <NewNavBarComponent />
       <Modal className='bg-black' show={openModal} size={'4xl'} onClose={() => setOpenModal(false)}>
-        <AddChallengeModal addingChallengeBool={addingChallengeBool} handleTrueChallengeBool={handleTrueChallengeBool} handleFalseChallengeBool={handleFalseChallengeBool} create1v1Challenge={create1v1Challenge} createPracticeSession={createPracticeSession} handleVisibilityChange={handleVisibilityChange} visibility={visibility} handleLocationOneChange={handleLocationOneChange} locationOne={locationOne} handleLocationTwoChange={handleLocationTwoChange} locationTwo={locationTwo} handleLocationThreeChange={handleLocationThreeChange} locationThree={locationThree} handleDescriptionChange={handleDescriptionChange} description={description} handleCloseModal={handleCloseModal} />
+        <AddChallengeModal addingChallengeBool={addingChallengeBool} handleTrueChallengeBool={handleTrueChallengeBool} handleFalseChallengeBool={handleFalseChallengeBool} create1v1Challenge={create1v1Challenge} createPracticeSession={createPracticeSession} handleVisibilityChange={handleVisibilityChange} visibility={visibility} handleLocationOneChange={handleLocationOneChange} locationOne={locationOne} handleLocationTwoChange={handleLocationTwoChange} locationTwo={locationTwo} handleLocationThreeChange={handleLocationThreeChange} locationThree={locationThree} handleDescriptionChange={handleDescriptionChange} description={description} handleCloseModal={handleCloseModal} handleTimeStartChange={handleTimeStartChange} handleTimeEndChange={handleTimeEndChange} setDate={setDate} handleMaxPplChange={handleMaxPplChange} timeStart={startTime} timeEnd={endTime} date={date} maxPpl={maxPpl.toString()} />
       </Modal>
 
       <div className='bgLogin min-h-screen pt-12 2xl:px-44 xl:px-36 lg:px-24 sm:px-14 px-6 pb-20 relative'>
@@ -289,10 +303,10 @@ const HomePage = () => {
             </div>
 
             <div className='grid grid-cols-2 justify-between px-10 pt-7'>
-                <RecentWinnerComponent pfp='/images/blankpfp.png' idx={0} />
-                <RecentWinnerComponent pfp='/images/blankpfp.png' idx={1} />
-                <RecentWinnerComponent pfp='/images/blankpfp.png' idx={2}/>
-                <RecentWinnerComponent pfp='/images/blankpfp.png' idx={3}/>
+              <RecentWinnerComponent pfp='/images/blankpfp.png' idx={0} />
+              <RecentWinnerComponent pfp='/images/blankpfp.png' idx={1} />
+              <RecentWinnerComponent pfp='/images/blankpfp.png' idx={2} />
+              <RecentWinnerComponent pfp='/images/blankpfp.png' idx={3} />
             </div>
           </div>
         </div>
