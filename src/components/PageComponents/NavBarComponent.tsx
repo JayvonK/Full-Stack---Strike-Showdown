@@ -114,7 +114,7 @@ const customTheme: CustomFlowbiteTheme = {
           <img
             src={FriendsIcon.src}
             alt=""
-            className="object-cover  lg:justify-center friendsPic     mb-1  "
+            className="object-cover  friendsPic     mb-1  "
           />
           </div>
           Friends
