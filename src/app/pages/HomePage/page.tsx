@@ -27,6 +27,7 @@ import MatchComponent from '@/components/PageComponents/HomePage/MatchComponent'
 import AddChallengeModal from '@/components/PageComponents/HomePage/AddMatchModal';
 import RecentWinnerComponent from '@/components/PageComponents/HomePage/RecentWinnerComponent';
 import NewNavBarComponent from '@/components/PageComponents/NewNavBarComponent';
+import EditProfileModal from '@/components/PageComponents/HomePage/EditProfileModal';
 
 const HomePage = () => {
   const fakeUserData: IPublicUserData = {
@@ -50,10 +51,15 @@ const HomePage = () => {
     highSeries: '800',
     streak: 5
   }
+
+  const pageContext = useAppContext();
+  const route = useRouter();
   const placeholderDate = new Date();
   const { toast } = useToast();
   const [openModal, setOpenModal] = useState(false);
   const [verifiedUserData, setVerifiedUserData] = useState<IPublicUserData>(fakeUserData);
+
+  // State Variables For Match Data
   const [matchData, setMatchData] = useState<(IUserPosts)[]>(postsData);
   const [visibility, setVisibility] = useState<boolean>(true);
   const [state, setState] = useState<string>('');
@@ -65,15 +71,51 @@ const HomePage = () => {
   const [currentPpl, setCurrentPpl] = useState<number>(0);
   const [description, setDescription] = useState<string>('');
   const [isFinished, setIsFinished] = useState<boolean>(false);
+  const [matchModal, setMatchModal] = useState<boolean>(false);
   const [addingChallengeBool, setAddingChallengeBool] = useState<boolean>(true);
   const [locationOne, setLocationOne] = useState<string>('');
   const [locationTwo, setLocationTwo] = useState<string>('');
   const [locationThree, setLocationThree] = useState<string>('');
   const [invitedUsers, setInvitedUsers] = useState<string>('');
   const [invitedUsersArr, setInvitedUsersArray] = useState<string[]>([])
-  const pageContext = useAppContext();
-  const route = useRouter();
 
+  // State Variables For Edit Match Modal
+  const [editModal, setEditModal] = useState<boolean>(false);
+  const [editProfileImg, setEditProfileImg] = useState<string>('');
+  const [editUsername, setEditUsername] = useState<string>('');
+  const [editEmail, setEditEmail] = useState<string>('');
+  const [editPronouns, setEditPronouns] = useState<string>('');
+  const [editFullName, setEditFullName] = useState<string>('');
+  const [editMainCenter, setEditMainCenter] = useState<string>('');
+  const [editAverage, setEditAverage] = useState<string>('');
+  const [editStyle, setEditStyle] = useState<string>('')
+  const [editEarnings, setEditEarnings] = useState<string>('');
+  const [editHighGame, setEditHighGame] = useState<string>('');
+  const [editHighSeries, setEditHighSeries] = useState<string>('');
+  const editData: IPublicUserData = {
+    id: 0,
+    username: editUsername,
+    email: editEmail,
+    location: '',
+    securityQuestion: '',
+    securityQuestionTwo: '',
+    securityQuestionThree: '',
+    fullName: editFullName,
+    profileImage: editProfileImg,
+    pronouns: editPronouns,
+    wins: 0,
+    losses: 0,
+    style: editStyle,
+    mainCenter: editMainCenter,
+    average: editAverage,
+    earnings: editEarnings,
+    highGame: editHighGame,
+    highSeries: editHighSeries,
+    streak: 0
+  }
+
+
+  // Formatting Functions
   const locationFormat = (locArr: string[]) => {
     let newArr: string[] = []
     locArr.forEach((loc, idx) => {
@@ -90,6 +132,71 @@ const HomePage = () => {
     return avg.split("Avg")[0];
   }
 
+  // All functions for Edit Modal
+
+  const setEditData = (data: IPublicUserData) => {
+    setEditProfileImg(data.profileImage);
+    setEditUsername(data.username);
+    setEditEmail(data.email);
+    setEditPronouns(data.pronouns);
+    setEditFullName(data.fullName);
+    setEditMainCenter(data.mainCenter);
+    setEditAverage(data.average);
+    setEditStyle(data.style)
+    setEditEarnings(data.earnings);
+    setEditHighGame(data.highGame);
+    setEditHighSeries(data.highSeries);
+  }
+  const openEditModal = () => {
+    setEditModal(true);
+    setOpenModal(true);
+  }
+
+  const handleCloseEditModal = () => {
+    setEditModal(false);
+    setOpenModal(false);
+  }
+
+  const handleEditUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEditUsername(e.target.value);
+  }
+  const handleEditEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEditEmail(e.target.value);
+  }
+  const handleEditPronounsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEditPronouns(e.target.value)
+  }
+
+  const handleEditFullNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEditFullName(e.target.value)
+  }
+  const handleEditMainCenterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEditMainCenter(e.target.value);
+  }
+  const handleEditAverageChange = (e: string) => {
+    setEditAverage(e);
+  }
+  const handleEditStyleChange = (e: string) => {
+    setEditStyle(e);
+  }
+  const handleEditEarningChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEditEarnings(e.target.value);
+  }
+  const handleEditHighGameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEditHighGame(e.target.value)
+  }
+  const handleEditHighSeriesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEditHighSeries(e.target.value);
+  }
+
+
+
+  // Handle Functions For Match Modal  
+
+  const openChallengeModal = () => {
+    setMatchModal(true);
+    setOpenModal(true);
+  }
   const handleTrueChallengeBool = () => {
     setAddingChallengeBool(true);
   }
@@ -102,10 +209,9 @@ const HomePage = () => {
     setOpenModal(true);
   }
 
-  const handleCloseModal = () => {
+  const handleCloseMatchModal = () => {
+    setMatchModal(false);
     setOpenModal(false);
-    // date ? alert(format(date, "MM/dd/yy")) : "date dont exist";
-    alert(verifiedUserData.profileImage)
   }
 
   const handleVisibilityChange = (e: string) => {
@@ -197,27 +303,37 @@ const HomePage = () => {
       invitedUsers: invitedUsersArr
     }
   }
+  // End of functions for match modal
 
-  // useEffect(() => {
-  //   if (!pageContext.userLoggedIn) {
-  //     route.push('/');
-  //   } else {
-  //     const grabUserData = async () => {
-  //       const userData = await GetUserAPI(pageContext.verifiedUser);
-  //       setVerifiedUserData(userData);
-  //       setMatchData(await GetPublicMatchesByStateAPI(userData.location));
-  //       console.log(locationFormat(['Pac bowl', '400 bowl', '209 bowl']));
-  //     }
-  //     grabUserData();
-  //   }
-  // }, [])
+
+
+  useEffect(() => {
+    if (!pageContext.userLoggedIn) {
+      route.push('/');
+    } else {
+      const grabUserData = async () => {
+        const userData: IPublicUserData = await GetUserAPI(pageContext.verifiedUser);
+        setVerifiedUserData(userData);
+        setEditData(userData);
+        setMatchData(await GetPublicMatchesByStateAPI(userData.location));
+        console.log(locationFormat(['Pac bowl', '400 bowl', '209 bowl']));
+      }
+      grabUserData();
+    }
+  }, [])
 
 
   return (
     <div>
       <NewNavBarComponent />
       <Modal className='bg-black' show={openModal} size={'4xl'} onClose={() => setOpenModal(false)}>
-        <AddChallengeModal addingChallengeBool={addingChallengeBool} handleTrueChallengeBool={handleTrueChallengeBool} handleFalseChallengeBool={handleFalseChallengeBool} create1v1Challenge={create1v1Challenge} createPracticeSession={createPracticeSession} handleVisibilityChange={handleVisibilityChange} visibility={visibility} handleLocationOneChange={handleLocationOneChange} locationOne={locationOne} handleLocationTwoChange={handleLocationTwoChange} locationTwo={locationTwo} handleLocationThreeChange={handleLocationThreeChange} locationThree={locationThree} handleDescriptionChange={handleDescriptionChange} description={description} handleCloseModal={handleCloseModal} handleTimeStartChange={handleTimeStartChange} handleTimeEndChange={handleTimeEndChange} setDate={setDate} handleMaxPplChange={handleMaxPplChange} timeStart={startTime} timeEnd={endTime} date={date} maxPpl={maxPpl.toString()} />
+        {
+          matchModal && <AddChallengeModal addingChallengeBool={addingChallengeBool} handleTrueChallengeBool={handleTrueChallengeBool} handleFalseChallengeBool={handleFalseChallengeBool} create1v1Challenge={create1v1Challenge} createPracticeSession={createPracticeSession} handleVisibilityChange={handleVisibilityChange} visibility={visibility} handleLocationOneChange={handleLocationOneChange} locationOne={locationOne} handleLocationTwoChange={handleLocationTwoChange} locationTwo={locationTwo} handleLocationThreeChange={handleLocationThreeChange} locationThree={locationThree} handleDescriptionChange={handleDescriptionChange} description={description} handleCloseModal={handleCloseMatchModal} handleTimeStartChange={handleTimeStartChange} handleTimeEndChange={handleTimeEndChange} setDate={setDate} handleMaxPplChange={handleMaxPplChange} timeStart={startTime} timeEnd={endTime} date={date} maxPpl={maxPpl.toString()} />
+        }
+
+        {
+          editModal && <EditProfileModal data={editData} handleEditStyleChange={handleEditStyleChange} handleCloseEditModal={handleCloseEditModal}/>
+        }
       </Modal>
 
       <div className='bgLogin min-h-screen pt-12 2xl:px-44 xl:px-36 lg:px-24 sm:px-14 px-6 pb-20 relative'>
@@ -281,8 +397,8 @@ const HomePage = () => {
               </div>
 
               <div>
-                <button className='bgOrange w-full xl:text-2xl lg:text-xl sm:text-2xl text-lg juraBold sm:py-2 py-1 rounded-lg hover:bg-[#ff9939] xl:mb-6 lg:mb-4 sm:mb-6 mb-3' onClick={() => setOpenModal(true)}>Add a Post</button>
-                <button className='bgOrange w-full xl:text-2xl lg:text-xl sm:text-2xl text-lg juraBold sm:py-2 py-1 rounded-lg hover:bg-[#ff9939]' onClick={() => setOpenModal(true)}>Challenge Friends</button>
+                <button className='bgOrange w-full xl:text-2xl lg:text-xl sm:text-2xl text-lg juraBold sm:py-2 py-1 rounded-lg hover:bg-[#ff9939] xl:mb-6 lg:mb-4 sm:mb-6 mb-3' onClick={openChallengeModal}>Add a Post</button>
+                <button className='bgOrange w-full xl:text-2xl lg:text-xl sm:text-2xl text-lg juraBold sm:py-2 py-1 rounded-lg hover:bg-[#ff9939]' onClick={openEditModal}>Challenge Friends</button>
               </div>
 
             </div>
