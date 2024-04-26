@@ -71,7 +71,7 @@ const AddMatchModal = (props: { addingChallengeBool: boolean, handleFalseChallen
                                 <h3 className='jura text-white text-2xl'>Time:</h3>
                                 <div className='flex justify-between items-center'>
                                     <input required type="text" onChange={props.handleTimeStartChange} value={props.timeStart} placeholder='Start' className="w-full jura text-2xl h-10 bg-white pl-2 mb-2 mt-2 rounded-sm" />
-                                    <p className='px-8 inline-block text-white'>-</p>
+                                    <p className='px-4 inline-block text-white'>-</p>
                                     <input required type="text" onChange={props.handleTimeEndChange} value={props.timeEnd} placeholder='End' className="w-full jura text-2xl h-10 bg-white pl-2 mb-2 mt-2 rounded-sm" />
                                 </div>
                             </div>

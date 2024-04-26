@@ -105,6 +105,7 @@ const HomePage = () => {
   const handleCloseModal = () => {
     setOpenModal(false);
     // date ? alert(format(date, "MM/dd/yy")) : "date dont exist";
+    alert(verifiedUserData.profileImage)
   }
 
   const handleVisibilityChange = (e: string) => {
@@ -197,19 +198,19 @@ const HomePage = () => {
     }
   }
 
-  useEffect(() => {
-    if (!pageContext.userLoggedIn) {
-      route.push('/');
-    } else {
-      const grabUserData = async () => {
-        const userData = await GetUserAPI(pageContext.verifiedUser);
-        setVerifiedUserData(userData);
-        setMatchData(await GetPublicMatchesByStateAPI(userData.location));
-        console.log(locationFormat(['Pac bowl', '400 bowl', '209 bowl']));
-      }
-      grabUserData();
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (!pageContext.userLoggedIn) {
+  //     route.push('/');
+  //   } else {
+  //     const grabUserData = async () => {
+  //       const userData = await GetUserAPI(pageContext.verifiedUser);
+  //       setVerifiedUserData(userData);
+  //       setMatchData(await GetPublicMatchesByStateAPI(userData.location));
+  //       console.log(locationFormat(['Pac bowl', '400 bowl', '209 bowl']));
+  //     }
+  //     grabUserData();
+  //   }
+  // }, [])
 
 
   return (

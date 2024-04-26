@@ -64,7 +64,7 @@ export interface IUserPosts {
   id: number;
   userID: number;
   title: string;
-  visibility: boolean; 
+  isVisible: boolean; 
   state: string;
   locations: string;
   date: string; 
@@ -73,8 +73,8 @@ export interface IUserPosts {
   currentPpl: number;
   description: string; 
   isFinished: boolean; 
-  username: string; 
-  profileImage: string; 
+  publisher: string; 
+  image: string; 
   wins: number; 
   average: string; 
   style: string; 
