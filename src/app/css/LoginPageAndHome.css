@@ -11,6 +11,7 @@
 .bgLogin {
     background-image: url(../../../public/images/Main\ Background\ Img\ Placeholder.jpg);
     background-size: cover;
+    background-attachment: fixed;
 }
 
 .bgHome {

@@ -29,6 +29,7 @@ import RecentWinnerComponent from '@/components/PageComponents/HomePage/RecentWi
 import NewNavBarComponent from '@/components/PageComponents/NewNavBarComponent';
 import EditProfileModal from '@/components/PageComponents/HomePage/Modals/EditProfileModal';
 import { EditLocalStorageUsername, GetLocalStorage } from '@/utils/LocalStorageFunctions';
+import MatchSkeleton from '@/components/PageComponents/HomePage/MatchSkeleton';
 
 const HomePage = () => {
   const fakeUserData: IPublicUserData = {
@@ -61,6 +62,7 @@ const HomePage = () => {
   const [verifiedUserData, setVerifiedUserData] = useState<IPublicUserData>(fakeUserData);
   const [storage, setStorage] = useState();
   const [currentUsername, setCurrentUsername] = useState<string>();
+  const [skeleton, setSkeleton] = useState<boolean>(false);
 
   // State Variables For Match Data
   const [matchData, setMatchData] = useState<(IUserPosts)[]>(postsData);
@@ -359,6 +361,13 @@ const HomePage = () => {
   }
   // End of functions for match modal
 
+  const handleReloadMatches = async () => {
+    // setMatchData(await GetPublicMatchesByStateAPI(verifiedUserData.location))
+    setSkeleton(true);
+    setTimeout(() => {
+      setSkeleton(false);
+    }, 2000)
+  }
 
   useEffect(() => {
     let storageArr = GetLocalStorage();
@@ -459,11 +468,17 @@ const HomePage = () => {
             </div>
           </div>
 
-          <div className='min-h-[500px] max-h-[1200px] bg-black sm:rounded-3xl rounded-xl overflow-y-auto overflow-x-hidden scrollbar mb-10'>
+          <div className='min-h-[500px] max-h-[1200px] bg-black sm:rounded-3xl rounded-xl overflow-y-auto overflow-x-hidden scrollbar'>
             <div className='flex'>
-              <h1 className='text-black xl:text-4xl text-3xl juraBold py-4 px-8 bg-[#FF7A00] max-w-[450px] text-center sm:rounded-tl-3xl rounded-tl-xl mb-12'>Available Matches</h1>
-              <h1 className='text-white xl:text-4xl text-3xl jura py-4 px-8 max-w-[450px] text-center ml-6'>Location: <span className='txtOrange'>{verifiedUserData && verifiedUserData.location}</span></h1>
+              <h1 className='text-black xl:text-4xl text-3xl juraBold py-4 px-8 bg-[#FF7A00] max-w-[450px] text-center sm:rounded-tl-3xl rounded-tl-xl'>Available Matches</h1>
+              <h1 className='text-white xl:text-4xl text-3xl jura py-4 px-8 max-w-[450px] text-center ml-6'>Location: <span className='txtOrange'>{verifiedUserData && verifiedUserData.location}</span>
+              </h1>
+              <div className='flex items-center ml-4'>
+                <img className='w-10 h-10 hover:cursor-pointer' src="/images/arrow-clockwise-bold.svg" alt="" onClick={handleReloadMatches}/>
+              </div>
             </div>
+
+            <div className='mt-10'></div>
 
             {
               matchData.length !== 0 ? (
@@ -471,12 +486,11 @@ const HomePage = () => {
                   <div key={idx}>
                     {
                       data.title === 'Practice Session' ? (
-                        <PracticeSessionComponent data={data} join={() => { }} userClick={() => { }} />
+                        skeleton ? (<MatchSkeleton />) : (<PracticeSessionComponent data={data} join={() => { }} userClick={() => { }} />)
                       ) : (
-                        <MatchComponent challenge={handleJoin} data={data} />
+                        skeleton ? (<MatchSkeleton />) : (<MatchComponent challenge={handleJoin} data={data} />)
                       )
                     }
-
                   </div>
                 ))
               ) : (
