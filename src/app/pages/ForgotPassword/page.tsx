@@ -1,6 +1,6 @@
 'use client'
 
-import LoginNavComponent from '@/components/PageComponents/LoginNavComponent';
+import LoginNavComponent from '@/components/PageComponents/LoginPage/LoginNavComponent';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import '@/app/css/LoginPage.css';

@@ -4,7 +4,7 @@ import * as React from "react"
 import { useEffect, useState } from "react";
 import '@/app/css/LoginPageAndHome.css'
 import { useRouter } from "next/navigation";
-import LoginNavComponent from "../components/PageComponents/LoginNavComponent";
+import LoginNavComponent from "../components/PageComponents/LoginPage/LoginNavComponent";
 import RequiredInputComponent from "../components/PageComponents/LoginPage/RequiredInputComponent";
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
@@ -20,6 +20,7 @@ import {
 import { IUserLogin } from "@/interfaces/Interfaces";
 import { LoginAPI } from "@/Data/DataServices";
 import { useAppContext } from "@/context/Context";
+import { AddToLocalStorage, GetLocalStorage } from "@/utils/LocalStorageFunctions";
 
 export default function Home() {
   const [username, setUsername] = useState<string>('');
@@ -69,9 +70,10 @@ export default function Home() {
         } else {
           setuserBorderError('');
           setPasswordBorderError('');
+          AddToLocalStorage([token.token, username]);
           pageContext.setVerifiedUser(username);
           pageContext.setUserLoggedIn(true);
-          router.push('/pages/HomePage')
+          router.push('/pages/HomePage');
         }
       }
     } catch (error) {
@@ -97,6 +99,10 @@ export default function Home() {
   }
 
   useEffect(() => {
+    let storage = GetLocalStorage();
+    if(storage.length !== 0){
+      router.push('/pages/HomePage')
+    }
     if (pageContext.createdAccountBool) {
       toast({
         title: "You have Successfully Created An Account.",

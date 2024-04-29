@@ -2,7 +2,7 @@ import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from '@
 import { IPublicUserData } from '@/interfaces/Interfaces'
 import React from 'react'
 
-const EditProfileModal = (props: { data: IPublicUserData, handleEditStyleChange: (e: string) => void, handleCloseEditModal: () => void, handleEditUsernameChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleEditEmailChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleEditPronounsChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleEditFullNameChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleEditMainCenterChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleEditAverageChange: (e: string) => void, handleEditEarningsChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleEditHighGameChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleEditHighSeriesChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleEditUserConfirm: () => void }) => {
+const EditProfileModal = (props: { data: IPublicUserData, handleEditStyleChange: (e: string) => void, handleCloseEditModal: () => void, handleEditUsernameChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleEditEmailChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleEditPronounsChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleEditFullNameChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleEditMainCenterChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleEditAverageChange: (e: string) => void, handleEditEarningsChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleEditHighGameChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleEditHighSeriesChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleEditUserConfirm: (e: React.FormEvent<HTMLFormElement>) => void }) => {
   return (
     <div className='p-4'>
       <form onSubmit={props.handleEditUserConfirm}>
@@ -30,7 +30,7 @@ const EditProfileModal = (props: { data: IPublicUserData, handleEditStyleChange:
             </div>
             <div>
               <h3 className='jura text-white text-2xl'>Style</h3>
-              <Select value={props.data.style === "N/A" ? "" : props.data.style} onValueChange={props.handleEditAverageChange}>
+              <Select value={props.data.style === "N/A" ? "" : props.data.style} onValueChange={props.handleEditStyleChange}>
                 <SelectTrigger className="w-full jura text-2xl h-10 bg-white pl-3 mt-1">
                   <SelectValue placeholder="N/A" />
                 </SelectTrigger>
@@ -83,15 +83,15 @@ const EditProfileModal = (props: { data: IPublicUserData, handleEditStyleChange:
             </div>
             <div>
               <h3 className='jura text-white text-2xl'>Earnings</h3>
-              <input value={props.data.earnings  === "N/A" ? "" : props.data.earnings} onChange={props.handleEditEarningsChange} placeholder='N/A' type="text" className="w-full jura text-2xl h-10 bg-white pl-2 mb-2 mt-1 rounded-sm" />
+              <input value={props.data.earnings === "N/A" ? "" : props.data.earnings} onChange={props.handleEditEarningsChange} placeholder='N/A' type="text" className="w-full jura text-2xl h-10 bg-white pl-2 mb-2 mt-1 rounded-sm" />
             </div>
             <div>
               <h3 className='jura text-white text-2xl'>High Game</h3>
-              <input value={props.data.highGame  === "N/A" ? "" : props.data.highGame} onChange={props.handleEditHighGameChange} placeholder='N/A' type="text" className="w-full jura text-2xl h-10 bg-white pl-2 mb-2 mt-1 rounded-sm" />
+              <input value={props.data.highGame === "N/A" ? "" : props.data.highGame} onChange={props.handleEditHighGameChange} placeholder='N/A' type="text" className="w-full jura text-2xl h-10 bg-white pl-2 mb-2 mt-1 rounded-sm" />
             </div>
             <div>
               <h3 className='jura text-white text-2xl'>High Series</h3>
-              <input value={props.data.highSeries  === "N/A" ? "" : props.data.highSeries} onChange={props.handleEditHighSeriesChange} placeholder='N/A' type="text" className="w-full jura text-2xl h-10 bg-white pl-2 mb-2 mt-1 rounded-sm" />
+              <input value={props.data.highSeries === "N/A" ? "" : props.data.highSeries} onChange={props.handleEditHighSeriesChange} placeholder='N/A' type="text" className="w-full jura text-2xl h-10 bg-white pl-2 mb-2 mt-1 rounded-sm" />
             </div>
           </div>
         </div>

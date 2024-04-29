@@ -6,7 +6,7 @@ import plusIcon from '../../../../public/images/plus-bold.svg';
 import closeIcon from '../../../../public/images/x-bold.svg';
 import profile from '../../../../public/images/Profile.png';
 import planeIcon from '../../../../public/images/paper-plane-tilt-fill.svg'
-import NavBarComponent from '@/components/PageComponents/NavBarComponent';
+import NavBarComponent from '@/components/PageComponents/HomePage/NavBarComponent';
 import { useAppContext } from '@/context/Context';
 import { useRouter } from 'next/navigation';
 import NewNavBarComponent from '@/components/PageComponents/NewNavBarComponent';

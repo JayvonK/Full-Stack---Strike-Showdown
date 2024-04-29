@@ -1,6 +1,6 @@
 import React from 'react';
-import logo from '../../../public/images/Strike Showdown Logo.png'
-import backArrow from '../../../public/images/arrow-u-up-left-fill.svg'
+import logo from '../../../../public/images/Strike Showdown Logo.png'
+import backArrow from '../../../../public/images/arrow-u-up-left-fill.svg'
 import { useRouter } from 'next/navigation';
 
 const LoginNavComponent = (props: { exist: boolean, onClick: () => void }) => {

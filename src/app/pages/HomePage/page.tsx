@@ -1,5 +1,5 @@
 'use client'
-import NavBarComponent from '@/components/PageComponents/NavBarComponent';
+import NavBarComponent from '@/components/PageComponents/HomePage/NavBarComponent';
 import { Navbar, Button, Modal } from 'flowbite-react';
 import { format } from 'date-fns'
 import { useRouter } from 'next/navigation';
@@ -28,6 +28,7 @@ import AddChallengeModal from '@/components/PageComponents/HomePage/Modals/AddMa
 import RecentWinnerComponent from '@/components/PageComponents/HomePage/RecentWinnerComponent';
 import NewNavBarComponent from '@/components/PageComponents/NewNavBarComponent';
 import EditProfileModal from '@/components/PageComponents/HomePage/Modals/EditProfileModal';
+import { EditLocalStorageUsername, GetLocalStorage } from '@/utils/LocalStorageFunctions';
 
 const HomePage = () => {
   const fakeUserData: IPublicUserData = {
@@ -58,6 +59,8 @@ const HomePage = () => {
   const { toast } = useToast();
   const [openModal, setOpenModal] = useState(false);
   const [verifiedUserData, setVerifiedUserData] = useState<IPublicUserData>(fakeUserData);
+  const [storage, setStorage] = useState();
+  const [currentUsername, setCurrentUsername] = useState<string>();
 
   // State Variables For Match Data
   const [matchData, setMatchData] = useState<(IUserPosts)[]>(postsData);
@@ -155,6 +158,7 @@ const HomePage = () => {
   const handleCloseEditModal = () => {
     setEditModal(false);
     setOpenModal(false);
+    setEditData(verifiedUserData);
   }
 
   const handleEditUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -186,7 +190,7 @@ const HomePage = () => {
   const handleEditHighGameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if ((Number(e.target.value) || e.target.value === '') && !e.target.value.includes('.') && Number(e.target.value) <= 300) {
       setEditHighGame(e.target.value)
-    } else {
+    } else if (Number(e.target.value) > 300) {
       toast({
         variant: "destructive",
         title: "Error ",
@@ -199,7 +203,8 @@ const HomePage = () => {
     setEditHighSeries(e.target.value);
   }
 
-  const handleEditUserConfirm = async () => {
+  const handleEditUserConfirm = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     let editUserData: IPublicUserData = {
       id: 0,
       username: editUsername,
@@ -229,7 +234,8 @@ const HomePage = () => {
         title: "Your profile was updated.",
         description: "Yayy",
       })
-      pageContext.setVerifiedUser(editUserData.username);
+      EditLocalStorageUsername(editUsername);
+      setCurrentUsername(editUsername);
     } catch (error) {
       toast({
         variant: 'destructive',
@@ -355,11 +361,13 @@ const HomePage = () => {
 
 
   useEffect(() => {
-    if (!pageContext.userLoggedIn) {
+    let storageArr = GetLocalStorage();
+    setStorage(storageArr);
+    if (storageArr.length === 0) {
       route.push('/');
     } else {
       const grabUserData = async () => {
-        const userData: IPublicUserData = await GetUserAPI(pageContext.verifiedUser);
+        const userData: IPublicUserData = await GetUserAPI(storageArr[0][1]);
         setVerifiedUserData(userData);
         setEditData(userData);
         setMatchData(await GetPublicMatchesByStateAPI(userData.location));
@@ -368,8 +376,7 @@ const HomePage = () => {
       }
       grabUserData();
     }
-  }, [pageContext.verifiedUser])
-
+  }, [currentUsername])
 
   return (
     <div>
@@ -380,7 +387,7 @@ const HomePage = () => {
         }
 
         {
-          editModal && <EditProfileModal data={verifiedUserData} handleEditStyleChange={handleEditStyleChange} handleCloseEditModal={handleCloseEditModal} handleEditUsernameChange={handleEditUsernameChange} handleEditEmailChange={handleEditEmailChange} handleEditPronounsChange={handleEditPronounsChange} handleEditFullNameChange={handleEditFullNameChange} handleEditMainCenterChange={handleEditMainCenterChange} handleEditAverageChange={handleEditAverageChange} handleEditEarningsChange={handleEditEarningChange} handleEditHighGameChange={handleEditHighGameChange} handleEditHighSeriesChange={handleEditHighSeriesChange} handleEditUserConfirm={handleEditUserConfirm} />
+          editModal && <EditProfileModal data={editData} handleEditStyleChange={handleEditStyleChange} handleCloseEditModal={handleCloseEditModal} handleEditUsernameChange={handleEditUsernameChange} handleEditEmailChange={handleEditEmailChange} handleEditPronounsChange={handleEditPronounsChange} handleEditFullNameChange={handleEditFullNameChange} handleEditMainCenterChange={handleEditMainCenterChange} handleEditAverageChange={handleEditAverageChange} handleEditEarningsChange={handleEditEarningChange} handleEditHighGameChange={handleEditHighGameChange} handleEditHighSeriesChange={handleEditHighSeriesChange} handleEditUserConfirm={handleEditUserConfirm} />
         }
       </Modal>
 

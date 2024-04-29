@@ -1,6 +1,6 @@
 'use client'
 
-import LoginNavComponent from '@/components/PageComponents/LoginNavComponent';
+import LoginNavComponent from '@/components/PageComponents/LoginPage/LoginNavComponent';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import '@/app/css/LoginPageAndHome.css';
@@ -68,6 +68,7 @@ const SignUp = () => {
   const handleUserChange = (param: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(param.target.value);
     setUserBorderError('');
+    setPasswordBorderError('');
   }
 
   const handleEmailChange = (param: React.ChangeEvent<HTMLInputElement>) => {
@@ -88,6 +89,7 @@ const SignUp = () => {
       setPassword(param.target.value);
       setPasswordsMatch(true);
       setPasswordBorderError('');
+      setUserBorderError('');
     }
   }
 
@@ -138,7 +140,7 @@ const SignUp = () => {
   const handleHighGameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if ((Number(e.target.value) || e.target.value === '') && !e.target.value.includes('.') && Number(e.target.value) <= 300) {
       setHighGame(e.target.value);
-    } else {
+    } else if (Number(e.target.value) > 300)  {
       toast({
         variant: "destructive",
         title: "Error ",
