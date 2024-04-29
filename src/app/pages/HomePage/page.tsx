@@ -369,7 +369,7 @@ const HomePage = () => {
         }
 
         {
-          editModal && <EditProfileModal data={verifiedUserData} handleEditStyleChange={handleEditStyleChange} handleCloseEditModal={handleCloseEditModal}/>
+          editModal && <EditProfileModal data={verifiedUserData} handleEditStyleChange={handleEditStyleChange} handleCloseEditModal={handleCloseEditModal} handleEditUsernameChange={handleEditUsernameChange} handleEditEmailChange={handleEditEmailChange} handleEditPronounsChange={handleEditPronounsChange} handleEditFullNameChange={handleEditFullNameChange} handleEditMainCenterChange={handleEditMainCenterChange} handleEditAverageChange={handleEditAverageChange} handleEditEarningsChange={handleEditEarningChange} handleEditHighGameChange={handleEditHighGameChange} handleEditHighSeriesChange={handleEditHighSeriesChange} handleEditUserConfirm={handleEditUserConfirm}/>
         }
       </Modal>
 
