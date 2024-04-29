@@ -33,7 +33,7 @@ const EditProfileModal = (props: { data: IPublicUserData, handleEditStyleChange:
               <h3 className='jura text-white text-2xl'>Style</h3>
               <Select required defaultValue={props.data.style}>
                 <SelectTrigger className="w-full jura text-2xl h-10 bg-white pl-3 mt-1">
-                  <SelectValue defaultValue={''} />
+                  <SelectValue defaultValue={props.data.style} />
                 </SelectTrigger>
                 <SelectContent className="jura text-4xl">
                   <SelectItem className='text-2xl' value="1 Handed (Left)">1 Handed (Left)</SelectItem>
@@ -99,7 +99,7 @@ const EditProfileModal = (props: { data: IPublicUserData, handleEditStyleChange:
 
         <div className='p-4 flex justify-end'>
           <button type='submit' className={'jura text-4xl py-2 px-4 rounded-md mr-6 bgOrange'}>Confirm</button>
-          <button className={'jura text-4xl py-2 px-4 rounded-md bgOrange'} >Close</button>
+          <button className={'jura text-4xl py-2 px-4 rounded-md bg-red-500'} >Cancel</button>
         </div>
       </form>
     </div>

@@ -96,7 +96,7 @@ const AddMatchModal = (props: { addingChallengeBool: boolean, handleFalseChallen
                                         className="flex w-auto flex-col p-2"
                                     >
                                         <Select
-                                            onValueChange={(value) => 
+                                            onValueChange={(value) =>
                                                 props.setDate(addDays(new Date(), parseInt(value)))
                                             }
                                         >

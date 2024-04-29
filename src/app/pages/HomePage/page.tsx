@@ -20,14 +20,14 @@ import { useToast } from "@/components/ui/use-toast";
 import { useState } from "react";
 import { useAppContext } from '@/context/Context';
 import { ICreatePost, IPublicUserData, IUserInfoWithStats, IUserPosts } from '@/interfaces/Interfaces';
-import { CreatePostAPI, GetPublicMatchesByStateAPI, GetUserAPI } from '@/Data/DataServices';
+import { CreatePostAPI, GetPublicMatchesByStateAPI, GetUserAPI, UpdateUserAPI } from '@/Data/DataServices';
 import PracticePostDummyData from '../../../utils/PostData.json';
 import PracticeSessionComponent from '@/components/PageComponents/HomePage/PracticeSessionComponent';
 import MatchComponent from '@/components/PageComponents/HomePage/MatchComponent';
-import AddChallengeModal from '@/components/PageComponents/HomePage/AddMatchModal';
+import AddChallengeModal from '@/components/PageComponents/HomePage/Modals/AddMatchModal';
 import RecentWinnerComponent from '@/components/PageComponents/HomePage/RecentWinnerComponent';
 import NewNavBarComponent from '@/components/PageComponents/NewNavBarComponent';
-import EditProfileModal from '@/components/PageComponents/HomePage/EditProfileModal';
+import EditProfileModal from '@/components/PageComponents/HomePage/Modals/EditProfileModal';
 
 const HomePage = () => {
   const fakeUserData: IPublicUserData = {
@@ -166,7 +166,6 @@ const HomePage = () => {
   const handleEditPronounsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEditPronouns(e.target.value)
   }
-
   const handleEditFullNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEditFullName(e.target.value)
   }
@@ -189,7 +188,45 @@ const HomePage = () => {
     setEditHighSeries(e.target.value);
   }
 
+  const handleEditUserConfirm = async () => {
+    let editUserData: IPublicUserData = {
+      id: 0,
+      username: editUsername,
+      email: editEmail,
+      location: verifiedUserData.location,
+      securityQuestion: verifiedUserData.securityQuestion,
+      securityQuestionTwo: verifiedUserData.securityQuestionTwo,
+      securityQuestionThree: verifiedUserData.securityQuestionThree,
+      fullName: editFullName,
+      profileImage: editProfileImg,
+      pronouns: editPronouns,
+      wins: verifiedUserData.wins,
+      losses: verifiedUserData.losses,
+      style: editStyle,
+      mainCenter: editMainCenter,
+      average: editAverage,
+      earnings: editEarnings,
+      highGame: editHighGame,
+      highSeries: editHighSeries,
+      streak: verifiedUserData.streak
+    }
 
+    try {
+      const data = await UpdateUserAPI(verifiedUserData.username, editUserData);
+      handleCloseEditModal();
+      toast({
+        title: "Your profile was updated.",
+        description: "Yayy",
+      })
+      pageContext.setVerifiedUser(editUserData.username);
+    } catch (error) {
+      toast({
+        variant: 'destructive',
+        title: "Something went wrong.",
+        description: "Uh Oh",
+      })
+    }
+  }
 
   // Handle Functions For Match Modal  
 
@@ -306,7 +343,6 @@ const HomePage = () => {
   // End of functions for match modal
 
 
-
   useEffect(() => {
     if (!pageContext.userLoggedIn) {
       route.push('/');
@@ -317,10 +353,11 @@ const HomePage = () => {
         setEditData(userData);
         setMatchData(await GetPublicMatchesByStateAPI(userData.location));
         console.log(locationFormat(['Pac bowl', '400 bowl', '209 bowl']));
+        console.log('use effect ran')
       }
       grabUserData();
     }
-  }, [])
+  }, [pageContext.verifiedUser])
 
 
   return (
@@ -332,7 +369,7 @@ const HomePage = () => {
         }
 
         {
-          editModal && <EditProfileModal data={editData} handleEditStyleChange={handleEditStyleChange} handleCloseEditModal={handleCloseEditModal}/>
+          editModal && <EditProfileModal data={verifiedUserData} handleEditStyleChange={handleEditStyleChange} handleCloseEditModal={handleCloseEditModal}/>
         }
       </Modal>
 
