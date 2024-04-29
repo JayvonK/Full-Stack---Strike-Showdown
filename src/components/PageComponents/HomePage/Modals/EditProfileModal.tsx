@@ -18,7 +18,7 @@ const EditProfileModal = (props: { data: IPublicUserData, handleEditStyleChange:
             </div>
             <div>
               <h3 className='jura text-white text-2xl'>Full Name</h3>
-              <input required type="text" value={props.data.fullName} onChange={props.handleEditFullNameChange} className="w-full jura text-2xl h-10 bg-white pl-2 mb-2 mt-1 rounded-sm" />
+              <input type="text" value={props.data.fullName === "N/A" ? "" : props.data.fullName} onChange={props.handleEditFullNameChange} placeholder='N/A' className="w-full jura text-2xl h-10 bg-white pl-2 mb-2 mt-1 rounded-sm" />
             </div>
             <div>
               <h3 className='jura text-white text-2xl'>Email</h3>
@@ -26,13 +26,13 @@ const EditProfileModal = (props: { data: IPublicUserData, handleEditStyleChange:
             </div>
             <div>
               <h3 className='jura text-white text-2xl'>Pronouns</h3>
-              <input required type="text" value={props.data.pronouns} onChange={props.handleEditPronounsChange} className="w-full jura text-2xl h-10 bg-white pl-2 mb-2 mt-1 rounded-sm" />
+              <input type="text" value={props.data.pronouns === "N/A" ? "" : props.data.pronouns} onChange={props.handleEditPronounsChange} placeholder='N/A' className="w-full jura text-2xl h-10 bg-white pl-2 mb-2 mt-1 rounded-sm" />
             </div>
             <div>
               <h3 className='jura text-white text-2xl'>Style</h3>
-              <Select required defaultValue={props.data.style} onValueChange={props.handleEditAverageChange}>
+              <Select value={props.data.style === "N/A" ? "" : props.data.style} onValueChange={props.handleEditAverageChange}>
                 <SelectTrigger className="w-full jura text-2xl h-10 bg-white pl-3 mt-1">
-                  <SelectValue defaultValue={props.data.style} />
+                  <SelectValue placeholder="N/A" />
                 </SelectTrigger>
                 <SelectContent className="jura text-4xl">
                   <SelectItem className='text-2xl' value="1 Handed (Left)">1 Handed (Left)</SelectItem>
@@ -47,9 +47,9 @@ const EditProfileModal = (props: { data: IPublicUserData, handleEditStyleChange:
             </div>
             <div>
               <h3 className='jura text-white text-2xl'>Average</h3>
-              <Select required value={props.data.average} onValueChange={props.handleEditAverageChange}>
+              <Select value={props.data.average === 'N/A' ? "" : props.data.average} onValueChange={props.handleEditAverageChange}>
                 <SelectTrigger className="w-full jura text-2xl h-10 bg-white pl-3 mt-1">
-                  <SelectValue defaultValue={props.data.average} />
+                  <SelectValue placeholder="N/A" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem className='text-2xl' value="Under 90">Under 90</SelectItem>
@@ -79,26 +79,26 @@ const EditProfileModal = (props: { data: IPublicUserData, handleEditStyleChange:
             </div>
             <div>
               <h3 className='jura text-white text-2xl'>Main Center</h3>
-              <input required value={props.data.mainCenter} onChange={props.handleEditMainCenterChange} type="text" className="w-full jura text-2xl h-10 bg-white pl-2 mb-2 mt-1 rounded-sm" />
+              <input value={props.data.mainCenter === "N/A" ? "" : props.data.mainCenter} onChange={props.handleEditMainCenterChange} placeholder='N/A' type="text" className="w-full jura text-2xl h-10 bg-white pl-2 mb-2 mt-1 rounded-sm" />
             </div>
             <div>
               <h3 className='jura text-white text-2xl'>Earnings</h3>
-              <input required value={props.data.earnings} onChange={props.handleEditEarningsChange} type="text" className="w-full jura text-2xl h-10 bg-white pl-2 mb-2 mt-1 rounded-sm" />
+              <input value={props.data.earnings  === "N/A" ? "" : props.data.earnings} onChange={props.handleEditEarningsChange} placeholder='N/A' type="text" className="w-full jura text-2xl h-10 bg-white pl-2 mb-2 mt-1 rounded-sm" />
             </div>
             <div>
               <h3 className='jura text-white text-2xl'>High Game</h3>
-              <input required value={props.data.highGame} onChange={props.handleEditHighGameChange} type="text" className="w-full jura text-2xl h-10 bg-white pl-2 mb-2 mt-1 rounded-sm" />
+              <input value={props.data.highGame  === "N/A" ? "" : props.data.highGame} onChange={props.handleEditHighGameChange} placeholder='N/A' type="text" className="w-full jura text-2xl h-10 bg-white pl-2 mb-2 mt-1 rounded-sm" />
             </div>
             <div>
               <h3 className='jura text-white text-2xl'>High Series</h3>
-              <input required value={props.data.highSeries} type="text" className="w-full jura text-2xl h-10 bg-white pl-2 mb-2 mt-1 rounded-sm" />
+              <input value={props.data.highSeries  === "N/A" ? "" : props.data.highSeries} onChange={props.handleEditHighSeriesChange} placeholder='N/A' type="text" className="w-full jura text-2xl h-10 bg-white pl-2 mb-2 mt-1 rounded-sm" />
             </div>
           </div>
         </div>
 
         <div className='p-4 flex justify-end'>
           <button type='submit' className={'jura text-4xl py-2 px-4 rounded-md mr-6 bgOrange'}>Confirm</button>
-          <button className={'jura text-4xl py-2 px-4 rounded-md bg-red-500'} onCanPlay={props.handleCloseEditModal} >Cancel</button>
+          <button className={'jura text-4xl py-2 px-4 rounded-md bg-red-500'} onClick={props.handleCloseEditModal} >Cancel</button>
         </div>
       </form>
     </div>

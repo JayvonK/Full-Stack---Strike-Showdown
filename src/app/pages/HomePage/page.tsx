@@ -179,10 +179,21 @@ const HomePage = () => {
     setEditStyle(e);
   }
   const handleEditEarningChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEditEarnings(e.target.value);
+    if ((Number(e.target.value) || e.target.value === '')) {
+      setEditEarnings(e.target.value);
+    }
   }
   const handleEditHighGameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEditHighGame(e.target.value)
+    if ((Number(e.target.value) || e.target.value === '') && !e.target.value.includes('.') && Number(e.target.value) <= 300) {
+      setEditHighGame(e.target.value)
+    } else {
+      toast({
+        variant: "destructive",
+        title: "Error ",
+        description: "Your High Game Cannot be over 300",
+        action: <ToastAction altText="Try again">Try again</ToastAction>,
+      })
+    }
   }
   const handleEditHighSeriesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEditHighSeries(e.target.value);
@@ -197,17 +208,17 @@ const HomePage = () => {
       securityQuestion: verifiedUserData.securityQuestion,
       securityQuestionTwo: verifiedUserData.securityQuestionTwo,
       securityQuestionThree: verifiedUserData.securityQuestionThree,
-      fullName: editFullName,
+      fullName: editFullName === "" ? "N/A" : editFullName,
       profileImage: editProfileImg,
-      pronouns: editPronouns,
+      pronouns: editPronouns === "" ? "N/A" : editPronouns,
       wins: verifiedUserData.wins,
       losses: verifiedUserData.losses,
-      style: editStyle,
-      mainCenter: editMainCenter,
-      average: editAverage,
-      earnings: editEarnings,
-      highGame: editHighGame,
-      highSeries: editHighSeries,
+      style: editStyle === "" ? "N/A" : editStyle,
+      mainCenter: editMainCenter === "" ? "N/A" : editMainCenter,
+      average: editAverage === "" ? "N/A" : editAverage,
+      earnings: editEarnings === "" ? "N/A" : editEarnings,
+      highGame: editHighGame === "" ? "N/A" : editHighGame,
+      highSeries: editHighSeries === "" ? "N/A" : editHighSeries,
       streak: verifiedUserData.streak
     }
 
@@ -369,7 +380,7 @@ const HomePage = () => {
         }
 
         {
-          editModal && <EditProfileModal data={verifiedUserData} handleEditStyleChange={handleEditStyleChange} handleCloseEditModal={handleCloseEditModal} handleEditUsernameChange={handleEditUsernameChange} handleEditEmailChange={handleEditEmailChange} handleEditPronounsChange={handleEditPronounsChange} handleEditFullNameChange={handleEditFullNameChange} handleEditMainCenterChange={handleEditMainCenterChange} handleEditAverageChange={handleEditAverageChange} handleEditEarningsChange={handleEditEarningChange} handleEditHighGameChange={handleEditHighGameChange} handleEditHighSeriesChange={handleEditHighSeriesChange} handleEditUserConfirm={handleEditUserConfirm}/>
+          editModal && <EditProfileModal data={verifiedUserData} handleEditStyleChange={handleEditStyleChange} handleCloseEditModal={handleCloseEditModal} handleEditUsernameChange={handleEditUsernameChange} handleEditEmailChange={handleEditEmailChange} handleEditPronounsChange={handleEditPronounsChange} handleEditFullNameChange={handleEditFullNameChange} handleEditMainCenterChange={handleEditMainCenterChange} handleEditAverageChange={handleEditAverageChange} handleEditEarningsChange={handleEditEarningChange} handleEditHighGameChange={handleEditHighGameChange} handleEditHighSeriesChange={handleEditHighSeriesChange} handleEditUserConfirm={handleEditUserConfirm} />
         }
       </Modal>
 
