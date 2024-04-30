@@ -30,6 +30,7 @@ import NewNavBarComponent from '@/components/PageComponents/NewNavBarComponent';
 import EditProfileModal from '@/components/PageComponents/HomePage/Modals/EditProfileModal';
 import { EditLocalStorageUsername, GetLocalStorage } from '@/utils/LocalStorageFunctions';
 import MatchSkeleton from '@/components/PageComponents/HomePage/MatchSkeleton';
+import { averageStatFormat, locationFormat, timeFormat } from '@/utils/FormatFunctions';
 
 const HomePage = () => {
   const fakeUserData: IPublicUserData = {
@@ -74,10 +75,12 @@ const HomePage = () => {
   const [endTime, setEndTime] = useState<string>('');
   const [maxPpl, setMaxPpl] = useState<number>(0);
   const [currentPpl, setCurrentPpl] = useState<number>(0);
+  const [practiceDescription, setPracticeDescription] = useState<string>('');
   const [description, setDescription] = useState<string>('');
   const [isFinished, setIsFinished] = useState<boolean>(false);
   const [matchModal, setMatchModal] = useState<boolean>(false);
   const [addingChallengeBool, setAddingChallengeBool] = useState<boolean>(true);
+  const [practiceLocation, setPracticeLocation] = useState<string>('');
   const [locationOne, setLocationOne] = useState<string>('');
   const [locationTwo, setLocationTwo] = useState<string>('');
   const [locationThree, setLocationThree] = useState<string>('');
@@ -119,23 +122,6 @@ const HomePage = () => {
     streak: 0
   }
 
-
-  // Formatting Functions
-  const locationFormat = (locArr: string[]) => {
-    let newArr: string[] = []
-    locArr.forEach((loc, idx) => {
-      if (idx !== locArr.length - 1) {
-        newArr.push(locArr[idx] + ', ')
-      } else {
-        newArr.push(locArr[idx]);
-      }
-    })
-    return newArr.join();
-  }
-
-  const averageStatFormat = (avg: string) => {
-    return avg.split("Avg")[0];
-  }
 
   // All functions for Edit Modal
 
@@ -274,6 +260,10 @@ const HomePage = () => {
     e === 'Public' ? setVisibility(true) : setVisibility(false);
   }
 
+  const handlePracticeLocationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPracticeLocation(e.target.value);
+  }
+
   const handleLocationOneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLocationOne(e.target.value);
   }
@@ -284,6 +274,10 @@ const HomePage = () => {
 
   const handleLocationThreeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLocationThree(e.target.value);
+  }
+
+  const handlePracticeDescriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setPracticeDescription(e.target.value);
   }
 
   const handleDescriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -311,22 +305,24 @@ const HomePage = () => {
   const createPracticeSession = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+
+
     let PostData: ICreatePost = {
       title: 'Practice Session',
       isVisible: visibility,
       state: verifiedUserData.location,
-      locations: locationOne,
+      locations: practiceLocation,
       date: date ? format(date, "MM/dd/yy") : "",
-      time: startTime + '-' + endTime,
+      time: timeFormat(startTime) + '-' + timeFormat(endTime),
       maxPpl: maxPpl,
       currentPpl: currentPpl,
-      description: description,
+      description: practiceDescription,
       isFinished: false,
       invitedUsers: [],
     }
 
     try {
-      const data = await CreatePostAPI(PostData, pageContext.verifiedUser);
+      const data = await CreatePostAPI(PostData, storage ? storage[0][1] : '');
       setOpenModal(false);
       setMatchData(await GetPublicMatchesByStateAPI(verifiedUserData.location))
       toast({
@@ -345,18 +341,37 @@ const HomePage = () => {
   const create1v1Challenge = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    let location = locationFormat([locationOne, locationTwo, locationThree]);
+
+    alert('work')
     let PostData: ICreatePost = {
       title: '1v1 Challenge',
       isVisible: visibility,
       state: verifiedUserData.location,
-      locations: locations,
+      locations: location,
       date: format(placeholderDate, "MM/dd/yy"),
       time: '',
       maxPpl: 0,
       currentPpl: 0,
       description: description,
       isFinished: false,
-      invitedUsers: invitedUsersArr
+      invitedUsers: []
+    }
+
+    try {
+      const data = await CreatePostAPI(PostData, storage ? storage[0][1] : '');
+      setOpenModal(false);
+      setMatchData(await GetPublicMatchesByStateAPI(verifiedUserData.location))
+      toast({
+        title: "Your Post Was Created!.",
+        description: "Yayy",
+      })
+    } catch (error) {
+      toast({
+        variant: 'destructive',
+        title: "Something went wrong.",
+        description: "Uh Oh",
+      })
     }
   }
   // End of functions for match modal
@@ -397,9 +412,10 @@ const HomePage = () => {
         setVerifiedUserData(userData);
         setEditData(userData);
         setMatchData(await GetPublicMatchesByStateAPI(userData.location));
-        console.log(locationFormat(['Pac bowl', '400 bowl', '209 bowl']));
+        console.log(locationFormat(['Pac bowl', '', '209 bowl']));
         console.log('use effect ran')
       }
+      console.log(timeFormat('01:44'));
       grabUserData();
     }
   }, [currentUsername])
@@ -409,7 +425,7 @@ const HomePage = () => {
       <NewNavBarComponent />
       <Modal className='bg-black' show={openModal} size={'4xl'} onClose={() => setOpenModal(false)}>
         {
-          matchModal && <AddChallengeModal addingChallengeBool={addingChallengeBool} handleTrueChallengeBool={handleTrueChallengeBool} handleFalseChallengeBool={handleFalseChallengeBool} create1v1Challenge={create1v1Challenge} createPracticeSession={createPracticeSession} handleVisibilityChange={handleVisibilityChange} visibility={visibility} handleLocationOneChange={handleLocationOneChange} locationOne={locationOne} handleLocationTwoChange={handleLocationTwoChange} locationTwo={locationTwo} handleLocationThreeChange={handleLocationThreeChange} locationThree={locationThree} handleDescriptionChange={handleDescriptionChange} description={description} handleCloseModal={handleCloseMatchModal} handleTimeStartChange={handleTimeStartChange} handleTimeEndChange={handleTimeEndChange} setDate={setDate} handleMaxPplChange={handleMaxPplChange} timeStart={startTime} timeEnd={endTime} date={date} maxPpl={maxPpl.toString()} />
+          matchModal && <AddChallengeModal addingChallengeBool={addingChallengeBool} handleTrueChallengeBool={handleTrueChallengeBool} handleFalseChallengeBool={handleFalseChallengeBool} create1v1Challenge={create1v1Challenge} createPracticeSession={createPracticeSession} handleVisibilityChange={handleVisibilityChange} visibility={visibility} handleLocationOneChange={handleLocationOneChange} locationOne={locationOne} handleLocationTwoChange={handleLocationTwoChange} locationTwo={locationTwo} handleLocationThreeChange={handleLocationThreeChange} locationThree={locationThree} handlePracticeLocationChange={handlePracticeLocationChange} handlePracticeDescriptionChange={handlePracticeDescriptionChange} handleDescriptionChange={handleDescriptionChange} description={description} handleCloseModal={handleCloseMatchModal} handleTimeStartChange={handleTimeStartChange} handleTimeEndChange={handleTimeEndChange} setDate={setDate} handleMaxPplChange={handleMaxPplChange} timeStart={startTime} timeEnd={endTime} date={date} maxPpl={maxPpl.toString()} practiceLocation={practiceLocation} practiceDescription={practiceDescription}/>
         }
 
         {
@@ -503,9 +519,9 @@ const HomePage = () => {
                   <div key={idx}>
                     {
                       data.title === 'Practice Session' ? (
-                        skeleton ? (<MatchSkeleton />) : (<PracticeSessionComponent fadeAway={fadeAwayClass} data={data} join={() => { }} userClick={() => { }} />)
+                        skeleton ? (<MatchSkeleton />) : (<PracticeSessionComponent fadeAway={fadeAwayClass} data={data} join={() => { }} userClick={() => { }} edit={true} handleEditMatchClick={() => { }} />)
                       ) : (
-                        skeleton ? (<MatchSkeleton />) : (<MatchComponent fadeAway={fadeAwayClass} challenge={handleJoin} data={data} />)
+                        skeleton ? (<MatchSkeleton />) : (<MatchComponent fadeAway={fadeAwayClass} challenge={handleJoin} data={data} edit={true} handleEditMatchClick={() => { }} />)
                       )
                     }
                   </div>

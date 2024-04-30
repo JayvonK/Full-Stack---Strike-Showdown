@@ -11,7 +11,7 @@ import {
 import Image from 'next/image';
 import { IUserPosts } from '@/interfaces/Interfaces';
 
-const MatchComponent = (props: { challenge: () => void, data: IUserPosts, fadeAway: string}) => {
+const MatchComponent = (props: { challenge: () => void, data: IUserPosts, fadeAway: string, edit: boolean, handleEditMatchClick: () => void }) => {
     const array = props.data.locations.split(",");
 
     return (
@@ -19,7 +19,7 @@ const MatchComponent = (props: { challenge: () => void, data: IUserPosts, fadeAw
             <div className='flex justify-between'>
                 <h2 className='text-white juraBold xl:text-3xl sm:text-2xl text-lg md:mr-10 mr-5'>{props.data.title}</h2>
                 <div className='flex justify-end'>
-                    <button className='bgOrange md:min-w-56 xl:text-3xl sm:text-2xl text-lg juraBold md:py-2 py-1 md:px-0 sm:px-10 px-4 sm:rounded-3xl rounded-xl hover:bg-[#ff9939]' onClick={props.challenge}>Challenge</button>
+                    <button className='bgOrange md:min-w-56 xl:text-3xl sm:text-2xl text-lg juraBold md:py-2 py-1 md:px-0 sm:px-10 px-4 sm:rounded-3xl rounded-xl hover:bg-[#ff9939]' onClick={props.edit ? props.handleEditMatchClick : props.challenge}>{props.edit ? "Edit" : "Join"}</button>
                 </div>
             </div>
 
@@ -109,7 +109,7 @@ const MatchComponent = (props: { challenge: () => void, data: IUserPosts, fadeAw
                 </div>
             </div>
 
-            <h3 className='jura xl:text-2xl md:text-xl sm:text-lg text-sm text-white'><span className='juraBold txtOrange'>Description: </span> {props.data.description}</h3>
+            <h3 className='jura xl:text-2xl md:text-xl sm:text-lg text-sm text-white break-words'><span className='juraBold txtOrange'>Description: </span> {props.data.description}</h3>
 
             <hr className='border-white mt-5 mb-8' />
         </div>

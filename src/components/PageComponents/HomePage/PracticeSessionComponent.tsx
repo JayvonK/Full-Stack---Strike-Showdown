@@ -1,7 +1,7 @@
 import { IUserPosts } from '@/interfaces/Interfaces'
 import React from 'react'
 
-const PracticeSessionComponent = (props: { data: IUserPosts, join: () => void, userClick: () => void, fadeAway: string}) => {
+const PracticeSessionComponent = (props: { data: IUserPosts, join: () => void, userClick: () => void, fadeAway: string, edit: boolean, handleEditMatchClick: () => void}) => {
   return (
     <div className={'md:px-10 sm:px-8 px-4 ' + props.fadeAway}>
       <div className='flex justify-between'>
@@ -10,7 +10,7 @@ const PracticeSessionComponent = (props: { data: IUserPosts, join: () => void, u
           <h2 className='txtOrange'>{props.data.currentPpl}/{props.data.maxPpl}</h2>
         </div>
         <div>
-          <button className='bgOrange md:min-w-56 xl:text-3xl sm:text-2xl text-lg juraBold md:py-2 py-1 md:px-0 sm:px-10 px-4 sm:rounded-3xl rounded-xl hover:bg-[#ff9939]' onClick={props.join}>Join</button>
+          <button className='bgOrange md:min-w-56 xl:text-3xl sm:text-2xl text-lg juraBold md:py-2 py-1 md:px-0 sm:px-10 px-4 sm:rounded-3xl rounded-xl hover:bg-[#ff9939]' onClick={props.edit ?props.handleEditMatchClick : props.join}>{props.edit ? "Edit" : "Join"}</button>
         </div>
       </div>
 
@@ -81,7 +81,7 @@ const PracticeSessionComponent = (props: { data: IUserPosts, join: () => void, u
 
       </div>
 
-      <h3 className='jura xl:text-2xl md:text-xl sm:text-lg text-sm text-white'><span className='juraBold txtOrange'>Description: </span> {props.data.description}</h3>
+      <h3 className='jura xl:text-2xl md:text-xl sm:text-lg text-sm text-white break-words'><span className='juraBold txtOrange'>Description: </span> {props.data.description}</h3>
 
       <hr className='border-white mt-5 mb-8' />
     </div>

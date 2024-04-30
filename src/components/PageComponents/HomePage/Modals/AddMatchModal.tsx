@@ -15,7 +15,7 @@ import {
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Dispatch, SetStateAction, useState } from "react"
 
-const AddMatchModal = (props: { addingChallengeBool: boolean, handleFalseChallengeBool: () => void, handleTrueChallengeBool: () => void, create1v1Challenge: (e: React.FormEvent<HTMLFormElement>) => void, createPracticeSession: (e: React.FormEvent<HTMLFormElement>) => void, handleVisibilityChange: (e: string) => void, visibility: boolean, handleLocationOneChange: (e: React.ChangeEvent<HTMLInputElement>) => void, locationOne: string, handleLocationTwoChange: (e: React.ChangeEvent<HTMLInputElement>) => void, locationTwo: string, handleLocationThreeChange: (e: React.ChangeEvent<HTMLInputElement>) => void, locationThree: string, handleDescriptionChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void, description: string, handleCloseModal: () => void, handleTimeStartChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleTimeEndChange: (e: React.ChangeEvent<HTMLInputElement>) => void, setDate: React.Dispatch<SetStateAction<Date | undefined>>, handleMaxPplChange: (e: React.ChangeEvent<HTMLInputElement>) => void, timeStart: string, timeEnd: string, date: Date | undefined, maxPpl: string }) => {
+const AddMatchModal = (props: { addingChallengeBool: boolean, handleFalseChallengeBool: () => void, handleTrueChallengeBool: () => void, create1v1Challenge: (e: React.FormEvent<HTMLFormElement>) => void, createPracticeSession: (e: React.FormEvent<HTMLFormElement>) => void, handleVisibilityChange: (e: string) => void, visibility: boolean, handlePracticeLocationChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleLocationOneChange: (e: React.ChangeEvent<HTMLInputElement>) => void, locationOne: string, handleLocationTwoChange: (e: React.ChangeEvent<HTMLInputElement>) => void, locationTwo: string, handleLocationThreeChange: (e: React.ChangeEvent<HTMLInputElement>) => void, locationThree: string, handleDescriptionChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void, handlePracticeDescriptionChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void, description: string, handleCloseModal: () => void, handleTimeStartChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleTimeEndChange: (e: React.ChangeEvent<HTMLInputElement>) => void, setDate: React.Dispatch<SetStateAction<Date | undefined>>, handleMaxPplChange: (e: React.ChangeEvent<HTMLInputElement>) => void, timeStart: string, timeEnd: string, date: Date | undefined, maxPpl: string, practiceLocation: string, practiceDescription: string }) => {
 
     return (
         <>
@@ -26,7 +26,7 @@ const AddMatchModal = (props: { addingChallengeBool: boolean, handleFalseChallen
             <div className='px-4'>
                 <form onSubmit={props.addingChallengeBool ? props.create1v1Challenge : props.createPracticeSession}>
                     <div className="py-4 px-6 bg-black rounded-md">
-                        <div className='flex justify-between gap-60'>
+                        <div className='flex justify-between gap-40'>
                             <div className='w-full'>
                                 <h3 className='jura text-white text-2xl'>Visibility</h3>
                                 <Select value={props.visibility ? 'Public' : 'Private'} required onValueChange={(e) => props.handleVisibilityChange(e)}>
@@ -56,23 +56,31 @@ const AddMatchModal = (props: { addingChallengeBool: boolean, handleFalseChallen
                             <div className='flex justify-between gap-4'>
                                 <input type="text" onChange={props.handleLocationOneChange} value={props.locationOne} placeholder='Location 1' className="w-full jura text-2xl h-10 bg-white pl-2 mb-2 mt-2 rounded-sm" />
                                 <input type="text" onChange={props.handleLocationTwoChange} value={props.locationTwo} placeholder='Location 2' className="w-full jura text-2xl h-10 bg-white pl-2 mb-2 mt-2 rounded-sm" />
-                                <input type="text" onChange={props.handleLocationTwoChange} value={props.locationThree} placeholder='Location 3' className="w-full jura text-2xl h-10 bg-white pl-2 mb-2 mt-2 rounded-sm" />
+                                <input type="text" onChange={props.handleLocationThreeChange} value={props.locationThree} placeholder='Location 3' className="w-full jura text-2xl h-10 bg-white pl-2 mb-2 mt-2 rounded-sm" />
                             </div>
                             <p className='jura txtOrange text-xl mb-4'>*Leave blank if open to any locations</p>
                         </div>
 
-                        <div className={!props.addingChallengeBool ? 'grid grid-cols-2 gap-x-60' : 'hidden'}>
+                        <div className={!props.addingChallengeBool ? 'grid grid-cols-2 gap-x-40' : 'hidden'}>
                             <div>
                                 <h3 className='jura text-white text-2xl'>Location:</h3>
-                                <input required type="text" onChange={props.handleLocationOneChange} value={props.locationOne} placeholder='Location' className="w-full jura text-2xl h-10 bg-white pl-2 mb-2 mt-2 rounded-sm" />
+                                <input required type="text" onChange={props.handlePracticeLocationChange} value={props.practiceLocation} placeholder='Location' className="w-full jura text-2xl h-10 bg-white pl-2 mb-2 mt-2 rounded-sm" />
                             </div>
 
                             <div>
                                 <h3 className='jura text-white text-2xl'>Time:</h3>
                                 <div className='flex justify-between items-center'>
-                                    <input required type="text" onChange={props.handleTimeStartChange} value={props.timeStart} placeholder='Start' className="w-full jura text-2xl h-10 bg-white pl-2 mb-2 mt-2 rounded-sm" />
-                                    <p className='px-4 inline-block text-white'>-</p>
-                                    <input required type="text" onChange={props.handleTimeEndChange} value={props.timeEnd} placeholder='End' className="w-full jura text-2xl h-10 bg-white pl-2 mb-2 mt-2 rounded-sm" />
+                                    {
+                                        !props.addingChallengeBool ? (
+                                            <>
+                                                <input required type="time" onChange={props.handleTimeStartChange} value={props.timeStart} placeholder='Start' className="w-full jura text-xl h-10 bg-white pl-2 mb-2 mt-2 rounded-sm" />
+                                                <p className='px-4 inline-block text-white'>-</p>
+                                                <input required type="time" onChange={props.handleTimeEndChange} value={props.timeEnd} placeholder='End' className="w-full jura text-xl h-10 bg-white pl-2 mb-2 mt-2 rounded-sm" />
+                                            </>
+
+                                        ) : (<div></div>)
+                                    }
+
                                 </div>
                             </div>
 
@@ -124,7 +132,13 @@ const AddMatchModal = (props: { addingChallengeBool: boolean, handleFalseChallen
                         </div>
 
                         <h3 className='jura text-white text-2xl'>Description</h3>
-                        <textarea required onChange={props.handleDescriptionChange} value={props.description} className='w-full h-40 text-black jura text-2xl bg-white pl-2 mb-2 mt-2 rounded-sm placeholder:text-black pt-1' placeholder='Add your description.'></textarea>
+                        {
+                            !props.addingChallengeBool ? (
+                                <textarea required onChange={props.handlePracticeDescriptionChange} value={props.practiceDescription} className='w-full h-40 text-black jura text-2xl bg-white pl-2 mb-2 mt-2 rounded-sm placeholder:text-black pt-1' placeholder='Add your description.'></textarea>
+                            ) :  (
+                                    <textarea required onChange={props.handleDescriptionChange} value={props.description} className='w-full h-40 text-black jura text-2xl bg-white pl-2 mb-2 mt-2 rounded-sm placeholder:text-black pt-1' placeholder='Add your description.'></textarea>
+                                )
+                        }
                     </div>
 
                     <div className='p-4 flex justify-end'>
