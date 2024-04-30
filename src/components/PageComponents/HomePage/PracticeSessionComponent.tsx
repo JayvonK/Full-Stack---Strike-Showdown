@@ -1,9 +1,9 @@
 import { IUserPosts } from '@/interfaces/Interfaces'
 import React from 'react'
 
-const PracticeSessionComponent = (props: { data: IUserPosts, join: () => void, userClick: () => void}) => {
+const PracticeSessionComponent = (props: { data: IUserPosts, join: () => void, userClick: () => void, fadeAway: string}) => {
   return (
-    <div className='md:px-10 sm:px-8 px-4'>
+    <div className={'md:px-10 sm:px-8 px-4 ' + props.fadeAway}>
       <div className='flex justify-between'>
         <div className='flex juraBold xl:text-3xl sm:text-2xl text-lg'>
           <h2 className='text-white md:mr-10 mr-5'>Practice Session</h2>

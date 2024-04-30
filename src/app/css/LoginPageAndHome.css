@@ -68,8 +68,22 @@
 }
 
 .recentWinnerCols {
-        grid-template-columns: 50% 50%;
-    }
+    grid-template-columns: 50% 50%;
+}
+
+.fadeAway {
+    opacity: 0;
+    transition: 0.5s ease;
+}
+
+.fadeIn {
+    opacity: 0;
+}
+
+.fadeInTrue {
+    opacity: 1;
+    transition: opacity 0.5s ease-in;
+}
 
 @media screen and (max-width: 1160px) {
     .recentWinnerCols {
@@ -93,4 +107,3 @@
         font-size: 12px;
     }
 }
-

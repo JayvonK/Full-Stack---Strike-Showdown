@@ -11,11 +11,11 @@ import {
 import Image from 'next/image';
 import { IUserPosts } from '@/interfaces/Interfaces';
 
-const MatchComponent = (props: { challenge: () => void, data: IUserPosts}) => {
+const MatchComponent = (props: { challenge: () => void, data: IUserPosts, fadeAway: string}) => {
     const array = props.data.locations.split(",");
 
     return (
-        <div className='md:px-10 sm:px-8 px-4'>
+        <div className={'md:px-10 sm:px-8 px-4 ' + props.fadeAway}>
             <div className='flex justify-between'>
                 <h2 className='text-white juraBold xl:text-3xl sm:text-2xl text-lg md:mr-10 mr-5'>{props.data.title}</h2>
                 <div className='flex justify-end'>

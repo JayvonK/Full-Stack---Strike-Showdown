@@ -361,12 +361,29 @@ const HomePage = () => {
   }
   // End of functions for match modal
 
+
+  const [fadeAwayClass, setFadeAwayClass] = useState<string>('');
+
   const handleReloadMatches = async () => {
     // setMatchData(await GetPublicMatchesByStateAPI(verifiedUserData.location))
-    setSkeleton(true);
+    setFadeAwayClass('fadeAway');
+
+    setTimeout(() => {
+      setSkeleton(true);
+    }, 500)
+
     setTimeout(() => {
       setSkeleton(false);
-    }, 2000)
+    }, 2500)
+
+    setTimeout(() => {
+      setFadeAwayClass('fadeIn');
+    }, 2500)
+
+    setTimeout(() => {
+      setFadeAwayClass('fadeInTrue');
+    }, 2700)
+
   }
 
   useEffect(() => {
@@ -474,11 +491,11 @@ const HomePage = () => {
               <h1 className='text-white xl:text-4xl text-3xl jura py-4 px-8 max-w-[450px] text-center ml-6'>Location: <span className='txtOrange'>{verifiedUserData && verifiedUserData.location}</span>
               </h1>
               <div className='flex items-center ml-4'>
-                <img className='w-10 h-10 hover:cursor-pointer' src="/images/arrow-clockwise-bold.svg" alt="" onClick={handleReloadMatches}/>
+                <img className='w-10 h-10 hover:cursor-pointer' src="/images/arrow-clockwise-bold.svg" alt="" onClick={handleReloadMatches} />
               </div>
             </div>
 
-            <div className='mt-10'></div>
+            <div className={'mt-10 opacity-0'}></div>
 
             {
               matchData.length !== 0 ? (
@@ -486,9 +503,9 @@ const HomePage = () => {
                   <div key={idx}>
                     {
                       data.title === 'Practice Session' ? (
-                        skeleton ? (<MatchSkeleton />) : (<PracticeSessionComponent data={data} join={() => { }} userClick={() => { }} />)
+                        skeleton ? (<MatchSkeleton />) : (<PracticeSessionComponent fadeAway={fadeAwayClass} data={data} join={() => { }} userClick={() => { }} />)
                       ) : (
-                        skeleton ? (<MatchSkeleton />) : (<MatchComponent challenge={handleJoin} data={data} />)
+                        skeleton ? (<MatchSkeleton />) : (<MatchComponent fadeAway={fadeAwayClass} challenge={handleJoin} data={data} />)
                       )
                     }
                   </div>
@@ -502,7 +519,7 @@ const HomePage = () => {
 
           </div>
 
-          <div className='min-h-[500px] max-h-[1200px] bg-black sm:rounded-3xl rounded-xl overflow-y-auto overflow-x-hidden scrollbar'>
+          <div className='min-h-[500px] max-h-[1200px] bg-black sm:rounded-3xl rounded-xl overflow-y-auto overflow-x-hidden scrollbar mt-8'>
             <div className='flex'>
               <h1 className='text-black xl:text-4xl text-3xl juraBold py-4 px-8 bg-[#FF7A00] max-w-[450px] text-center sm:rounded-tl-3xl rounded-tl-xl mb-6'>Recent Winners</h1>
             </div>
