@@ -61,8 +61,9 @@ const HomePage = () => {
   const { toast } = useToast();
   const [openModal, setOpenModal] = useState(false);
   const [verifiedUserData, setVerifiedUserData] = useState<IPublicUserData>(fakeUserData);
-  const [storage, setStorage] = useState();
-  const [currentUsername, setCurrentUsername] = useState<string>();
+  const [storage, setStorage] = useState([["", ""]]);
+  const [currentUsername, setCurrentUsername] = useState<string>('');
+  const [runUseEffect, setRunUseEffect] = useState<boolean>(false);
   const [skeleton, setSkeleton] = useState<boolean>(false);
 
   // State Variables For Match Data
@@ -86,8 +87,10 @@ const HomePage = () => {
   const [locationThree, setLocationThree] = useState<string>('');
   const [invitedUsers, setInvitedUsers] = useState<string>('');
   const [invitedUsersArr, setInvitedUsersArray] = useState<string[]>([])
+  const [editMatchModal, setEditMatchModal] = useState<boolean>(false);
+  const [editChallenge, setEditChallenge] = useState<boolean>(false);
 
-  // State Variables For Edit Match Modal
+  // State Variables For Edit User Modal
   const [editModal, setEditModal] = useState<boolean>(false);
   const [editProfileImg, setEditProfileImg] = useState<string>('');
   const [editUsername, setEditUsername] = useState<string>('');
@@ -224,6 +227,7 @@ const HomePage = () => {
       })
       EditLocalStorageUsername(editUsername);
       setCurrentUsername(editUsername);
+      setRunUseEffect(!runUseEffect);
     } catch (error) {
       toast({
         variant: 'destructive',
@@ -305,8 +309,6 @@ const HomePage = () => {
   const createPracticeSession = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-
-
     let PostData: ICreatePost = {
       title: 'Practice Session',
       isVisible: visibility,
@@ -322,7 +324,7 @@ const HomePage = () => {
     }
 
     try {
-      const data = await CreatePostAPI(PostData, storage ? storage[0][1] : '');
+      const data = await CreatePostAPI(PostData, currentUsername);
       setOpenModal(false);
       setMatchData(await GetPublicMatchesByStateAPI(verifiedUserData.location))
       toast({
@@ -343,12 +345,11 @@ const HomePage = () => {
 
     let location = locationFormat([locationOne, locationTwo, locationThree]);
 
-    alert('work')
     let PostData: ICreatePost = {
       title: '1v1 Challenge',
       isVisible: visibility,
       state: verifiedUserData.location,
-      locations: location,
+      locations: location === "" ? "Open to any locations" : location,
       date: format(placeholderDate, "MM/dd/yy"),
       time: '',
       maxPpl: 0,
@@ -359,7 +360,7 @@ const HomePage = () => {
     }
 
     try {
-      const data = await CreatePostAPI(PostData, storage ? storage[0][1] : '');
+      const data = await CreatePostAPI(PostData, currentUsername);
       setOpenModal(false);
       setMatchData(await GetPublicMatchesByStateAPI(verifiedUserData.location))
       toast({
@@ -373,6 +374,13 @@ const HomePage = () => {
         description: "Uh Oh",
       })
     }
+  }
+
+
+  // Edit Match Modal
+
+  const openEditMatchModal = (data: IUserPosts) => {
+
   }
   // End of functions for match modal
 
@@ -411,26 +419,34 @@ const HomePage = () => {
         const userData: IPublicUserData = await GetUserAPI(storageArr[0][1]);
         setVerifiedUserData(userData);
         setEditData(userData);
+        setCurrentUsername(storageArr[0][1])
         setMatchData(await GetPublicMatchesByStateAPI(userData.location));
-        console.log(locationFormat(['Pac bowl', '', '209 bowl']));
-        console.log('use effect ran')
       }
-      console.log(timeFormat('01:44'));
       grabUserData();
     }
-  }, [currentUsername])
+  }, [runUseEffect])
 
   return (
     <div>
       <NewNavBarComponent />
       <Modal className='bg-black' show={openModal} size={'4xl'} onClose={() => setOpenModal(false)}>
         {
-          matchModal && <AddChallengeModal addingChallengeBool={addingChallengeBool} handleTrueChallengeBool={handleTrueChallengeBool} handleFalseChallengeBool={handleFalseChallengeBool} create1v1Challenge={create1v1Challenge} createPracticeSession={createPracticeSession} handleVisibilityChange={handleVisibilityChange} visibility={visibility} handleLocationOneChange={handleLocationOneChange} locationOne={locationOne} handleLocationTwoChange={handleLocationTwoChange} locationTwo={locationTwo} handleLocationThreeChange={handleLocationThreeChange} locationThree={locationThree} handlePracticeLocationChange={handlePracticeLocationChange} handlePracticeDescriptionChange={handlePracticeDescriptionChange} handleDescriptionChange={handleDescriptionChange} description={description} handleCloseModal={handleCloseMatchModal} handleTimeStartChange={handleTimeStartChange} handleTimeEndChange={handleTimeEndChange} setDate={setDate} handleMaxPplChange={handleMaxPplChange} timeStart={startTime} timeEnd={endTime} date={date} maxPpl={maxPpl.toString()} practiceLocation={practiceLocation} practiceDescription={practiceDescription}/>
+          matchModal && <AddChallengeModal addingChallengeBool={addingChallengeBool} handleTrueChallengeBool={handleTrueChallengeBool} handleFalseChallengeBool={handleFalseChallengeBool} create1v1Challenge={create1v1Challenge} createPracticeSession={createPracticeSession} handleVisibilityChange={handleVisibilityChange} visibility={visibility} handleLocationOneChange={handleLocationOneChange} locationOne={locationOne} handleLocationTwoChange={handleLocationTwoChange} locationTwo={locationTwo} handleLocationThreeChange={handleLocationThreeChange} locationThree={locationThree} handlePracticeLocationChange={handlePracticeLocationChange} handlePracticeDescriptionChange={handlePracticeDescriptionChange} handleDescriptionChange={handleDescriptionChange} description={description} handleCloseModal={handleCloseMatchModal} handleTimeStartChange={handleTimeStartChange} handleTimeEndChange={handleTimeEndChange} setDate={setDate} handleMaxPplChange={handleMaxPplChange} timeStart={startTime} timeEnd={endTime} date={date} maxPpl={maxPpl.toString()} practiceLocation={practiceLocation} practiceDescription={practiceDescription} />
         }
 
         {
           editModal && <EditProfileModal data={editData} handleEditStyleChange={handleEditStyleChange} handleCloseEditModal={handleCloseEditModal} handleEditUsernameChange={handleEditUsernameChange} handleEditEmailChange={handleEditEmailChange} handleEditPronounsChange={handleEditPronounsChange} handleEditFullNameChange={handleEditFullNameChange} handleEditMainCenterChange={handleEditMainCenterChange} handleEditAverageChange={handleEditAverageChange} handleEditEarningsChange={handleEditEarningChange} handleEditHighGameChange={handleEditHighGameChange} handleEditHighSeriesChange={handleEditHighSeriesChange} handleEditUserConfirm={handleEditUserConfirm} />
         }
+
+        {
+          editMatchModal && editChallenge && <AddChallengeModal addingChallengeBool={true} handleTrueChallengeBool={() => { }} handleFalseChallengeBool={() => { }} create1v1Challenge={create1v1Challenge} createPracticeSession={createPracticeSession} handleVisibilityChange={handleVisibilityChange} visibility={visibility} handleLocationOneChange={handleLocationOneChange} locationOne={locationOne} handleLocationTwoChange={handleLocationTwoChange} locationTwo={locationTwo} handleLocationThreeChange={handleLocationThreeChange} locationThree={locationThree} handlePracticeLocationChange={handlePracticeLocationChange} handlePracticeDescriptionChange={handlePracticeDescriptionChange} handleDescriptionChange={handleDescriptionChange} description={description} handleCloseModal={handleCloseMatchModal} handleTimeStartChange={handleTimeStartChange} handleTimeEndChange={handleTimeEndChange} setDate={setDate} handleMaxPplChange={handleMaxPplChange} timeStart={startTime} timeEnd={endTime} date={date} maxPpl={maxPpl.toString()} practiceLocation={practiceLocation} practiceDescription={practiceDescription} />
+        }
+        
+        {
+          editMatchModal && !editChallenge && <AddChallengeModal addingChallengeBool={false} handleTrueChallengeBool={() => { }} handleFalseChallengeBool={() => { }} create1v1Challenge={create1v1Challenge} createPracticeSession={createPracticeSession} handleVisibilityChange={handleVisibilityChange} visibility={visibility} handleLocationOneChange={handleLocationOneChange} locationOne={locationOne} handleLocationTwoChange={handleLocationTwoChange} locationTwo={locationTwo} handleLocationThreeChange={handleLocationThreeChange} locationThree={locationThree} handlePracticeLocationChange={handlePracticeLocationChange} handlePracticeDescriptionChange={handlePracticeDescriptionChange} handleDescriptionChange={handleDescriptionChange} description={description} handleCloseModal={handleCloseMatchModal} handleTimeStartChange={handleTimeStartChange} handleTimeEndChange={handleTimeEndChange} setDate={setDate} handleMaxPplChange={handleMaxPplChange} timeStart={startTime} timeEnd={endTime} date={date} maxPpl={maxPpl.toString()} practiceLocation={practiceLocation} practiceDescription={practiceDescription} />
+        }
+
+
       </Modal>
 
       <div className='bgLogin min-h-screen pt-12 2xl:px-44 xl:px-36 lg:px-24 sm:px-14 px-6 pb-20 relative'>
@@ -519,9 +535,9 @@ const HomePage = () => {
                   <div key={idx}>
                     {
                       data.title === 'Practice Session' ? (
-                        skeleton ? (<MatchSkeleton />) : (<PracticeSessionComponent fadeAway={fadeAwayClass} data={data} join={() => { }} userClick={() => { }} edit={true} handleEditMatchClick={() => { }} />)
+                        skeleton ? (<MatchSkeleton />) : (<PracticeSessionComponent fadeAway={fadeAwayClass} data={data} join={() => { }} userClick={() => { }} edit={data.publisher === currentUsername} handleEditMatchClick={() => { }} />)
                       ) : (
-                        skeleton ? (<MatchSkeleton />) : (<MatchComponent fadeAway={fadeAwayClass} challenge={handleJoin} data={data} edit={true} handleEditMatchClick={() => { }} />)
+                        skeleton ? (<MatchSkeleton />) : (<MatchComponent fadeAway={fadeAwayClass} challenge={handleJoin} data={data} edit={data.publisher === currentUsername} handleEditMatchClick={() => { }} />)
                       )
                     }
                   </div>

@@ -6,7 +6,7 @@ export const locationFormat = (locArr: string[]) => {
     }
   });
 
-  if(newArr[newArr.length - 1].includes(",")){
+  if(newArr.length !==0 && newArr[newArr.length - 1].includes(",")){
     newArr[newArr.length - 1] = newArr[newArr.length - 1].replace(',', "");
   }
   return newArr.join();

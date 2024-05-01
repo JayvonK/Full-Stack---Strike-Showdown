@@ -64,7 +64,14 @@ const AddMatchModal = (props: { addingChallengeBool: boolean, handleFalseChallen
                         <div className={!props.addingChallengeBool ? 'grid grid-cols-2 gap-x-40' : 'hidden'}>
                             <div>
                                 <h3 className='jura text-white text-2xl'>Location:</h3>
-                                <input required type="text" onChange={props.handlePracticeLocationChange} value={props.practiceLocation} placeholder='Location' className="w-full jura text-2xl h-10 bg-white pl-2 mb-2 mt-2 rounded-sm" />
+                                {
+                                        !props.addingChallengeBool ? (
+                                            <>
+                                                <input required type="text" onChange={props.handlePracticeLocationChange} value={props.practiceLocation} placeholder='Location' className="w-full jura text-2xl h-10 bg-white pl-2 mb-2 mt-2 rounded-sm" />
+                                            </>
+
+                                        ) : (<div></div>)
+                                    }
                             </div>
 
                             <div>
