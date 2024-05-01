@@ -43,15 +43,15 @@ setActiveTab(tab);
   };
   return (
     <>
-      <div className=" mb-5 flex justify-center  md:justify-end mt-5 lg:mt-0 ">
+      <div className=" mb-5 flex justify-center mt-5 ">
         <div>
           <img
             src={ProfilePic2.src}
-            className=" mt-5 lg:ml-5 ml-0  md:mt-5 lg:mt-10 pr-4 h-24 md:h-48"
+            className=" mt-5 ml-5    pr-4 h-24 md:h-48"
           ></img>
         </div>
-        <div className="lg:px-5 mx-5 lg:mx-0 my-0 lg:my-5">
-          <div className="grid grid-flow-col overflow-hidden  bg-black rounded-2xl w-52 justify-center   md:mx-0 md:px-0 md:pt-4 md:pb-4 md:pr-5    md:w-96 md:h-60">
+        <div className="">
+          <div className="grid grid-flow-col overflow-hidden  bg-black rounded-2xl  justify-center   md:mx-0 md:px-0 md:pt-4 md:pb-4 md:pr-5  w-64   md:w-96 md:h-60">
             <div className=" ml-8 ">
               <div className="grid grid-flow-col  auto-cols-max justify-start items-center pb-3 ">
                 <div>
@@ -64,22 +64,23 @@ setActiveTab(tab);
                   </h1>
                   <h1 className="text-white jura text-base md:text-xl pt-2 pb-2 ">
                     {props.proNouns}
+                  
                   </h1>
                 </div>
               </div>
 
               <div className=" flex justify-center items-center ">
-                <button className="  bg-orange-500  mr-2  rounded-lg px-3 pt-1 pb-1 w-48   hover:!bg-orange-500 text-black jura">
+                <button className="  bg-orange-500  mr-2  rounded-lg px-3 pt-1 pb-1 w-24 lg:w-48   hover:!bg-orange-500 text-black jura">
                   <div className="flex flex-col-2  items-center justify-center">
-                    <button   className="mr-4 ">
+                   
                       <img
                        alt="Friend Icon"
                         src={AddFriendIcon.src}
-                        className="h-8 w-8"
+                        className="h-4 lg:h-8 lg:w-8 mr-2 lg:mr-4"
                         >
                         
                       </img>
-                    </button>
+                 
                     <div>
                       <h3 className="text-base md:text-3xl text-center">
                         Friend
@@ -103,69 +104,72 @@ setActiveTab(tab);
           </div>
         </div>
       </div>
-      <div className="lg:px-5 lg:pb-5  ">
-        <div className="rounded-xl   bg-black  justify-center px-2 py-2 mx-5  mb-5  lg:px-10 ">
+      
+      <div className="  ">
+        <div className="rounded-xl   bg-black  justify-center  py-2 mx-5 px-5  mb-5 lg:px-10 md:px-10 ">
           <div className="rounded-xl   justify-space bg-black w-50  grid grid-flow-col auto-cols">
+            
             <div className="" >
-              <button  className={`   text-center mt-5   text-base md:text-3xl md:w-40   w-20  rounded-lg  pt-2 pb-2  mb-2  jura ${ activeTab === 'Info'
+              <button  className={`   text-center mt-5   text-xl md:text-3xl md:w-40   w-20  rounded-lg  pt-2 pb-2  mb-2  jura ${ activeTab === 'Info'
           ? 'bg-orange-500   '
           : ' text-white'}`}  onClick={() => handlePage('Info')}>
                 Info
               </button>
-              <p className="text-white jura text-xs md:text-xl pt-4">Record:</p>
-              <p className="text-orange-500 text-sm jura md:text-2xl ">
+              
+              <p className="text-white jura text-lg md:text-xl pt-4">Record:</p>
+              <p className="text-orange-500 text-lg jura md:text-2xl ">
                 {props.record}
               </p>
 
-              <p className="text-white jura text-xs md:text-xl pt-4 ">
+              <p className="text-white jura text-lg md:text-xl pt-4 ">
                 Main Center:
               </p>
 
-              <p className="overflow-auto text-orange-500 text-sm jura md:text-2xl">
+              <p className="overflow-auto text-orange-500 text-lg jura md:text-2xl">
                 {props.mainCenter}
               </p>
             </div>
-            <div className="">
-              <button className={`jura text-xs  md:text-3xl  mt-5 rounded-xl  px-5  pt-2 pb-2  mb-2 jura ${activeTab === 'Session'
+            <div className="" >
+              <button className={`jura text-xl  md:text-3xl  mt-5 rounded-lg  px-5  pt-2 pb-2  mb-2 jura ${activeTab === 'Session'
           ? 'bg-orange-500  text-black '
           : ' text-white'}`}  onClick={() => handlePage('Session')}>
                 Open Sessions
               </button>
-              <p className="text-white jura text-xs md:text-xl pt-4">Style:</p>
-              <p className="text-orange-500 text-sm jura md:text-2xl">
+              <p className="text-white jura text-lg md:text-xl pt-4">Style:</p>
+              <p className="text-orange-500 text-lg jura md:text-2xl">
                 {props.style}
               </p>
-              <p className="text-white jura text-xs md:text-xl pt-4">
+              <p className="text-white jura text-lg md:text-xl pt-4">
                 Average:
               </p>
-              <p className="text-orange-500 text-sm jura md:text-2xl">
+              <p className="text-orange-500 text-lg jura md:text-2xl">
                 {props.average}
               </p>
             </div>
           </div>
           <div className=" mt-4 pb-5 pt-4 flex flex-col-3  justify-between items-center">
             <div className="">
-              <h1 className="text-white text-xs md:text-xl jura text-center">
+              <h1 className="text-white text-lg md:text-xl jura text-center">
                 High Game:
               </h1>
 
-              <h1 className="text-orange-500 text-sm jura md:text-2xl text-center">
+              <h1 className="text-orange-500 text-lg jura md:text-2xl text-center">
                 {props.highGames}
               </h1>
             </div>
             <div>
-              <h1 className="text-white jura text-xs md:text-xl text-center">
+              <h1 className="text-white jura text-lg md:text-xl text-center">
                 High Series:
               </h1>
-              <h1 className="text-orange-500 text-sm jura md:text-2xl text-center">
+              <h1 className="text-orange-500 text-lg jura md:text-2xl text-center">
                 {props.highSeries}
               </h1>
             </div>
-            <div className="pr-14 ">
-              <h1 className="text-white jura text-xs md:text-xl text-center">
+            <div className=" pr-0 lg:pr-14 ">
+              <h1 className="text-white jura text-lg md:text-xl text-center">
                 Earnings:
               </h1>
-              <h1 className="text-orange-500 text-sm jura md:text-2xl text-center">
+              <h1 className="text-orange-500 text-lg jura md:text-2xl text-center">
                 ${props.earnings}
               </h1>
             </div>

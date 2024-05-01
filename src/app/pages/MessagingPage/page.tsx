@@ -6,7 +6,6 @@ import plusIcon from '../../../../public/images/plus-bold.svg';
 import closeIcon from '../../../../public/images/x-bold.svg';
 import profile from '../../../../public/images/Profile.png';
 import planeIcon from '../../../../public/images/paper-plane-tilt-fill.svg'
-import NavBarComponent from '@/components/PageComponents/NavBarComponent';
 import { useAppContext } from '@/context/Context';
 import { useRouter } from 'next/navigation';
 
@@ -23,7 +22,7 @@ const MessagingPage = () => {
 
     return (
         <>
-            <NavBarComponent />
+ 
             <div className='bgLogin min-h-screen pt-12 px-52 pb-20 relative'>
                 <div className='h-full w-full bgHome absolute top-0 left-0 z-10'></div>
                 <div className='py-16 grid grid-cols-[30%_70%] h-[85vh] z-20 relative'>
