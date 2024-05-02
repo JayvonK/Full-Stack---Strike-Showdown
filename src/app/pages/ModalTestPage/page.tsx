@@ -16,7 +16,7 @@ function page() {
 
     <div>
        <Button onClick={() => setOpenModal(true)}>Toggle modal</Button>
-      <Modal dismissible show={openModal} onClose={() => setOpenModal(false)}>
+       <Modal dismissible show={openModal} onClose={() => setOpenModal(false)} size={'4x1'}>
 
        {/* <FriendsModalComponent/>  */}
      {/* <InboxModalComponent/>   */}
