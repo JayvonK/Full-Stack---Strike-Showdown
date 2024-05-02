@@ -1,7 +1,7 @@
 import { IUserPosts } from '@/interfaces/Interfaces'
 import React from 'react'
 
-const PracticeSessionComponent = (props: { data: IUserPosts, join: () => void, userClick: () => void, fadeAway: string, edit: boolean, handleEditMatchClick: () => void}) => {
+const PracticeSessionComponent = (props: { data: IUserPosts, join: () => void, userClick: () => void, fadeAway: string, edit: boolean, handleEditMatchClick:() => void}) => {
   return (
     <div className={'md:px-10 sm:px-8 px-4 ' + props.fadeAway}>
       <div className='flex justify-between'>
