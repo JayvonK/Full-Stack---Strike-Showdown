@@ -27,12 +27,12 @@ const NewNavBarComponent = (props: {openUsersProfileModal: () => void, openFrien
                     <h3 className='xl:text-xl text-lg  text-center jura mt-2'>Search</h3>
                 </div>
                 <div className='flex flex-col items-center hover:brightness-125 hover:cursor-pointer hover:!text-orange-500 text-white 2xl:mr-14 mr-8'>
-                    <img className='xl:w-[60px] xl:h-[45px] w-14 h-[40px]' src="/images/Friends.png" alt="" />
-                    <h3 className='xl:text-xl text-lg  text-center jura mt-2'>Friends</h3>
+                    <img className='xl:w-[60px] xl:h-[45px] w-14 h-[40px]' src="/images/Friends.png" alt="" onClick={props.openFriendsModal}/>
+                    <h3 className='xl:text-xl text-lg  text-center jura mt-2' onClick={props.openFriendsModal}>Friends</h3>
                 </div>
                 <div className='flex flex-col items-center hover:brightness-125 hover:cursor-pointer hover:!text-orange-500 text-white 2xl:mr-14 mr-8'>
                     <img className='aspect-square xl:w-[45px] w-[40px]' src="/images/Inbox.png" alt="" />
-                    <h3 className='xl:text-xl text-lg  text-center jura mt-2'>Inbox</h3>
+                    <h3 className='xl:text-xl text-lg  text-center jura mt-2' onClick={props.openInboxModal}>Inbox</h3>
                 </div>
                 <div className='flex flex-col items-center hover:brightness-125 hover:cursor-pointer hover:!text-orange-500 text-white 2xl:mr-14 mr-8' onClick={() => route.push('/pages/MessagingPage')}>
                     <img className='aspect-square xl:w-[45px] w-[40px]' src="/images/Message.png" alt="" />
@@ -40,7 +40,7 @@ const NewNavBarComponent = (props: {openUsersProfileModal: () => void, openFrien
                 </div>
                 <div className='flex flex-col items-center hover:brightness-125 hover:cursor-pointer hover:!text-orange-500 text-white'>
                     <img className='aspect-square xl:w-[45px] w-[40px]' src="/images/Profile.png" alt="" />
-                    <h3 className='xl:text-xl text-lg text-center jura mt-2'>Profile</h3>
+                    <h3 className='xl:text-xl text-lg text-center jura mt-2' onClick={props.openUsersProfileModal}>Profile</h3>
                 </div>
             </div>
             <div className='lg:hidden'>
