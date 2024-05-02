@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/sheet"
 import { useRouter } from 'next/navigation'
 
-const NewNavBarComponent = () => {
+const NewNavBarComponent = (props: {openUsersProfileModal: () => void, openFriendsModal: () => void, openInboxModal: () => void, }) => {
     const route = useRouter();
     return (
         <div className='w-full bg-black 2xl:px-44 xl:px-36 lg:px-24 sm:px-14 px-6 py-6 flex justify-between'>

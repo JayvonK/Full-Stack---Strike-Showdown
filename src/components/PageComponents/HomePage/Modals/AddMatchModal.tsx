@@ -15,13 +15,24 @@ import {
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Dispatch, SetStateAction, useState } from "react"
 
-const AddMatchModal = (props: { addingChallengeBool: boolean, handleFalseChallengeBool: () => void, handleTrueChallengeBool: () => void, create1v1Challenge: (e: React.FormEvent<HTMLFormElement>) => void, createPracticeSession: (e: React.FormEvent<HTMLFormElement>) => void, handleVisibilityChange: (e: string) => void, visibility: boolean, handlePracticeLocationChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleLocationOneChange: (e: React.ChangeEvent<HTMLInputElement>) => void, locationOne: string, handleLocationTwoChange: (e: React.ChangeEvent<HTMLInputElement>) => void, locationTwo: string, handleLocationThreeChange: (e: React.ChangeEvent<HTMLInputElement>) => void, locationThree: string, handleDescriptionChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void, handlePracticeDescriptionChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void, description: string, handleCloseModal: () => void, handleTimeStartChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleTimeEndChange: (e: React.ChangeEvent<HTMLInputElement>) => void, setDate: React.Dispatch<SetStateAction<Date | undefined>>, handleMaxPplChange: (e: React.ChangeEvent<HTMLInputElement>) => void, timeStart: string, timeEnd: string, date: Date | undefined, maxPpl: string, practiceLocation: string, practiceDescription: string }) => {
+const AddMatchModal = (props: { addingChallengeBool: boolean, handleFalseChallengeBool: () => void, handleTrueChallengeBool: () => void, create1v1Challenge: (e: React.FormEvent<HTMLFormElement>) => void, createPracticeSession: (e: React.FormEvent<HTMLFormElement>) => void, handleVisibilityChange: (e: string) => void, visibility: boolean, handlePracticeLocationChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleLocationOneChange: (e: React.ChangeEvent<HTMLInputElement>) => void, locationOne: string, handleLocationTwoChange: (e: React.ChangeEvent<HTMLInputElement>) => void, locationTwo: string, handleLocationThreeChange: (e: React.ChangeEvent<HTMLInputElement>) => void, locationThree: string, handleDescriptionChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void, handlePracticeDescriptionChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void, description: string, handleCloseModal: () => void, handleTimeStartChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleTimeEndChange: (e: React.ChangeEvent<HTMLInputElement>) => void, setDate: React.Dispatch<SetStateAction<Date | undefined>>, handleMaxPplChange: (e: React.ChangeEvent<HTMLInputElement>) => void, timeStart: string, timeEnd: string, date: Date | undefined, maxPpl: string, practiceLocation: string, practiceDescription: string, edit: boolean, closeEditMatchModal: () => void }) => {
 
     return (
         <>
             <div className='p-4'>
-                <button className={'jura text-4xl py-2 px-4 rounded-md mr-6 ' + (props.addingChallengeBool ? 'bgOrange' : '')} onClick={props.handleTrueChallengeBool}>Add Challenge</button>
-                <button className={'jura text-4xl py-2 px-4 rounded-md ' + (!props.addingChallengeBool ? 'bgOrange' : '')} onClick={props.handleFalseChallengeBool}>Add Session</button>
+                {
+                    props.edit ? (
+                        <>
+                            <h1 className="jura text-4xl py-2 px-4 rounded-md bgOrange inline-block">Edit Match</h1>
+                        </>
+                    ) :
+                        (
+                            <>
+                                <button className={'jura text-4xl py-2 px-4 rounded-md mr-6 ' + (props.addingChallengeBool ? 'bgOrange' : '')} onClick={props.handleTrueChallengeBool}>Add Challenge</button>
+                                <button className={'jura text-4xl py-2 px-4 rounded-md ' + (!props.addingChallengeBool ? 'bgOrange' : '')} onClick={props.handleFalseChallengeBool}>Add Session</button>
+                            </>
+                        )
+                }
             </div>
             <div className='px-4'>
                 <form onSubmit={props.addingChallengeBool ? props.create1v1Challenge : props.createPracticeSession}>
@@ -65,13 +76,13 @@ const AddMatchModal = (props: { addingChallengeBool: boolean, handleFalseChallen
                             <div>
                                 <h3 className='jura text-white text-2xl'>Location:</h3>
                                 {
-                                        !props.addingChallengeBool ? (
-                                            <>
-                                                <input required type="text" onChange={props.handlePracticeLocationChange} value={props.practiceLocation} placeholder='Location' className="w-full jura text-2xl h-10 bg-white pl-2 mb-2 mt-2 rounded-sm" />
-                                            </>
+                                    !props.addingChallengeBool ? (
+                                        <>
+                                            <input required type="text" onChange={props.handlePracticeLocationChange} value={props.practiceLocation} placeholder='Location' className="w-full jura text-2xl h-10 bg-white pl-2 mb-2 mt-2 rounded-sm" />
+                                        </>
 
-                                        ) : (<div></div>)
-                                    }
+                                    ) : (<div></div>)
+                                }
                             </div>
 
                             <div>
@@ -142,15 +153,15 @@ const AddMatchModal = (props: { addingChallengeBool: boolean, handleFalseChallen
                         {
                             !props.addingChallengeBool ? (
                                 <textarea required onChange={props.handlePracticeDescriptionChange} value={props.practiceDescription} className='w-full h-40 text-black jura text-2xl bg-white pl-2 mb-2 mt-2 rounded-sm placeholder:text-black pt-1' placeholder='Add your description.'></textarea>
-                            ) :  (
-                                    <textarea required onChange={props.handleDescriptionChange} value={props.description} className='w-full h-40 text-black jura text-2xl bg-white pl-2 mb-2 mt-2 rounded-sm placeholder:text-black pt-1' placeholder='Add your description.'></textarea>
-                                )
+                            ) : (
+                                <textarea required onChange={props.handleDescriptionChange} value={props.description} className='w-full h-40 text-black jura text-2xl bg-white pl-2 mb-2 mt-2 rounded-sm placeholder:text-black pt-1' placeholder='Add your description.'></textarea>
+                            )
                         }
                     </div>
 
-                    <div className='p-4 flex justify-end'>
-                        <button type='submit' className={'jura text-4xl py-2 px-4 rounded-md mr-6 bgOrange'}>Confirm</button>
-                        <button className={'jura text-4xl py-2 px-4 rounded-md bgOrange'} onClick={props.handleCloseModal}>Close</button>
+                    <div className='py-4 flex justify-end'>
+                        <button type='submit' className={'jura text-4xl py-2 px-4 rounded-md mr-6 bgOrange'}>{props.edit ? "Edit" : "Confirm"}</button>
+                        <button className={'jura text-4xl py-2 px-4 rounded-md bgOrange'} onClick={props.edit ? props.closeEditMatchModal : props.handleCloseModal}>{props.edit ? "Cancel" : "Close"}</button>
                     </div>
                 </form>
             </div>
