@@ -2,14 +2,18 @@ import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from '@
 import { IPublicUserData } from '@/interfaces/Interfaces'
 import React from 'react'
 
-const EditProfileModal = (props: { data: IPublicUserData, handleEditStyleChange: (e: string) => void, handleCloseEditModal: () => void, handleEditUsernameChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleEditEmailChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleEditPronounsChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleEditFullNameChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleEditMainCenterChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleEditAverageChange: (e: string) => void, handleEditEarningsChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleEditHighGameChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleEditHighSeriesChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleEditUserConfirm: (e: React.FormEvent<HTMLFormElement>) => void }) => {
+
+const EditProfileModal = (props: { data: IPublicUserData, handleEditStyleChange: (e: string) => void, handleCloseEditModal: () => void, handleEditUsernameChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleEditEmailChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleEditPronounsChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleEditFullNameChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleEditMainCenterChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleEditAverageChange: (e: string) => void, handleEditEarningsChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleEditHighGameChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleEditHighSeriesChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleEditUserConfirm: (e: React.FormEvent<HTMLFormElement>) => void, handleEditProfileImgChange: (e: React.ChangeEvent<HTMLInputElement>) => void }) => {
   return (
     <div className='p-4'>
       <form onSubmit={props.handleEditUserConfirm}>
         <div className='bg-black py-6 px-10 rounded-lg'>
-          <div className='flex w-full justify-center mb-10'>
-            <img className='aspect-square w-24 rounded-full' src="/images/blankpfp.png" alt="" />
+          <div className='flex w-full flex-col items-center mb-10'>
+            <img className='aspect-square w-24 rounded-full mb-2' src={props.data.profileImage} alt="user's profile pic" />
+            <input type="file" className='jura text-white w-[105px]' onChange={props.handleEditProfileImgChange} />
           </div>
+
+
 
           <div className='grid grid-cols-2 gap-x-10 gap-y-2'>
             <div>

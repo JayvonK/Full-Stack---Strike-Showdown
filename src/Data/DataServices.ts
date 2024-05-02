@@ -98,7 +98,7 @@ export const CreatePostAPI = async (Post: ICreatePost, publisher: string) => {
 }
 
 export const UpdateMatchAPI = async (match: IUserPosts) => {
-    const res = await fetch(url  + 'Match/UpdateMatch/' + match, {
+    const res = await fetch(url  + 'Match/UpdateMatch', {
         method: 'PUT',
         headers: {
             'Content-Type': "application/json"
