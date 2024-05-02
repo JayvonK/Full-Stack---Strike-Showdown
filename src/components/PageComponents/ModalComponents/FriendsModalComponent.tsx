@@ -3,7 +3,7 @@ import UserMinus from "../../../../public/images/UserMinus.png";
 import ProfilePic from "../../../../public/images/Ellipse 16.png";
 import { useState } from 'react';
 import { Modal, Button} from 'flowbite-react';
-import "../../../app/css/LoginPage.css";
+import "../../../app/css/LoginPageAndHome.css";
 const FriendsModalComponent = () => {
     const [openModal, setOpenModal] = useState(false);
   return (

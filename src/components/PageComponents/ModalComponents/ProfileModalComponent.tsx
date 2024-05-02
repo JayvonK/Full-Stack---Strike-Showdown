@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react'
 import { Modal } from 'flowbite-react';
-import "../../../app/css/LoginPage.css";
+import "../../../app/css/LoginPageAndHome.css";
 import ProfilePic2 from "../../../../public/images/profilePIc.png";
 import { useRouter } from 'next/navigation';
 const ProfileModalComponent = (props:{userName:string, proNouns:string, fullName:string, mainCenter:string, average:string, highGames:string, highSeries:string, earnings:string, style:string }) => {
@@ -21,7 +21,7 @@ const ProfileModalComponent = (props:{userName:string, proNouns:string, fullName
         className=" mt-5 lg:ml-5 ml-0  md:mt-5 lg:mt-10 pr-4 h-24 md:h-48"
       ></img>
     </div>
-<div className='lg:px-5 mx-5 lg:mx-0 my-0 lg:my-5'>
+<div className='lg:px-5 mx-5 lg:mx-0 my-0 lg:my-5 '>
     <div className="grid grid-flow-col overflow-hidden  bg-black rounded-2xl w-48 justify-center   md:mx-0 md:px-0 md:pt-4 md:pb-4 md:pr-5    md:w-96 md:h-60">
       <div className=" ml-4 ">
         <div className="grid grid-flow-col  auto-cols-max justify-start items-center pb-3 ">
@@ -38,7 +38,7 @@ const ProfileModalComponent = (props:{userName:string, proNouns:string, fullName
 
         <div className=" justify-center">
           <button className="  bg-orange-500 md:mt-5 mr-2   w-20 md:w-36 rounded-xl  md:rounded-2xl pt-2 pb-2  hover:!bg-orange-500 mb-2 text-black jura">
-            <h3 className="text-base md:text-3xl">Edit</h3>
+            <h3 className="text-xl md:text-3xl">Edit</h3>
           </button>
 
           <button onClick={handleLogOut} className="bg-red-500 md:ml-10    w-20 md:w-36 rounded-xl  md:rounded-2xl pt-2 pb-2  text-black jura">
@@ -49,42 +49,42 @@ const ProfileModalComponent = (props:{userName:string, proNouns:string, fullName
     </div>
   </div>
   </div>
-<div className='lg:px-5 lg:pb-5  '>
-  <div className="rounded-xl   bg-black  justify-center px-2 py-2 mx-5 lg:mx-0 mb-5  lg:px-10 lg:">
-    <div className="rounded-xl   justify-space bg-black w-50  grid grid-flow-col auto-cols">
+<div className='px-5 pb-5  '>
+  <div className="rounded-lg   bg-black  justify-center  py-2 mx-5  mb-5  px-10 ">
+    <div className="rounded-lg   justify-space bg-black w-50  grid grid-flow-col auto-cols">
       <div className="">
         <h1 className=" bg-orange-500    text-center mt-5   text-base md:text-3xl md:w-36   w-20  rounded-xl  md:rounded-2xl    pt-2 pb-2  mb-2 text-black jura">
           Info
         </h1>
-        <p className="text-white jura text-xs md:text-xl pt-4">
+        <p className="text-white jura text-lg md:text-xl pt-4">
           Full Name:
         </p>
-        <p className="text-orange-500 text-sm jura md:text-2xl ">
+        <p className="text-orange-500 text-lg jura md:text-2xl ">
           {props.fullName}
         </p>
 
-        <p className="text-white jura text-xs md:text-xl pt-4 ">
+        <p className="text-white jura text-lg md:text-xl pt-4 ">
           Main Center:
         </p>
 
-        <p className="overflow-auto text-orange-500 text-sm jura md:text-2xl">
+        <p className="overflow-auto text-orange-500 text-lg jura md:text-2xl">
         {props.mainCenter}
         </p>
       </div>
       <div className="">
-        <h1 className="text-white jura text-xs  md:text-3xl  mt-5 rounded-xl   pt-2 pb-2  mb-2 jura">
+        <h1 className="text-white jura text-lg  md:text-3xl  mt-5 rounded-xl   pt-2 pb-2  mb-2 jura">
           Your Post
         </h1>
-        <p className="text-white jura text-xs md:text-xl pt-4">
+        <p className="text-white jura text-lg md:text-xl pt-4">
           Style:
         </p>
-        <p className="text-orange-500 text-sm jura md:text-2xl">
+        <p className="text-orange-500 text-lg jura md:text-2xl">
           {props.style}
         </p>
-        <p className="text-white jura text-xs md:text-xl pt-4">
+        <p className="text-white jura text-lg md:text-xl pt-4">
           Average:
         </p>
-        <p className="text-orange-500 text-sm jura md:text-2xl">
+        <p className="text-orange-500 text-lg jura md:text-2xl">
           {props.average}
         </p>
       </div>
