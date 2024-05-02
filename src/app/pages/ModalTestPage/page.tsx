@@ -19,8 +19,8 @@ function page() {
       <Modal dismissible show={openModal} onClose={() => setOpenModal(false)}>
 
        {/* <FriendsModalComponent/>  */}
-     <InboxModalComponent/>  
-      {/* <ProfileModalComponent userName={'Tommy201'} proNouns={'Salmon'} fullName={'alphaMale'} mainCenter={'Packed Man'} average={'1000'} highGames={'911'} highSeries={'111'} earnings={'4'} style={'quadruple handroll'} />  */}
+     {/* <InboxModalComponent/>   */}
+      <ProfileModalComponent userName={'Tommy201'} proNouns={'Salmon'} fullName={'alphaMale'} mainCenter={'Packed Man'} average={'1000'} highGames={'911'} highSeries={'111'} earnings={'4'} style={'quadruple handroll'} />  
  {/* <JoinSessionModalComponent />  */}
 {/* <ViewProfileModalComponent userName={'Briaaa'} proNouns={'hers/she'} record={'15'} mainCenter={'267'} average={'150'} highGames={'140'} highSeries={'100'} earnings={'2000'} style={'Righty'} email={'briaharrold@gmail.com'}/> */}
 

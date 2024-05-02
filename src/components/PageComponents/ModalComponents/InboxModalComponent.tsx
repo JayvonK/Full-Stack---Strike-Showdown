@@ -34,10 +34,10 @@ const InboxModalComponent = () => {
   };
   return (
     <>
-      <div className="px-6 py-10 ">
+      <div className="  px-6 py-5  lg:py-10 ">
         <div className="flex justify-evenly">
           <button
-            className={`tab-button px-4 w-48 py-2 rounded focus:outline-none jura text-3xl ${
+            className={`tab-button px-4 w-48 py-2 rounded focus:outline-none jura text-xl md:text-2xl lg:text-3xl ${
               activeTab === "Inbox" ? "bg-orange-500   " : " text-black"
             }`}
             onClick={() => handleTabChange("Inbox")}
@@ -45,7 +45,7 @@ const InboxModalComponent = () => {
             Inbox
           </button>
           <button
-            className={`tab-button px-4 py-2 w-48 rounded focus:outline-none jura text-3xl ${
+            className={`tab-button px-4 py-2 w-48 rounded focus:outline-none jura text-xl md:text-2xl lg:text-3xl ${
               activeTab === "Matches" ? "bg-orange-500 " : " text-black "
             }`}
             onClick={() => handleTabChange("Matches")}
@@ -53,7 +53,7 @@ const InboxModalComponent = () => {
             Matches
           </button>
           <button
-            className={`tab-button px-4 py-2 w-48 rounded focus:outline-none jura text-3xl ${
+            className={`tab-button px-4 py-2 w-48 rounded focus:outline-none jura text-xl md:text-2xl lg:text-3xl ${
               activeTab === "Sessions" ? "bg-orange-500  " : " text-black"
             }`}
             onClick={() => handleTabChange("Sessions")}
@@ -69,34 +69,34 @@ const InboxModalComponent = () => {
             <img className="h-20" alt="" src={ProfilePic.src} />{" "}
             <div className="pl-10 ">
               {" "}
-              <h2 className="text-center text-xl pb-2 jura text-white">
-                <h1></h1> has accepted your friend request
+              <h2 className="text-center text-lg md:text-2xl lg:text-3xl pb-3 jura  text-white">
+               has accepted your friend request
               </h2>
-              <button   className="text-center text-xl bg-orange-500 rounded-lg jura px-2">
+              <button   className="text-center text-xl md:text-2xl lg:text-3xl bg-orange-500 rounded-lg jura px-2">
                 View Friends
               </button>
             </div>
           </div>
         )}
         {tabTwoActive && (
-          <h2 className="text-center text-3xl jura py-40 px-40">
+          <h2 className="text-center text-xl md:text-2xl lg:text-3xl jura py-20 px-20 lg:py-40 lg:px-40">
             No Notifications
           </h2>
         )}
         {tabThreeActive && (
-          <h2 className="text-center text-3xl jura  py-40 px-40">
+          <h2 className="text-center text-xl md:text-2xl lg:text-3xl jura py-20 px-20  lg:py-40 lg:px-40">
             No Notifications
           </h2>
         )}
       </div>
 
       <div className="flex justify-end py-7 px-7">
-        <Button
-          className=" border-color outline-none   mt-3 bg-orange-500  w-20 md:w-36 rounded-xl  md:rounded-lg  hover:!bg-orange-500 text-black jura"
+        <button
+          className=" border-color focus:outline-none h-10 md:h-12 lg:h-14    mt-3 bg-orange-500  w-20 md:w-36 rounded-md    hover:!bg-orange-500 text-black jura"
           onClick={() => setOpenModal(false)}
         >
-          <h3 className=" text-base  md:text-3xl   ">Close</h3>
-        </Button>
+          <h3 className=" text-xl md:text-2xl lg:text-3xl   ">Close</h3>
+        </button>
       </div>
     </>
   );
