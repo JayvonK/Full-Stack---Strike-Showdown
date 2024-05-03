@@ -508,6 +508,18 @@ const HomePage = () => {
   }
 
   const closeEditMatchModal = () => {
+    setVisibility(true);
+    setLocationOne("");
+    setLocationThree("");
+    setLocationTwo("");
+    setPracticeLocation("");
+    setDescription("");
+    setPracticeDescription("");
+    setStartTime("");
+    setEndTime("");
+    setMaxPpl(0);
+    setCurrentPpl(0);
+    setDate(undefined);
     setEditMatchModal(false);
     setOpenModal(false);
   }
