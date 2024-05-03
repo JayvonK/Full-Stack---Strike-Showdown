@@ -100,8 +100,11 @@ export default function Home() {
 
   useEffect(() => {
     let storage = GetLocalStorage();
-    if(storage.length !== 0){
+    if(storage.length !== 0 && !pageContext.userLoggedIn){
       router.push('/pages/HomePage')
+      pageContext.setUserLoggedIn(true);
+    } else if(storage.length !== 0 && pageContext.userLoggedIn){
+      localStorage.clear();
     }
     if (pageContext.createdAccountBool) {
       toast({
