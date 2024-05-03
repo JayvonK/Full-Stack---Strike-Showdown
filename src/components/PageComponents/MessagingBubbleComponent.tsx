@@ -11,7 +11,7 @@ const MessagingBubbleComponent = (props: { isSender: boolean, delivered: boolean
 
                         <div className=''>
                             <div className="flex justify-end">
-                                <h1 className='juraBold sm:text-2xl text-lg bg-[#FF7A00] sm:px-5 sm:py-2 px-3 py-1 rounded-lg max-w-full break-words'>What&ap</h1>
+                                <h1 className='juraBold sm:text-2xl text-lg bg-[#FF7A00] sm:px-5 sm:py-2 px-3 py-1 rounded-lg max-w-full break-words'>What's up?</h1>
                             </div>
                             <div className='flex justify-end'>
                                 <p className='text-[#BFBFBF] jura sm:text-xl text-base sm:py-2 py-1'>Delivered</p>
@@ -21,7 +21,7 @@ const MessagingBubbleComponent = (props: { isSender: boolean, delivered: boolean
                 ) : (
                     <div className='grid grid-cols-[70%_30%] '>
                         <div className='flex'>
-                            <h1 className='juraBold sm:text-2xl text-lg bg-white sm:px-5 sm:py-2 px-3 py-1 rounded-lg break-words'>j2 2qp oj2q?</h1>
+                            <h1 className='juraBold sm:text-2xl text-lg bg-white sm:px-5 sm:py-2 px-3 py-1 rounded-lg break-words'>Nothin, wbu?</h1>
                         </div>
 
                         <div className=''>
