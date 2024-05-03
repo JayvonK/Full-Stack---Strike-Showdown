@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import '@/app/css/LoginPage.css'
+import '@/app/css/LoginPageAndHome.css';
 import bowler from '../../../../public/images/pexels-pavel-danilyuk-7429728.jpg';
 import fireIcon from '../../../../public/images/fire-fill.svg'
 import { Button, Modal } from "flowbite-react";

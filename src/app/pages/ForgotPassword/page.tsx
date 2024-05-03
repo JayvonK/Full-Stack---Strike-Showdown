@@ -3,7 +3,7 @@
 import LoginNavComponent from '@/components/PageComponents/LoginPage/LoginNavComponent';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
-import '@/app/css/LoginPage.css';
+import '@/app/css/LoginPageAndHome.css';
 import RequiredInputComponent from '@/components/PageComponents/LoginPage/RequiredInputComponent';
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
