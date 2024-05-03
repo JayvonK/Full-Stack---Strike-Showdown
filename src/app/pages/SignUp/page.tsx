@@ -362,7 +362,6 @@ const SignUp = () => {
                           <SelectValue placeholder="States" />
                         </SelectTrigger>
                         <SelectContent className="jura text-3xl">
-                          <SelectItem value="ALL">All States</SelectItem>
                           <SelectItem value="AL">Alabama</SelectItem>
                           <SelectItem value="AK">Alaska</SelectItem>
                           <SelectItem value="AZ">Arizona</SelectItem>
