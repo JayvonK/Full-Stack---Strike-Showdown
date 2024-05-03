@@ -4,7 +4,7 @@ import ProfilePic from "../../../../public/images/Ellipse 16.png";
 import { useState } from 'react';
 import { Modal, Button} from 'flowbite-react';
 import "../../../app/css/LoginPageAndHome.css";
-const FriendsModalComponent = () => {
+const FriendsModalComponent = (props: {closeModal: () => void}) => {
     const [openModal, setOpenModal] = useState(false);
   return (
   <>
@@ -61,7 +61,7 @@ const FriendsModalComponent = () => {
             <Button
               className="  mt-3 bg-orange-500  w-20 md:w-36 rounded-xl  md:rounded-2xl  hover:!bg-orange-500 text-black jura"
               
-              onClick={() => setOpenModal(false)}
+              onClick={props.closeModal}
             >
               <h3 className=" text-base  md:text-3xl   md:w-36 rounded-xl  md:rounded-2xl ">Close</h3>
             </Button>

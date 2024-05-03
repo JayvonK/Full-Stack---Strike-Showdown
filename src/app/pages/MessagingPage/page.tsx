@@ -25,7 +25,6 @@ const MessagingPage = () => {
 
     return (
         <>
-            <NewNavBarComponent />
             <div className='bgLogin min-h-screen pt-12 2xl:px-44 xl:px-36 lg:px-24 sm:px-14 px-6 relative'>
                 <div className='h-full w-full bgHome absolute top-0 left-0 z-10'></div>
                 <div className='pb-16 grid lg:grid-cols-[31%_69%] h-[85vh] z-20 relative'>

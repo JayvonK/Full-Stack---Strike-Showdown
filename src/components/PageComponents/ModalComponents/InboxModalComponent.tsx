@@ -5,7 +5,7 @@ import { useState } from "react";
 import React from "react";
 import "../../../app/css/LoginPageAndHome.css";
 import ProfilePic from "../../../../public/images/Ellipse 16.png";
-const InboxModalComponent = () => {
+const InboxModalComponent = (props: {closeModal: () => void, openFriendsModal: () => void}) => {
   const [showModal, setOpenModal] = useState(false);
   const [activeTab, setActiveTab] = useState("Inbox");
   const [tabOneActive, setTabOneActive] = useState(true);
@@ -62,7 +62,7 @@ const InboxModalComponent = () => {
           </button>
         </div>
       </div>
-      <div className="  " onClick={() => handleTabChange("Sessions")}>
+      <div className=" min-h-[500px]" onClick={() => handleTabChange("Sessions")}>
         {tabOneActive && (
           <div className="bg-black flex justify-start rounded-lg mx-8  px-5 py-2">
             {" "}
@@ -72,7 +72,7 @@ const InboxModalComponent = () => {
               <h2 className="text-center text-lg md:text-2xl lg:text-3xl pb-3 jura  text-white">
                has accepted your friend request
               </h2>
-              <button   className="text-center text-xl md:text-2xl lg:text-3xl bg-orange-500 rounded-lg jura px-2">
+              <button   className="text-center text-xl md:text-2xl lg:text-3xl bg-orange-500 rounded-lg jura px-2" onClick={props.openFriendsModal}>
                 View Friends
               </button>
             </div>
@@ -93,7 +93,7 @@ const InboxModalComponent = () => {
       <div className="flex justify-end py-7 px-7">
         <button
           className=" border-color focus:outline-none h-10 md:h-12 lg:h-14    mt-3 bg-orange-500  w-20 md:w-36 rounded-md    hover:!bg-orange-500 text-black jura"
-          onClick={() => setOpenModal(false)}
+          onClick={props.closeModal}
         >
           <h3 className=" text-xl md:text-2xl lg:text-3xl   ">Close</h3>
         </button>

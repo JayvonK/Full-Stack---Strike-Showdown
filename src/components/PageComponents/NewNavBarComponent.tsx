@@ -9,12 +9,12 @@ import {
 } from "@/components/ui/sheet"
 import { useRouter } from 'next/navigation'
 
-const NewNavBarComponent = (props: {openUsersProfileModal: () => void, openFriendsModal: () => void, openInboxModal: () => void, }) => {
+const NewNavBarComponent = (props: { openUsersProfileModal: () => void, openFriendsModal: () => void, openInboxModal: () => void, openSearchModal: () => void, goToHomePage: () => void, goToMessagingPage: () => void }) => {
     const route = useRouter();
     return (
         <div className='w-full bg-black 2xl:px-44 xl:px-36 lg:px-24 sm:px-14 px-6 py-6 flex justify-between'>
             <div>
-                <div className='flex hover:cursor-pointer' onClick={() => route.push('/pages/HomePage')}>
+                <div className='flex hover:cursor-pointer' onClick={props.goToHomePage}>
                     <img className='aspect-auto lg:w-[75px] w-16 rounded-full outline-white outline' src="/images/Strike Showdown Logo.png" alt="" />
                     <div className='flex items-center'>
                         <h1 className='juraBold txtOrange 2xl:text-5xl text-4xl 2xl:ml-10 ml-6 items-end md:block hidden'>Strike <span className='text-white'>Showdown</span></h1>
@@ -23,23 +23,23 @@ const NewNavBarComponent = (props: {openUsersProfileModal: () => void, openFrien
             </div>
             <div className='lg:flex items-center hidden'>
                 <div className='flex flex-col items-center hover:brightness-125 hover:cursor-pointer hover:!text-orange-500 text-white 2xl:mr-14 mr-8 ml-20'>
-                    <img className='aspect-square xl:w-[45px] w-[40px]' src="/images/Search.png" alt="" />
-                    <h3 className='xl:text-xl text-lg  text-center jura mt-2'>Search</h3>
+                    <img className='aspect-square xl:w-[45px] w-[40px]' src="/images/Search.png" alt="" onClick={props.openSearchModal}/>
+                    <h3 className='xl:text-xl text-lg  text-center jura mt-2' onClick={props.openSearchModal}>Search</h3>
                 </div>
                 <div className='flex flex-col items-center hover:brightness-125 hover:cursor-pointer hover:!text-orange-500 text-white 2xl:mr-14 mr-8'>
-                    <img className='xl:w-[60px] xl:h-[45px] w-14 h-[40px]' src="/images/Friends.png" alt="" onClick={props.openFriendsModal}/>
+                    <img className='xl:w-[60px] xl:h-[45px] w-14 h-[40px]' src="/images/Friends.png" alt="" onClick={props.openFriendsModal} />
                     <h3 className='xl:text-xl text-lg  text-center jura mt-2' onClick={props.openFriendsModal}>Friends</h3>
                 </div>
                 <div className='flex flex-col items-center hover:brightness-125 hover:cursor-pointer hover:!text-orange-500 text-white 2xl:mr-14 mr-8'>
-                    <img className='aspect-square xl:w-[45px] w-[40px]' src="/images/Inbox.png" alt="" />
+                    <img className='aspect-square xl:w-[45px] w-[40px]' src="/images/Inbox.png" alt="" onClick={props.openInboxModal} />
                     <h3 className='xl:text-xl text-lg  text-center jura mt-2' onClick={props.openInboxModal}>Inbox</h3>
                 </div>
-                <div className='flex flex-col items-center hover:brightness-125 hover:cursor-pointer hover:!text-orange-500 text-white 2xl:mr-14 mr-8' onClick={() => route.push('/pages/MessagingPage')}>
-                    <img className='aspect-square xl:w-[45px] w-[40px]' src="/images/Message.png" alt="" />
-                    <h3 className='xl:text-xl text-lg  text-center jura mt-2'>Message</h3>
+                <div className='flex flex-col items-center hover:brightness-125 hover:cursor-pointer hover:!text-orange-500 text-white 2xl:mr-14 mr-8'>
+                    <img className='aspect-square xl:w-[45px] w-[40px]' src="/images/Message.png" alt="" onClick={props.goToMessagingPage}/>
+                    <h3 className='xl:text-xl text-lg  text-center jura mt-2' onClick={props.goToMessagingPage}>Message</h3>
                 </div>
                 <div className='flex flex-col items-center hover:brightness-125 hover:cursor-pointer hover:!text-orange-500 text-white'>
-                    <img className='aspect-square xl:w-[45px] w-[40px]' src="/images/Profile.png" alt="" />
+                    <img className='aspect-square xl:w-[45px] w-[40px]' src="/images/Profile.png" alt="" onClick={props.openUsersProfileModal} />
                     <h3 className='xl:text-xl text-lg text-center jura mt-2' onClick={props.openUsersProfileModal}>Profile</h3>
                 </div>
             </div>
