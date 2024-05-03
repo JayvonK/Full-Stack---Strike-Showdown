@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/sheet"
 import { useRouter } from 'next/navigation'
 
-const NewNavBarComponent = (props: { openUsersProfileModal: () => void, openFriendsModal: () => void, openInboxModal: () => void, openSearchModal: () => void, goToHomePage: () => void, goToMessagingPage: () => void }) => {
+const NewNavBarComponent = (props: { openUsersProfileModal: () => void, openFriendsModal: () => void, openInboxModal: () => void, openSearchModal: () => void, goToHomePage: () => void, goToMessagingPage: () => void, errorMobileModal: () => void }) => {
     const route = useRouter();
     return (
         <div className='w-full bg-black 2xl:px-44 xl:px-36 lg:px-24 sm:px-14 px-6 py-6 flex justify-between'>
@@ -51,24 +51,24 @@ const NewNavBarComponent = (props: { openUsersProfileModal: () => void, openFrie
                             <SheetTrigger className='flex justify-end'><img className='w-16' src="/images/list-bold.svg" alt="" /></SheetTrigger>
                             <SheetDescription>
                                 <div className='flex items-center hover:brightness-125 hover:cursor-pointer hover:!text-orange-500 text-white mt-10'>
-                                    <img className='aspect-square md:w-16 md:h-16 w-14 h-14 mr-10' src="/images/Search.png" alt="" />
-                                    <h3 className='md:text-6xl text-5xl text-center inline-block jura'>Search</h3>
+                                    <img className='aspect-square md:w-16 md:h-16 w-14 h-14 mr-10' src="/images/Search.png" alt="" onClick={props.errorMobileModal}/>
+                                    <h3 className='md:text-6xl text-5xl text-center inline-block jura' onClick={props.errorMobileModal}>Search</h3>
                                 </div>
                                 <div className='flex items-center hover:brightness-125 hover:cursor-pointer hover:!text-orange-500 text-white mt-14'>
-                                    <img className='aspect-square md:w-16 md:h-12 w-14 h-10 mr-10' src="/images/Friends.png" alt="" />
-                                    <h3 className='md:text-6xl text-5xl text-center inline-block jura'>Friends</h3>
+                                    <img className='aspect-square md:w-16 md:h-12 w-14 h-10 mr-10' src="/images/Friends.png" alt="" onClick={props.errorMobileModal}/>
+                                    <h3 className='md:text-6xl text-5xl text-center inline-block jura' onClick={props.errorMobileModal}>Friends</h3>
                                 </div>
                                 <div className='flex items-center hover:brightness-125 hover:cursor-pointer hover:!text-orange-500 text-white mt-14'>
-                                    <img className='aspect-square md:w-16 md:h-16 w-14 h-14 mr-10' src="/images/Inbox.png" alt="" />
-                                    <h3 className='md:text-6xl text-5xl text-center inline-block jura'>Inbox</h3>
+                                    <img className='aspect-square md:w-16 md:h-16 w-14 h-14 mr-10' src="/images/Inbox.png" alt="" onClick={props.errorMobileModal}/>
+                                    <h3 className='md:text-6xl text-5xl text-center inline-block jura' onClick={props.errorMobileModal}>Inbox</h3>
                                 </div>
                                 <div className='flex items-center hover:brightness-125 hover:cursor-pointer hover:!text-orange-500 text-white mt-14'>
-                                    <img className='aspect-square md:w-16 md:h-16 w-14 h-14 mr-10' src="/images/Message.png" alt="" />
-                                    <h3 className='md:text-6xl text-5xl text-center inline-block jura'>Message</h3>
+                                    <img className='aspect-square md:w-16 md:h-16 w-14 h-14 mr-10' src="/images/Message.png" alt="" onClick={props.goToMessagingPage}/>
+                                    <h3 className='md:text-6xl text-5xl text-center inline-block jura' onClick={props.goToMessagingPage}>Message</h3>
                                 </div>
                                 <div className='flex items-center hover:brightness-125 hover:cursor-pointer hover:!text-orange-500 text-white mt-14'>
-                                    <img className='aspect-square md:w-16 md:h-16 w-14 h-14 mr-10' src="/images/Profile.png" alt="" />
-                                    <h3 className='md:text-6xl text-5xl text-center inline-block jura'>Profile</h3>
+                                    <img className='aspect-square md:w-16 md:h-16 w-14 h-14 mr-10' src="/images/Profile.png" alt="" onClick={props.errorMobileModal}/>
+                                    <h3 className='md:text-6xl text-5xl text-center inline-block jura' onClick={props.errorMobileModal}>Profile</h3>
                                 </div>
                             </SheetDescription>
                         </SheetHeader>

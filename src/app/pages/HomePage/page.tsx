@@ -361,15 +361,21 @@ const HomePage = () => {
   }
 
   const handleLocationOneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLocationOne(e.target.value);
+    if (e.target.value !== ',') {
+      setLocationOne(e.target.value);
+    }
   }
 
   const handleLocationTwoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLocationTwo(e.target.value);
+    if (e.target.value !== ',') {
+      setLocationTwo(e.target.value);
+    }
   }
 
   const handleLocationThreeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLocationThree(e.target.value);
+    if (e.target.value !== ',') {
+      setLocationThree(e.target.value);
+    }
   }
 
   const handlePracticeDescriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -495,6 +501,7 @@ const HomePage = () => {
 
   const openEditMatchModal = (data: IUserPosts) => {
     setEditMatchModalData(data);
+    console.log(data);
     setEditMatchModal(true);
     data.title === 'Practice Session' ? setEditingChallengeBool(false) : setEditingChallengeBool(true);
     setOpenModal(true);
@@ -514,7 +521,7 @@ const HomePage = () => {
       id: editMatchID,
       userID: verifiedUserData.id,
       title: editingChallengeBool ? '1v1 Challenge' : 'Practice Session',
-      isVisible: false,
+      isVisible: visibility,
       state: verifiedUserData.location,
       locations: editingChallengeBool ? location : practiceLocation,
       date: date ? format(date, "MM/dd/yy") : format(placeholderDate, "MM/dd/yy"),
@@ -560,6 +567,13 @@ const HomePage = () => {
     setMessagePage(false);
   }
 
+  const errorMobileModal = () => {
+    toast({
+      variant: 'destructive',
+      title: "Mobile Modals are still in the works.",
+      description: "Sorry aboout that",
+    })
+  }
 
   const [fadeAwayClass, setFadeAwayClass] = useState<string>('');
 
@@ -610,7 +624,7 @@ const HomePage = () => {
 
   return (
     <div>
-      <NewNavBarComponent openFriendsModal={openFriendsModal} openUsersProfileModal={openUsersProfileModal} openInboxModal={openInboxModal} openSearchModal={openSearchModal} goToHomePage={goToHomePage} goToMessagingPage={goToMessagingPage} />
+      <NewNavBarComponent openFriendsModal={openFriendsModal} openUsersProfileModal={openUsersProfileModal} openInboxModal={openInboxModal} openSearchModal={openSearchModal} goToHomePage={goToHomePage} goToMessagingPage={goToMessagingPage} errorMobileModal={errorMobileModal} />
       <Modal className='bg-black' show={openModal} size={'4xl'} onClose={() => setOpenModal(false)}>
         {
           matchModal && <AddChallengeModal addingChallengeBool={addingChallengeBool} handleTrueChallengeBool={handleTrueChallengeBool} handleFalseChallengeBool={handleFalseChallengeBool} create1v1Challenge={create1v1Challenge} createPracticeSession={createPracticeSession} handleVisibilityChange={handleVisibilityChange} visibility={visibility} handleLocationOneChange={handleLocationOneChange} locationOne={locationOne} handleLocationTwoChange={handleLocationTwoChange} locationTwo={locationTwo} handleLocationThreeChange={handleLocationThreeChange} locationThree={locationThree} handlePracticeLocationChange={handlePracticeLocationChange} handlePracticeDescriptionChange={handlePracticeDescriptionChange} handleDescriptionChange={handleDescriptionChange} description={description} handleCloseModal={handleCloseMatchModal} handleTimeStartChange={handleTimeStartChange} handleTimeEndChange={handleTimeEndChange} setDate={setDate} handleMaxPplChange={handleMaxPplChange} timeStart={startTime} timeEnd={endTime} date={date} maxPpl={maxPpl.toString()} practiceLocation={practiceLocation} practiceDescription={practiceDescription} edit={false} closeEditMatchModal={closeEditMatchModal} editMatchClick={editMatchClick} />
@@ -658,30 +672,30 @@ const HomePage = () => {
                   <div className="grid grid-cols-[30%_70%] xl:px-10 xl:py-10 lg:px-8 lg:py-8 md:px-10 md:py-10 sm:px-8 sm:py-8 px-4 py-4">
                     <div className='w-full flex flex-col items-center justify-center'>
                       <img className='object-cover w-full aspect-square rounded-full hover:cursor-pointer' src={verifiedUserData ? verifiedUserData.profileImage : "/images/blankpfp.png"} alt="" onClick={openEditModal} />
-                      {verifiedUserData.profileImage === '/images/blankpfp.png' ? <p className='text-gray-400 jura text-lg pt-3'>Click to add pfp</p> : <div></div>}
+                      {verifiedUserData.profileImage === '/images/blankpfp.png' ? <p className='text-gray-400 jura xl:text-lg sm:text-base text-sm pt-3'>Click to add pfp</p> : <div></div>}
                     </div>
 
                     <div>
-                      <h1 className='jura xl:text-4xl lg:text-3xl sm:text-4xl text-2xl txtOrange mb-6 breakWordStyle xl:pl-10 lg:pl-6 md:pl-10 sm:pl-8 pl-4'><span className='bgWaveIcon w-8 h-8 inline-block mr-3 -mb-1'></span>Welcome, <span className='juraBold text-white'>{verifiedUserData && verifiedUserData.username}</span></h1>
+                      <h1 className='jura xl:text-4xl lg:text-3xl sm:text-4xl text-2xl txtOrange mb-6 breakWordStyle xl:pl-10 lg:pl-6 md:pl-10 sm:pl-8 pl-6'><span className='bgWaveIcon sm:w-8 sm:h-8 h-6 w-6 inline-block mr-3 -mb-1'></span>Welcome, <span className='juraBold text-white'>{verifiedUserData && verifiedUserData.username}</span></h1>
 
-                      <div className='xl:pl-10 lg:pl-6 md:pl-10 sm:pl-8 pl-4'>
+                      <div className='xl:pl-10 lg:pl-6 md:pl-10 sm:pl-8 pl-6'>
 
                         <div className='xl:hidden lg:flex justify-between hidden'>
                           <h3 className='text-white jura xl:text-2xl text-xl mb-2 mr-10 inline-block'>Wins: <span className='txtOrange juraBold'>{verifiedUserData && verifiedUserData.wins}</span></h3>
                           <h3 className='text-white jura xl:text-2xl text-xl mb-2 2xl:mr-10 inline-block'>Losses: <span className='txtOrange juraBold'>{verifiedUserData && verifiedUserData.losses}</span></h3>
                         </div>
 
-                        <h3 className='text-white jura xl:text-2xl lg:text-xl sm:text-2xl text-lg mb-2 sm:mr-10 mr-8 xl:inline-block lg:hidden inline-block'>Wins: <span className='txtOrange juraBold'>{verifiedUserData && verifiedUserData.wins}</span></h3>
-                        <h3 className='text-white jura xl:text-2xl lg:text-xl sm:text-2xl text-lg mb-2 2xl:mr-10 lg:mr-0 md:mr-10 xl:inline-block lg:hidden inline-block'>Losses: <span className='txtOrange juraBold'>{verifiedUserData && verifiedUserData.losses}</span></h3>
-                        <h3 className='text-white jura xl:text-2xl lg:text-xl sm:text-2xl text-lg mb-2 mr-10 xl:inline-block lg:hidden sm:inline-block hidden'>Streak: <span className='txtOrange juraBold'>{verifiedUserData && verifiedUserData.streak}</span></h3>
-                        <h3 className='text-white jura xl:text-2xl lg:text-xl sm:text-2xl text-lg mb-2 2xl:mr-10 lg:mr-0 md:mr-10 xl:inline-block lg:hidden sm:inline-block hidden'>Avg: <span className='txtOrange juraBold'> {averageStatFormat(verifiedUserData && verifiedUserData.average)}</span></h3>
+                        <h3 className='text-white jura xl:text-2xl lg:text-xl sm:text-2xl text-lg mb-2 sm:mr-10 mr-6 xl:inline-block lg:hidden inline-block'>Wins: <span className='txtOrange juraBold'>{verifiedUserData && verifiedUserData.wins}</span></h3>
+                        <h3 className='text-white jura xl:text-2xl lg:text-xl sm:text-2xl text-lg mb-2 2xl:mr-10 lg:mr-0 md:mr-10 mr-6 xl:inline-block lg:hidden inline-block'>Losses: <span className='txtOrange juraBold'>{verifiedUserData && verifiedUserData.losses}</span></h3>
+                        <h3 className='text-white jura xl:text-2xl lg:text-xl sm:text-2xl text-lg mb-2 mr-6 xl:inline-block lg:hidden inline-block newHidden'>Streak: <span className='txtOrange juraBold'>{verifiedUserData && verifiedUserData.streak}</span></h3>
+                        <h3 className='text-white jura xl:text-2xl lg:text-xl sm:text-2xl text-lg mb-2 2xl:mr-10 lg:mr-0 md:mr-10 mr-6 xl:inline-block lg:hidden inline-block'>Avg: <span className='txtOrange juraBold'> {averageStatFormat(verifiedUserData && verifiedUserData.average)}</span></h3>
 
                         <div className='xl:hidden lg:flex justify-between hidden'>
                           <h3 className='text-white jura xl:text-2xl text-xl mb-2 mr-10 inline-block'>Streak: <span className='txtOrange juraBold'>{verifiedUserData && verifiedUserData.streak}</span></h3>
                           <h3 className='text-white jura xl:text-2xl text-xl mb-2 2xl:mr-10 inline-block'>Avg: <span className='txtOrange juraBold'> {averageStatFormat(verifiedUserData && verifiedUserData.average)}</span></h3>
                         </div>
 
-                        <h3 className='text-white jura xl:text-2xl lg:text-xl sm:text-2xl text-lg sm:inline-block hidden'>Style: <span className='txtOrange juraBold'> {verifiedUserData && verifiedUserData.style}</span></h3>
+                        <h3 className='text-white jura xl:text-2xl lg:text-xl sm:text-2xl text-lg inline-block newHidden'>Style: <span className='txtOrange juraBold'> {verifiedUserData && verifiedUserData.style}</span></h3>
                       </div>
 
                     </div>
@@ -716,25 +730,28 @@ const HomePage = () => {
 
                 <div className='min-h-[500px] max-h-[1200px] bg-black sm:rounded-3xl rounded-xl overflow-y-auto overflow-x-hidden scrollbar'>
                   <div className='flex'>
-                    <h1 className='text-black xl:text-4xl text-3xl juraBold py-4 px-8 bg-[#FF7A00] max-w-[450px] text-center sm:rounded-tl-3xl rounded-tl-xl'>Available Matches</h1>
-                    <h1 className='text-white xl:text-4xl text-3xl jura py-4 px-8 max-w-[450px] text-center ml-6'>Location: <span className='txtOrange'>{verifiedUserData && verifiedUserData.location}</span>
+                    <h1 className='text-black xl:text-4xl lg:text-3xl sm:text-2xl text-xl juraBold py-4 px-8 bg-[#FF7A00] inline-block md:text-center sm:rounded-tl-3xl rounded-tl-xl'>Available Matches</h1>
+                    <h1 className='text-white xl:text-4xl lg:text-3xl text-2xl jura py-4 px-8 md:text-center md:ml-6 md:block hidden'>Location: <span className='txtOrange'>{verifiedUserData && verifiedUserData.location}</span>
                     </h1>
                     <div className='flex items-center ml-4'>
-                      <img className='w-10 h-10 hover:cursor-pointer' src="/images/arrow-clockwise-bold.svg" alt="" onClick={handleReloadMatches} />
+                      <img className='sm:w-10 sm:h-10 w-8 h-8 hover:cursor-pointer' src="/images/arrow-clockwise-bold.svg" alt="" onClick={handleReloadMatches} />
                     </div>
                   </div>
+                  <h1 className='text-white xl:text-4xl lg:text-3xl sm:text-2xl text-xl jura py-4 px-8 md:text-center md:ml-6 md:hidden block'>Location: <span className='txtOrange'>{verifiedUserData && verifiedUserData.location}</span></h1>
 
-                  <div className={'mt-10 opacity-0'}></div>
+                  <div className={'md:mt-10 mt-6 opacity-0'}></div>
 
                   {
                     matchData.length !== 0 ? (
                       matchData.map((data, idx) => (
                         <div key={idx}>
                           {
-                            data.title === 'Practice Session' && data.isVisible ? (
+                            data.isVisible ? data.title === 'Practice Session' ? (
                               skeleton ? (<MatchSkeleton />) : (<PracticeSessionComponent fadeAway={fadeAwayClass} data={data} join={handleJoin} userClick={() => { }} edit={data.publisher === currentUsername} handleEditMatchClick={() => { openEditMatchModal(data) }} />)
                             ) : (
                               skeleton ? (<MatchSkeleton />) : (<MatchComponent fadeAway={fadeAwayClass} challenge={handleJoin} data={data} edit={data.publisher === currentUsername} handleEditMatchClick={() => { openEditMatchModal(data) }} />)
+                            ) : (
+                              <div></div>
                             )
                           }
                         </div>
@@ -750,10 +767,10 @@ const HomePage = () => {
 
                 <div className='min-h-[500px] max-h-[1200px] bg-black sm:rounded-3xl rounded-xl overflow-y-auto overflow-x-hidden scrollbar mt-8'>
                   <div className='flex'>
-                    <h1 className='text-black xl:text-4xl text-3xl juraBold py-4 px-8 bg-[#FF7A00] max-w-[450px] text-center sm:rounded-tl-3xl rounded-tl-xl mb-6'>Recent Winners</h1>
+                    <h1 className='text-black xl:text-4xl lg:text-3xl sm:text-2xl text-xl juraBold py-4 px-8 bg-[#FF7A00] inline-block md:text-center sm:rounded-tl-3xl rounded-tl-xl mb-6'>Recent Winners</h1>
                   </div>
 
-                  <div className='grid lg:grid-cols-2 grid-cols-1 justify-between px-10 pt-7'>
+                  <div className='grid lg:grid-cols-2 grid-cols-1 justify-between md:px-10 sm:px-8 px-4'>
                     <RecentWinnerComponent pfp='/images/blankpfp.png' idx={0} />
                     <RecentWinnerComponent pfp='/images/blankpfp.png' idx={1} />
                     <RecentWinnerComponent pfp='/images/blankpfp.png' idx={2} />
