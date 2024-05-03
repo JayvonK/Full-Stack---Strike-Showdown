@@ -69,7 +69,7 @@ const MatchComponent = (props: { challenge: () => void, data: IUserPosts, fadeAw
                                     <SelectContent>
                                         {
                                             array.map((location, idx) => (
-                                                <SelectItem key={idx} className='xl:text-xl sm:text-lg text-sm' value={location}>{location}</SelectItem>
+                                                <SelectItem key={idx} className='xl:text-xl sm:text-lg text-sm' value={location === "" ? "N/A" : location}>{location}</SelectItem>
                                             ))
                                         }
                                     </SelectContent>
@@ -82,7 +82,7 @@ const MatchComponent = (props: { challenge: () => void, data: IUserPosts, fadeAw
                                     <SelectContent>
                                         {
                                             array.map((location, idx) => (
-                                                <SelectItem key={idx} className='xl:text-xl sm:text-lg text-sm' value={location}>{location}</SelectItem>
+                                                <SelectItem key={idx} className='xl:text-xl sm:text-lg text-sm' value={location === "" ? "N/A" : location}>{location}</SelectItem>
                                             ))
                                         }
                                     </SelectContent>
@@ -112,7 +112,7 @@ const MatchComponent = (props: { challenge: () => void, data: IUserPosts, fadeAw
                                             <SelectContent>
                                                 {
                                                     array.map((location, idx) => (
-                                                        <SelectItem key={idx} className='xl:text-xl sm:text-lg text-sm' value={location}>{location}</SelectItem>
+                                                        <SelectItem key={idx} className='xl:text-xl sm:text-lg text-sm' value={location === "" ? "N/A" : location}>{location}</SelectItem>
                                                     ))
                                                 }
                                             </SelectContent>
@@ -125,7 +125,7 @@ const MatchComponent = (props: { challenge: () => void, data: IUserPosts, fadeAw
                                             <SelectContent>
                                                 {
                                                     array.map((location, idx) => (
-                                                        <SelectItem key={idx} className='xl:text-xl sm:text-lg text-sm' value={location}>{location}</SelectItem>
+                                                        <SelectItem key={idx} className='xl:text-xl sm:text-lg text-sm' value={location === "" ? "N/A" : location}>{location}</SelectItem>
                                                     ))
                                                 }
                                             </SelectContent>
