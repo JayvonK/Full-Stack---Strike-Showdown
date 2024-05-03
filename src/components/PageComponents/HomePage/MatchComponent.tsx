@@ -60,18 +60,35 @@ const MatchComponent = (props: { challenge: () => void, data: IUserPosts, fadeAw
                     </div>
                     <div className='xl:text-xl sm:text-lg text-sm'>
                         <h3 className='jura text-white mb-1'>Pick Location</h3>
-                        <Select>
-                            <SelectTrigger className="w-full xl:text-xl sm:text-lg text-sm bg-white pl-3 py-0">
-                                <SelectValue placeholder="Location" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                {
-                                    array.map((location, idx) => (
-                                        <SelectItem key={idx} className='xl:text-xl sm:text-lg text-sm' value={location}>{location}</SelectItem>
-                                    ))
-                                }
-                            </SelectContent>
-                        </Select>
+                        {
+                            props.data.locations.includes(",") ? (
+                                <Select>
+                                    <SelectTrigger className="w-full xl:text-xl sm:text-lg text-sm bg-white pl-3 py-0">
+                                        <SelectValue placeholder="Location" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {
+                                            array.map((location, idx) => (
+                                                <SelectItem key={idx} className='xl:text-xl sm:text-lg text-sm' value={location}>{location}</SelectItem>
+                                            ))
+                                        }
+                                    </SelectContent>
+                                </Select>
+                            ) : (
+                                <Select disabled>
+                                    <SelectTrigger className="w-full xl:text-xl sm:text-lg text-sm bg-white pl-3 py-0">
+                                        <SelectValue placeholder="Location" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {
+                                            array.map((location, idx) => (
+                                                <SelectItem key={idx} className='xl:text-xl sm:text-lg text-sm' value={location}>{location}</SelectItem>
+                                            ))
+                                        }
+                                    </SelectContent>
+                                </Select>
+                            )
+                        }
                     </div>
                 </div>
 
@@ -86,18 +103,36 @@ const MatchComponent = (props: { challenge: () => void, data: IUserPosts, fadeAw
                         <div>
                             <div className='xl:text-xl sm:text-lg text-sm'>
                                 <h3 className='jura text-white md:mb-1 mb-0'>Pick Location</h3>
-                                <Select>
-                                    <SelectTrigger className="sm:min-w-44 xl:text-xl sm:text-lg text-sm bg-white sm:pl-3 pl-2 py-0 sm:h-10 h-6">
-                                        <SelectValue placeholder="Location" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        {
-                                            array.map((location, idx) => (
-                                                <SelectItem key={idx} className='xl:text-xl sm:text-lg text-sm' value={location}>{location}</SelectItem>
-                                            ))
-                                        }
-                                    </SelectContent>
-                                </Select>
+                                {
+                                    props.data.locations.includes(",") ? (
+                                        <Select>
+                                            <SelectTrigger className="sm:min-w-44 xl:text-xl sm:text-lg text-sm bg-white sm:pl-3 pl-2 py-0 sm:h-10 h-6">
+                                                <SelectValue placeholder="Location" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                {
+                                                    array.map((location, idx) => (
+                                                        <SelectItem key={idx} className='xl:text-xl sm:text-lg text-sm' value={location}>{location}</SelectItem>
+                                                    ))
+                                                }
+                                            </SelectContent>
+                                        </Select>
+                                    ) : (
+                                        <Select disabled>
+                                            <SelectTrigger className="sm:min-w-44 xl:text-xl sm:text-lg text-sm bg-white sm:pl-3 pl-2 py-0 sm:h-10 h-6">
+                                                <SelectValue placeholder="Location" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                {
+                                                    array.map((location, idx) => (
+                                                        <SelectItem key={idx} className='xl:text-xl sm:text-lg text-sm' value={location}>{location}</SelectItem>
+                                                    ))
+                                                }
+                                            </SelectContent>
+                                        </Select>
+                                    )
+                                }
+
                             </div>
                         </div>
                     </div>
