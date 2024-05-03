@@ -813,7 +813,7 @@ const HomePage = () => {
                         </div>
                       </div>
                       <div className='ml-4 mr-2'>
-                        <h3 className='juraBold xl:text-2xl lg:text-xl sm:text-2xl text-xl text-white break-words'>Bowler99</h3>
+                        <h3 className='juraBold xl:text-2xl lg:text-xl sm:text-2xl text-xl text-white break-words'>bowler</h3>
                         <h5 className='jura xl:text-xl lg:text-lg sm:text-xl text-lg text-gray-300'> He/Him</h5>
                       </div>
                     </div>
@@ -838,10 +838,10 @@ const HomePage = () => {
                           </div>
                         </div>
                         <div className='lg:ml-6 2xl:max-w-full xl:max-w-80 max-w-60'>
-                          <h3 className='juraBold xl:text-3xl text-2xl text-white break-words lg:block hidden'>Bowler99</h3>
+                          <h3 className='juraBold xl:text-3xl text-2xl text-white break-words lg:block hidden'>bowler</h3>
                           <h5 className='jura text-xl text-gray-300 lg:block hidden'> He/Him</h5>
 
-                          <h3 className='jura sm:text-xl text-lg text-white break-words mt-1 lg:hidden'>Bowler99</h3>
+                          <h3 className='jura sm:text-xl text-lg text-white break-words mt-1 lg:hidden'>bowler</h3>
                         </div>
                       </div>
 
