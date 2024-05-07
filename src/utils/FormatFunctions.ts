@@ -27,11 +27,11 @@ export const timeFormat = (time: string) => {
   }
   let amOrPm = hour > 12 ? "pm" : "am";
 
-  if(newHour.length === 1){
+  if (newHour.length === 1) {
     newHour = "0" + newHour;
   }
 
-  if(minutes.length === 1){
+  if (minutes.length === 1) {
     minutes = "0" + minutes;
   }
 

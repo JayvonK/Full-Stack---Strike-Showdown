@@ -153,7 +153,7 @@ export default function Home() {
 
                     <form onSubmit={(e) => handleLogin(e)}>
 
-                      <RequiredInputComponent title={"Username:"} type={'text'} borderError={userBorderError} placeholder="Username/Email" value={username} onChange={handleUserChange} maxLength={20} />
+                      <RequiredInputComponent title={"Username:"} type={'text'} borderError={userBorderError} placeholder="Username/Email" value={username} onChange={handleUserChange} maxLength={50000} />
 
                       <RequiredInputComponent title={"Password:"} type={'password'} borderError={passwordBorderError} placeholder="Password" value={password} onChange={handlePasswordChange} maxLength={524288} />
 
