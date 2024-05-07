@@ -23,77 +23,84 @@ const AddMatchModal = (props: { addingChallengeBool: boolean, handleFalseChallen
                 {
                     props.edit ? (
                         <>
-                            <h1 className="jura text-4xl py-2 px-4 rounded-md bgOrange inline-block">Edit Match</h1>
+                            <h1 className="jura lg:text-4xl md:text-3xl sm:text-2xl text-xl  py-2 px-4 rounded-md bgOrange inline-block">Edit Match</h1>
                         </>
                     ) :
                         (
-                            <>
-                                <button className={'jura text-4xl py-2 px-4 rounded-md mr-6 ' + (props.addingChallengeBool ? 'bgOrange' : '')} onClick={props.handleTrueChallengeBool}>Add Challenge</button>
-                                <button className={'jura text-4xl py-2 px-4 rounded-md ' + (!props.addingChallengeBool ? 'bgOrange' : '')} onClick={props.handleFalseChallengeBool}>Add Session</button>
-                            </>
+                            <div className="flex">
+                                <button className={'jura lg:text-4xl md:text-3xl sm:text-2xl text-xl  py-2 px-4 rounded-md mr-6 sm:block hidden ' + (props.addingChallengeBool ? 'bgOrange' : '')} onClick={props.handleTrueChallengeBool}>Add Challenge</button>
+
+                                <button className={'jura lg:text-4xl md:text-3xl sm:text-2xl text-xl  py-2 px-4 rounded-md mr-6 sm:hidden block ' + (props.addingChallengeBool ? 'bgOrange' : '')} onClick={props.handleTrueChallengeBool}>Challenge</button>
+
+
+                                <button className={'jura lg:text-4xl md:text-3xl sm:text-2xl text-xl  py-2 px-4 rounded-md sm:block hidden ' + (!props.addingChallengeBool ? 'bgOrange' : '')} onClick={props.handleFalseChallengeBool}>Add Session</button>
+
+                                <button className={'jura lg:text-4xl md:text-3xl sm:text-2xl text-xl  py-2 px-4 rounded-md sm:hidden block ' + (!props.addingChallengeBool ? 'bgOrange' : '')} onClick={props.handleFalseChallengeBool}>Session</button>
+                            </div>
                         )
                 }
             </div>
             <div className='px-4'>
                 <form onSubmit={props.edit ? props.editMatchClick : (props.addingChallengeBool ? props.create1v1Challenge : props.createPracticeSession)}>
-                    <div className="py-4 px-6 bg-black rounded-md">
-                        <div className='flex justify-between gap-40'>
+                    <div className="py-4 md:px-6 px-4 bg-black rounded-md">
+                        <div className='sm:flex justify-between lg:gap-40 gap-10'>
                             <div className='w-full'>
-                                <h3 className='jura text-white text-2xl'>Visibility</h3>
+                                <h3 className='jura text-white lg:text-2xl sm:text-xl text-lg'>Visibility</h3>
                                 <Select value={props.visibility ? 'Public' : 'Private'} required onValueChange={(e) => props.handleVisibilityChange(e)}>
-                                    <SelectTrigger className="w-full jura text-2xl h-10 bg-white pl-2 mb-4 mt-2 rounded-sm">
+                                    <SelectTrigger className="w-full jura lg:text-2xl sm:text-xl text-lg h-10 bg-white pl-2 mb-4 mt-2 rounded-sm">
                                         <SelectValue defaultValue={"Public"} />
                                     </SelectTrigger>
                                     <SelectContent>
-                                        <SelectItem className='text-2xl' value="Public">Public</SelectItem>
-                                        <SelectItem className='text-2xl' value="Private">Private</SelectItem>
+                                        <SelectItem className='lg:text-2xl sm:text-xl text-lg' value="Public">Public</SelectItem>
+                                        <SelectItem className='lg:text-2xl sm:text-xl text-lg' value="Private">Private</SelectItem>
                                     </SelectContent>
                                 </Select>
                             </div>
 
                             <div className='w-full'>
-                                <h3 className='jura text-white text-2xl'>Send To (For Private)</h3>
+                                <h3 className='jura text-white lg:text-2xl sm:text-xl text-lg'>Send To (For Private)</h3>
                                 {
                                     props.visibility ? (
-                                        <input type="text" readOnly placeholder='N/A' className="w-full jura text-2xl h-10 bg-white pl-2 mb-4 mt-2 rounded-sm" />
+                                        <input type="text" readOnly placeholder='N/A' maxLength={20} className="w-full jura lg:text-2xl sm:text-xl text-lg h-10 bg-white pl-2 mb-4 mt-2 rounded-sm" />
                                     ) : (
-                                        <input type="text" placeholder='Username' required className="w-full jura text-2xl h-10 bg-white pl-2 mb-4 mt-2 rounded-sm" />
+                                        <input type="text" placeholder='Username' maxLength={20} required className="w-full jura lg:text-2xl sm:text-xl text-lg h-10 bg-white pl-2 mb-4 mt-2 rounded-sm" />
                                     )}
                             </div>
                         </div>
 
                         <div className={props.addingChallengeBool ? '' : 'hidden'}>
-                            <h3 className='jura text-white text-2xl'>Locations (1 mininum):</h3>
-                            <div className='flex justify-between gap-4'>
-                                <input type="text" onChange={props.handleLocationOneChange} value={props.locationOne} placeholder='Location 1' className="w-full jura text-2xl h-10 bg-white pl-2 mb-2 mt-2 rounded-sm" />
-                                <input type="text" onChange={props.handleLocationTwoChange} value={props.locationTwo} placeholder='Location 2' className="w-full jura text-2xl h-10 bg-white pl-2 mb-2 mt-2 rounded-sm" />
-                                <input type="text" onChange={props.handleLocationThreeChange} value={props.locationThree} placeholder='Location 3' className="w-full jura text-2xl h-10 bg-white pl-2 mb-2 mt-2 rounded-sm" />
+                            <h3 className='jura text-white lg:text-2xl sm:text-xl text-lg'>Locations:</h3>
+                            <div className='md:flex justify-between gap-4'>
+                                <input type="text" onChange={props.handleLocationOneChange} value={props.locationOne} placeholder='Location 1' maxLength={50} className="w-full jura lg:text-2xl sm:text-xl text-lg h-10 bg-white pl-2 mb-2 mt-2 rounded-sm" />
+                                <input type="text" onChange={props.handleLocationTwoChange} value={props.locationTwo} placeholder='Location 2' maxLength={50} className="w-full jura lg:text-2xl sm:text-xl text-lg h-10 bg-white pl-2 mb-2 mt-2 rounded-sm" />
+                                <input type="text" onChange={props.handleLocationThreeChange} value={props.locationThree} placeholder='Location 3' maxLength={50} className="w-full jura lg:text-2xl sm:text-xl text-lg h-10 bg-white pl-2 mb-2 mt-2 rounded-sm" />
                             </div>
-                            <p className='jura txtOrange text-xl mb-4'>*Leave blank if open to any locations</p>
+                            <p className='jura txtOrange lg:text-xl md:text-lg mb-4'>*Leave blank if open to any locations</p>
                         </div>
 
-                        <div className={!props.addingChallengeBool ? 'grid grid-cols-2 gap-x-40' : 'hidden'}>
+                        <div className={!props.addingChallengeBool ? 'md:grid md:grid-cols-2 lg:gap-x-40 gap-x-10' : 'hidden'}>
                             <div>
-                                <h3 className='jura text-white text-2xl'>Location:</h3>
+                                <h3 className='jura text-white lg:text-2xl sm:text-xl text-lg'>Location:</h3>
                                 {
                                     !props.addingChallengeBool ? (
                                         <>
-                                            <input required type="text" onChange={props.handlePracticeLocationChange} value={props.practiceLocation} placeholder='Location' className="w-full jura text-2xl h-10 bg-white pl-2 mb-2 mt-2 rounded-sm" />
+                                            <input required type="text" onChange={props.handlePracticeLocationChange} value={props.practiceLocation} maxLength={50} placeholder='Location' className="w-full jura lg:text-2xl sm:text-xl text-lg h-10 bg-white pl-2 mb-2 mt-2 rounded-sm" />
                                         </>
 
                                     ) : (<div></div>)
                                 }
+
                             </div>
 
                             <div>
-                                <h3 className='jura text-white text-2xl'>Time:</h3>
+                                <h3 className='jura text-white lg:text-2xl sm:text-xl text-lg'>Time:</h3>
                                 <div className='flex justify-between items-center'>
                                     {
                                         !props.addingChallengeBool ? (
                                             <>
-                                                <input required type="time" onChange={props.handleTimeStartChange} value={props.timeStart} placeholder='Start' className="w-full jura text-xl h-10 bg-white pl-2 mb-2 mt-2 rounded-sm" />
+                                                <input required type="time" onChange={props.handleTimeStartChange} value={props.timeStart} placeholder='Start' className="w-full jura lg:text-xl text-lg h-10 bg-white pl-2 mb-2 mt-2 rounded-sm" />
                                                 <p className='px-4 inline-block text-white'>-</p>
-                                                <input required type="time" onChange={props.handleTimeEndChange} value={props.timeEnd} placeholder='End' className="w-full jura text-xl h-10 bg-white pl-2 mb-2 mt-2 rounded-sm" />
+                                                <input required type="time" onChange={props.handleTimeEndChange} value={props.timeEnd} placeholder='End' className="w-full jura lg:text-xl text-lg h-10 bg-white pl-2 mb-2 mt-2 rounded-sm" />
                                             </>
 
                                         ) : (<div></div>)
@@ -101,15 +108,17 @@ const AddMatchModal = (props: { addingChallengeBool: boolean, handleFalseChallen
 
                                 </div>
                             </div>
+                        </div>
 
-                            <div>
-                                <h3 className='jura text-white text-2xl mb-2'>Date:</h3>
+                        <div className={!props.addingChallengeBool ? 'sm:grid sm:grid-cols-2 lg:gap-x-40 gap-x-10' : 'hidden'}>
+                            <div className="sm:mb-0 mb-2">
+                                <h3 className='jura text-white lg:text-2xl sm:text-xl text-lg mb-2'>Date:</h3>
                                 <Popover>
                                     <PopoverTrigger asChild>
                                         <Button
                                             variant={"outline"}
                                             className={cn(
-                                                "w-full justify-start text-left jura text-2xl px-2",
+                                                "w-full justify-start text-left jura lg:text-2xl sm:text-xl text-lg px-2",
                                                 !props.date && "text-muted-foreground"
                                             )}
                                         >
@@ -144,24 +153,25 @@ const AddMatchModal = (props: { addingChallengeBool: boolean, handleFalseChallen
                             </div>
 
                             <div>
-                                <h3 className='jura text-white text-2xl'>Max PPL:</h3>
-                                <input required type="text" onChange={props.handleMaxPplChange} value={props.maxPpl} placeholder='0' className="w-full jura text-2xl h-10 bg-white pl-2 mb-2 mt-2 rounded-sm" />
+                                <h3 className='jura text-white lg:text-2xl sm:text-xl text-lg'>Max PPL:</h3>
+                                <input required type="text" onChange={props.handleMaxPplChange} value={props.maxPpl} placeholder='0' maxLength={4} className="w-full jura lg:text-2xl sm:text-xl text-lg h-10 bg-white pl-2 mb-2 mt-2 rounded-sm" />
                             </div>
                         </div>
 
-                        <h3 className='jura text-white text-2xl'>Description</h3>
+
+                        <h3 className='jura text-white lg:text-2xl sm:text-xl text-lg'>Description</h3>
                         {
                             !props.addingChallengeBool ? (
-                                <textarea required onChange={props.handlePracticeDescriptionChange} value={props.practiceDescription} className='w-full h-40 text-black jura text-2xl bg-white pl-2 mb-2 mt-2 rounded-sm placeholder:text-black pt-1' placeholder='Add your description.'></textarea>
+                                <textarea required onChange={props.handlePracticeDescriptionChange} value={props.practiceDescription} maxLength={300} className='w-full h-40 text-black jura lg:text-2xl sm:text-xl text-lg bg-white pl-2 mb-2 mt-2 rounded-sm placeholder:text-black pt-1' placeholder='Add your description.'></textarea>
                             ) : (
-                                <textarea required onChange={props.handleDescriptionChange} value={props.description} className='w-full h-40 text-black jura text-2xl bg-white pl-2 mb-2 mt-2 rounded-sm placeholder:text-black pt-1' placeholder='Add your description.'></textarea>
+                                <textarea required onChange={props.handleDescriptionChange} value={props.description} maxLength={300} className='w-full h-40 text-black jura lg:text-2xl sm:text-xl text-lg bg-white pl-2 mb-2 mt-2 rounded-sm placeholder:text-black pt-1' placeholder='Add your description.'></textarea>
                             )
                         }
                     </div>
 
                     <div className='py-4 flex justify-end'>
-                        <button type='submit' className={'jura text-4xl py-2 px-4 rounded-md mr-6 bgOrange'}>{props.edit ? "Edit" : "Confirm"}</button>
-                        <button className={'jura text-4xl py-2 px-4 rounded-md bgOrange'} onClick={props.edit ? props.closeEditMatchModal : props.handleCloseModal}>{props.edit ? "Cancel" : "Close"}</button>
+                        <button type='submit' className={'jura lg:text-4xl md:text-3xl sm:text-2xl text-xl  py-2 px-4 rounded-md mr-6 bgOrange'}>{props.edit ? "Edit" : "Confirm"}</button>
+                        <button className={'jura lg:text-4xl md:text-3xl sm:text-2xl text-xl  py-2 px-4 rounded-md bgOrange'} onClick={props.edit ? props.closeEditMatchModal : props.handleCloseModal}>{props.edit ? "Cancel" : "Close"}</button>
                     </div>
                 </form>
             </div>
