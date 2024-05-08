@@ -106,10 +106,27 @@ export const UpdateMatchAPI = async (match: IUserPosts) => {
         body: JSON.stringify(match)
     })
     if(!res.ok){
-        const message = "Ann error message has occured " + res.status;
+        const message = "An error message has occured " + res.status;
         throw new Error(message);
     }
     const data = await res.json();
+    return data;
+}
+
+export const DeleteMatchAPI = async(match: IUserPosts) => {
+    const res = await fetch(url + 'Match/DeleteMatch', {
+        method: 'PUT',
+        headers: {
+            'Content-Type': "application/json"
+        },
+        body: JSON.stringify(match)
+    })
+    if(!res.ok){
+        const message = "An error message has occured" + res.status;
+        throw new Error(message);
+    }
+
+    const data = res.json()
     return data;
 }
 
