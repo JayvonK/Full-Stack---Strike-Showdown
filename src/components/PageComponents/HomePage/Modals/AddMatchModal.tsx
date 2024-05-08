@@ -15,7 +15,7 @@ import {
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Dispatch, SetStateAction, useState } from "react"
 
-const AddMatchModal = (props: { addingChallengeBool: boolean, handleFalseChallengeBool: () => void, handleTrueChallengeBool: () => void, editMatchClick: (e: React.FormEvent<HTMLFormElement>) => void, create1v1Challenge: (e: React.FormEvent<HTMLFormElement>) => void, createPracticeSession: (e: React.FormEvent<HTMLFormElement>) => void, handleVisibilityChange: (e: string) => void, visibility: boolean, handlePracticeLocationChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleLocationOneChange: (e: React.ChangeEvent<HTMLInputElement>) => void, locationOne: string, handleLocationTwoChange: (e: React.ChangeEvent<HTMLInputElement>) => void, locationTwo: string, handleLocationThreeChange: (e: React.ChangeEvent<HTMLInputElement>) => void, locationThree: string, handleDescriptionChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void, handlePracticeDescriptionChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void, description: string, handleCloseModal: () => void, handleTimeStartChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleTimeEndChange: (e: React.ChangeEvent<HTMLInputElement>) => void, setDate: React.Dispatch<SetStateAction<Date | undefined>>, handleMaxPplChange: (e: React.ChangeEvent<HTMLInputElement>) => void, timeStart: string, timeEnd: string, date: Date | undefined, maxPpl: string, practiceLocation: string, practiceDescription: string, edit: boolean, closeEditMatchModal: () => void }) => {
+const AddMatchModal = (props: { addingChallengeBool: boolean, handleFalseChallengeBool: () => void, handleTrueChallengeBool: () => void, editMatchClick: (e: React.FormEvent<HTMLFormElement>) => void, create1v1Challenge: (e: React.FormEvent<HTMLFormElement>) => void, createPracticeSession: (e: React.FormEvent<HTMLFormElement>) => void, handleVisibilityChange: (e: string) => void, visibility: boolean, handlePracticeLocationChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleLocationOneChange: (e: React.ChangeEvent<HTMLInputElement>) => void, locationOne: string, handleLocationTwoChange: (e: React.ChangeEvent<HTMLInputElement>) => void, locationTwo: string, handleLocationThreeChange: (e: React.ChangeEvent<HTMLInputElement>) => void, locationThree: string, handleDescriptionChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void, handlePracticeDescriptionChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void, description: string, handleCloseModal: () => void, handleTimeStartChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleTimeEndChange: (e: React.ChangeEvent<HTMLInputElement>) => void, setDate: React.Dispatch<SetStateAction<Date | undefined>>, handleMaxPplChange: (e: React.ChangeEvent<HTMLInputElement>) => void, timeStart: string, timeEnd: string, date: Date | undefined, maxPpl: string, practiceLocation: string, practiceDescription: string, edit: boolean, closeEditMatchModal: () => void, openConfirmation: () => void }) => {
 
     return (
         <>
@@ -105,7 +105,6 @@ const AddMatchModal = (props: { addingChallengeBool: boolean, handleFalseChallen
 
                                         ) : (<div></div>)
                                     }
-
                                 </div>
                             </div>
                         </div>
@@ -154,7 +153,7 @@ const AddMatchModal = (props: { addingChallengeBool: boolean, handleFalseChallen
 
                             <div>
                                 <h3 className='jura text-white lg:text-2xl sm:text-xl text-lg'>Max PPL:</h3>
-                                <input required type="text" onChange={props.handleMaxPplChange} value={props.maxPpl} placeholder='0' maxLength={4} className="w-full jura lg:text-2xl sm:text-xl text-lg h-10 bg-white pl-2 mb-2 mt-2 rounded-sm" />
+                                {props.addingChallengeBool ? (<></>) : (<input required type="text" onChange={props.handleMaxPplChange} value={props.maxPpl} placeholder='0' maxLength={4} className="w-full jura lg:text-2xl sm:text-xl text-lg h-10 bg-white pl-2 mb-2 mt-2 rounded-sm" />)}
                             </div>
                         </div>
 
@@ -170,7 +169,8 @@ const AddMatchModal = (props: { addingChallengeBool: boolean, handleFalseChallen
                     </div>
 
                     <div className='py-4 flex justify-end'>
-                        <button type='submit' className={'jura lg:text-4xl md:text-3xl sm:text-2xl text-xl  py-2 px-4 rounded-md mr-6 bgOrange'}>{props.edit ? "Edit" : "Confirm"}</button>
+                        {props.edit ? (<button className='jura lg:text-4xl md:text-3xl sm:text-2xl text-xl py-2 px-4 rounded-md mr-6 bg-red-500' onClick={props.openConfirmation}>Delete</button>) : (<></>)}
+                        <button type='submit' className={'jura lg:text-4xl md:text-3xl sm:text-2xl text-xl py-2 px-4 rounded-md mr-6 bgOrange'}>{props.edit ? "Edit" : "Confirm"}</button>
                         <button className={'jura lg:text-4xl md:text-3xl sm:text-2xl text-xl  py-2 px-4 rounded-md bgOrange'} onClick={props.edit ? props.closeEditMatchModal : props.handleCloseModal}>{props.edit ? "Cancel" : "Close"}</button>
                     </div>
                 </form>
