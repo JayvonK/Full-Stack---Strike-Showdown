@@ -11,20 +11,20 @@ import ViewProfileModalComponent from '@/components/PageComponents/ModalComponen
 
 
 function page() {
-    // const [openModal, setOpenModal] = useState(true);
+    const [openModal, setOpenModal] = useState(true);
   return (
 
     <div>
-       {/* <Button onClick={() => setOpenModal(true)}>Toggle modal</Button>
-       <Modal dismissible show={openModal} onClose={() => setOpenModal(false)} size={'4x1'}>
+       <Button onClick={() => setOpenModal(true)}>Toggle modal</Button>
+       <Modal dismissible show={openModal} onClose={() => setOpenModal(false)} size={'4xl'}>
 
-       <FriendsModalComponent/> 
-     <InboxModalComponent/>  
-      <ProfileModalComponent userName={'Tommy201'} proNouns={'Salmon'} fullName={'alphaMale'} mainCenter={'Packed Man'} average={'1000'} highGames={'911'} highSeries={'111'} earnings={'4'} style={'quadruple handroll'} />  
+       {/* <FriendsModalComponent/> 
+     <InboxModalComponent/>   */}
+      {/* <ProfileModalComponent userName={'Tommy201'} proNouns={'Salmon'} fullName={'alphaMale'} mainCenter={'Packed Man'} average={'1000'} highGames={'911'} highSeries={'111'} earnings={'4'} style={'quadruple handroll'} />   */}
  <JoinSessionModalComponent /> 
-<ViewProfileModalComponent userName={'Briaaa'} proNouns={'hers/she'} record={'15'} mainCenter={'267'} average={'150'} highGames={'140'} highSeries={'100'} earnings={'2000'} style={'Righty'} email={'briaharrold@gmail.com'}/>
+{/* <ViewProfileModalComponent userName={'Briaaa'} proNouns={'hers/she'} record={'15'} mainCenter={'267'} average={'150'} highGames={'140'} highSeries={'100'} earnings={'2000'} style={'Righty'} email={'briaharrold@gmail.com'}/> */}
 
-      </Modal> */}
+      </Modal>
     </div>
   )
 }

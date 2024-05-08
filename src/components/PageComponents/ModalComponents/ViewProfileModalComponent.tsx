@@ -6,8 +6,6 @@ import { useRouter } from "next/navigation";
 import AddFriendIcon from "../../../../public/images/UserPlus.png";
 import MessagingIcon from "../../../../public/images/MessageProfile.png";
 import UserMinus from "../../../../../public/images/UserMinus.png";
-
-
 import Router from "next/router";
 const ViewProfileModalComponent = (props: {
   userName: string;
@@ -105,10 +103,10 @@ setActiveTab(tab);
         </div>
       </div>
       
-      <div className="  ">
-        <div className="rounded-xl   bg-black  justify-center  py-2 mx-5 px-5  mb-5 lg:px-10 md:px-10 ">
-          <div className="rounded-xl   justify-space bg-black w-50  grid grid-flow-col auto-cols">
-            
+      <div className=" flex justify-center  ">
+        <div className="rounded-xl  bg-black  w-1/2  py-2 mx-5 px-5  mb-5 md:px-10 ">
+          <div className="rounded-xl  justify-space bg-black   grid grid-flow-col auto-cols">
+    
             <div className="" >
               <button  className={`   text-center mt-5   text-xl md:text-3xl md:w-40   w-20  rounded-lg  pt-2 pb-2  mb-2  jura ${ activeTab === 'Info'
           ? 'bg-orange-500   '
