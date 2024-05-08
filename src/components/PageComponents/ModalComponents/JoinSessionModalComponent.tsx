@@ -4,6 +4,7 @@ import { Button } from "flowbite-react";
 import "../../../app/css/LoginPageAndHome.css";
 import { Dispatch, SetStateAction, useState } from "react"
 const JoinSessionModalComponent =() => {
+
   return (
     <div>
       <div className="px-5 py-5">
@@ -11,14 +12,14 @@ const JoinSessionModalComponent =() => {
       </div>
       
       <div className="bg-black py-4 px-6  mx-5 rounded-lg  ">
-        <div className="flex flex-cols-3">
+        <div className="flex flex-cols-3 justify-between">
 
         
         <div>
           <img src={ProfilePic.src} alt="Your Profile Picture"></img>
         </div>
         <div>
-          <p className=" text-orange-500 text-3xl jura px-5 py-1">GodOfBowling</p>
+          <p className=" text-orange-500 text-2xl lg:text-3xl jura px-2 lg:px-5 py-1 ">GodOfBowling</p>
           <div className="flex flex-col-6 gap-5 pl-5">
          <div>
           <p className="text-white jura text-xl py-1">150 Wins</p>
@@ -31,13 +32,13 @@ const JoinSessionModalComponent =() => {
         </div>
         </div>
         
-     <h1 className="bg-orange-500 text-2xl jura rounded-lg px-8 h-12 flex items-center py-2">Message</h1>
+     <h1 className="bg-orange-500 text-2xl jura rounded-lg px-4 lg:px-8 h-12 flex items-center py-2">Message</h1>
 
         </div>
      <div>
       <p className="text-white jura text-2xl">Location:</p>
       <p className=" jura text-2xl text-orange-500">Paddock Bowl</p>
-      <div className="flex flex-col-6 justify-between pr-52">
+      <div className="flex flex-col-6 justify-between pr-0 lg:pr-52">
         <div>
         <p className="text-white jura text-2xl">Spots:</p>
         <p className=" jura text-2xl text-orange-500">1/3</p>
@@ -54,18 +55,18 @@ const JoinSessionModalComponent =() => {
      </div>
      <div>
      <h3 className='jura text-white text-2xl'>Description:</h3>
-                        <p className='w-full h-40 text-orange-500 jura text-2xl  pl-2 mb-2 mt-2 rounded-sm '>Practice Session for working on spare shooting. Mainly single pins like 10 pins or 7 pins. Will be practicing for 4 games, maybe more feel free to join.</p>
+                        <p className='w-full h-40 text-orange-500 jura text-xl lg:text-2xl  pl-2 mb-2 mt-2 rounded-sm '>Practice Session for working on spare shooting. Mainly single pins like 10 pins or 7 pins. Will be practicing for 4 games, maybe more feel free to join.</p>
                   
      </div>
      
       </div>
       <div className="flex justify-end py-3 px-7 pb-10">
-      <Button className=" border-color outline-none mr-5   mt-3 bg-orange-500  w-20 md:w-36 rounded-xl  md:rounded-lg  hover:!bg-orange-500 text-black jura">
-          <h3 className=" text-base  md:text-3xl   ">Join</h3>
-        </Button>
-        <Button className=" border-color outline-none   mt-3 bg-orange-500  w-20 md:w-36 rounded-xl  md:rounded-lg  hover:!bg-orange-500 text-black jura">
-          <h3 className=" text-base  md:text-3xl   ">Close</h3>
-        </Button>
+      <button className=" border-color outline-none mr-5   mt-3 bg-orange-500  w-20 md:w-36 rounded-xl  md:rounded-lg  hover:!bg-orange-500 text-black jura">
+          <h3 className=" text-2xl  md:text-3xl   ">Join</h3>
+        </button>
+        <button className=" border-color outline-none   mt-3 bg-orange-500  w-20 md:w-36 rounded-xl  md:rounded-lg  hover:!bg-orange-500 text-black jura">
+          <h3 className=" text-2xl  md:text-3xl  py-2 ">Close</h3>
+        </button>
       </div>
    
     </div>
