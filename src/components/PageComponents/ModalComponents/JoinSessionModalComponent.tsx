@@ -62,22 +62,22 @@ const JoinSessionModalComponent = () => {
 
         </div>
         <div className="">
-          <p className="text-white jura text-2xl">Location:</p>
-          <p className=" jura text-2xl text-orange-500">Paddock Bowl</p>
-          <div className="flex flex-col-6 justify-between pr-0 lg:pr-52">
+          <p className="text-white jura text-xl md:text-lg lg:text-2xl">Location:</p>
+          <p className=" jura text-xl md:text-lg lg:text-2xl text-orange-500">Paddock Bowl</p>
+          <div className="flex flex-col-6 justify-between pr-0  md:pr-0 lg:pr-0 xl:pr-0">
             <div>
-              <p className="text-white jura text-2xl">Spots:</p>
-              <p className=" jura text-2xl text-orange-500">1/3</p>
+              <p className="text-white jura text-xl md:text-lg lg:text-2xl">Spots:</p>
+              <p className=" jura text-xl md:text-lg lg:text-2xl text-orange-500">1/3</p>
             </div>
             <div className="">
-              <p className="text-white jura text-2xl">Time:</p>
-              <p className="text-orange-500 text-2xl jura">1:00 - 4:00</p>
+              <p className="text-white jura text-xl md:text-lg lg:text-2xl">Time:</p>
+              <p className="text-orange-500 text-xl md:text-lg lg:text-2xl jura">1:00 - 4:00</p>
             </div>
           </div>
         </div>
         <div>
           <h3 className="jura text-white text-2xl">Description:</h3>
-          <p className="w-full h-40 text-orange-500 jura text-xl lg:text-2xl  pl-2 mb-2 mt-2 rounded-sm overflow-scroll ">
+          <p className="w-full h-40 text-orange-500 jura text-xl md:text-lg lg:text-2xl  pl-2 mb-2 mt-2 rounded-sm overflow-scroll ">
             Practice Session for working on spare shooting. Mainly single pins
             like 10 pins or 7 pins. Will be practicing for 4 games, maybe more
             feel free to join.
@@ -89,7 +89,7 @@ const JoinSessionModalComponent = () => {
           <h3 className=" text-2xl  md:text-3xl   ">Join</h3>
         </button>
         <button className=" border-color outline-none   mt-3 bg-orange-500  w-36 md:w-36 rounded-xl  md:rounded-lg  hover:!bg-orange-500 text-black jura">
-          <h3 className=" text-2xl  md:text-3xl  py-2 ">Close</h3>
+          <h3 className=" text-2xl  lg:text-3xl  py-2 ">Close</h3>
         </button>
       </div>
     </div>
