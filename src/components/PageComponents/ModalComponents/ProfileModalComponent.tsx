@@ -54,7 +54,7 @@ const ProfileModalComponent = (props: { userData: IPublicUserData, handleOpenEdi
       <div>
         <div className="rounded-xl jura bg-black max-h-[475px] overflow-y-scroll scrollbar justify-center lg:p-8 sm:p-6 p-4 ">
 
-          <div className='flex mb-8'>
+          <div className='flex sm:mb-4 mb-2'>
 
             {
               props.onInfo ? (
@@ -87,7 +87,7 @@ const ProfileModalComponent = (props: { userData: IPublicUserData, handleOpenEdi
               <>
                 <div className="rounded-lg justify-space w-50 grid sm:grid-cols-2 sm:gap-4">
                   <div>
-                    <p className="text-white text-xl pt-4">
+                    <p className="text-white text-xl pt-2">
                       Full Name:
                     </p>
                     <p className="text-orange-500  text-2xl ">
@@ -101,7 +101,7 @@ const ProfileModalComponent = (props: { userData: IPublicUserData, handleOpenEdi
                     </p>
                   </div>
                   <div>
-                    <p className="text-white text-xl pt-4">
+                    <p className="text-white text-xl pt-2">
                       Style:
                     </p>
                     <p className="text-orange-500 text-2xl">
@@ -146,6 +146,9 @@ const ProfileModalComponent = (props: { userData: IPublicUserData, handleOpenEdi
               (
                 props.posts.length === 0 ? (
                   <>
+                    <h1 className='text-center text-white sm:text-3xl text-2xl jura min-h-56 flex justify-center pb-12 items-center'>
+                      No matches found
+                    </h1>
                   </>
                 ): (
                   props.posts.map((p, idx)=> {

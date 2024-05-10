@@ -93,7 +93,7 @@ export const convertTimeBack = (time: string) => {
 export const grabUserPosts = (id: number, posts: IUserPosts[]) => {
   let arr: IUserPosts[] = [];
   posts.forEach(post => {
-    if(post.id = id){
+    if(post.userID === id){
       arr.push(post);
     }
   })
