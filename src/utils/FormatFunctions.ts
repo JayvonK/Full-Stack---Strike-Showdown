@@ -1,3 +1,5 @@
+import { IUserPosts } from "@/interfaces/Interfaces";
+
 export const locationFormat = (locArr: string[]) => {
   let newArr: string[] = [];
   locArr.forEach((loc, idx) => {
@@ -87,3 +89,13 @@ export const convertTimeBack = (time: string) => {
 
   return newTimeArr;
 };
+
+export const grabUserPosts = (id: number, posts: IUserPosts[]) => {
+  let arr: IUserPosts[] = [];
+  posts.forEach(post => {
+    if(post.id = id){
+      arr.push(post);
+    }
+  })
+  return arr;
+}

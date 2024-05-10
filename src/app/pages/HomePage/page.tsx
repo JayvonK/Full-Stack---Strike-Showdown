@@ -30,7 +30,7 @@ import NewNavBarComponent from '@/components/PageComponents/NewNavBarComponent';
 import EditProfileModal from '@/components/PageComponents/HomePage/Modals/EditProfileModal';
 import { EditLocalStorageUsername, GetLocalStorage } from '@/utils/LocalStorageFunctions';
 import MatchSkeleton from '@/components/PageComponents/HomePage/MatchSkeleton';
-import { averageStatFormat, convertTimeBack, convertToDate, editMatchLocationArr, locationFormat, timeFormat } from '@/utils/FormatFunctions';
+import { averageStatFormat, convertTimeBack, convertToDate, editMatchLocationArr, grabUserPosts, locationFormat, timeFormat } from '@/utils/FormatFunctions';
 import ProfileModalComponent from '@/components/PageComponents/ModalComponents/ProfileModalComponent';
 import InboxModalComponent from '@/components/PageComponents/ModalComponents/InboxModalComponent';
 import FriendsModalComponent from '@/components/PageComponents/ModalComponents/FriendsModalComponent';
@@ -58,7 +58,7 @@ const HomePage = () => {
     style: '2 Handed (Right)',
     mainCenter: 'Pacific Avenue Bowl',
     average: '120-130 Avg',
-    earnings: '$700',
+    earnings: '700',
     highGame: '300',
     highSeries: '800',
     streak: 5
@@ -75,6 +75,7 @@ const HomePage = () => {
   const [runUseEffect, setRunUseEffect] = useState<boolean>(false);
   const [skeleton, setSkeleton] = useState<boolean>(false);
   const [messagePage, setMessagePage] = useState<boolean>(false);
+  const [currentUsersPosts, setCurrentUsersPosts] = useState<IUserPosts[]>([]);
 
   // State Variables For Match Data
   const [matchData, setMatchData] = useState<(IUserPosts)[]>(postsData);
@@ -104,6 +105,7 @@ const HomePage = () => {
 
   // State Variables for Users Profile Modal
   const [userProfileModal, setUserProfileModal] = useState<boolean>(false);
+  const [onInfo, setOnInfo] = useState<boolean>(true);
 
   // State Variables for Inbox Modal
   const [inboxModal, setInboxModal] = useState<boolean>(false);
@@ -161,6 +163,15 @@ const HomePage = () => {
     setUserProfileModal(false);
     setOpenModal(false);
   }
+
+  const openMyInfo = () => {
+    setOnInfo(true);
+  }
+
+  const openMyPosts = () => {
+    setOnInfo(false);
+  }
+
   // Functions for Friends Modal
 
   const openFriendsModal = () => {
@@ -655,6 +666,7 @@ const HomePage = () => {
 
   const updateAllMatches = async () => {
     setMatchData(await GetPublicMatchesByStateAPI(verifiedUserData.location))
+    setCurrentUsersPosts(grabUserPosts(verifiedUserData.id, await GetPublicMatchesByStateAPI(verifiedUserData.location)));
   }
 
   useEffect(() => {
@@ -669,6 +681,7 @@ const HomePage = () => {
         setEditData(userData);
         setCurrentUsername(storageArr[0][1])
         setMatchData(await GetPublicMatchesByStateAPI(userData.location));
+        setCurrentUsersPosts(grabUserPosts(userData.id, await GetPublicMatchesByStateAPI(userData.location)));
       }
       grabUserData();
     }
@@ -699,7 +712,7 @@ const HomePage = () => {
         }
 
         {
-          userProfileModal && <ProfileModalComponent data={verifiedUserData} handleCloseUsersProfileModal={closeUsersProfileModal} handleOpenEditModal={openEditModal} />
+          userProfileModal && <ProfileModalComponent userData={verifiedUserData} handleCloseUsersProfileModal={closeUsersProfileModal} handleOpenEditModal={openEditModal} openMyInfo={openMyInfo} openMyPosts={openMyPosts} onInfo={onInfo} posts={currentUsersPosts} />
         }
 
         {
@@ -730,7 +743,7 @@ const HomePage = () => {
         }
 
         {
-          userProfileModal && <ProfileModalComponent data={verifiedUserData} handleCloseUsersProfileModal={closeUsersProfileModal} handleOpenEditModal={openEditModal} />
+          userProfileModal && <ProfileModalComponent userData={verifiedUserData} handleCloseUsersProfileModal={closeUsersProfileModal} handleOpenEditModal={openEditModal} openMyInfo={openMyInfo} openMyPosts={openMyPosts} onInfo={onInfo} posts={currentUsersPosts} />
         }
 
         {
@@ -761,7 +774,7 @@ const HomePage = () => {
         }
 
         {
-          userProfileModal && <ProfileModalComponent data={verifiedUserData} handleCloseUsersProfileModal={closeUsersProfileModal} handleOpenEditModal={openEditModal} />
+          userProfileModal && <ProfileModalComponent userData={verifiedUserData} handleCloseUsersProfileModal={closeUsersProfileModal} handleOpenEditModal={openEditModal} openMyInfo={openMyInfo} openMyPosts={openMyPosts} onInfo={onInfo} posts={currentUsersPosts} />
         }
 
         {
@@ -793,7 +806,7 @@ const HomePage = () => {
         }
 
         {
-          userProfileModal && <ProfileModalComponent data={verifiedUserData} handleCloseUsersProfileModal={closeUsersProfileModal} handleOpenEditModal={openEditModal} />
+          userProfileModal && <ProfileModalComponent userData={verifiedUserData} handleCloseUsersProfileModal={closeUsersProfileModal} handleOpenEditModal={openEditModal} openMyInfo={openMyInfo} openMyPosts={openMyPosts} onInfo={onInfo} posts={currentUsersPosts} />
         }
 
         {
