@@ -117,6 +117,9 @@ const HomePage = () => {
   const [confirmationModal, setConfirmationModal] = useState<boolean>(false);
   const [deletePost, setDeletePost] = useState<IUserPosts | undefined>(undefined);
 
+  // State Variables for Search Modal
+  const [searchModal, setSearchModal] = useState<boolean>(false);
+
   // State Variables For Edit User Modal
   const [editModal, setEditModal] = useState<boolean>(false);
   const [editProfileImg, setEditProfileImg] = useState<any>('');
@@ -200,11 +203,7 @@ const HomePage = () => {
   // Functions for Search Modal
 
   const openSearchModal = () => {
-    toast({
-      variant: "destructive",
-      title: "Search function is still in progress ",
-      description: "Sorry About That",
-    })
+    setSearchModal(true);
   }
 
   // Functions for Cofirmation Modal
@@ -661,7 +660,6 @@ const HomePage = () => {
     setTimeout(() => {
       setFadeAwayClass('fadeInTrue');
     }, 2700)
-
   }
 
   const updateAllMatches = async () => {
@@ -676,12 +674,17 @@ const HomePage = () => {
       route.push('/');
     } else {
       const grabUserData = async () => {
-        const userData: IPublicUserData = await GetUserAPI(storageArr[0][1]);
-        setVerifiedUserData(userData);
-        setEditData(userData);
-        setCurrentUsername(storageArr[0][1])
-        setMatchData(await GetPublicMatchesByStateAPI(userData.location));
-        setCurrentUsersPosts(grabUserPosts(userData.id, await GetPublicMatchesByStateAPI(userData.location)));
+        try {
+          const userData: IPublicUserData = await GetUserAPI(storageArr[0][1]);
+          setVerifiedUserData(userData);
+          setEditData(userData);
+          setCurrentUsername(storageArr[0][1])
+          setMatchData(await GetPublicMatchesByStateAPI(userData.location));
+          setCurrentUsersPosts(grabUserPosts(userData.id, await GetPublicMatchesByStateAPI(userData.location)));
+        } catch (error) {
+          localStorage.clear();
+          route.push('/');
+        }
       }
       grabUserData();
     }
@@ -826,7 +829,8 @@ const HomePage = () => {
 
           {
             !messagePage ? (
-              <><div className='grid lg:grid-cols-[55%_45%] xl:min-h-[310px] mb-10'>
+              <>
+              <div className='grid lg:grid-cols-[55%_45%] xl:min-h-[310px] mb-10'>
 
                 {/* Col 1 */}
                 <div className='bg-black lg:rounded-tl-3xl lg:rounded-bl-3xl lg:rounded-none sm:rounded-3xl rounded-xl'>
