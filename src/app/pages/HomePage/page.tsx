@@ -725,6 +725,8 @@ const HomePage = () => {
 
         {/* Everything when opening profile modal */}
 
+        {/* Everything when opening profile modal */}
+
         {
           userProfileModal && <ProfileModalComponent userData={verifiedUserData} handleCloseUsersProfileModal={closeUsersProfileModal} handleOpenEditModal={openEditModal} openMyInfo={openMyInfo} openMyPosts={openMyPosts} onInfo={onInfo} posts={currentUsersPosts}/>
         }
