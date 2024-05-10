@@ -148,10 +148,10 @@ const ProfileModalComponent = (props: { userData: IPublicUserData, handleOpenEdi
                   <>
                   </>
                 ): (
-                  props.posts.map(p => {
+                  props.posts.map((p, idx)=> {
                   if (p.userID === props.userData.id && !p.isFinished) {
                     return (
-                      <ProfileMatchesComponent data={p} />
+                      <ProfileMatchesComponent data={p} key={idx}/>
                     )
                   }
                 })
