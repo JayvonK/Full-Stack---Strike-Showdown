@@ -11,6 +11,7 @@ const ProfileModalComponent = (props: { userData: IPublicUserData, handleOpenEdi
   const handleLogOut = () => {
     router.push('/');
   }
+
   return (
     <div className='lg:p-8 p-6 bg-white rounded-md'>
       <div className="grid sm:grid-cols-[40%_60%] lg:mb-8 mb-6">
