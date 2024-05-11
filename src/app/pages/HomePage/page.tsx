@@ -572,7 +572,7 @@ const HomePage = () => {
     setCurrentPpl(0);
     setDate(undefined);
     setEditMatchModal(false);
-    setOpenModal(false);
+    userProfileModal ? (setOpenModal(true)) : (setOpenModal(false)) 
   }
 
   const editMatchClick = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -674,28 +674,28 @@ const HomePage = () => {
     setCurrentUsersPosts(grabUserPosts(verifiedUserData.id, await GetPublicMatchesByStateAPI(verifiedUserData.location)));
   }
 
-  useEffect(() => {
-    let storageArr = GetLocalStorage();
-    setStorage(storageArr);
-    if (storageArr.length === 0) {
-      route.push('/');
-    } else {
-      const grabUserData = async () => {
-        try {
-          const userData: IPublicUserData = await GetUserAPI(storageArr[0][1]);
-          setVerifiedUserData(userData);
-          setEditData(userData);
-          setCurrentUsername(storageArr[0][1])
-          setMatchData(await GetPublicMatchesByStateAPI(userData.location));
-          setCurrentUsersPosts(grabUserPosts(userData.id, await GetPublicMatchesByStateAPI(userData.location)));
-        } catch (error) {
-          localStorage.clear();
-          route.push('/');
-        }
-      }
-      grabUserData();
-    }
-  }, [runUseEffect])
+  // useEffect(() => {
+  //   let storageArr = GetLocalStorage();
+  //   setStorage(storageArr);
+  //   if (storageArr.length === 0) {
+  //     route.push('/');
+  //   } else {
+  //     const grabUserData = async () => {
+  //       try {
+  //         const userData: IPublicUserData = await GetUserAPI(storageArr[0][1]);
+  //         setVerifiedUserData(userData);
+  //         setEditData(userData);
+  //         setCurrentUsername(storageArr[0][1])
+  //         setMatchData(await GetPublicMatchesByStateAPI(userData.location));
+  //         setCurrentUsersPosts(grabUserPosts(userData.id, await GetPublicMatchesByStateAPI(userData.location)));
+  //       } catch (error) {
+  //         localStorage.clear();
+  //         route.push('/');
+  //       }
+  //     }
+  //     grabUserData();
+  //   }
+  // }, [runUseEffect])
 
   return (
     <div>
@@ -726,11 +726,7 @@ const HomePage = () => {
         {/* Everything when opening profile modal */}
 
         {
-          userProfileModal && <ProfileModalComponent userData={verifiedUserData} handleCloseUsersProfileModal={closeUsersProfileModal} handleOpenEditModal={openEditModal} openMyInfo={openMyInfo} openMyPosts={openMyPosts} onInfo={onInfo} posts={currentUsersPosts}/>
-        }
-
-        {
-          userProfileModal && editMatchModal && editingChallengeBool && !confirmationModal && <AddChallengeModal addingChallengeBool={true} handleTrueChallengeBool={() => { }} handleFalseChallengeBool={() => { }} create1v1Challenge={create1v1Challenge} createPracticeSession={createPracticeSession} handleVisibilityChange={handleVisibilityChange} visibility={visibility} handleLocationOneChange={handleLocationOneChange} locationOne={locationOne} handleLocationTwoChange={handleLocationTwoChange} locationTwo={locationTwo} handleLocationThreeChange={handleLocationThreeChange} locationThree={locationThree} handlePracticeLocationChange={handlePracticeLocationChange} handlePracticeDescriptionChange={handlePracticeDescriptionChange} handleDescriptionChange={handleDescriptionChange} description={description} handleCloseModal={handleCloseMatchModal} handleTimeStartChange={handleTimeStartChange} handleTimeEndChange={handleTimeEndChange} setDate={setDate} handleMaxPplChange={handleMaxPplChange} timeStart={startTime} timeEnd={endTime} date={date} maxPpl={maxPpl.toString()} practiceLocation={practiceLocation} practiceDescription={practiceDescription} edit={true} closeEditMatchModal={closeEditMatchModal} editMatchClick={editMatchClick} openConfirmation={openConfirmation} />
+          userProfileModal && !editMatchModal && <ProfileModalComponent userData={verifiedUserData} handleCloseUsersProfileModal={closeUsersProfileModal} handleOpenEditModal={openEditModal} openMyInfo={openMyInfo} openMyPosts={openMyPosts} onInfo={onInfo} posts={currentUsersPosts} openEditMatchModal={openEditMatchModal}/>
         }
 
         {
@@ -773,7 +769,7 @@ const HomePage = () => {
         }
 
         {
-          userProfileModal && <ProfileModalComponent userData={verifiedUserData} handleCloseUsersProfileModal={closeUsersProfileModal} handleOpenEditModal={openEditModal} openMyInfo={openMyInfo} openMyPosts={openMyPosts} onInfo={onInfo} posts={currentUsersPosts} />
+          userProfileModal && <ProfileModalComponent userData={verifiedUserData} handleCloseUsersProfileModal={closeUsersProfileModal} handleOpenEditModal={openEditModal} openMyInfo={openMyInfo} openMyPosts={openMyPosts} onInfo={onInfo} posts={currentUsersPosts} openEditMatchModal={openEditMatchModal} />
         }
 
         {
@@ -812,7 +808,7 @@ const HomePage = () => {
         }
 
         {
-          userProfileModal && <ProfileModalComponent userData={verifiedUserData} handleCloseUsersProfileModal={closeUsersProfileModal} handleOpenEditModal={openEditModal} openMyInfo={openMyInfo} openMyPosts={openMyPosts} onInfo={onInfo} posts={currentUsersPosts} />
+          userProfileModal && <ProfileModalComponent userData={verifiedUserData} handleCloseUsersProfileModal={closeUsersProfileModal} handleOpenEditModal={openEditModal} openMyInfo={openMyInfo} openMyPosts={openMyPosts} onInfo={onInfo} posts={currentUsersPosts} openEditMatchModal={openEditMatchModal} />
         }
 
         {

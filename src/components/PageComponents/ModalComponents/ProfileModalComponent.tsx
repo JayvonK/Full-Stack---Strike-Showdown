@@ -6,7 +6,7 @@ import ProfilePic2 from "../../../../public/images/profilePIc.png";
 import { useRouter } from 'next/navigation';
 import { IPublicUserData, IUserPosts } from '@/interfaces/Interfaces';
 import ProfileMatchesComponent from '../HomePage/ProfileMatchesComponent';
-const ProfileModalComponent = (props: { userData: IPublicUserData, handleOpenEditModal: () => void, handleCloseUsersProfileModal: () => void, openMyPosts: () => void, openMyInfo: () => void, onInfo: boolean, posts: IUserPosts[] }) => {
+const ProfileModalComponent = (props: { userData: IPublicUserData, handleOpenEditModal: () => void, handleCloseUsersProfileModal: () => void, openMyPosts: () => void, openMyInfo: () => void, onInfo: boolean, posts: IUserPosts[], openEditMatchModal: (data: IUserPosts) => void }) => {
   const router = useRouter();
   const handleLogOut = () => {
     router.push('/');
@@ -155,7 +155,7 @@ const ProfileModalComponent = (props: { userData: IPublicUserData, handleOpenEdi
                   props.posts.map((p, idx)=> {
                   if (p.userID === props.userData.id && !p.isFinished) {
                     return (
-                      <ProfileMatchesComponent data={p} key={idx}/>
+                      <ProfileMatchesComponent data={p} key={idx} openEditMatchModal={props.openEditMatchModal}/>
                     )
                   }
                 })
