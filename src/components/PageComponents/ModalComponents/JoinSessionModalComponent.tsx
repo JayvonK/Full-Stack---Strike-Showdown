@@ -9,9 +9,9 @@ const JoinSessionModalComponent = () => {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-        setPageSize(window.innerWidth > 768);
+        setPageSize(window.innerWidth > 1024);
         const handleResize = () => {
-            setPageSize(window.innerWidth > 768)
+            setPageSize(window.innerWidth > 1024)
         }
         window.addEventListener('resize', handleResize)
         return () => window.removeEventListener('resize', handleResize)
@@ -64,7 +64,7 @@ const JoinSessionModalComponent = () => {
         <div className="">
           <p className="text-white jura text-xl md:text-lg lg:text-2xl">Location:</p>
           <p className=" jura text-xl md:text-lg lg:text-2xl text-orange-500">Paddock Bowl</p>
-          <div className="flex flex-col-6 justify-between pr-0  md:pr-0 lg:pr-0 xl:pr-0">
+          <div className="flex flex-col-6 justify-between pr-0  md:pr-0 lg:pr-0 xl:pr-52">
             <div>
               <p className="text-white jura text-xl md:text-lg lg:text-2xl">Spots:</p>
               <p className=" jura text-xl md:text-lg lg:text-2xl text-orange-500">1/3</p>

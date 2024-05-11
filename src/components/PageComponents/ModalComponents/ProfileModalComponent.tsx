@@ -10,13 +10,17 @@ const ProfileModalComponent = (props: { data: IPublicUserData, handleOpenEditMod
   const handleLogOut = () => {
     router.push('/');
   }
+
   return (
-    <div className='p-8'>
-      <div className="grid grid-cols-[40%_60%] mb-8">
-        <div className='flex items-center'>
+    <div className='bg-white'>
+
+    
+    <div className='p-4 '>
+      <div className="grid justify-center gap-3 grid-flow-col mb-8">
+        <div className='flex  items-center'>
           <img
-            src={props.data.profileImage}
-            className="w-48 aspect-square rounded-full border border-black ml-8"
+            src={''}
+            className="w-48 aspect-square rounded-full border border-black"
           ></img>
         </div>
         <div className='flex justify-end'>
@@ -121,6 +125,8 @@ const ProfileModalComponent = (props: { data: IPublicUserData, handleOpenEditMod
         </div>
       </div>
     </ div>
+    </ div>
+    
   )
 }
 
