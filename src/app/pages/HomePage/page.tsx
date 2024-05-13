@@ -572,7 +572,7 @@ const HomePage = () => {
     setCurrentPpl(0);
     setDate(undefined);
     setEditMatchModal(false);
-    userProfileModal ? (setOpenModal(true)) : (setOpenModal(false)) 
+    userProfileModal ? (setOpenModal(true)) : (setOpenModal(false))
   }
 
   const editMatchClick = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -623,6 +623,16 @@ const HomePage = () => {
 
 
   // End of functions for match modal
+
+  const closeAllModals = () => {
+    setMatchModal(false);
+    setEditModal(false);
+    setInboxModal(false);
+    setFriendsModal(false);
+    setSearchModal(false);
+    setEditMatchModal(false);
+    setOpenModal(false);
+  }
 
   const goToMessagingPage = () => {
     setMessagePage(true);
@@ -700,7 +710,7 @@ const HomePage = () => {
   return (
     <div>
       <NewNavBarComponent openFriendsModal={openFriendsModal} openUsersProfileModal={openUsersProfileModal} openInboxModal={openInboxModal} openSearchModal={openSearchModal} goToHomePage={goToHomePage} goToMessagingPage={goToMessagingPage} errorMobileModal={errorMobileModal} />
-      <Modal className='bg-black lg:flex hidden  justify-center' show={openModal} size={'4xl'} onClose={() => setOpenModal(false)}>
+      <Modal className='bg-black lg:flex hidden  justify-center bgModal' show={openModal} size={'4xl'} onClose={() => setOpenModal(false)}>
 
         {/* Everything with match modals */}
         {
@@ -726,7 +736,7 @@ const HomePage = () => {
         {/* Everything when opening profile modal */}
 
         {
-          userProfileModal && !editMatchModal && <ProfileModalComponent userData={verifiedUserData} handleCloseUsersProfileModal={closeUsersProfileModal} handleOpenEditModal={openEditModal} openMyInfo={openMyInfo} openMyPosts={openMyPosts} onInfo={onInfo} posts={currentUsersPosts} openEditMatchModal={openEditMatchModal}/>
+          userProfileModal && !editMatchModal && <ProfileModalComponent userData={verifiedUserData} handleCloseUsersProfileModal={closeUsersProfileModal} handleOpenEditModal={openEditModal} openMyInfo={openMyInfo} openMyPosts={openMyPosts} onInfo={onInfo} posts={currentUsersPosts} openEditMatchModal={openEditMatchModal} viewModal={false}/>
         }
 
         {
@@ -742,13 +752,13 @@ const HomePage = () => {
         }
 
         {
-          searchModal && <SearchModal />
+          searchModal && <SearchModal closeModal={closeSearchModal} userData={verifiedUserData} handleCloseUsersProfileModal={closeUsersProfileModal} handleOpenEditModal={openEditModal} openMyInfo={openMyInfo} openMyPosts={openMyPosts} onInfo={onInfo} posts={currentUsersPosts} openEditMatchModal={openEditMatchModal} />
         }
 
       </Modal>
 
       <Modal className='bg-black lg:hidden md:flex hidden justify-center items-center' show={openModal} size={'2xl'} onClose={() => setOpenModal(false)}>
-      {
+        {
           matchModal && <AddChallengeModal addingChallengeBool={addingChallengeBool} handleTrueChallengeBool={handleTrueChallengeBool} handleFalseChallengeBool={handleFalseChallengeBool} create1v1Challenge={create1v1Challenge} createPracticeSession={createPracticeSession} handleVisibilityChange={handleVisibilityChange} visibility={visibility} handleLocationOneChange={handleLocationOneChange} locationOne={locationOne} handleLocationTwoChange={handleLocationTwoChange} locationTwo={locationTwo} handleLocationThreeChange={handleLocationThreeChange} locationThree={locationThree} handlePracticeLocationChange={handlePracticeLocationChange} handlePracticeDescriptionChange={handlePracticeDescriptionChange} handleDescriptionChange={handleDescriptionChange} description={description} handleCloseModal={handleCloseMatchModal} handleTimeStartChange={handleTimeStartChange} handleTimeEndChange={handleTimeEndChange} setDate={setDate} handleMaxPplChange={handleMaxPplChange} timeStart={startTime} timeEnd={endTime} date={date} maxPpl={maxPpl.toString()} practiceLocation={practiceLocation} practiceDescription={practiceDescription} edit={false} closeEditMatchModal={closeEditMatchModal} editMatchClick={editMatchClick} openConfirmation={openConfirmation} />
         }
 
@@ -769,7 +779,7 @@ const HomePage = () => {
         }
 
         {
-          userProfileModal && <ProfileModalComponent userData={verifiedUserData} handleCloseUsersProfileModal={closeUsersProfileModal} handleOpenEditModal={openEditModal} openMyInfo={openMyInfo} openMyPosts={openMyPosts} onInfo={onInfo} posts={currentUsersPosts} openEditMatchModal={openEditMatchModal} />
+          userProfileModal && <ProfileModalComponent userData={verifiedUserData} handleCloseUsersProfileModal={closeUsersProfileModal} handleOpenEditModal={openEditModal} openMyInfo={openMyInfo} openMyPosts={openMyPosts} onInfo={onInfo} posts={currentUsersPosts} openEditMatchModal={openEditMatchModal} viewModal={false}/>
         }
 
         {
@@ -781,13 +791,13 @@ const HomePage = () => {
         }
 
         {
-          searchModal && <SearchModal />
+          searchModal && <SearchModal closeModal={closeSearchModal} userData={verifiedUserData} handleCloseUsersProfileModal={closeUsersProfileModal} handleOpenEditModal={openEditModal} openMyInfo={openMyInfo} openMyPosts={openMyPosts} onInfo={onInfo} posts={currentUsersPosts} openEditMatchModal={openEditMatchModal} />
         }
 
       </Modal>
 
       <Modal className='bg-black md:hidden sm:flex hidden justify-center items-center h-auto' show={openModal} size={'xl'} onClose={() => setOpenModal(false)}>
-      {
+        {
           matchModal && <AddChallengeModal addingChallengeBool={addingChallengeBool} handleTrueChallengeBool={handleTrueChallengeBool} handleFalseChallengeBool={handleFalseChallengeBool} create1v1Challenge={create1v1Challenge} createPracticeSession={createPracticeSession} handleVisibilityChange={handleVisibilityChange} visibility={visibility} handleLocationOneChange={handleLocationOneChange} locationOne={locationOne} handleLocationTwoChange={handleLocationTwoChange} locationTwo={locationTwo} handleLocationThreeChange={handleLocationThreeChange} locationThree={locationThree} handlePracticeLocationChange={handlePracticeLocationChange} handlePracticeDescriptionChange={handlePracticeDescriptionChange} handleDescriptionChange={handleDescriptionChange} description={description} handleCloseModal={handleCloseMatchModal} handleTimeStartChange={handleTimeStartChange} handleTimeEndChange={handleTimeEndChange} setDate={setDate} handleMaxPplChange={handleMaxPplChange} timeStart={startTime} timeEnd={endTime} date={date} maxPpl={maxPpl.toString()} practiceLocation={practiceLocation} practiceDescription={practiceDescription} edit={false} closeEditMatchModal={closeEditMatchModal} editMatchClick={editMatchClick} openConfirmation={openConfirmation} />
         }
 
@@ -808,7 +818,7 @@ const HomePage = () => {
         }
 
         {
-          userProfileModal && <ProfileModalComponent userData={verifiedUserData} handleCloseUsersProfileModal={closeUsersProfileModal} handleOpenEditModal={openEditModal} openMyInfo={openMyInfo} openMyPosts={openMyPosts} onInfo={onInfo} posts={currentUsersPosts} openEditMatchModal={openEditMatchModal} />
+          userProfileModal && <ProfileModalComponent userData={verifiedUserData} handleCloseUsersProfileModal={closeUsersProfileModal} handleOpenEditModal={openEditModal} openMyInfo={openMyInfo} openMyPosts={openMyPosts} onInfo={onInfo} posts={currentUsersPosts} openEditMatchModal={openEditMatchModal} viewModal={false}/>
         }
 
         {
@@ -820,14 +830,14 @@ const HomePage = () => {
         }
 
         {
-          searchModal && <SearchModal />
+          searchModal && <SearchModal closeModal={closeSearchModal} userData={verifiedUserData} handleCloseUsersProfileModal={closeUsersProfileModal} handleOpenEditModal={openEditModal} openMyInfo={openMyInfo} openMyPosts={openMyPosts} onInfo={onInfo} posts={currentUsersPosts} openEditMatchModal={openEditMatchModal} />
         }
 
       </Modal>
 
 
       <Modal className='bg-black sm:hidden flex justify-center items-center h-auto' show={openModal} size={'sm'} onClose={() => setOpenModal(false)}>
-      {
+        {
           matchModal && <AddChallengeModal addingChallengeBool={addingChallengeBool} handleTrueChallengeBool={handleTrueChallengeBool} handleFalseChallengeBool={handleFalseChallengeBool} create1v1Challenge={create1v1Challenge} createPracticeSession={createPracticeSession} handleVisibilityChange={handleVisibilityChange} visibility={visibility} handleLocationOneChange={handleLocationOneChange} locationOne={locationOne} handleLocationTwoChange={handleLocationTwoChange} locationTwo={locationTwo} handleLocationThreeChange={handleLocationThreeChange} locationThree={locationThree} handlePracticeLocationChange={handlePracticeLocationChange} handlePracticeDescriptionChange={handlePracticeDescriptionChange} handleDescriptionChange={handleDescriptionChange} description={description} handleCloseModal={handleCloseMatchModal} handleTimeStartChange={handleTimeStartChange} handleTimeEndChange={handleTimeEndChange} setDate={setDate} handleMaxPplChange={handleMaxPplChange} timeStart={startTime} timeEnd={endTime} date={date} maxPpl={maxPpl.toString()} practiceLocation={practiceLocation} practiceDescription={practiceDescription} edit={false} closeEditMatchModal={closeEditMatchModal} editMatchClick={editMatchClick} openConfirmation={openConfirmation} />
         }
 
@@ -860,7 +870,7 @@ const HomePage = () => {
         }
 
         {
-          searchModal && <SearchModal />
+          searchModal && <SearchModal closeModal={closeSearchModal} userData={verifiedUserData} handleCloseUsersProfileModal={closeUsersProfileModal} handleOpenEditModal={openEditModal} openMyInfo={openMyInfo} openMyPosts={openMyPosts} onInfo={onInfo} posts={currentUsersPosts} openEditMatchModal={openEditMatchModal} />
         }
 
       </Modal>

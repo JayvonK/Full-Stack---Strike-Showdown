@@ -5,7 +5,7 @@ import React from 'react'
 
 const EditProfileModal = (props: { data: IPublicUserData, handleEditStyleChange: (e: string) => void, handleCloseEditModal: () => void, handleEditUsernameChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleEditEmailChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleEditPronounsChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleEditFullNameChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleEditMainCenterChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleEditAverageChange: (e: string) => void, handleEditEarningsChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleEditHighGameChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleEditHighSeriesChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleEditUserConfirm: (e: React.FormEvent<HTMLFormElement>) => void, handleEditProfileImgChange: (e: React.ChangeEvent<HTMLInputElement>) => void }) => {
   return (
-    <div className='p-4'>
+    <div className='p-4 bg-white rounded-md'>
       <form onSubmit={props.handleEditUserConfirm}>
         <div className='bg-black py-6 px-10 rounded-lg'>
           <div className='flex w-full flex-col items-center mb-10'>
@@ -100,9 +100,9 @@ const EditProfileModal = (props: { data: IPublicUserData, handleEditStyleChange:
           </div>
         </div>
 
-        <div className='p-4 flex justify-end'>
-          <button type='submit' className={'jura text-4xl py-2 px-4 rounded-md mr-6 bgOrange'}>Confirm</button>
-          <button className={'jura text-4xl py-2 px-4 rounded-md bg-red-500'} onClick={props.handleCloseEditModal} >Cancel</button>
+        <div className='pt-4 flex justify-end'>
+          <button type='submit' className={'jura lg:text-3xl text-2xl py-2 px-4 rounded-md mr-6 bgOrange'}>Confirm</button>
+          <button className={'jura lg:text-3xl text-2xl py-2 px-4 rounded-md bg-red-500'} onClick={props.handleCloseEditModal} >Cancel</button>
         </div>
       </form>
     </div>
