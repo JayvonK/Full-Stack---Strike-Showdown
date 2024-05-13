@@ -3,10 +3,12 @@ import React, { useState } from 'react'
 import { Modal } from 'flowbite-react';
 import "../../../app/css/LoginPageAndHome.css";
 import ProfilePic2 from "../../../../public/images/profilePIc.png";
+import AddFriendIcon from "../../../../public/images/UserPlus.png"
+import MessagingIcon from "../../../../public/images/MessageProfile.png"
 import { useRouter } from 'next/navigation';
 import { IPublicUserData, IUserPosts } from '@/interfaces/Interfaces';
 import ProfileMatchesComponent from '../HomePage/ProfileMatchesComponent';
-const ProfileModalComponent = (props: { userData: IPublicUserData, handleOpenEditModal: () => void, handleCloseUsersProfileModal: () => void, openMyPosts: () => void, openMyInfo: () => void, onInfo: boolean, posts: IUserPosts[], openEditMatchModal: (data: IUserPosts) => void }) => {
+const ProfileModalComponent = (props: { userData: IPublicUserData, handleOpenEditModal: () => void, handleCloseUsersProfileModal: () => void, openMyPosts: () => void, openMyInfo: () => void, onInfo: boolean, posts: IUserPosts[], openEditMatchModal: (data: IUserPosts) => void, viewModal: boolean }) => {
   const router = useRouter();
   const handleLogOut = () => {
     router.push('/');
@@ -36,13 +38,38 @@ const ProfileModalComponent = (props: { userData: IPublicUserData, handleOpenEdi
               </div>
 
               <div className="flex justify-between">
-                <button className="bg-orange-500  rounded-md pt-2 pb-2 md:px-8 px-6  hover:!bg-orange-500 text-black " onClick={props.handleOpenEditModal}>
-                  <h3 className="lg:text-3xl text-2xl ">Edit</h3>
-                </button>
+                {
+                  props.viewModal ? (
+                    <>
+                      <button className=" bg-orange-500  rounded-lg px-3 pt-1 pb-1 w-24 lg:w-48  hover:!bg-orange-500 text-black jura">
+                        <div className="flex flex-col-2  items-center justify-center">
 
-                <button onClick={handleLogOut} className="bg-red-500 md:px-8 px-6 rounded-md pt-2 pb-2  text-black ">
-                  <h3 className="lg:text-3xl text-2xl">Log Out</h3>
-                </button>
+                          <img alt="Friend Icon" src={AddFriendIcon.src} className="h-4 lg:h-8 lg:w-8 mr-3" />
+
+                          <div>
+                            <h3 className="text-base md:text-3xl text-center">
+                              Friend
+                            </h3>
+                          </div>
+                        </div>
+                      </button>
+
+                      <button onClick={() => {}} className="bg-orange-500 w-24 flex justify-center rounded-lg pt-2 text-black jura">
+                        <img src={MessagingIcon.src} className="h-6 w-6 " alt="message icon" />
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <button className="bg-orange-500  rounded-md pt-2 pb-2 md:px-8 px-6  hover:!bg-orange-500 text-black " onClick={props.handleOpenEditModal}>
+                        <h3 className="lg:text-3xl text-2xl ">Edit</h3>
+                      </button>
+
+                      <button onClick={handleLogOut} className="bg-red-500 md:px-8 px-6 rounded-md pt-2 pb-2  text-black ">
+                        <h3 className="lg:text-3xl text-2xl">Log Out</h3>
+                      </button>
+                    </>
+                  )
+                }
               </div>
 
             </div>
@@ -151,24 +178,29 @@ const ProfileModalComponent = (props: { userData: IPublicUserData, handleOpenEdi
                       No matches found
                     </h1>
                   </>
-                ): (
-                  props.posts.map((p, idx)=> {
-                  if (p.userID === props.userData.id && !p.isFinished) {
-                    return (
-                      <ProfileMatchesComponent data={p} key={idx} openEditMatchModal={props.openEditMatchModal}/>
-                    )
-                  }
-                })
-              ))
-                
+                ) : (
+                  props.posts.map((p, idx) => {
+                    if (p.userID === props.userData.id && !p.isFinished) {
+                      return (
+                        <ProfileMatchesComponent data={p} key={idx} openEditMatchModal={props.openEditMatchModal} />
+                      )
+                    }
+                  })
+                ))
+
           }
 
 
         </div>
 
-        <div className='lg:pt-8 pt-6 flex justify-end'>
-          <button className={'jura lg:text-3xl text-2xl py-2 px-4 rounded-md bgOrange'} onClick={props.handleCloseUsersProfileModal}>Close</button>
-        </div>
+        {
+          !props.viewModal ? (<div className='lg:pt-8 pt-6 flex justify-end'>
+            <button className={'jura lg:text-3xl text-2xl py-2 px-4 rounded-md bgOrange'} onClick={props.handleCloseUsersProfileModal}>Close</button>
+          </div>) : (
+            <></>
+          )
+        }
+
 
       </div>
 

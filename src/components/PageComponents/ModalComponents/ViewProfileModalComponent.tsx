@@ -103,8 +103,8 @@ setActiveTab(tab);
         </div>
       </div>
       
-      <div className=" flex justify-center  ">
-        <div className="rounded-xl  bg-black  w-1/2  py-2 mx-5 px-5  mb-5 md:px-10 ">
+      <div className=" flex  w-full">
+        <div className="rounded-xl  bg-black  py-2 mx-5 px-5  mb-5 md:px-10 ">
           <div className="rounded-xl  justify-space bg-black   grid grid-flow-col auto-cols">
     
             <div className="" >
