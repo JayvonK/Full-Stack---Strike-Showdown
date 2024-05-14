@@ -129,9 +129,11 @@ const HomePage = () => {
   const [editMatchID, setEditMatchID] = useState<number>(0);
   const [canReloadMatchData, setCanReloadMatchData] = useState<boolean>(true);
 
-  // State Variables for View Match Modal
+  // State Variables for Viewing Matches Modal
   const [viewMatchData, setViewMatchData] = useState<IUserPosts>(postsData[0]);
   const [viewMatchModal, setViewMatchModal] = useState<boolean>(false);
+  const [joinSessionModal, setJoinSessionModal] = useState<boolean>(false);
+  const [joinChallengeModal, setJoinChallengeModal] = useState<boolean>(false);
 
   // State Variables for Users Profile Modal
   const [userProfileModal, setUserProfileModal] = useState<boolean>(false);
@@ -250,9 +252,9 @@ const HomePage = () => {
   const openSearchModal = async () => {
     setSearchModal(true);
     setOpenModal(true);
-    // let data = await GetUsersByStateAPI(verifiedUserData.location);
-    // setUsersArray(data);
-    // console.log(data);
+    let data = await GetUsersByStateAPI(verifiedUserData.location);
+    setUsersArray(data);
+    console.log(data);
   }
 
   const closeSearchModal = () => {
@@ -591,8 +593,19 @@ const HomePage = () => {
     setOpenModal(true);
   }
 
+  const viewChallenge = (data: IUserPosts) => {
+    setJoinChallengeModal(true);
+    setOpenModal(true);
+  }
+
+  const viewSession = (data: IUserPosts) => {
+    setJoinSessionModal(true);
+    setOpenModal(true);
+  }
+
   const closeViewMatch = () => {
-    setViewMatchModal(false);
+    setJoinChallengeModal(false);
+    setJoinSessionModal(false);
     setOpenModal(false);
   }
 
@@ -805,7 +818,7 @@ const HomePage = () => {
         {/* Everything when opening profile modal */}
 
         {
-          userProfileModal && !editMatchModal && <ProfileModalComponent userData={verifiedUserData} handleCloseUsersProfileModal={closeUsersProfileModal} handleOpenEditModal={openEditModal} openMyInfo={openMyInfo} openMyPosts={openMyPosts} onInfo={onInfo} posts={currentUsersPosts} openEditMatchModal={openEditMatchModal} viewModal={false} viewMatch={viewMatch} />
+          userProfileModal && !editMatchModal && !editModal && <ProfileModalComponent userData={verifiedUserData} handleCloseUsersProfileModal={closeUsersProfileModal} handleOpenEditModal={openEditModal} openMyInfo={openMyInfo} openMyPosts={openMyPosts} onInfo={onInfo} posts={currentUsersPosts} openEditMatchModal={openEditMatchModal} viewModal={false} viewChallenge={viewChallenge} viewSession={viewSession}/>
         }
 
         {
@@ -825,15 +838,15 @@ const HomePage = () => {
         }
 
         {
-          searchModal && viewOtherUserModal && !viewMatchModal && <ProfileModalComponent userData={viewOtherUserData} handleCloseUsersProfileModal={() => setViewOtherUserModal(false)} handleOpenEditModal={openEditModal} openMyInfo={openMyInfo} openMyPosts={openMyPosts} onInfo={onInfo} posts={currentUsersPosts} openEditMatchModal={openEditMatchModal} viewModal={true} viewMatch={viewMatch}/>
+          searchModal && viewOtherUserModal && !joinChallengeModal && !joinSessionModal && <ProfileModalComponent userData={viewOtherUserData} handleCloseUsersProfileModal={() => setViewOtherUserModal(false)} handleOpenEditModal={openEditModal} openMyInfo={openMyInfo} openMyPosts={openMyPosts} onInfo={onInfo} posts={currentUsersPosts} openEditMatchModal={openEditMatchModal} viewModal={true} viewChallenge={viewChallenge} viewSession={viewSession}/>
         }
 
         {
-          searchModal && viewOtherUserModal && viewMatchModal && <JoinSessionModalComponent />
+          searchModal && viewOtherUserModal && joinChallengeModal && <JoinChallengeModal data={viewMatchData} closeModal={closeViewMatch} joinChallenge={() => {}} />
         }
 
         {
-          viewMatchModal && !searchModal && <JoinChallengeModal data={viewMatchData} closeModal={closeViewMatch} joinChallenge={() => {}} />
+          joinChallengeModal && !searchModal && <JoinChallengeModal data={viewMatchData} closeModal={closeViewMatch} joinChallenge={() => {}} />
         }
 
       </Modal>
@@ -860,7 +873,7 @@ const HomePage = () => {
         }
 
         {
-          userProfileModal && <ProfileModalComponent userData={verifiedUserData} handleCloseUsersProfileModal={closeUsersProfileModal} handleOpenEditModal={openEditModal} openMyInfo={openMyInfo} openMyPosts={openMyPosts} onInfo={onInfo} posts={currentUsersPosts} openEditMatchModal={openEditMatchModal} viewModal={false} viewMatch={viewMatch}/>
+          <ProfileModalComponent userData={viewOtherUserData} handleCloseUsersProfileModal={() => setViewOtherUserModal(false)} handleOpenEditModal={openEditModal} openMyInfo={openMyInfo} openMyPosts={openMyPosts} onInfo={onInfo} posts={currentUsersPosts} openEditMatchModal={openEditMatchModal} viewModal={true} viewChallenge={viewChallenge} viewSession={viewSession}/>
         }
 
         {
@@ -899,7 +912,7 @@ const HomePage = () => {
         }
 
         {
-          userProfileModal && <ProfileModalComponent userData={verifiedUserData} handleCloseUsersProfileModal={closeUsersProfileModal} handleOpenEditModal={openEditModal} openMyInfo={openMyInfo} openMyPosts={openMyPosts} onInfo={onInfo} posts={currentUsersPosts} openEditMatchModal={openEditMatchModal} viewModal={false} viewMatch={viewMatch}/>
+          userProfileModal && <ProfileModalComponent userData={viewOtherUserData} handleCloseUsersProfileModal={() => setViewOtherUserModal(false)} handleOpenEditModal={openEditModal} openMyInfo={openMyInfo} openMyPosts={openMyPosts} onInfo={onInfo} posts={currentUsersPosts} openEditMatchModal={openEditMatchModal} viewModal={true} viewChallenge={viewChallenge} viewSession={viewSession}/>
         }
 
         {
