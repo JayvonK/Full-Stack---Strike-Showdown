@@ -29,7 +29,7 @@ const ProfileMatchesComponent = (props: {data: IUserPosts, openEditMatchModal: (
                 </div>
 
                 <div className='sm:flex justify-end items-center hidden'>
-                    <button className="bg-orange-500 rounded-md pt-2 pb-2 md:px-8 sm:px-6 px-4 text-black" onClick={() => props.openEditMatchModal(props.data)}>
+                    <button className="bg-orange-500 rounded-md pt-2 pb-2 md:px-8 sm:px-6 px-4 text-black" onClick={props.viewModal ? props.viewMatch : () => props.openEditMatchModal(props.data)}>
                         <h3 className="lg:text-2xl sm:text-xl text-lg">{props.viewModal ? "View" : "Edit"}</h3>
                     </button>
                 </div>

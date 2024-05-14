@@ -153,9 +153,9 @@ export default function Home() {
 
                     <form onSubmit={(e) => handleLogin(e)}>
 
-                      <RequiredInputComponent title={"Username:"} type={'text'} borderError={userBorderError} placeholder="Username/Email" value={username} onChange={handleUserChange} maxLength={50000} />
+                      <RequiredInputComponent title={"Username:"} type={'text'} borderError={userBorderError} placeholder="Username/Email" value={username} onChange={handleUserChange} maxLength={50} />
 
-                      <RequiredInputComponent title={"Password:"} type={'password'} borderError={passwordBorderError} placeholder="Password" value={password} onChange={handlePasswordChange} maxLength={524288} />
+                      <RequiredInputComponent title={"Password:"} type={'password'} borderError={passwordBorderError} placeholder="Password" value={password} onChange={handlePasswordChange} maxLength={50} />
 
                       <h3 className=" text-2xl txtOrange jura underline hover:cursor-pointer hover:text-[#ff9939] my-2" onClick={handleForgotPassword}>Forgot Password?</h3>
 

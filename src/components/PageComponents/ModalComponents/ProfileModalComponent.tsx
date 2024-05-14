@@ -182,12 +182,11 @@ const ProfileModalComponent = (props: { userData: IPublicUserData, handleOpenEdi
                   props.posts.map((p, idx) => {
                     if (p.userID === props.userData.id && !p.isFinished) {
                       return (
-                        <ProfileMatchesComponent data={p} key={idx} openEditMatchModal={props.openEditMatchModal} viewMatch={() => props.viewMatch} viewModal={props.viewModal}/>
+                        <ProfileMatchesComponent data={p} key={idx} openEditMatchModal={props.openEditMatchModal} viewMatch={() => props.viewMatch(p)} viewModal={props.viewModal} />
                       )
                     }
                   })
                 ))
-
           }
 
 
