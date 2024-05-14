@@ -1,16 +1,36 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { IPublicUserData, IUserPosts } from '@/interfaces/Interfaces'
-import ProfileModalComponent from '../../ModalComponents/ProfileModalComponent'
+import SearchModalRecentUsersComponent from './SearchModalRecentUsersComponent'
 
-const SearchModal = (props: { closeModal: () => void, userData: IPublicUserData, handleOpenEditModal: () => void, handleCloseUsersProfileModal: () => void, openMyPosts: () => void, openMyInfo: () => void, onInfo: boolean, posts: IUserPosts[], openEditMatchModal: (data: IUserPosts) => void }) => {
+const SearchModal = (props: { closeModal: () => void, userArr: IPublicUserData[], clickSearch: (data: IPublicUserData) => void }) => {
+
+  const [recSearch, setRecSearch] = useState<boolean>(false);
+  const [searchedUsername, setSearchedUsername] = useState<string>('');
+
+  const viewUser = () => {
+    setRecSearch(true);
+  }
+
   return (
     <div>
-      <div className='bg-white rounded-lg'>
-        <input type="text" placeholder='Search For User' className='bg-transparent jura lg:text-3xl text-2xl w-full pl-8 py-2' />
-      </div>
+      <div className='bg-white rounded-lg max-h-[850px] overflow-auto '>
+        <input type="text" placeholder='Search For User' className='bg-transparent jura lg:text-3xl text-2xl w-full pl-6 py-2 relative' onFocus={() => setRecSearch(true)} onChange={(e) => setSearchedUsername(e.target.value)} />
 
-      <div className='mt-4'>
-        <ProfileModalComponent userData={props.userData} handleCloseUsersProfileModal={props.handleCloseUsersProfileModal} handleOpenEditModal={props.handleOpenEditModal} openMyInfo={props.openMyInfo} openMyPosts={props.openMyPosts} onInfo={props.onInfo} posts={props.posts} openEditMatchModal={props.openEditMatchModal} viewModal={true} />
+        <>
+          {
+            recSearch && props.userArr.map((user, idx) => {
+              if (searchedUsername.trim() === '') {
+                return (
+                  idx === props.userArr.length - 1 ? (<SearchModalRecentUsersComponent key={idx} username={user.username} avg={user.average} wins={user.wins} losses={user.losses} pfp={user.profileImage} last={true} viewUser={() => { props.clickSearch(user) }} />) : (<SearchModalRecentUsersComponent key={idx} username={user.username} avg={user.average} wins={user.wins} losses={user.losses} pfp={user.profileImage} last={false} viewUser={() => { props.clickSearch(user) }} />)
+                )
+              } else if (user.username.toLowerCase().includes(searchedUsername.toLowerCase())){
+                return (
+                  idx === props.userArr.length - 1 ? (<SearchModalRecentUsersComponent key={idx} username={user.username} avg={user.average} wins={user.wins} losses={user.losses} pfp={user.profileImage} last={true} viewUser={() => { props.clickSearch(user) }} />) : (<SearchModalRecentUsersComponent key={idx} username={user.username} avg={user.average} wins={user.wins} losses={user.losses} pfp={user.profileImage} last={false} viewUser={() => { props.clickSearch(user) }} />)
+                )
+              }
+            })
+          }
+        </>
       </div>
 
       <div className='pt-4 flex justify-end'>

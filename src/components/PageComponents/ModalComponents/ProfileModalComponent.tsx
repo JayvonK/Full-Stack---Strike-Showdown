@@ -8,7 +8,7 @@ import MessagingIcon from "../../../../public/images/MessageProfile.png"
 import { useRouter } from 'next/navigation';
 import { IPublicUserData, IUserPosts } from '@/interfaces/Interfaces';
 import ProfileMatchesComponent from '../HomePage/ProfileMatchesComponent';
-const ProfileModalComponent = (props: { userData: IPublicUserData, handleOpenEditModal: () => void, handleCloseUsersProfileModal: () => void, openMyPosts: () => void, openMyInfo: () => void, onInfo: boolean, posts: IUserPosts[], openEditMatchModal: (data: IUserPosts) => void, viewModal: boolean }) => {
+const ProfileModalComponent = (props: { userData: IPublicUserData, handleOpenEditModal: () => void, handleCloseUsersProfileModal: () => void, openMyPosts: () => void, openMyInfo: () => void, onInfo: boolean, posts: IUserPosts[], openEditMatchModal: (data: IUserPosts) => void, viewModal: boolean, viewMatch: (post: IUserPosts) => void }) => {
   const router = useRouter();
   const handleLogOut = () => {
     router.push('/');
@@ -54,7 +54,7 @@ const ProfileModalComponent = (props: { userData: IPublicUserData, handleOpenEdi
                         </div>
                       </button>
 
-                      <button onClick={() => {}} className="bg-orange-500 w-24 flex justify-center rounded-lg pt-2 text-black jura">
+                      <button onClick={() => { }} className="bg-orange-500 w-24 flex justify-center rounded-lg pt-2 text-black jura">
                         <img src={MessagingIcon.src} className="h-6 w-6 " alt="message icon" />
                       </button>
                     </>
@@ -182,7 +182,7 @@ const ProfileModalComponent = (props: { userData: IPublicUserData, handleOpenEdi
                   props.posts.map((p, idx) => {
                     if (p.userID === props.userData.id && !p.isFinished) {
                       return (
-                        <ProfileMatchesComponent data={p} key={idx} openEditMatchModal={props.openEditMatchModal} />
+                        <ProfileMatchesComponent data={p} key={idx} openEditMatchModal={props.openEditMatchModal} viewMatch={() => props.viewMatch} viewModal={props.viewModal}/>
                       )
                     }
                   })
@@ -193,13 +193,9 @@ const ProfileModalComponent = (props: { userData: IPublicUserData, handleOpenEdi
 
         </div>
 
-        {
-          !props.viewModal ? (<div className='lg:pt-8 pt-6 flex justify-end'>
-            <button className={'jura lg:text-3xl text-2xl py-2 px-4 rounded-md bgOrange'} onClick={props.handleCloseUsersProfileModal}>Close</button>
-          </div>) : (
-            <></>
-          )
-        }
+        <div className='lg:pt-8 pt-6 flex justify-end'>
+          <button className={'jura lg:text-3xl text-2xl py-2 px-4 rounded-md bgOrange'} onClick={props.handleCloseUsersProfileModal}>Close</button>
+        </div>
 
 
       </div>

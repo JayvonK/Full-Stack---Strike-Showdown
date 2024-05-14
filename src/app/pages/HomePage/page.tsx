@@ -20,7 +20,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { useState } from "react";
 import { useAppContext } from '@/context/Context';
 import { ICreatePost, IPublicUserData, IUserInfoWithStats, IUserPosts } from '@/interfaces/Interfaces';
-import { CreatePostAPI, DeleteMatchAPI, GetPublicMatchesByStateAPI, GetUserAPI, UpdateMatchAPI, UpdateUserAPI } from '@/Data/DataServices';
+import { CreatePostAPI, DeleteMatchAPI, GetPublicMatchesByStateAPI, GetUserAPI, GetUsersByStateAPI, UpdateMatchAPI, UpdateUserAPI } from '@/Data/DataServices';
 import PracticePostDummyData from '../../../utils/PostData.json';
 import PracticeSessionComponent from '@/components/PageComponents/HomePage/PracticeSessionComponent';
 import MatchComponent from '@/components/PageComponents/HomePage/MatchComponent';
@@ -65,6 +65,28 @@ const HomePage = () => {
     streak: 5
   }
 
+  const fakeUserData2: IPublicUserData = {
+    id: 1,
+    username: 'NotKingOfBowling',
+    email: 'kingofbowling@gmail.com',
+    location: 'CA',
+    securityQuestion: '',
+    securityQuestionTwo: '',
+    securityQuestionThree: '',
+    fullName: 'Edward Sokel',
+    profileImage: '/images/feetsaiah.png',
+    pronouns: 'he/him',
+    wins: 100,
+    losses: 50,
+    style: '2 Handed (Right)',
+    mainCenter: 'Pacific Avenue Bowl',
+    average: '120-130 Avg',
+    earnings: '700',
+    highGame: '300',
+    highSeries: '800',
+    streak: 5
+  }
+
   const pageContext = useAppContext();
   const route = useRouter();
   const placeholderDate = new Date();
@@ -77,6 +99,7 @@ const HomePage = () => {
   const [skeleton, setSkeleton] = useState<boolean>(false);
   const [messagePage, setMessagePage] = useState<boolean>(false);
   const [currentUsersPosts, setCurrentUsersPosts] = useState<IUserPosts[]>([]);
+  const [usersArray, setUsersArray] = useState<IPublicUserData[]>([fakeUserData, fakeUserData, fakeUserData2])
 
   // State Variables For Match Data
   const [matchData, setMatchData] = useState<(IUserPosts)[]>(postsData);
@@ -104,9 +127,17 @@ const HomePage = () => {
   const [editMatchID, setEditMatchID] = useState<number>(0);
   const [canReloadMatchData, setCanReloadMatchData] = useState<boolean>(true);
 
+  // State Variables for View Match Modal
+  const [viewMatchData, setViewMatchData] = useState<IUserPosts>(postsData[0]);
+  const [viewMatchModal, setViewMatchModal] = useState<boolean>(false);
+
+
   // State Variables for Users Profile Modal
   const [userProfileModal, setUserProfileModal] = useState<boolean>(false);
   const [onInfo, setOnInfo] = useState<boolean>(true);
+
+  const [viewOtherUserModal, setViewOtherUserModal] = useState<boolean>(false);
+  const [viewOtherUserData, setViewOtherUserData] = useState<IPublicUserData>(fakeUserData);
 
   // State Variables for Inbox Modal
   const [inboxModal, setInboxModal] = useState<boolean>(false);
@@ -176,6 +207,18 @@ const HomePage = () => {
     setOnInfo(false);
   }
 
+  // Function for viewing others profile
+
+  const openViewOtherUserModal = () => {
+    setViewOtherUserModal(true);
+    setOpenModal(true);
+  }
+
+  const closeViewOtherUserModal = () => {
+    setViewOtherUserModal(false);
+    setOpenModal(false);
+  }
+
   // Functions for Friends Modal
 
   const openFriendsModal = () => {
@@ -203,14 +246,25 @@ const HomePage = () => {
 
   // Functions for Search Modal
 
-  const openSearchModal = () => {
+  const openSearchModal = async () => {
     setSearchModal(true);
     setOpenModal(true);
+    // let data = await GetUsersByStateAPI(verifiedUserData.location);
+    // setUsersArray(data);
+    // console.log(data);
   }
 
   const closeSearchModal = () => {
     setSearchModal(false);
     setOpenModal(false);
+  }
+
+  const clickSearch = (data: IPublicUserData) => {
+    setViewOtherUserData(data);
+    setCurrentUsersPosts(grabUserPosts(data.id, postsData))
+    openViewOtherUserModal();
+    console.log(grabUserPosts(data.id, postsData));
+    console.log(matchData)
   }
 
   // Functions for Cofirmation Modal
@@ -382,6 +436,7 @@ const HomePage = () => {
     setMatchModal(true);
     setOpenModal(true);
   }
+
   const handleTrueChallengeBool = () => {
     setAddingChallengeBool(true);
   }
@@ -525,6 +580,12 @@ const HomePage = () => {
         description: "Uh Oh",
       })
     }
+  }
+
+  // View Matches Functions
+
+  const viewMatch = (data: IUserPosts) => {
+
   }
 
   // Edit Match Modal
@@ -736,7 +797,7 @@ const HomePage = () => {
         {/* Everything when opening profile modal */}
 
         {
-          userProfileModal && !editMatchModal && <ProfileModalComponent userData={verifiedUserData} handleCloseUsersProfileModal={closeUsersProfileModal} handleOpenEditModal={openEditModal} openMyInfo={openMyInfo} openMyPosts={openMyPosts} onInfo={onInfo} posts={currentUsersPosts} openEditMatchModal={openEditMatchModal} viewModal={false}/>
+          userProfileModal && !editMatchModal && <ProfileModalComponent userData={verifiedUserData} handleCloseUsersProfileModal={closeUsersProfileModal} handleOpenEditModal={openEditModal} openMyInfo={openMyInfo} openMyPosts={openMyPosts} onInfo={onInfo} posts={currentUsersPosts} openEditMatchModal={openEditMatchModal} viewModal={false} viewMatch={viewMatch} />
         }
 
         {
@@ -752,7 +813,15 @@ const HomePage = () => {
         }
 
         {
-          searchModal && <SearchModal closeModal={closeSearchModal} userData={verifiedUserData} handleCloseUsersProfileModal={closeUsersProfileModal} handleOpenEditModal={openEditModal} openMyInfo={openMyInfo} openMyPosts={openMyPosts} onInfo={onInfo} posts={currentUsersPosts} openEditMatchModal={openEditMatchModal} />
+          searchModal && !viewOtherUserModal && <SearchModal closeModal={closeSearchModal} userArr={usersArray} clickSearch={clickSearch}/>
+        }
+
+        {
+          searchModal && viewOtherUserModal && !viewMatchModal && <ProfileModalComponent userData={viewOtherUserData} handleCloseUsersProfileModal={() => setViewOtherUserModal(false)} handleOpenEditModal={openEditModal} openMyInfo={openMyInfo} openMyPosts={openMyPosts} onInfo={onInfo} posts={currentUsersPosts} openEditMatchModal={openEditMatchModal} viewModal={true} viewMatch={viewMatch}/>
+        }
+
+        {
+          searchModal && viewOtherUserModal && viewMatchModal && <></>
         }
 
       </Modal>
@@ -779,7 +848,7 @@ const HomePage = () => {
         }
 
         {
-          userProfileModal && <ProfileModalComponent userData={verifiedUserData} handleCloseUsersProfileModal={closeUsersProfileModal} handleOpenEditModal={openEditModal} openMyInfo={openMyInfo} openMyPosts={openMyPosts} onInfo={onInfo} posts={currentUsersPosts} openEditMatchModal={openEditMatchModal} viewModal={false}/>
+          userProfileModal && <ProfileModalComponent userData={verifiedUserData} handleCloseUsersProfileModal={closeUsersProfileModal} handleOpenEditModal={openEditModal} openMyInfo={openMyInfo} openMyPosts={openMyPosts} onInfo={onInfo} posts={currentUsersPosts} openEditMatchModal={openEditMatchModal} viewModal={false} viewMatch={viewMatch}/>
         }
 
         {
@@ -791,7 +860,7 @@ const HomePage = () => {
         }
 
         {
-          searchModal && <SearchModal closeModal={closeSearchModal} userData={verifiedUserData} handleCloseUsersProfileModal={closeUsersProfileModal} handleOpenEditModal={openEditModal} openMyInfo={openMyInfo} openMyPosts={openMyPosts} onInfo={onInfo} posts={currentUsersPosts} openEditMatchModal={openEditMatchModal} />
+          searchModal && <SearchModal closeModal={closeSearchModal} userArr={usersArray} clickSearch={clickSearch}/>
         }
 
       </Modal>
@@ -818,7 +887,7 @@ const HomePage = () => {
         }
 
         {
-          userProfileModal && <ProfileModalComponent userData={verifiedUserData} handleCloseUsersProfileModal={closeUsersProfileModal} handleOpenEditModal={openEditModal} openMyInfo={openMyInfo} openMyPosts={openMyPosts} onInfo={onInfo} posts={currentUsersPosts} openEditMatchModal={openEditMatchModal} viewModal={false}/>
+          userProfileModal && <ProfileModalComponent userData={verifiedUserData} handleCloseUsersProfileModal={closeUsersProfileModal} handleOpenEditModal={openEditModal} openMyInfo={openMyInfo} openMyPosts={openMyPosts} onInfo={onInfo} posts={currentUsersPosts} openEditMatchModal={openEditMatchModal} viewModal={false} viewMatch={viewMatch}/>
         }
 
         {
@@ -830,7 +899,7 @@ const HomePage = () => {
         }
 
         {
-          searchModal && <SearchModal closeModal={closeSearchModal} userData={verifiedUserData} handleCloseUsersProfileModal={closeUsersProfileModal} handleOpenEditModal={openEditModal} openMyInfo={openMyInfo} openMyPosts={openMyPosts} onInfo={onInfo} posts={currentUsersPosts} openEditMatchModal={openEditMatchModal} />
+          searchModal && <SearchModal closeModal={closeSearchModal} userArr={usersArray} clickSearch={clickSearch} />
         }
 
       </Modal>
@@ -870,7 +939,7 @@ const HomePage = () => {
         }
 
         {
-          searchModal && <SearchModal closeModal={closeSearchModal} userData={verifiedUserData} handleCloseUsersProfileModal={closeUsersProfileModal} handleOpenEditModal={openEditModal} openMyInfo={openMyInfo} openMyPosts={openMyPosts} onInfo={onInfo} posts={currentUsersPosts} openEditMatchModal={openEditMatchModal} />
+          searchModal && <SearchModal closeModal={closeSearchModal} userArr={usersArray} clickSearch={clickSearch} />
         }
 
       </Modal>
