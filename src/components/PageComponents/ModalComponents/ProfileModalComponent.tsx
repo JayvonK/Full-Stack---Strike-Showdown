@@ -8,7 +8,7 @@ import MessagingIcon from "../../../../public/images/MessageProfile.png"
 import { useRouter } from 'next/navigation';
 import { IPublicUserData, IUserPosts } from '@/interfaces/Interfaces';
 import ProfileMatchesComponent from '../HomePage/ProfileMatchesComponent';
-const ProfileModalComponent = (props: { userData: IPublicUserData, handleOpenEditModal: () => void, handleCloseUsersProfileModal: () => void, openMyPosts: () => void, openMyInfo: () => void, onInfo: boolean, posts: IUserPosts[], openEditMatchModal: (data: IUserPosts) => void, viewModal: boolean, viewMatch: (post: IUserPosts) => void }) => {
+const ProfileModalComponent = (props: { userData: IPublicUserData, handleOpenEditModal: () => void, handleCloseUsersProfileModal: () => void, openMyPosts: () => void, openMyInfo: () => void, onInfo: boolean, posts: IUserPosts[], openEditMatchModal: (data: IUserPosts) => void, viewModal: boolean, viewChallenge: (post: IUserPosts) => void, viewSession: (post: IUserPosts) => void }) => {
   const router = useRouter();
   const handleLogOut = () => {
     router.push('/');
@@ -181,9 +181,12 @@ const ProfileModalComponent = (props: { userData: IPublicUserData, handleOpenEdi
                 ) : (
                   props.posts.map((p, idx) => {
                     if (p.userID === props.userData.id && !p.isFinished) {
-                      return (
-                        <ProfileMatchesComponent data={p} key={idx} openEditMatchModal={props.openEditMatchModal} viewMatch={() => props.viewMatch(p)} viewModal={props.viewModal} />
+                      return p.title === "1v1 Challenge" ? (
+                        <ProfileMatchesComponent data={p} key={idx} openEditMatchModal={props.openEditMatchModal} viewMatch={() => props.viewChallenge(p)} viewModal={props.viewModal} />
+                      ) : (
+                        <ProfileMatchesComponent data={p} key={idx} openEditMatchModal={props.openEditMatchModal} viewMatch={() => props.viewSession(p)} viewModal={props.viewModal} />
                       )
+
                     }
                   })
                 ))
