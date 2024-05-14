@@ -147,3 +147,9 @@ export const GetMatchesByID = async (id: number) => {
     const data = await promise.json();
     return data;
 }
+
+export const GetUsersByStateAPI = async (state: string) => {
+    const promise = await fetch(url + 'User/GetUsersByState/' + state);
+    const data = await promise.json();
+    return data;
+}
