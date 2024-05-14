@@ -18,19 +18,19 @@ const EditProfileModal = (props: { data: IPublicUserData, handleEditStyleChange:
           <div className='grid grid-cols-2 gap-x-10 gap-y-2'>
             <div>
               <h3 className='jura text-white text-2xl'>Username</h3>
-              <input required type="text" value={props.data.username} onChange={props.handleEditUsernameChange} className="w-full jura text-2xl h-10 bg-white pl-2 mb-2 mt-1 rounded-sm" />
+              <input required type="text" value={props.data.username} onChange={props.handleEditUsernameChange} className="w-full jura text-2xl h-10 bg-white pl-2 mb-2 mt-1 rounded-sm" maxLength={20}/>
             </div>
             <div>
               <h3 className='jura text-white text-2xl'>Full Name</h3>
-              <input type="text" value={props.data.fullName === "N/A" ? "" : props.data.fullName} onChange={props.handleEditFullNameChange} placeholder='N/A' className="w-full jura text-2xl h-10 bg-white pl-2 mb-2 mt-1 rounded-sm" />
+              <input type="text" value={props.data.fullName === "N/A" ? "" : props.data.fullName} onChange={props.handleEditFullNameChange} placeholder='N/A' className="w-full jura text-2xl h-10 bg-white pl-2 mb-2 mt-1 rounded-sm" maxLength={50}/>
             </div>
             <div>
               <h3 className='jura text-white text-2xl'>Email</h3>
-              <input required type="text" value={props.data.email} onChange={props.handleEditEmailChange} className="w-full jura text-2xl h-10 bg-white pl-2 mb-2 mt-1 rounded-sm" />
+              <input required type="email" value={props.data.email} onChange={props.handleEditEmailChange} className="w-full jura text-2xl h-10 bg-white pl-2 mb-2 mt-1 rounded-sm" maxLength={50}/>
             </div>
             <div>
               <h3 className='jura text-white text-2xl'>Pronouns</h3>
-              <input type="text" value={props.data.pronouns === "N/A" ? "" : props.data.pronouns} onChange={props.handleEditPronounsChange} placeholder='N/A' className="w-full jura text-2xl h-10 bg-white pl-2 mb-2 mt-1 rounded-sm" />
+              <input type="text" value={props.data.pronouns === "N/A" ? "" : props.data.pronouns} onChange={props.handleEditPronounsChange} placeholder='N/A' className="w-full jura text-2xl h-10 bg-white pl-2 mb-2 mt-1 rounded-sm" maxLength={50}/>
             </div>
             <div>
               <h3 className='jura text-white text-2xl'>Style</h3>
@@ -83,19 +83,19 @@ const EditProfileModal = (props: { data: IPublicUserData, handleEditStyleChange:
             </div>
             <div>
               <h3 className='jura text-white text-2xl'>Main Center</h3>
-              <input value={props.data.mainCenter === "N/A" ? "" : props.data.mainCenter} onChange={props.handleEditMainCenterChange} placeholder='N/A' type="text" className="w-full jura text-2xl h-10 bg-white pl-2 mb-2 mt-1 rounded-sm" />
+              <input value={props.data.mainCenter === "N/A" ? "" : props.data.mainCenter} onChange={props.handleEditMainCenterChange} placeholder='N/A' type="text" className="w-full jura text-2xl h-10 bg-white pl-2 mb-2 mt-1 rounded-sm" maxLength={50}/>
             </div>
             <div>
               <h3 className='jura text-white text-2xl'>Earnings</h3>
-              <input value={props.data.earnings === "N/A" ? "" : props.data.earnings} onChange={props.handleEditEarningsChange} placeholder='N/A' type="text" className="w-full jura text-2xl h-10 bg-white pl-2 mb-2 mt-1 rounded-sm" />
+              <input value={props.data.earnings === "N/A" ? "" : props.data.earnings} onChange={props.handleEditEarningsChange} placeholder='N/A' type="text" className="w-full jura text-2xl h-10 bg-white pl-2 mb-2 mt-1 rounded-sm" maxLength={15}/>
             </div>
             <div>
               <h3 className='jura text-white text-2xl'>High Game</h3>
-              <input value={props.data.highGame === "N/A" ? "" : props.data.highGame} onChange={props.handleEditHighGameChange} placeholder='N/A' type="text" className="w-full jura text-2xl h-10 bg-white pl-2 mb-2 mt-1 rounded-sm" />
+              <input value={props.data.highGame === "N/A" ? "" : props.data.highGame} onChange={props.handleEditHighGameChange} placeholder='N/A' type="text" className="w-full jura text-2xl h-10 bg-white pl-2 mb-2 mt-1 rounded-sm" maxLength={3}/>
             </div>
             <div>
               <h3 className='jura text-white text-2xl'>High Series</h3>
-              <input value={props.data.highSeries === "N/A" ? "" : props.data.highSeries} onChange={props.handleEditHighSeriesChange} placeholder='N/A' type="text" className="w-full jura text-2xl h-10 bg-white pl-2 mb-2 mt-1 rounded-sm" />
+              <input value={props.data.highSeries === "N/A" ? "" : props.data.highSeries} onChange={props.handleEditHighSeriesChange} placeholder='N/A' type="text" className="w-full jura text-2xl h-10 bg-white pl-2 mb-2 mt-1 rounded-sm" maxLength={4}/>
             </div>
           </div>
         </div>

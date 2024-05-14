@@ -354,8 +354,8 @@ const SignUp = () => {
                     <h1 className="txtOrange sm:text-6xl text-5xl juraBold mb-8 sm:leading-[75px]"> Create Your Account</h1>
 
                     <form onSubmit={handleNext}>
-                      <RequiredInputComponent title="Username:" type='text' borderError={userBorderError} placeholder='Enter Username' value={username} onChange={handleUserChange} maxLength={5000} />
-                      <RequiredInputComponent title="Email:" type='email' borderError={emailBorderError} placeholder='Enter Email' value={email} onChange={handleEmailChange} maxLength={5000} />
+                      <RequiredInputComponent title="Username:" type='text' borderError={userBorderError} placeholder='Enter Username' value={username} onChange={handleUserChange} maxLength={20} />
+                      <RequiredInputComponent title="Email:" type='email' borderError={emailBorderError} placeholder='Enter Email' value={email} onChange={handleEmailChange} maxLength={50} />
                       <h3 className="text-3xl jura text-white">Preferred Location</h3>
                       <Select required onValueChange={(e) => handleLocationChange(e)}>
                         <SelectTrigger className="w-full jura text-3xl sm:min-h-43 min-h-12 bg-white pl-3 mb-4 mt-2">
@@ -416,8 +416,8 @@ const SignUp = () => {
                           <SelectItem value="WY">Wyoming</SelectItem>
                         </SelectContent>
                       </Select>
-                      <RequiredInputComponent title="Password:" type='password' borderError={passwordBorderError} placeholder='Enter Password' value={password} onChange={handlePasswordChange} maxLength={5000} />
-                      <RequiredInputComponent title="Verify Password:" type='password' borderError={passwordBorderError} placeholder='Re-enter Password' value={password2} onChange={handlePassword2Change} maxLength={5000} />
+                      <RequiredInputComponent title="Password:" type='password' borderError={passwordBorderError} placeholder='Enter Password' value={password} onChange={handlePasswordChange} maxLength={50} />
+                      <RequiredInputComponent title="Verify Password:" type='password' borderError={passwordBorderError} placeholder='Re-enter Password' value={password2} onChange={handlePassword2Change} maxLength={50} />
                       {!passwordsMatch ? (<h1 className='text-2xl jura text-red-600'>Passwords Dont Match</h1>) : (<div></div>)}
 
                       <button type='submit' className=" text-3xl text-black sm:min-h-14 min-h-12 w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]"> Next</button>
@@ -457,7 +457,7 @@ const SignUp = () => {
                           </SelectGroup>
                         </SelectContent>
                       </Select>
-                      <RequiredInputComponent title="" type='text' borderError={''} placeholder='Answer #1' value={securityOne} onChange={handleSecurityOneChange} maxLength={5000} />
+                      <RequiredInputComponent title="" type='text' borderError={''} placeholder='Answer #1' value={securityOne} onChange={handleSecurityOneChange} maxLength={50} />
 
 
                       {/* Selecting Question 2 */}
@@ -474,7 +474,7 @@ const SignUp = () => {
                           </SelectGroup>
                         </SelectContent>
                       </Select>
-                      <RequiredInputComponent title="" type='text' borderError={''} placeholder='Answer #2' value={securityTwo} onChange={handleSecurityTwoChange} maxLength={5000} />
+                      <RequiredInputComponent title="" type='text' borderError={''} placeholder='Answer #2' value={securityTwo} onChange={handleSecurityTwoChange} maxLength={50} />
 
 
                       {/* Selecting Question 3 */}
@@ -491,7 +491,7 @@ const SignUp = () => {
                           </SelectGroup>
                         </SelectContent>
                       </Select>
-                      <RequiredInputComponent title="" type='text' borderError={''} placeholder='Answer #3' value={securityThree} onChange={handleSecurityThreeChange} maxLength={5000} />
+                      <RequiredInputComponent title="" type='text' borderError={''} placeholder='Answer #3' value={securityThree} onChange={handleSecurityThreeChange} maxLength={50} />
 
                       <button type='submit' className=" text-3xl text-black sm:min-h-14 min-h-12 w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]"> Next</button>
 
@@ -544,8 +544,8 @@ const SignUp = () => {
 
                     <div className='grid sm:grid-cols-2 grid-cols-1 sm:gap-16'>
                       <div>
-                        <NotRequiredInputComponent title='Full Name' type='text' borderError={''} placeholder='Full Name' value={fullname} onChange={handleFullNameChange} maxLength={5000} info='Enter Your Full Name. e.g Booger Barth Truth' />
-                        <NotRequiredInputComponent title='Pronouns' type='text' borderError={''} placeholder='Pronouns' value={pronouns} onChange={handlePronounsChange} maxLength={5000} info='Enter Your Pronounse. e.g He/Him' />
+                        <NotRequiredInputComponent title='Full Name' type='text' borderError={''} placeholder='Full Name' value={fullname} onChange={handleFullNameChange} maxLength={50} info='Enter Your Full Name. e.g Booger Barth Truth' />
+                        <NotRequiredInputComponent title='Pronouns' type='text' borderError={''} placeholder='Pronouns' value={pronouns} onChange={handlePronounsChange} maxLength={50} info='Enter Your Pronounse. e.g He/Him' />
                         <div className='flex'>
                           <h3 className={"text-3xl jura text-white pr-2"}>Select Average</h3>
                           <TooltipProvider>
@@ -586,7 +586,7 @@ const SignUp = () => {
                             <SelectItem value="290-300 Avg">290-300 Avg</SelectItem>
                           </SelectContent>
                         </Select>
-                        <NotRequiredInputComponent title='Bowling Center' type='text' borderError={''} placeholder='Bowling Center' value={bowlingCenter} onChange={handleBowlingCenterChange} maxLength={5000} info='Enter the bowling center where you bowl the most, or represent the most. e.g Reno Bowl' />
+                        <NotRequiredInputComponent title='Bowling Center' type='text' borderError={''} placeholder='Bowling Center' value={bowlingCenter} onChange={handleBowlingCenterChange} maxLength={50} info='Enter the bowling center where you bowl the most, or represent the most. e.g Reno Bowl' />
                       </div>
 
                       <div>
@@ -615,9 +615,9 @@ const SignUp = () => {
                             <SelectItem value="Hadouken Style">Hadouken Style</SelectItem>
                           </SelectContent>
                         </Select>
-                        <NotRequiredInputComponent title='High Game' type='text' borderError={''} placeholder='High Game' value={highGame} onChange={handleHighGameChange} maxLength={5000} info='Enter in your highest game that you bowled (Max 300). e.g 275' />
-                        <NotRequiredInputComponent title='High Series' type='text' borderError={''} placeholder='High Series' value={highSeries} onChange={handleHighSeriesChange} maxLength={5000} info='Enter in your highest seires that you bowled out of three games or more (1st game score + 2nd game score + 3rd game score). e.g 777' />
-                        <NotRequiredInputComponent title='Earnings' type='text' borderError={''} placeholder='$ Earnings $' value={earnings} onChange={handleEarningsChange} maxLength={5000} info='Enter how much money you have made from bowling tournaments $$$' />
+                        <NotRequiredInputComponent title='High Game' type='text' borderError={''} placeholder='High Game' value={highGame} onChange={handleHighGameChange} maxLength={50} info='Enter in your highest game that you bowled (Max 300). e.g 275' />
+                        <NotRequiredInputComponent title='High Series' type='text' borderError={''} placeholder='High Series' value={highSeries} onChange={handleHighSeriesChange} maxLength={50} info='Enter in your highest seires that you bowled out of three games or more (1st game score + 2nd game score + 3rd game score). e.g 777' />
+                        <NotRequiredInputComponent title='Earnings' type='text' borderError={''} placeholder='$ Earnings $' value={earnings} onChange={handleEarningsChange} maxLength={50} info='Enter how much money you have made from bowling tournaments $$$' />
                       </div>
                     </div>
 
