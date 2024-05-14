@@ -41,6 +41,8 @@ import profile from '../../../../public/images/Profile.png';
 import planeIcon from '../../../../public/images/paper-plane-tilt-fill.svg'
 import ConfirmationModal from '@/components/PageComponents/HomePage/Modals/ConfirmationModal';
 import SearchModal from '@/components/PageComponents/HomePage/Modals/SearchModal';
+import JoinSessionModalComponent from '@/components/PageComponents/ModalComponents/JoinSessionModalComponent';
+import JoinChallengeModal from '@/components/PageComponents/HomePage/Modals/JoinChallengeModal';
 
 const HomePage = () => {
   const fakeUserData: IPublicUserData = {
@@ -130,7 +132,6 @@ const HomePage = () => {
   // State Variables for View Match Modal
   const [viewMatchData, setViewMatchData] = useState<IUserPosts>(postsData[0]);
   const [viewMatchModal, setViewMatchModal] = useState<boolean>(false);
-
 
   // State Variables for Users Profile Modal
   const [userProfileModal, setUserProfileModal] = useState<boolean>(false);
@@ -585,7 +586,14 @@ const HomePage = () => {
   // View Matches Functions
 
   const viewMatch = (data: IUserPosts) => {
+    setViewMatchData(data);
+    setViewMatchModal(true);
+    setOpenModal(true);
+  }
 
+  const closeViewMatch = () => {
+    setViewMatchModal(false);
+    setOpenModal(false);
   }
 
   // Edit Match Modal
@@ -745,28 +753,28 @@ const HomePage = () => {
     setCurrentUsersPosts(grabUserPosts(verifiedUserData.id, await GetPublicMatchesByStateAPI(verifiedUserData.location)));
   }
 
-  // useEffect(() => {
-  //   let storageArr = GetLocalStorage();
-  //   setStorage(storageArr);
-  //   if (storageArr.length === 0) {
-  //     route.push('/');
-  //   } else {
-  //     const grabUserData = async () => {
-  //       try {
-  //         const userData: IPublicUserData = await GetUserAPI(storageArr[0][1]);
-  //         setVerifiedUserData(userData);
-  //         setEditData(userData);
-  //         setCurrentUsername(storageArr[0][1])
-  //         setMatchData(await GetPublicMatchesByStateAPI(userData.location));
-  //         setCurrentUsersPosts(grabUserPosts(userData.id, await GetPublicMatchesByStateAPI(userData.location)));
-  //       } catch (error) {
-  //         localStorage.clear();
-  //         route.push('/');
-  //       }
-  //     }
-  //     grabUserData();
-  //   }
-  // }, [runUseEffect])
+  useEffect(() => {
+    let storageArr = GetLocalStorage();
+    setStorage(storageArr);
+    if (storageArr.length === 0) {
+      route.push('/');
+    } else {
+      const grabUserData = async () => {
+        try {
+          const userData: IPublicUserData = await GetUserAPI(storageArr[0][1]);
+          setVerifiedUserData(userData);
+          setEditData(userData);
+          setCurrentUsername(storageArr[0][1])
+          setMatchData(await GetPublicMatchesByStateAPI(userData.location));
+          setCurrentUsersPosts(grabUserPosts(userData.id, await GetPublicMatchesByStateAPI(userData.location)));
+        } catch (error) {
+          localStorage.clear();
+          route.push('/');
+        }
+      }
+      grabUserData();
+    }
+  }, [runUseEffect])
 
   return (
     <div>
@@ -821,7 +829,11 @@ const HomePage = () => {
         }
 
         {
-          searchModal && viewOtherUserModal && viewMatchModal && <></>
+          searchModal && viewOtherUserModal && viewMatchModal && <JoinSessionModalComponent />
+        }
+
+        {
+          viewMatchModal && !searchModal && <JoinChallengeModal data={viewMatchData} closeModal={closeViewMatch} joinChallenge={() => {}} />
         }
 
       </Modal>
@@ -1035,9 +1047,9 @@ const HomePage = () => {
                         <div key={idx}>
                           {
                             data.isVisible && !data.isFinished ? data.title === 'Practice Session' ? (
-                              skeleton ? (<MatchSkeleton />) : (<PracticeSessionComponent fadeAway={fadeAwayClass} data={data} join={handleJoin} userClick={() => { }} edit={data.publisher === currentUsername} handleEditMatchClick={() => { openEditMatchModal(data) }} />)
+                              skeleton ? (<MatchSkeleton />) : (<PracticeSessionComponent fadeAway={fadeAwayClass} data={data} join={() => viewMatch(data)} userClick={() => { }} edit={data.publisher === currentUsername} handleEditMatchClick={() => { openEditMatchModal(data) }} />)
                             ) : (
-                              skeleton ? (<MatchSkeleton />) : (<MatchComponent fadeAway={fadeAwayClass} challenge={handleJoin} data={data} edit={data.publisher === currentUsername} handleEditMatchClick={() => { openEditMatchModal(data) }} />)
+                              skeleton ? (<MatchSkeleton />) : (<MatchComponent fadeAway={fadeAwayClass} challenge={() => viewMatch(data)} data={data} edit={data.publisher === currentUsername} handleEditMatchClick={() => { openEditMatchModal(data) }} />)
                             )
 
                               : (
@@ -1070,6 +1082,9 @@ const HomePage = () => {
               </>
 
             ) : (
+
+              // Start of Messaging UI
+
               <div className='pb-16 grid lg:grid-cols-[31%_69%] h-[85vh] z-20 relative'>
 
                 <div className='bg-black rounded-3xl px-7 py-7'>
@@ -1135,8 +1150,8 @@ const HomePage = () => {
                   </div>
 
                   <div className='h-full py-5'>
-                    <MessagingBubbleComponent isSender={true} delivered={true} />
-                    <MessagingBubbleComponent isSender={false} delivered={true} />
+                    <MessagingBubbleComponent isSender={true} content={'Hey whats up?'}/>
+                    <MessagingBubbleComponent isSender={false} content={'Nothin wbu?'}/>
                   </div>
 
                   <div className='flex bg-white py-1 rounded-xl items-center pr-5'>
