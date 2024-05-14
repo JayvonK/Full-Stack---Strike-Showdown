@@ -1,7 +1,7 @@
 import { IUserPosts } from '@/interfaces/Interfaces'
 import React from 'react'
 
-const ProfileMatchesComponent = (props: {data: IUserPosts, openEditMatchModal: (data: IUserPosts) => void}) => {
+const ProfileMatchesComponent = (props: {data: IUserPosts, openEditMatchModal: (data: IUserPosts) => void, viewModal: boolean, viewMatch: () => void}) => {
     return (
         <div className='rounded-md bg-white w-full sm:px-6 px-4 py-2 mb-4'>
             <div className='grid sm:grid-cols-[70%_30%]'>
@@ -30,7 +30,7 @@ const ProfileMatchesComponent = (props: {data: IUserPosts, openEditMatchModal: (
 
                 <div className='sm:flex justify-end items-center hidden'>
                     <button className="bg-orange-500 rounded-md pt-2 pb-2 md:px-8 sm:px-6 px-4 text-black" onClick={() => props.openEditMatchModal(props.data)}>
-                        <h3 className="lg:text-2xl sm:text-xl text-lg">Edit</h3>
+                        <h3 className="lg:text-2xl sm:text-xl text-lg">{props.viewModal ? "View" : "Edit"}</h3>
                     </button>
                 </div>
 
