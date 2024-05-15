@@ -5,7 +5,7 @@ import { useState } from "react";
 import React from "react";
 import "../../../app/css/LoginPageAndHome.css";
 import ProfilePic from "../../../../public/images/Ellipse 16.png";
-const InboxModalComponent = (props: {closeModal: () => void, openFriendsModal: () => void}) => {
+const InboxModalComponent = (props: { closeModal: () => void, openFriendsModal: () => void }) => {
   const [showModal, setOpenModal] = useState(false);
   const [activeTab, setActiveTab] = useState("Inbox");
   const [tabOneActive, setTabOneActive] = useState(true);
@@ -33,72 +33,54 @@ const InboxModalComponent = (props: {closeModal: () => void, openFriendsModal: (
     setActiveTab(tab);
   };
   return (
-    <>
+    <div className="bg-white rounded-lg">
       <div className="  px-6 py-5  lg:py-10 ">
         <div className="flex justify-evenly">
-          <button
-            className={`tab-button px-4 w-48 py-2 rounded focus:outline-none jura text-xl md:text-2xl lg:text-3xl ${
-              activeTab === "Inbox" ? "bg-orange-500   " : " text-black"
-            }`}
-            onClick={() => handleTabChange("Inbox")}
-          >
-            Inbox
-          </button>
-          <button
-            className={`tab-button px-4 py-2 w-48 rounded focus:outline-none jura text-xl md:text-2xl lg:text-3xl ${
-              activeTab === "Matches" ? "bg-orange-500 " : " text-black "
-            }`}
-            onClick={() => handleTabChange("Matches")}
-          >
-            Matches
-          </button>
-          <button
-            className={`tab-button px-4 py-2 w-48 rounded focus:outline-none jura text-xl md:text-2xl lg:text-3xl ${
-              activeTab === "Sessions" ? "bg-orange-500  " : " text-black"
-            }`}
-            onClick={() => handleTabChange("Sessions")}
-          >
-            Sessions
-          </button>
+          <button className={`tab-button px-4 w-48 py-2 rounded focus:outline-none jura text-xl md:text-2xl lg:text-3xl ${activeTab === "Inbox" ? "bg-orange-500   " : " text-black"}`} onClick={() => handleTabChange("Inbox")}> Inbox </button>
+
+          <button className={`tab-button px-4 py-2 w-48 rounded focus:outline-none jura text-xl md:text-2xl lg:text-3xl ${activeTab === "Matches" ? "bg-orange-500 " : " text-black "}`} onClick={() => handleTabChange("Matches")}> Matches </button>
+
+          <button className={`tab-button px-4 py-2 w-48 rounded focus:outline-none jura text-xl md:text-2xl lg:text-3xl ${activeTab === "Sessions" ? "bg-orange-500  " : " text-black"}`} onClick={() => handleTabChange("Sessions")}> Sessions </button>
         </div>
       </div>
-      <div className=" min-h-[500px]" onClick={() => handleTabChange("Sessions")}>
-        {tabOneActive && (
-          <div className="bg-black flex justify-start rounded-lg mx-8  px-5 py-2">
-            {" "}
-            <img className="h-20" alt="" src={ProfilePic.src} />{" "}
-            <div className="pl-10 ">
-              {" "}
+
+      <div className=" min-h-[500px]">
+        {tabOneActive && 
+          <div className="bg-black flex justify-start rounded-lg mx-8 px-5 py-4">
+            <img className="h-20" alt="" src={ProfilePic.src} />
+
+            <div className="pl-10">
               <h2 className="text-center text-lg md:text-2xl lg:text-3xl pb-3 jura  text-white">
-               has accepted your friend request
+               {} has accepted your friend request
               </h2>
-              <button   className="text-center text-xl md:text-2xl lg:text-3xl bg-orange-500 rounded-lg jura px-2" onClick={props.openFriendsModal}>
-                View Friends
+              <button className="text-center text-lg md:text-xl lg:text-2xl bg-orange-500 rounded-lg jura px-2" onClick={() => {}}>
+                View Match
               </button>
             </div>
           </div>
-        )}
-        {tabTwoActive && (
+          }
+
+
+        {tabTwoActive &&
           <h2 className="text-center text-xl md:text-2xl lg:text-3xl jura py-20 px-20 lg:py-40 lg:px-40">
             No Notifications
           </h2>
-        )}
-        {tabThreeActive && (
+        }
+
+        {tabThreeActive && 
           <h2 className="text-center text-xl md:text-2xl lg:text-3xl jura py-20 px-20  lg:py-40 lg:px-40">
             No Notifications
           </h2>
-        )}
+        }
+
       </div>
 
       <div className="flex justify-end py-7 px-7">
-        <button
-          className=" border-color focus:outline-none h-10 md:h-12 lg:h-14    mt-3 bg-orange-500  w-20 md:w-36 rounded-md    hover:!bg-orange-500 text-black jura"
-          onClick={props.closeModal}
-        >
-          <h3 className=" text-xl md:text-2xl lg:text-3xl   ">Close</h3>
+        <button className=" border-color focus:outline-none h-10 md:h-12 lg:h-14  mt-3 bg-orange-500  w-20 md:w-36 rounded-md   hover:!bg-orange-500 text-black jura" onClick={props.closeModal}>
+          <h3 className=" text-xl md:text-2xl lg:text-3xl ">Close</h3>
         </button>
       </div>
-    </>
+    </div>
   );
 };
 
