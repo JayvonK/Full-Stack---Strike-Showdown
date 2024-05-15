@@ -92,7 +92,7 @@ const ProfileModalComponent = (props: { userData: IPublicUserData, handleOpenEdi
                   </h1>
 
                   <h1 className="text-white lg:text-3xl text-2xl rounded-xl py-2 sm:px-10 px-4 hover:cursor-pointer" onClick={props.openMyPosts}>
-                    Your Post
+                    {props.viewModal ? "Posts" : "Your Posts"}
                   </h1>
                 </>
               ) : (
@@ -102,7 +102,7 @@ const ProfileModalComponent = (props: { userData: IPublicUserData, handleOpenEdi
                   </h1>
 
                   <h1 className="bg-orange-500 text-center lg:text-3xl text-2xl rounded-md py-2 sm:px-10 px-4 text-black hover:cursor-pointer " onClick={props.openMyPosts}>
-                    Your Post
+                  {props.viewModal ? "Posts" : "Your Posts"}
                   </h1>
                 </>
               )

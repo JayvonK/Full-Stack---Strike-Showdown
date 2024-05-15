@@ -71,6 +71,7 @@ export interface IUserPosts {
   time: string; 
   maxPpl: number;
   currentPpl: number;
+  matchUserIDs: string;
   description: string; 
   isFinished: boolean; 
   publisher: string; 
@@ -78,8 +79,20 @@ export interface IUserPosts {
   wins: number; 
   average: string; 
   style: string; 
-  streak: number; 
-  invitedUsers: IIinvitedUser[];
+  streak: number;
+}
+
+export interface INotification {
+  id: number;
+  senderID: number;
+  senderUsername: string;
+  recieverID: number;
+  recieverUsername: string;
+  type: string;
+  image: string;
+  content: string;
+  isRead: boolean;
+  isDeleted: boolean;
 }
 
 export interface ICreatePost{
@@ -93,5 +106,11 @@ export interface ICreatePost{
   currentPpl: number;
   description: string; 
   isFinished: boolean; 
-  invitedUsers: string[];
+}
+
+export interface ICreateNotification{
+  senderID: number;
+  recieverID: number;
+  type: string;
+  content: string;
 }
