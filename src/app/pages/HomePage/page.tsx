@@ -604,14 +604,26 @@ const HomePage = () => {
     }
 
     try {
-      await CreatePostAPI(PostData, currentUsername);
-      setMatchModal(false);
-      setOpenModal(false);
-      updateAllMatches()
-      toast({
-        title: "Your Post Was Created!.",
-        description: "Yayy",
-      })
+      if (await CreatePostAPI(PostData, currentUsername)) {
+        setMatchModal(false);
+        setOpenModal(false);
+        let noti: ICreateNotification = {
+          senderID: verifiedUserData.id,
+          recieverID: verifiedUserData.id,
+          postID: await GetRecentMatchIDByUserIDAPI(verifiedUserData.id),
+          type: "Publisher " + "1v1 Challenge",
+          content: "You have created a 1v1 Challenge"
+        }
+        clearMatchInputs();
+        await CreateNotificationAPI(noti);
+        updateNotifications();
+        updateAllMatches();
+        toast({
+          title: "Your Post Was Created!.",
+          description: "Yayy",
+        })
+      }
+
     } catch (error) {
       toast({
         variant: 'destructive',
@@ -849,7 +861,7 @@ const HomePage = () => {
           setNewNotificationBool(true);
         }
       })
-      if(notiArr.every(noti => noti.isRead === true)){
+      if (notiArr.every(noti => noti.isRead === true)) {
         setNewNotificationBool(false);
       }
     }
@@ -871,9 +883,9 @@ const HomePage = () => {
           setCurrentUsersPosts(grabUserPosts(userData.id, await GetPublicMatchesByStateAPI(userData.location)));
           const notiArr: INotification[] = await GetNotificationsByUserIDAPI(userData.id);
           setNotificationsArray(notiArr);
-          if(notiArr.length !== 0){
+          if (notiArr.length !== 0) {
             notiArr.forEach(noti => {
-              if(noti.isDeleted === false && noti.isRead === false){
+              if (noti.isDeleted === false && noti.isRead === false) {
                 setNewNotificationBool(true);
               }
             })
