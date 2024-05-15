@@ -19,8 +19,8 @@ import { useToast } from "@/components/ui/use-toast";
 
 import { useState } from "react";
 import { useAppContext } from '@/context/Context';
-import { ICreatePost, IPublicUserData, IUserInfoWithStats, IUserPosts } from '@/interfaces/Interfaces';
-import { CreatePostAPI, DeleteMatchAPI, GetPublicMatchesByStateAPI, GetUserAPI, GetUsersByStateAPI, UpdateMatchAPI, UpdateUserAPI } from '@/Data/DataServices';
+import { ICreatePost, INotification, IPublicUserData, IUserInfoWithStats, IUserPosts } from '@/interfaces/Interfaces';
+import { CreatePostAPI, DeleteMatchAPI, GetNotificationsByUserIDAPI, GetPublicMatchesByStateAPI, GetUserAPI, GetUsersByStateAPI, UpdateMatchAPI, UpdateUserAPI } from '@/Data/DataServices';
 import PracticePostDummyData from '../../../utils/PostData.json';
 import PracticeSessionComponent from '@/components/PageComponents/HomePage/PracticeSessionComponent';
 import MatchComponent from '@/components/PageComponents/HomePage/MatchComponent';
@@ -122,6 +122,7 @@ const HomePage = () => {
   const [locationOne, setLocationOne] = useState<string>('');
   const [locationTwo, setLocationTwo] = useState<string>('');
   const [locationThree, setLocationThree] = useState<string>('');
+  const [userMatchIDs, setUserMatchIDs] = useState<string>('');
   const [invitedUsers, setInvitedUsers] = useState<string>('');
   const [invitedUsersArr, setInvitedUsersArray] = useState<string[]>([])
   const [editMatchModal, setEditMatchModal] = useState<boolean>(false);
@@ -189,6 +190,10 @@ const HomePage = () => {
     highSeries: editHighSeries,
     streak: 0
   }
+
+  // State Variables for Notifications
+  const [notificationArray, setNotificationsArray] = useState<INotification[]>([]);
+  const [newNotificationBool, setNewNotificationBool] = useState<boolean>(true);
 
   // Functions for Users Profile Modal
 
@@ -626,6 +631,7 @@ const HomePage = () => {
     setLocationOne(loc[0]);
     setLocationTwo(loc[1]);
     setLocationThree(loc[2]);
+    setUserMatchIDs(data.matchUserIDs)
     setDate(newDate);
   }
 
@@ -671,7 +677,7 @@ const HomePage = () => {
       time: timeFormat(startTime) + '-' + timeFormat(endTime),
       maxPpl: maxPpl === "" ? 0 : Number(maxPpl),
       currentPpl: currentPpl,
-      matchUserIDs: "",
+      matchUserIDs: userMatchIDs,
       description: editingChallengeBool ? description : practiceDescription,
       isFinished: false,
       publisher: verifiedUserData.username,
@@ -764,32 +770,41 @@ const HomePage = () => {
     setCurrentUsersPosts(grabUserPosts(verifiedUserData.id, await GetPublicMatchesByStateAPI(verifiedUserData.location)));
   }
 
-  useEffect(() => {
-    let storageArr = GetLocalStorage();
-    setStorage(storageArr);
-    if (storageArr.length === 0) {
-      route.push('/');
-    } else {
-      const grabUserData = async () => {
-        try {
-          const userData: IPublicUserData = await GetUserAPI(storageArr[0][1]);
-          setVerifiedUserData(userData);
-          setEditData(userData);
-          setCurrentUsername(storageArr[0][1])
-          setMatchData(await GetPublicMatchesByStateAPI(userData.location));
-          setCurrentUsersPosts(grabUserPosts(userData.id, await GetPublicMatchesByStateAPI(userData.location)));
-        } catch (error) {
-          localStorage.clear();
-          route.push('/');
-        }
-      }
-      grabUserData();
-    }
-  }, [runUseEffect])
+  // useEffect(() => {
+  //   let storageArr = GetLocalStorage();
+  //   setStorage(storageArr);
+  //   if (storageArr.length === 0) {
+  //     route.push('/');
+  //   } else {
+  //     const grabUserData = async () => {
+  //       try {
+  //         const userData: IPublicUserData = await GetUserAPI(storageArr[0][1]);
+  //         setVerifiedUserData(userData);
+  //         setEditData(userData);
+  //         setCurrentUsername(storageArr[0][1])
+  //         setMatchData(await GetPublicMatchesByStateAPI(userData.location));
+  //         setCurrentUsersPosts(grabUserPosts(userData.id, await GetPublicMatchesByStateAPI(userData.location)));
+  //         const notiArr: INotification[] = await GetNotificationsByUserIDAPI(userData.id);
+  //         setNotificationsArray(notiArr);
+  //         if(notiArr.length !== 0){
+  //           notiArr.forEach(noti => {
+  //             if(noti.isDeleted === false && noti.isRead === false){
+  //               setNewNotificationBool(true);
+  //             }
+  //           })
+  //         }
+  //       } catch (error) {
+  //         localStorage.clear();
+  //         route.push('/');
+  //       }
+  //     }
+  //     grabUserData();
+  //   }
+  // }, [runUseEffect])
 
   return (
     <div>
-      <NewNavBarComponent openFriendsModal={openFriendsModal} openUsersProfileModal={openUsersProfileModal} openInboxModal={openInboxModal} openSearchModal={openSearchModal} goToHomePage={goToHomePage} goToMessagingPage={goToMessagingPage} errorMobileModal={errorMobileModal} />
+      <NewNavBarComponent openFriendsModal={openFriendsModal} openUsersProfileModal={openUsersProfileModal} openInboxModal={openInboxModal} openSearchModal={openSearchModal} goToHomePage={goToHomePage} goToMessagingPage={goToMessagingPage} errorMobileModal={errorMobileModal} newNotificationBool={newNotificationBool}/>
       <Modal className='bg-black lg:flex hidden  justify-center bgModal' show={openModal} size={'4xl'} onClose={() => setOpenModal(false)}>
 
         {/* Everything with match modals */}
