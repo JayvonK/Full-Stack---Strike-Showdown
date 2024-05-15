@@ -40,9 +40,11 @@ function page() {
        <Button onClick={() => setOpenModal(true)}>Toggle modal</Button>
        <Modal dismissible show={openModal} onClose={() => setOpenModal(false)} size={'2xl'}>
 
-       {/* <FriendsModalComponent/> 
-     <InboxModalComponent/>   */}
- <ProfileModalComponent data={fakeUserData} handleCloseUsersProfileModal={() => {}} handleOpenEditModal={() => {}}/>   
+     <FriendsModalComponent closeModal={function (): void {
+          throw new Error('Function not implemented.');
+        } }/> 
+     {/*   <InboxModalComponent/>   */}
+ {/* <ProfileModalComponent data={fakeUserData} handleCloseUsersProfileModal={() => {}} handleOpenEditModal={() => {}}/>    */}
  {/* <JoinSessionModalComponent />  */}
 {/* <ViewProfileModalComponent userName={'Briaaa'} proNouns={'hers/she'} record={'15'} mainCenter={'267'} average={'150'} highGames={'140'} highSeries={'100'} earnings={'2000'} style={'Righty'} email={'briaharrold@gmail.com'}/> */}
       </Modal>
