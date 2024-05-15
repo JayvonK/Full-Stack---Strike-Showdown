@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import { IUserPosts } from "@/interfaces/Interfaces";
 import { profile } from "console";
 
-const JoinSessionModalComponent = (props: { data: IUserPosts, closeModal: () => void, joinChallenge: () => void }) => {
+const JoinSessionModalComponent = (props: { data: IUserPosts, closeModal: () => void, joinChallenge: (data: IUserPosts) => void }) => {
   const [pageSize, setPageSize] = useState<boolean>(false);
 
 
@@ -74,7 +74,7 @@ const JoinSessionModalComponent = (props: { data: IUserPosts, closeModal: () => 
       </div>
 
       <div className="flex justify-end pt-4">
-        <button className=" border-color outline-none mr-5 bg-orange-500  w-36 md:w-36 rounded-xl  md:rounded-lg  hover:!bg-orange-500 text-black jura">
+        <button className=" border-color outline-none mr-5 bg-orange-500  w-36 md:w-36 rounded-xl  md:rounded-lg  hover:!bg-orange-500 text-black jura" onClick={() => props.joinChallenge(props.data)}>
           <h3 className=" text-2xl  md:text-3xl   ">Join</h3>
         </button>
 

@@ -1,27 +1,30 @@
 "use client";
 import Link from "next/link";
 import { Navbar, Pagination, Modal, Button } from "flowbite-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import React from "react";
 import "../../../app/css/LoginPageAndHome.css";
 import ProfilePic from "../../../../public/images/Ellipse 16.png";
-const InboxModalComponent = (props: { closeModal: () => void, openFriendsModal: () => void }) => {
-  const [showModal, setOpenModal] = useState(false);
+import { INotification } from "@/interfaces/Interfaces";
+import MessageNotificationComponent from "../HomePage/Notifications/MessageNotificationComponent";
+import MatchNotificationComponent from "../HomePage/Notifications/MatchNotificationComponent";
+import { MakeNotificationRead } from "@/Data/DataServices";
+const InboxModalComponent = (props: { closeModal: () => void, openFriendsModal: () => void, notifications: INotification[] }) => {
+
   const [activeTab, setActiveTab] = useState("Inbox");
   const [tabOneActive, setTabOneActive] = useState(true);
   const [tabTwoActive, setTabTwoActive] = useState(false);
   const [tabThreeActive, setTabThreeActive] = useState(false);
 
-  const handleContextChange = (tab: any) => {
-    // setActiveTabContent(tab)
-  };
+  const [matchesUnread, setMatchesUnread] = useState(false);
+  const [sessionsUnread, setSessionsUnread] = useState(false);
 
   const handleTabChange = (tab: any) => {
     if (tab == "Inbox") {
       setTabOneActive(true);
       setTabTwoActive(false);
       setTabThreeActive(false);
-    } else if (tab == "Sessions") {
+    } else if (tab == "Matches") {
       setTabOneActive(false);
       setTabTwoActive(true);
       setTabThreeActive(false);
@@ -32,45 +35,100 @@ const InboxModalComponent = (props: { closeModal: () => void, openFriendsModal: 
     }
     setActiveTab(tab);
   };
+
+  const matchesClick = async () => {
+    handleTabChange("Matches");
+    props.notifications.forEach(async (noti, idx) => {
+      if (noti.type.includes("Challenge") && noti.isRead === false) {
+        await MakeNotificationRead(noti)
+      }
+    })
+    setMatchesUnread(false);
+  }
+
+  const inboxClick = () => {
+    handleTabChange("Inbox");
+  }
+
+  const sessionsClick = async () => {
+    handleTabChange("Sessions");
+    props.notifications.forEach(async (noti, idx) => {
+      if (noti.type.includes("Session") && noti.isRead === false) {
+        await MakeNotificationRead(noti)
+      }
+    })
+    setSessionsUnread(false);
+  }
+
+  useEffect(() => {
+    const notiRead = async (noti: INotification) => {
+      await MakeNotificationRead(noti)
+    }
+
+    props.notifications.forEach(noti => {
+      if (noti.type.includes("Inbox") && noti.isRead === false) {
+        notiRead(noti)
+      }
+    })
+
+    props.notifications.forEach(noti => {
+      if (noti.type.includes("Challenge") && noti.isRead === false) {
+        setMatchesUnread(true);
+      }
+    })
+
+    props.notifications.forEach(noti => {
+      if (noti.type.includes("Session") && noti.isRead === false) {
+        setSessionsUnread(true);
+      }
+    })
+  }, [])
   return (
     <div className="bg-white rounded-lg">
       <div className="  px-6 py-5  lg:py-10 ">
         <div className="flex justify-evenly">
-          <button className={`tab-button px-4 w-48 py-2 rounded focus:outline-none jura text-xl md:text-2xl lg:text-3xl ${activeTab === "Inbox" ? "bg-orange-500   " : " text-black"}`} onClick={() => handleTabChange("Inbox")}> Inbox </button>
+          <button className={`tab-button relative px-4 w-48 py-2 rounded focus:outline-none jura text-xl md:text-2xl lg:text-3xl ${activeTab === "Inbox" ? "bg-orange-500 " : "text-black"}`} onClick={inboxClick}> Inbox </button>
 
-          <button className={`tab-button px-4 py-2 w-48 rounded focus:outline-none jura text-xl md:text-2xl lg:text-3xl ${activeTab === "Matches" ? "bg-orange-500 " : " text-black "}`} onClick={() => handleTabChange("Matches")}> Matches </button>
+          <button className={`tab-button relative px-4 py-2 w-48 rounded focus:outline-none jura text-xl md:text-2xl lg:text-3xl ${activeTab === "Matches" ? "bg-orange-500 " : " text-black "}`} onClick={matchesClick}> Matches {matchesUnread && <div className="absolute bg-red-600 w-4 h-4 rounded-full top-2 right-2"></div>} </button>
 
-          <button className={`tab-button px-4 py-2 w-48 rounded focus:outline-none jura text-xl md:text-2xl lg:text-3xl ${activeTab === "Sessions" ? "bg-orange-500  " : " text-black"}`} onClick={() => handleTabChange("Sessions")}> Sessions </button>
+          <button className={`tab-button relative px-4 py-2 w-48 rounded focus:outline-none jura text-xl md:text-2xl lg:text-3xl ${activeTab === "Sessions" ? "bg-orange-500  " : " text-black"}`} onClick={sessionsClick}> Sessions {sessionsUnread && <div className="absolute bg-red-600 w-4 h-4 rounded-full top-2 right-2"></div>} </button>
         </div>
       </div>
 
       <div className=" min-h-[500px]">
-        {tabOneActive && 
-          <div className="bg-black flex justify-start rounded-lg mx-8 px-5 py-4">
-            <img className="h-20" alt="" src={ProfilePic.src} />
-
-            <div className="pl-10">
-              <h2 className="text-center text-lg md:text-2xl lg:text-3xl pb-3 jura  text-white">
-               {} has accepted your friend request
-              </h2>
-              <button className="text-center text-lg md:text-xl lg:text-2xl bg-orange-500 rounded-lg jura px-2" onClick={() => {}}>
-                View Match
-              </button>
-            </div>
-          </div>
+        {tabOneActive && props.notifications.map((noti, idx) => {
+          if (noti.type.includes("Inbox")) {
+            if (noti.type.includes("Message")) {
+              return (<MessageNotificationComponent data={noti} key={idx} />)
+            }
           }
-
-
-        {tabTwoActive &&
-          <h2 className="text-center text-xl md:text-2xl lg:text-3xl jura py-20 px-20 lg:py-40 lg:px-40">
-            No Notifications
-          </h2>
+        })
         }
 
-        {tabThreeActive && 
-          <h2 className="text-center text-xl md:text-2xl lg:text-3xl jura py-20 px-20  lg:py-40 lg:px-40">
-            No Notifications
-          </h2>
+        {tabTwoActive && props.notifications.map((noti, idx) => {
+          if (noti.type.includes("Challenge")) {
+            if (noti.type.includes("Deleted")) {
+              return (<MessageNotificationComponent data={noti} key={idx} />)
+            } else if (noti.type.includes("Publisher")) {
+              return (<MatchNotificationComponent data={noti} key={idx} click={() => { }} edit={true} />)
+            } else if (noti.type.includes("Viewer")) {
+              return (<MatchNotificationComponent data={noti} key={idx} click={() => { }} edit={false} />)
+            }
+          }
+        })
+        }
+
+        {tabThreeActive && props.notifications.map((noti, idx) => {
+          if (noti.type.includes("Session")) {
+            if (noti.type.includes("Deleted")) {
+              return (<MessageNotificationComponent data={noti} key={idx} />)
+            } else if (noti.type.includes("Publisher")) {
+              return (<MatchNotificationComponent data={noti} key={idx} click={() => { }} edit={true} />)
+            } else if (noti.type.includes("Viewer")) {
+              return (<MatchNotificationComponent data={noti} key={idx} click={() => { }} edit={false} />)
+            }
+          }
+        })
         }
 
       </div>
