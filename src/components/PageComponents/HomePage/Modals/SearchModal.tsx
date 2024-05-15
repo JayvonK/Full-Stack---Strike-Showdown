@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { IPublicUserData, IUserPosts } from '@/interfaces/Interfaces'
 import SearchModalRecentUsersComponent from './SearchModalRecentUsersComponent'
 
-const SearchModal = (props: { closeModal: () => void, userArr: IPublicUserData[], clickSearch: (data: IPublicUserData) => void }) => {
+const SearchModal = (props: { closeModal: () => void, userArr: IPublicUserData[], clickSearch: (data: IPublicUserData) => void, currentUsername: string }) => {
 
   const [recSearch, setRecSearch] = useState<boolean>(false);
   const [searchedUsername, setSearchedUsername] = useState<string>('');
@@ -19,14 +19,16 @@ const SearchModal = (props: { closeModal: () => void, userArr: IPublicUserData[]
         <>
           {
             recSearch && props.userArr.map((user, idx) => {
-              if (searchedUsername.trim() === '') {
-                return (
-                  idx === props.userArr.length - 1 ? (<SearchModalRecentUsersComponent key={idx} username={user.username} avg={user.average} wins={user.wins} losses={user.losses} pfp={user.profileImage} last={true} viewUser={() => { props.clickSearch(user) }} />) : (<SearchModalRecentUsersComponent key={idx} username={user.username} avg={user.average} wins={user.wins} losses={user.losses} pfp={user.profileImage} last={false} viewUser={() => { props.clickSearch(user) }} />)
-                )
-              } else if (user.username.toLowerCase().includes(searchedUsername.toLowerCase())){
-                return (
-                  idx === props.userArr.length - 1 ? (<SearchModalRecentUsersComponent key={idx} username={user.username} avg={user.average} wins={user.wins} losses={user.losses} pfp={user.profileImage} last={true} viewUser={() => { props.clickSearch(user) }} />) : (<SearchModalRecentUsersComponent key={idx} username={user.username} avg={user.average} wins={user.wins} losses={user.losses} pfp={user.profileImage} last={false} viewUser={() => { props.clickSearch(user) }} />)
-                )
+              if (user.username !== props.currentUsername) {
+                if (searchedUsername.trim() === '') {
+                  return (
+                    idx === props.userArr.length - 1 ? (<SearchModalRecentUsersComponent key={idx} username={user.username} avg={user.average} wins={user.wins} losses={user.losses} pfp={user.profileImage} last={true} viewUser={() => { props.clickSearch(user) }} />) : (<SearchModalRecentUsersComponent key={idx} username={user.username} avg={user.average} wins={user.wins} losses={user.losses} pfp={user.profileImage} last={false} viewUser={() => { props.clickSearch(user) }} />)
+                  )
+                } else if (user.username.toLowerCase().includes(searchedUsername.toLowerCase())) {
+                  return (
+                    idx === props.userArr.length - 1 ? (<SearchModalRecentUsersComponent key={idx} username={user.username} avg={user.average} wins={user.wins} losses={user.losses} pfp={user.profileImage} last={true} viewUser={() => { props.clickSearch(user) }} />) : (<SearchModalRecentUsersComponent key={idx} username={user.username} avg={user.average} wins={user.wins} losses={user.losses} pfp={user.profileImage} last={false} viewUser={() => { props.clickSearch(user) }} />)
+                  )
+                }
               }
             })
           }
