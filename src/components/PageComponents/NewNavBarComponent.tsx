@@ -36,8 +36,8 @@ const NewNavBarComponent = (props: { openUsersProfileModal: () => void, openFrie
                         <div className='flex flex-col items-center hover:brightness-125 hover:cursor-pointer hover:!text-orange-500 text-white 2xl:mr-14 mr-8 relative'>
                             <img className='aspect-square xl:w-[45px] w-[40px]' src="/images/Inbox.png" alt="" onClick={props.openInboxModal} />
                             <h3 className='xl:text-xl text-lg  text-center jura mt-2' onClick={props.openInboxModal}>Inbox</h3>
-                            <div className='absolute w-5 h-5 rounded-full bg-red-600 -top-2 -right-2'></div>
-                            <div className='absolute w-5 h-5 rounded-full bg-red-600 -top-2 -right-2 animate-[2s_ping_infinite]'></div>
+                            <div className='absolute w-6 h-6 rounded-full bg-red-600 -top-2 -right-2 text-white text-center flex justify-center items-center text-sm'>12</div>
+                            <div className='absolute w-6 h-6 rounded-full bg-red-600 -top-2 -right-2 animate-[3s_ping_infinite]'></div>
                         </div>
                     ) : (
                         <div className='flex flex-col items-center hover:brightness-125 hover:cursor-pointer hover:!text-orange-500 text-white 2xl:mr-14 mr-8'>
