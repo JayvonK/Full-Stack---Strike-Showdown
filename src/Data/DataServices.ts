@@ -1,6 +1,8 @@
-import { ICreatePost, IPublicUserData, IToken, IUserInfoWithStats, IUserLogin, IUserPosts } from "@/interfaces/Interfaces"
+import { ICreateNotification, ICreatePost, INotification, IPublicUserData, IToken, IUserInfoWithStats, IUserLogin, IUserPosts } from "@/interfaces/Interfaces"
 
 const url = 'https://strikeshowdownbackend.azurewebsites.net/api/'
+
+// Everything for Logging in and Creating User
 
 export const LoginAPI = async(createdUser: IUserLogin) => {
     const res = await fetch(url + 'User/Login/', {
@@ -59,6 +61,8 @@ export const ChangePasswordAPI = async(UsernameOrEmail: string, password: string
     console.log(data);
 }
 
+// Everything for Users
+
 export const GetUserAPI = async (UsernameOrEmail: string) => {
     const promise = await fetch(url + `User/GetUserByUsernameOrEmail/${UsernameOrEmail}`);
     const data: IPublicUserData = await promise.json();
@@ -78,6 +82,13 @@ export const UpdateUserAPI = async (username: string, userData: IPublicUserData)
         throw new Error(message);
     }
     const data = await res.json();
+    return data;
+}
+
+// Everything for Post and Matches
+export const GetUsersByStateAPI = async (state: string) => {
+    const promise = await fetch(url + 'User/GetUsersByState/' + state);
+    const data = await promise.json();
     return data;
 }
 
@@ -142,14 +153,73 @@ export const GetPublicMatchesByStateAPI = async (state: string) => {
     return data;
 }
 
-export const GetMatchesByID = async (id: number) => {
+export const GetMatchesByIDAPI = async (id: number) => {
     const promise = await fetch(url + 'Match/GetMatchesByID/' + id);
     const data = await promise.json();
     return data;
 }
 
-export const GetUsersByStateAPI = async (state: string) => {
-    const promise = await fetch(url + 'User/GetUsersByState/' + state);
+export const GetMatchByPostIDAPI = async (id: number) => {
+    const promise = await fetch(url + 'Match/GetMatchByPostID/' + id);
     const data = await promise.json();
+    return data;
+}
+
+export const AddUserToMatchAPI = async (userID: number, match: IUserPosts) => {
+    const res = await fetch(url + 'Match/AddUserToMatch/' + userID, {
+        method: "PUT",
+        headers: {
+            'Content-Type': "application/json"
+        },
+        body: JSON.stringify(match)
+    })
+
+    if(!res.ok){
+        const message = "An error message has occured " + res.status;
+        throw new Error(message);
+    }
+
+    const data = await res.json();
+    return data;
+}
+
+// Everything For Notifications
+
+export const GetNotificationsByUserIDAPI = async (id: number) => {
+    const promise = await fetch(url + 'Notification/GetNotificationsByUserID/' + id)
+    const data = await promise.json();
+    return data;
+}
+
+export const CreateNotificationAPI = async (noti: ICreateNotification) => {
+    const res = await fetch(url + 'Notification/CreateNotification', {
+        method: 'PUT',
+        headers: {
+            'Content-Type': "application/json"
+        },
+        body: JSON.stringify(noti)
+    })
+    if(!res.ok){
+        const message = "An error message has occured " + res.status;
+        throw new Error(message);
+    }
+    const data = await res.json();
+    return data;
+}
+
+export const DeleteNotificationAPI = async (noti: INotification) => {
+    const res = await fetch(url + 'Notification/DeleteNotification', {
+        method: 'PUT',
+        headers: {
+            'Content-Type': "application/json"
+        },
+        body: JSON.stringify(noti)
+    })
+    if(!res.ok){
+        const message = "An error message has occured " + res.status;
+        throw new Error(message);
+    }
+
+    const data = res.json();
     return data;
 }

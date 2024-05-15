@@ -84,6 +84,7 @@ export interface IUserPosts {
 
 export interface INotification {
   id: number;
+  postID: number;
   senderID: number;
   senderUsername: string;
   recieverID: number;
@@ -111,6 +112,7 @@ export interface ICreatePost{
 export interface ICreateNotification{
   senderID: number;
   recieverID: number;
+  postID: number;
   type: string;
   content: string;
 }
