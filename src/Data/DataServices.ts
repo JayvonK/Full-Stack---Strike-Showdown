@@ -153,6 +153,12 @@ export const GetPublicMatchesByStateAPI = async (state: string) => {
     return data;
 }
 
+export const GetRecentMatchIDByUserIDAPI = async (id: number) => {
+    const promise = await fetch(url + 'Match/GetRecentMatchIDByUserID/' +id);
+    const data = await promise.json();
+    return data;
+}
+
 export const GetMatchesByIDAPI = async (id: number) => {
     const promise = await fetch(url + 'Match/GetMatchesByID/' + id);
     const data = await promise.json();
@@ -193,7 +199,7 @@ export const GetNotificationsByUserIDAPI = async (id: number) => {
 
 export const CreateNotificationAPI = async (noti: ICreateNotification) => {
     const res = await fetch(url + 'Notification/CreateNotification', {
-        method: 'PUT',
+        method: 'POST',
         headers: {
             'Content-Type': "application/json"
         },
@@ -221,5 +227,21 @@ export const DeleteNotificationAPI = async (noti: INotification) => {
     }
 
     const data = res.json();
+    return data;
+}
+
+export const MakeNotificationRead = async (noti: INotification) => {
+    const res = await fetch(url + 'Notification/MakeNotificationRead', {
+        method: 'PUT',
+        headers: {
+            'Content-Type': "application/json"
+        },
+        body: JSON.stringify(noti)
+    })
+    if(!res.ok){
+        const message = "An error message has occured " + res.status;
+        throw new Error(message);
+    }
+    const data = await res.json();
     return data;
 }

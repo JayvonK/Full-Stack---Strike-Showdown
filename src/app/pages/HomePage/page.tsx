@@ -20,7 +20,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { useState } from "react";
 import { useAppContext } from '@/context/Context';
 import { ICreateNotification, ICreatePost, INotification, IPublicUserData, IUserInfoWithStats, IUserPosts } from '@/interfaces/Interfaces';
-import { AddUserToMatchAPI, CreateNotificationAPI, CreatePostAPI, DeleteMatchAPI, GetNotificationsByUserIDAPI, GetPublicMatchesByStateAPI, GetUserAPI, GetUsersByStateAPI, UpdateMatchAPI, UpdateUserAPI } from '@/Data/DataServices';
+import { AddUserToMatchAPI, CreateNotificationAPI, CreatePostAPI, DeleteMatchAPI, GetNotificationsByUserIDAPI, GetPublicMatchesByStateAPI, GetRecentMatchIDByUserIDAPI, GetUserAPI, GetUsersByStateAPI, UpdateMatchAPI, UpdateUserAPI } from '@/Data/DataServices';
 import PracticePostDummyData from '../../../utils/PostData.json';
 import PracticeSessionComponent from '@/components/PageComponents/HomePage/PracticeSessionComponent';
 import MatchComponent from '@/components/PageComponents/HomePage/MatchComponent';
@@ -250,6 +250,7 @@ const HomePage = () => {
   const closeInboxModal = () => {
     setInboxModal(false);
     setOpenModal(false);
+    updateNotifications();
   }
 
   // Functions for Search Modal
@@ -524,6 +525,21 @@ const HomePage = () => {
     setInvitedUsers(e.target.value);
   }
 
+  const clearMatchInputs = () => {
+    setVisibility(true);
+    setLocationOne("");
+    setLocationThree("");
+    setLocationTwo("");
+    setPracticeLocation("");
+    setDescription("");
+    setPracticeDescription("");
+    setStartTime("");
+    setEndTime("");
+    setMaxPpl("");
+    setCurrentPpl("");
+    setDate(undefined);
+  }
+
   const createPracticeSession = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -541,14 +557,25 @@ const HomePage = () => {
     }
 
     try {
-      await CreatePostAPI(PostData, currentUsername);
-      setMatchModal(false);
-      setOpenModal(false);
-      updateAllMatches()
-      toast({
-        title: "Your Post Was Created!.",
-        description: "Yayy",
-      })
+      if (await CreatePostAPI(PostData, currentUsername)) {
+        setMatchModal(false);
+        setOpenModal(false);
+        let noti: ICreateNotification = {
+          senderID: verifiedUserData.id,
+          recieverID: verifiedUserData.id,
+          postID: await GetRecentMatchIDByUserIDAPI(verifiedUserData.id),
+          type: "Publisher " + "Practice Session",
+          content: "You have created a Practice Session"
+        }
+        clearMatchInputs();
+        await CreateNotificationAPI(noti);
+        updateNotifications();
+        updateAllMatches();
+        toast({
+          title: "Your Post Was Created!",
+          description: "Yayy",
+        })
+      }
     } catch (error) {
       toast({
         variant: 'destructive',
@@ -626,7 +653,7 @@ const HomePage = () => {
       senderID: verifiedUserData.id,
       recieverID: match.userID,
       postID: match.id,
-      type: match.title,
+      type: "Publisher  " + match.title,
       content: verifiedUserData.username + ' has joined your ' + match.title + "!"
     }
 
@@ -634,7 +661,7 @@ const HomePage = () => {
       senderID: match.userID,
       recieverID: verifiedUserData.id,
       postID: match.id,
-      type: match.title,
+      type: "Viewer  " + match.title,
       content: `You have joined ${match.publisher}'s ${match.title}!`
     }
 
@@ -643,6 +670,10 @@ const HomePage = () => {
       await CreateNotificationAPI(noti2);
       closeViewMatch();
       updateNotifications();
+      toast({
+        title: "You've successfully joined the post",
+        description: "YAY",
+      })
     } else {
       toast({
         variant: 'destructive',
@@ -818,40 +849,43 @@ const HomePage = () => {
           setNewNotificationBool(true);
         }
       })
+      if(notiArr.every(noti => noti.isRead === true)){
+        setNewNotificationBool(false);
+      }
     }
   }
 
-  // useEffect(() => {
-  //   let storageArr = GetLocalStorage();
-  //   setStorage(storageArr);
-  //   if (storageArr.length === 0) {
-  //     route.push('/');
-  //   } else {
-  //     const grabUserData = async () => {
-  //       try {
-  //         const userData: IPublicUserData = await GetUserAPI(storageArr[0][1]);
-  //         setVerifiedUserData(userData);
-  //         setEditData(userData);
-  //         setCurrentUsername(storageArr[0][1])
-  //         setMatchData(await GetPublicMatchesByStateAPI(userData.location));
-  //         setCurrentUsersPosts(grabUserPosts(userData.id, await GetPublicMatchesByStateAPI(userData.location)));
-  //         const notiArr: INotification[] = await GetNotificationsByUserIDAPI(userData.id);
-  //         setNotificationsArray(notiArr);
-  //         if(notiArr.length !== 0){
-  //           notiArr.forEach(noti => {
-  //             if(noti.isDeleted === false && noti.isRead === false){
-  //               setNewNotificationBool(true);
-  //             }
-  //           })
-  //         }
-  //       } catch (error) {
-  //         localStorage.clear();
-  //         route.push('/');
-  //       }
-  //     }
-  //     grabUserData();
-  //   }
-  // }, [runUseEffect])
+  useEffect(() => {
+    let storageArr = GetLocalStorage();
+    setStorage(storageArr);
+    if (storageArr.length === 0) {
+      route.push('/');
+    } else {
+      const grabUserData = async () => {
+        try {
+          const userData: IPublicUserData = await GetUserAPI(storageArr[0][1]);
+          setVerifiedUserData(userData);
+          setEditData(userData);
+          setCurrentUsername(storageArr[0][1])
+          setMatchData(await GetPublicMatchesByStateAPI(userData.location));
+          setCurrentUsersPosts(grabUserPosts(userData.id, await GetPublicMatchesByStateAPI(userData.location)));
+          const notiArr: INotification[] = await GetNotificationsByUserIDAPI(userData.id);
+          setNotificationsArray(notiArr);
+          if(notiArr.length !== 0){
+            notiArr.forEach(noti => {
+              if(noti.isDeleted === false && noti.isRead === false){
+                setNewNotificationBool(true);
+              }
+            })
+          }
+        } catch (error) {
+          localStorage.clear();
+          route.push('/');
+        }
+      }
+      grabUserData();
+    }
+  }, [runUseEffect])
 
   return (
     <div>
@@ -890,7 +924,7 @@ const HomePage = () => {
         }
 
         {
-          inboxModal && <InboxModalComponent closeModal={closeInboxModal} openFriendsModal={openFriendsModal} />
+          inboxModal && <InboxModalComponent closeModal={closeInboxModal} openFriendsModal={openFriendsModal} notifications={notificationArray} />
         }
 
         {
@@ -914,11 +948,11 @@ const HomePage = () => {
         }
 
         {
-          joinChallengeModal && !searchModal && <JoinChallengeModal data={viewMatchData} closeModal={closeViewMatch} joinChallenge={() => { }} />
+          joinChallengeModal && !searchModal && <JoinChallengeModal data={viewMatchData} closeModal={closeViewMatch} joinChallenge={handleJoinMatch} />
         }
 
         {
-          joinSessionModal && !searchModal && <JoinSessionModalComponent data={viewMatchData} closeModal={closeViewMatch} joinChallenge={() => { }} />
+          joinSessionModal && !searchModal && <JoinSessionModalComponent data={viewMatchData} closeModal={closeViewMatch} joinChallenge={handleJoinMatch} />
         }
 
       </Modal>
@@ -949,7 +983,7 @@ const HomePage = () => {
         }
 
         {
-          inboxModal && <InboxModalComponent closeModal={closeInboxModal} openFriendsModal={openFriendsModal} />
+          inboxModal && <InboxModalComponent closeModal={closeInboxModal} openFriendsModal={openFriendsModal} notifications={notificationArray} />
         }
 
         {
@@ -988,7 +1022,7 @@ const HomePage = () => {
         }
 
         {
-          inboxModal && <InboxModalComponent closeModal={closeInboxModal} openFriendsModal={openFriendsModal} />
+          inboxModal && <InboxModalComponent closeModal={closeInboxModal} openFriendsModal={openFriendsModal} notifications={notificationArray} />
         }
 
         {
@@ -1028,7 +1062,7 @@ const HomePage = () => {
         }
 
         {
-          inboxModal && <InboxModalComponent closeModal={closeInboxModal} openFriendsModal={openFriendsModal} />
+          inboxModal && <InboxModalComponent closeModal={closeInboxModal} openFriendsModal={openFriendsModal} notifications={notificationArray} />
         }
 
         {
