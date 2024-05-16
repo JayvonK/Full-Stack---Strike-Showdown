@@ -7,9 +7,9 @@ const ProfileMatchesComponent = (props: {data: IUserPosts, openEditMatchModal: (
             <div className='grid sm:grid-cols-[70%_30%]'>
 
                 <div>
-                    <h2 className='lg:text-2xl sm:text-xl text-lg mb-4 sm:block hidden'>{props.data.title}</h2>
+                    <h2 className='lg:text-2xl sm:text-xl text-lg mb-4 sm:block hidden'>{props.data.title === "1v1 Challenge" ? props.data.title : `${props.data.title} ${props.data.currentPpl}/${props.data.maxPpl}`}</h2>
                     <div className='sm:hidden flex justify-between items-center mb-2'>
-                        <h2 className='lg:text-2xl sm:text-xl text-lg'>{props.data.title}</h2>
+                        <h2 className='lg:text-2xl sm:text-xl text-lg'>{props.data.title === "1v1 Challenge" ? props.data.title : `${props.data.title} ${props.data.currentPpl}/${props.data.maxPpl}`}</h2>
                         <button className="bg-orange-500 rounded-md py-1 px-4 text-black">
                             <h3 className="lg:text-2xl sm:text-xl text-lg">Edit</h3>
                         </button>

@@ -71,7 +71,7 @@ export interface IUserPosts {
   time: string; 
   maxPpl: number;
   currentPpl: number;
-  matchUserIDs: string;
+  matchUsersIDs: string;
   description: string; 
   isFinished: boolean; 
   publisher: string; 

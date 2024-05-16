@@ -30,7 +30,7 @@ import NewNavBarComponent from '@/components/PageComponents/NewNavBarComponent';
 import EditProfileModal from '@/components/PageComponents/HomePage/Modals/EditProfileModal';
 import { EditLocalStorageUsername, GetLocalStorage } from '@/utils/LocalStorageFunctions';
 import MatchSkeleton from '@/components/PageComponents/HomePage/MatchSkeleton';
-import { averageStatFormat, convertTimeBack, convertToDate, editMatchLocationArr, grabUserPosts, locationFormat, timeFormat } from '@/utils/FormatFunctions';
+import { averageStatFormat, convertTimeBack, convertToDate, editMatchLocationArr, grabUserPosts, grabViewUserPosts, locationFormat, timeFormat } from '@/utils/FormatFunctions';
 import ProfileModalComponent from '@/components/PageComponents/ModalComponents/ProfileModalComponent';
 import InboxModalComponent from '@/components/PageComponents/ModalComponents/InboxModalComponent';
 import FriendsModalComponent from '@/components/PageComponents/ModalComponents/FriendsModalComponent';
@@ -91,7 +91,6 @@ const HomePage = () => {
 
   const pageContext = useAppContext();
   const route = useRouter();
-  const placeholderDate = new Date();
   const { toast } = useToast();
   const [openModal, setOpenModal] = useState(false);
   const [verifiedUserData, setVerifiedUserData] = useState<IPublicUserData>(fakeUserData);
@@ -101,6 +100,7 @@ const HomePage = () => {
   const [skeleton, setSkeleton] = useState<boolean>(false);
   const [messagePage, setMessagePage] = useState<boolean>(false);
   const [currentUsersPosts, setCurrentUsersPosts] = useState<IUserPosts[]>([]);
+  const [viewUsersPosts, setViewUsersPosts] = useState<IUserPosts[]>([])
   const [usersArray, setUsersArray] = useState<IPublicUserData[]>([fakeUserData, fakeUserData, fakeUserData2])
 
   // State Variables For Match Data
@@ -135,6 +135,7 @@ const HomePage = () => {
   const [viewMatchModal, setViewMatchModal] = useState<boolean>(false);
   const [joinSessionModal, setJoinSessionModal] = useState<boolean>(false);
   const [joinChallengeModal, setJoinChallengeModal] = useState<boolean>(false);
+  const [joinChallengeLocation, setJoinChallengeLocation] = useState<string>('');
 
   // State Variables for Users Profile Modal
   const [userProfileModal, setUserProfileModal] = useState<boolean>(false);
@@ -169,11 +170,12 @@ const HomePage = () => {
   const [editEarnings, setEditEarnings] = useState<string>('');
   const [editHighGame, setEditHighGame] = useState<string>('');
   const [editHighSeries, setEditHighSeries] = useState<string>('');
+  const [editLocation, setEditLocation] = useState<string>('');
   const editData: IPublicUserData = {
     id: 0,
     username: editUsername,
     email: editEmail,
-    location: '',
+    location: editLocation,
     securityQuestion: '',
     securityQuestionTwo: '',
     securityQuestionThree: '',
@@ -270,7 +272,7 @@ const HomePage = () => {
 
   const clickSearch = (data: IPublicUserData) => {
     setViewOtherUserData(data);
-    setCurrentUsersPosts(grabUserPosts(data.id, matchData))
+    setViewUsersPosts(grabViewUserPosts(data.id, matchData))
     openViewOtherUserModal();
     console.log(grabUserPosts(data.id, matchData));
     console.log(matchData)
@@ -288,13 +290,35 @@ const HomePage = () => {
   }
 
   const deleteMatch = async () => {
-    if (deletePost) {
+    let users = deletePost?.matchUsersIDs.split("-");
+    console.log(users);
+
+    if (deletePost !== undefined) {
       try {
         await DeleteMatchAPI(deletePost);
         setConfirmationModal(false);
         setEditMatchModal(false);
         setOpenModal(false);
+        toast({
+          title: "Match Deleted",
+          description: "YAY",
+        })
         updateAllMatches();
+
+        users?.forEach(async (user, idx) => {
+          if (user !== "") {
+            let noti: ICreateNotification = {
+              senderID: verifiedUserData.id,
+              recieverID: Number(user),
+              postID: deletePost.id,
+              type: "Deleted " + deletePost.title,
+              content: idx === 0 ? `You have deleted your ${deletePost.title} that was created on ${deletePost.date}` : `${verifiedUserData.username} has deleted their ${deletePost.title} that was created on ${deletePost.date}`
+            }
+            await CreateNotificationAPI(noti);
+          }
+        })
+
+        updateNotifications();
       } catch (error) {
         toast({
           variant: 'destructive',
@@ -312,6 +336,7 @@ const HomePage = () => {
     setEditProfileImg(data.profileImage);
     setEditUsername(data.username);
     setEditEmail(data.email);
+    setEditLocation(data.location)
     setEditPronouns(data.pronouns);
     setEditFullName(data.fullName);
     setEditMainCenter(data.mainCenter);
@@ -366,6 +391,9 @@ const HomePage = () => {
   const handleEditFullNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEditFullName(e.target.value)
   }
+  const handleEditLocationChange = (e: string) => {
+    setEditLocation(e);
+  }
   const handleEditMainCenterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEditMainCenter(e.target.value);
   }
@@ -402,7 +430,7 @@ const HomePage = () => {
       id: 0,
       username: editUsername,
       email: editEmail,
-      location: verifiedUserData.location,
+      location: editLocation,
       securityQuestion: verifiedUserData.securityQuestion,
       securityQuestionTwo: verifiedUserData.securityQuestionTwo,
       securityQuestionThree: verifiedUserData.securityQuestionThree,
@@ -452,14 +480,6 @@ const HomePage = () => {
 
   const handleFalseChallengeBool = () => {
     setAddingChallengeBool(false);
-  }
-
-  const handleJoin = () => {
-    toast({
-      variant: "destructive",
-      title: "Join/Challenge function is still in progress ",
-      description: "Sorry About That",
-    })
   }
 
   const handleCloseMatchModal = () => {
@@ -595,7 +615,7 @@ const HomePage = () => {
       isVisible: visibility,
       state: verifiedUserData.location,
       locations: location === "" ? "Open to any locations" : location,
-      date: format(placeholderDate, "MM/dd/yy"),
+      date: format(new Date(), "MM/dd/yy"),
       time: '1:00 pm-2:00 pm',
       maxPpl: 2,
       currentPpl: 1,
@@ -642,31 +662,39 @@ const HomePage = () => {
   }
 
   const viewChallenge = (data: IUserPosts) => {
+    console.log('hey')
+    setViewMatchData(data);
     setJoinChallengeModal(true);
     setOpenModal(true);
   }
 
   const viewSession = (data: IUserPosts) => {
+    console.log('hey')
+    setViewMatchData(data);
     setJoinSessionModal(true);
     setOpenModal(true);
   }
 
   const closeViewMatch = () => {
+    setJoinChallengeLocation("");
     setJoinChallengeModal(false);
     setJoinSessionModal(false);
-    setOpenModal(false);
+    viewOtherUserModal ? setOpenModal(true) : setOpenModal(false);
   }
 
   // Join Match Functions
 
-  const handleJoinMatch = async (match: IUserPosts) => {
+  const handleJoinChallengeLocationChange = (e: string) => {
+    setJoinChallengeLocation(e);
+  }
 
+  const handleJoinMatch = async (match: IUserPosts) => {
     let noti1: ICreateNotification = {
       senderID: verifiedUserData.id,
       recieverID: match.userID,
       postID: match.id,
       type: "Publisher  " + match.title,
-      content: verifiedUserData.username + ' has joined your ' + match.title + "!"
+      content: match.title === "1v1 Challenge" ? `${verifiedUserData.username} has accepted your ${match.title} at the location: ${joinChallengeLocation} !` : `${verifiedUserData.username} has joined your ${match.title} scheduled on ${match.date} at ${match.time}`
     }
 
     let noti2: ICreateNotification = {
@@ -674,7 +702,7 @@ const HomePage = () => {
       recieverID: verifiedUserData.id,
       postID: match.id,
       type: "Viewer  " + match.title,
-      content: `You have joined ${match.publisher}'s ${match.title}!`
+      content: match.title === "1v1 Challenge" ? `You have joined ${match.publisher}'s ${match.title} at ${joinChallengeLocation}, message them for the date and time if you haven't already!` : `You have joined ${match.publisher}'s ${match.title} on ${match.date} at ${match.time}`
     }
 
     if (await AddUserToMatchAPI(verifiedUserData.id, match)) {
@@ -682,8 +710,9 @@ const HomePage = () => {
       await CreateNotificationAPI(noti2);
       closeViewMatch();
       updateNotifications();
+      updateAllMatches();
       toast({
-        title: "You've successfully joined the post",
+        title: "You've successfully joined the " + match.title,
         description: "YAY",
       })
     } else {
@@ -714,7 +743,7 @@ const HomePage = () => {
     setLocationOne(loc[0]);
     setLocationTwo(loc[1]);
     setLocationThree(loc[2]);
-    setUserMatchIDs(data.matchUserIDs)
+    setUserMatchIDs(data.matchUsersIDs)
     setDate(newDate);
   }
 
@@ -723,7 +752,7 @@ const HomePage = () => {
     setEditMatchModalData(data);
     console.log(data);
     setEditMatchModal(true);
-    data.title === 'Practice Session' ? setEditingChallengeBool(false) : setEditingChallengeBool(true);
+    data.title === '1v1 Challenge' ? setEditingChallengeBool(true) : setEditingChallengeBool(false);
     setOpenModal(true);
   }
 
@@ -756,11 +785,11 @@ const HomePage = () => {
       isVisible: visibility,
       state: verifiedUserData.location,
       locations: editingChallengeBool ? location : practiceLocation,
-      date: date ? format(date, "MM/dd/yy") : format(placeholderDate, "MM/dd/yy"),
+      date: date ? format(date, "MM/dd/yy") : format(new Date(), "MM/dd/yy"),
       time: timeFormat(startTime) + '-' + timeFormat(endTime),
       maxPpl: maxPpl === "" ? 0 : Number(maxPpl),
       currentPpl: currentPpl === "" ? 0 : Number(currentPpl),
-      matchUserIDs: userMatchIDs,
+      matchUsersIDs: userMatchIDs,
       description: editingChallengeBool ? description : practiceDescription,
       isFinished: false,
       publisher: verifiedUserData.username,
@@ -771,22 +800,31 @@ const HomePage = () => {
       streak: verifiedUserData.streak
     }
 
-    try {
-      await UpdateMatchAPI(editMatchData);
-      setEditMatchModal(false);
-      setOpenModal(false);
-      updateAllMatches()
-      toast({
-        title: "Your Match Was Updated!.",
-        description: "Yayy",
-      })
-    } catch (error) {
+    if (Number(maxPpl) < Number(currentPpl)) {
       toast({
         variant: 'destructive',
-        title: "Something went wrong.",
+        title: "Max amount of people can't be lower than current people.",
         description: "Uh Oh",
       })
+    } else {
+      try {
+        await UpdateMatchAPI(editMatchData);
+        closeEditMatchModal();
+        updateAllMatches()
+        toast({
+          title: "Your Match Was Updated!.",
+          description: "Yayy",
+        })
+      } catch (error) {
+        toast({
+          variant: 'destructive',
+          title: "Something went wrong.",
+          description: "Uh Oh",
+        })
+      }
     }
+
+
   }
 
 
@@ -881,6 +919,7 @@ const HomePage = () => {
           setCurrentUsername(storageArr[0][1])
           setMatchData(await GetPublicMatchesByStateAPI(userData.location));
           setCurrentUsersPosts(grabUserPosts(userData.id, await GetPublicMatchesByStateAPI(userData.location)));
+          console.log(grabUserPosts(userData.id, await GetPublicMatchesByStateAPI(userData.location)))
           const notiArr: INotification[] = await GetNotificationsByUserIDAPI(userData.id);
           setNotificationsArray(notiArr);
           if (notiArr.length !== 0) {
@@ -902,7 +941,7 @@ const HomePage = () => {
   return (
     <div>
       <NewNavBarComponent openFriendsModal={openFriendsModal} openUsersProfileModal={openUsersProfileModal} openInboxModal={openInboxModal} openSearchModal={openSearchModal} goToHomePage={goToHomePage} goToMessagingPage={goToMessagingPage} errorMobileModal={errorMobileModal} newNotificationBool={newNotificationBool} />
-      <Modal className='bg-black lg:flex hidden  justify-center bgModal' show={openModal} size={'4xl'} onClose={() => setOpenModal(false)}>
+      <Modal className='bg-black lg:flex hidden justify-center bgModal' show={openModal} size={'4xl'} onClose={() => setOpenModal(false)}>
 
         {/* Everything with match modals */}
         {
@@ -910,7 +949,7 @@ const HomePage = () => {
         }
 
         {
-          editModal && <EditProfileModal data={editData} handleEditStyleChange={handleEditStyleChange} handleCloseEditModal={handleCloseEditModal} handleEditUsernameChange={handleEditUsernameChange} handleEditEmailChange={handleEditEmailChange} handleEditPronounsChange={handleEditPronounsChange} handleEditFullNameChange={handleEditFullNameChange} handleEditMainCenterChange={handleEditMainCenterChange} handleEditAverageChange={handleEditAverageChange} handleEditEarningsChange={handleEditEarningChange} handleEditHighGameChange={handleEditHighGameChange} handleEditHighSeriesChange={handleEditHighSeriesChange} handleEditUserConfirm={handleEditUserConfirm} handleEditProfileImgChange={handleEditProfileImgChange} />
+          editModal && <EditProfileModal data={editData} handleEditStyleChange={handleEditStyleChange} handleCloseEditModal={handleCloseEditModal} handleEditUsernameChange={handleEditUsernameChange} handleEditEmailChange={handleEditEmailChange} handleEditPronounsChange={handleEditPronounsChange} handleEditFullNameChange={handleEditFullNameChange} handleEditMainCenterChange={handleEditMainCenterChange} handleEditAverageChange={handleEditAverageChange} handleEditEarningsChange={handleEditEarningChange} handleEditHighGameChange={handleEditHighGameChange} handleEditHighSeriesChange={handleEditHighSeriesChange} handleEditUserConfirm={handleEditUserConfirm} handleEditProfileImgChange={handleEditProfileImgChange} handleEditLocationChange={handleEditLocationChange} />
         }
 
         {
@@ -932,10 +971,6 @@ const HomePage = () => {
         }
 
         {
-          userProfileModal && editMatchModal && !editingChallengeBool && !confirmationModal && <AddChallengeModal addingChallengeBool={true} handleTrueChallengeBool={() => { }} handleFalseChallengeBool={() => { }} create1v1Challenge={create1v1Challenge} createPracticeSession={createPracticeSession} handleVisibilityChange={handleVisibilityChange} visibility={visibility} handleLocationOneChange={handleLocationOneChange} locationOne={locationOne} handleLocationTwoChange={handleLocationTwoChange} locationTwo={locationTwo} handleLocationThreeChange={handleLocationThreeChange} locationThree={locationThree} handlePracticeLocationChange={handlePracticeLocationChange} handlePracticeDescriptionChange={handlePracticeDescriptionChange} handleDescriptionChange={handleDescriptionChange} description={description} handleCloseModal={handleCloseMatchModal} handleTimeStartChange={handleTimeStartChange} handleTimeEndChange={handleTimeEndChange} setDate={setDate} handleMaxPplChange={handleMaxPplChange} timeStart={startTime} timeEnd={endTime} date={date} maxPpl={maxPpl.toString()} practiceLocation={practiceLocation} practiceDescription={practiceDescription} edit={true} closeEditMatchModal={closeEditMatchModal} editMatchClick={editMatchClick} openConfirmation={openConfirmation} currentPpl={currentPpl} handleCurrentPplChange={handleCurrentPplChange} />
-        }
-
-        {
           inboxModal && <InboxModalComponent closeModal={closeInboxModal} openFriendsModal={openFriendsModal} notifications={notificationArray} />
         }
 
@@ -948,143 +983,31 @@ const HomePage = () => {
         }
 
         {
-          searchModal && viewOtherUserModal && !joinChallengeModal && !joinSessionModal && <ProfileModalComponent userData={viewOtherUserData} handleCloseUsersProfileModal={() => setViewOtherUserModal(false)} handleOpenEditModal={openEditModal} openMyInfo={openMyInfo} openMyPosts={openMyPosts} onInfo={onInfo} posts={currentUsersPosts} openEditMatchModal={openEditMatchModal} viewModal={true} viewChallenge={viewChallenge} viewSession={viewSession} />
+          searchModal && viewOtherUserModal && !joinChallengeModal && !joinSessionModal && <ProfileModalComponent userData={viewOtherUserData} handleCloseUsersProfileModal={() => setViewOtherUserModal(false)} handleOpenEditModal={openEditModal} openMyInfo={openMyInfo} openMyPosts={openMyPosts} onInfo={onInfo} posts={viewUsersPosts} openEditMatchModal={openEditMatchModal} viewModal={true} viewChallenge={viewChallenge} viewSession={viewSession} />
         }
 
         {
-          searchModal && viewOtherUserModal && joinChallengeModal && <JoinChallengeModal data={viewMatchData} closeModal={() => setJoinChallengeModal(false)} joinChallenge={() => { }} />
+          joinChallengeModal && <JoinChallengeModal data={viewMatchData} closeModal={closeViewMatch} joinChallenge={handleJoinMatch} handleJoinChallengeLocationChange={handleJoinChallengeLocationChange} joinChallengeLocation={joinChallengeLocation} />
         }
 
         {
-          searchModal && viewOtherUserModal && joinSessionModal && <JoinSessionModalComponent data={viewMatchData} closeModal={() => setJoinSessionModal(false)} joinChallenge={() => { }} />
-        }
-
-        {
-          joinChallengeModal && !searchModal && <JoinChallengeModal data={viewMatchData} closeModal={closeViewMatch} joinChallenge={handleJoinMatch} />
-        }
-
-        {
-          joinSessionModal && !searchModal && <JoinSessionModalComponent data={viewMatchData} closeModal={closeViewMatch} joinChallenge={handleJoinMatch} />
+          joinSessionModal && <JoinSessionModalComponent data={viewMatchData} closeModal={closeViewMatch} joinChallenge={handleJoinMatch} />
         }
 
       </Modal>
 
       <Modal className='bg-black lg:hidden md:flex hidden justify-center items-center' show={openModal} size={'2xl'} onClose={() => setOpenModal(false)}>
-        {
-          matchModal && <AddChallengeModal addingChallengeBool={addingChallengeBool} handleTrueChallengeBool={handleTrueChallengeBool} handleFalseChallengeBool={handleFalseChallengeBool} create1v1Challenge={create1v1Challenge} createPracticeSession={createPracticeSession} handleVisibilityChange={handleVisibilityChange} visibility={visibility} handleLocationOneChange={handleLocationOneChange} locationOne={locationOne} handleLocationTwoChange={handleLocationTwoChange} locationTwo={locationTwo} handleLocationThreeChange={handleLocationThreeChange} locationThree={locationThree} handlePracticeLocationChange={handlePracticeLocationChange} handlePracticeDescriptionChange={handlePracticeDescriptionChange} handleDescriptionChange={handleDescriptionChange} description={description} handleCloseModal={handleCloseMatchModal} handleTimeStartChange={handleTimeStartChange} handleTimeEndChange={handleTimeEndChange} setDate={setDate} handleMaxPplChange={handleMaxPplChange} timeStart={startTime} timeEnd={endTime} date={date} maxPpl={maxPpl.toString()} practiceLocation={practiceLocation} practiceDescription={practiceDescription} edit={false} closeEditMatchModal={closeEditMatchModal} editMatchClick={editMatchClick} openConfirmation={openConfirmation} currentPpl={currentPpl} handleCurrentPplChange={handleCurrentPplChange} />
-        }
-
-        {
-          editModal && <EditProfileModal data={editData} handleEditStyleChange={handleEditStyleChange} handleCloseEditModal={handleCloseEditModal} handleEditUsernameChange={handleEditUsernameChange} handleEditEmailChange={handleEditEmailChange} handleEditPronounsChange={handleEditPronounsChange} handleEditFullNameChange={handleEditFullNameChange} handleEditMainCenterChange={handleEditMainCenterChange} handleEditAverageChange={handleEditAverageChange} handleEditEarningsChange={handleEditEarningChange} handleEditHighGameChange={handleEditHighGameChange} handleEditHighSeriesChange={handleEditHighSeriesChange} handleEditUserConfirm={handleEditUserConfirm} handleEditProfileImgChange={handleEditProfileImgChange} />
-        }
-
-        {
-          editMatchModal && editingChallengeBool && !confirmationModal && <AddChallengeModal addingChallengeBool={true} handleTrueChallengeBool={() => { }} handleFalseChallengeBool={() => { }} create1v1Challenge={create1v1Challenge} createPracticeSession={createPracticeSession} handleVisibilityChange={handleVisibilityChange} visibility={visibility} handleLocationOneChange={handleLocationOneChange} locationOne={locationOne} handleLocationTwoChange={handleLocationTwoChange} locationTwo={locationTwo} handleLocationThreeChange={handleLocationThreeChange} locationThree={locationThree} handlePracticeLocationChange={handlePracticeLocationChange} handlePracticeDescriptionChange={handlePracticeDescriptionChange} handleDescriptionChange={handleDescriptionChange} description={description} handleCloseModal={handleCloseMatchModal} handleTimeStartChange={handleTimeStartChange} handleTimeEndChange={handleTimeEndChange} setDate={setDate} handleMaxPplChange={handleMaxPplChange} timeStart={startTime} timeEnd={endTime} date={date} maxPpl={maxPpl.toString()} practiceLocation={practiceLocation} practiceDescription={practiceDescription} edit={true} closeEditMatchModal={closeEditMatchModal} editMatchClick={editMatchClick} openConfirmation={openConfirmation} currentPpl={currentPpl} handleCurrentPplChange={handleCurrentPplChange} />
-        }
-
-        {
-          editMatchModal && !editingChallengeBool && !confirmationModal && <AddChallengeModal addingChallengeBool={false} handleTrueChallengeBool={() => { }} handleFalseChallengeBool={() => { }} create1v1Challenge={create1v1Challenge} createPracticeSession={createPracticeSession} handleVisibilityChange={handleVisibilityChange} visibility={visibility} handleLocationOneChange={handleLocationOneChange} locationOne={locationOne} handleLocationTwoChange={handleLocationTwoChange} locationTwo={locationTwo} handleLocationThreeChange={handleLocationThreeChange} locationThree={locationThree} handlePracticeLocationChange={handlePracticeLocationChange} handlePracticeDescriptionChange={handlePracticeDescriptionChange} handleDescriptionChange={handleDescriptionChange} description={description} handleCloseModal={handleCloseMatchModal} handleTimeStartChange={handleTimeStartChange} handleTimeEndChange={handleTimeEndChange} setDate={setDate} handleMaxPplChange={handleMaxPplChange} timeStart={startTime} timeEnd={endTime} date={date} maxPpl={maxPpl.toString()} practiceLocation={practiceLocation} practiceDescription={practiceDescription} edit={true} closeEditMatchModal={closeEditMatchModal} editMatchClick={editMatchClick} openConfirmation={openConfirmation} currentPpl={currentPpl} handleCurrentPplChange={handleCurrentPplChange} />
-        }
-
-        {
-          editMatchModal && confirmationModal && <ConfirmationModal closeConfirmation={closeConfirmation} deleteMatch={deleteMatch} />
-        }
-
-        {
-          <ProfileModalComponent userData={viewOtherUserData} handleCloseUsersProfileModal={() => setViewOtherUserModal(false)} handleOpenEditModal={openEditModal} openMyInfo={openMyInfo} openMyPosts={openMyPosts} onInfo={onInfo} posts={currentUsersPosts} openEditMatchModal={openEditMatchModal} viewModal={true} viewChallenge={viewChallenge} viewSession={viewSession} />
-        }
-
-        {
-          inboxModal && <InboxModalComponent closeModal={closeInboxModal} openFriendsModal={openFriendsModal} notifications={notificationArray} />
-        }
-
-        {
-          friendsModal && <FriendsModalComponent closeModal={closeFriendsModal} />
-        }
-
-        {
-          searchModal && <SearchModal closeModal={closeSearchModal} userArr={usersArray} clickSearch={clickSearch} currentUsername={verifiedUserData.username} />
-        }
-
+        
       </Modal>
 
       <Modal className='bg-black md:hidden sm:flex hidden justify-center items-center h-auto' show={openModal} size={'xl'} onClose={() => setOpenModal(false)}>
-        {
-          matchModal && <AddChallengeModal addingChallengeBool={addingChallengeBool} handleTrueChallengeBool={handleTrueChallengeBool} handleFalseChallengeBool={handleFalseChallengeBool} create1v1Challenge={create1v1Challenge} createPracticeSession={createPracticeSession} handleVisibilityChange={handleVisibilityChange} visibility={visibility} handleLocationOneChange={handleLocationOneChange} locationOne={locationOne} handleLocationTwoChange={handleLocationTwoChange} locationTwo={locationTwo} handleLocationThreeChange={handleLocationThreeChange} locationThree={locationThree} handlePracticeLocationChange={handlePracticeLocationChange} handlePracticeDescriptionChange={handlePracticeDescriptionChange} handleDescriptionChange={handleDescriptionChange} description={description} handleCloseModal={handleCloseMatchModal} handleTimeStartChange={handleTimeStartChange} handleTimeEndChange={handleTimeEndChange} setDate={setDate} handleMaxPplChange={handleMaxPplChange} timeStart={startTime} timeEnd={endTime} date={date} maxPpl={maxPpl.toString()} practiceLocation={practiceLocation} practiceDescription={practiceDescription} edit={false} closeEditMatchModal={closeEditMatchModal} editMatchClick={editMatchClick} openConfirmation={openConfirmation} currentPpl={currentPpl} handleCurrentPplChange={handleCurrentPplChange} />
-        }
-
-        {
-          editModal && <EditProfileModal data={editData} handleEditStyleChange={handleEditStyleChange} handleCloseEditModal={handleCloseEditModal} handleEditUsernameChange={handleEditUsernameChange} handleEditEmailChange={handleEditEmailChange} handleEditPronounsChange={handleEditPronounsChange} handleEditFullNameChange={handleEditFullNameChange} handleEditMainCenterChange={handleEditMainCenterChange} handleEditAverageChange={handleEditAverageChange} handleEditEarningsChange={handleEditEarningChange} handleEditHighGameChange={handleEditHighGameChange} handleEditHighSeriesChange={handleEditHighSeriesChange} handleEditUserConfirm={handleEditUserConfirm} handleEditProfileImgChange={handleEditProfileImgChange} />
-        }
-
-        {
-          editMatchModal && editingChallengeBool && !confirmationModal && <AddChallengeModal addingChallengeBool={true} handleTrueChallengeBool={() => { }} handleFalseChallengeBool={() => { }} create1v1Challenge={create1v1Challenge} createPracticeSession={createPracticeSession} handleVisibilityChange={handleVisibilityChange} visibility={visibility} handleLocationOneChange={handleLocationOneChange} locationOne={locationOne} handleLocationTwoChange={handleLocationTwoChange} locationTwo={locationTwo} handleLocationThreeChange={handleLocationThreeChange} locationThree={locationThree} handlePracticeLocationChange={handlePracticeLocationChange} handlePracticeDescriptionChange={handlePracticeDescriptionChange} handleDescriptionChange={handleDescriptionChange} description={description} handleCloseModal={handleCloseMatchModal} handleTimeStartChange={handleTimeStartChange} handleTimeEndChange={handleTimeEndChange} setDate={setDate} handleMaxPplChange={handleMaxPplChange} timeStart={startTime} timeEnd={endTime} date={date} maxPpl={maxPpl.toString()} practiceLocation={practiceLocation} practiceDescription={practiceDescription} edit={true} closeEditMatchModal={closeEditMatchModal} editMatchClick={editMatchClick} openConfirmation={openConfirmation} currentPpl={currentPpl} handleCurrentPplChange={handleCurrentPplChange} />
-        }
-
-        {
-          editMatchModal && !editingChallengeBool && !confirmationModal && <AddChallengeModal addingChallengeBool={false} handleTrueChallengeBool={() => { }} handleFalseChallengeBool={() => { }} create1v1Challenge={create1v1Challenge} createPracticeSession={createPracticeSession} handleVisibilityChange={handleVisibilityChange} visibility={visibility} handleLocationOneChange={handleLocationOneChange} locationOne={locationOne} handleLocationTwoChange={handleLocationTwoChange} locationTwo={locationTwo} handleLocationThreeChange={handleLocationThreeChange} locationThree={locationThree} handlePracticeLocationChange={handlePracticeLocationChange} handlePracticeDescriptionChange={handlePracticeDescriptionChange} handleDescriptionChange={handleDescriptionChange} description={description} handleCloseModal={handleCloseMatchModal} handleTimeStartChange={handleTimeStartChange} handleTimeEndChange={handleTimeEndChange} setDate={setDate} handleMaxPplChange={handleMaxPplChange} timeStart={startTime} timeEnd={endTime} date={date} maxPpl={maxPpl.toString()} practiceLocation={practiceLocation} practiceDescription={practiceDescription} edit={true} closeEditMatchModal={closeEditMatchModal} editMatchClick={editMatchClick} openConfirmation={openConfirmation} currentPpl={currentPpl} handleCurrentPplChange={handleCurrentPplChange} />
-        }
-
-        {
-          editMatchModal && confirmationModal && <ConfirmationModal closeConfirmation={closeConfirmation} deleteMatch={deleteMatch} />
-        }
-
-        {
-          userProfileModal && <ProfileModalComponent userData={viewOtherUserData} handleCloseUsersProfileModal={() => setViewOtherUserModal(false)} handleOpenEditModal={openEditModal} openMyInfo={openMyInfo} openMyPosts={openMyPosts} onInfo={onInfo} posts={currentUsersPosts} openEditMatchModal={openEditMatchModal} viewModal={true} viewChallenge={viewChallenge} viewSession={viewSession} />
-        }
-
-        {
-          inboxModal && <InboxModalComponent closeModal={closeInboxModal} openFriendsModal={openFriendsModal} notifications={notificationArray} />
-        }
-
-        {
-          friendsModal && <FriendsModalComponent closeModal={closeFriendsModal} />
-        }
-
-        {
-          searchModal && <SearchModal closeModal={closeSearchModal} userArr={usersArray} clickSearch={clickSearch} currentUsername={verifiedUserData.username} />
-        }
+        
 
       </Modal>
 
 
       <Modal className='bg-black sm:hidden flex justify-center items-center h-auto' show={openModal} size={'sm'} onClose={() => setOpenModal(false)}>
-        {
-          matchModal && <AddChallengeModal addingChallengeBool={addingChallengeBool} handleTrueChallengeBool={handleTrueChallengeBool} handleFalseChallengeBool={handleFalseChallengeBool} create1v1Challenge={create1v1Challenge} createPracticeSession={createPracticeSession} handleVisibilityChange={handleVisibilityChange} visibility={visibility} handleLocationOneChange={handleLocationOneChange} locationOne={locationOne} handleLocationTwoChange={handleLocationTwoChange} locationTwo={locationTwo} handleLocationThreeChange={handleLocationThreeChange} locationThree={locationThree} handlePracticeLocationChange={handlePracticeLocationChange} handlePracticeDescriptionChange={handlePracticeDescriptionChange} handleDescriptionChange={handleDescriptionChange} description={description} handleCloseModal={handleCloseMatchModal} handleTimeStartChange={handleTimeStartChange} handleTimeEndChange={handleTimeEndChange} setDate={setDate} handleMaxPplChange={handleMaxPplChange} timeStart={startTime} timeEnd={endTime} date={date} maxPpl={maxPpl.toString()} practiceLocation={practiceLocation} practiceDescription={practiceDescription} edit={false} closeEditMatchModal={closeEditMatchModal} editMatchClick={editMatchClick} openConfirmation={openConfirmation} currentPpl={currentPpl} handleCurrentPplChange={handleCurrentPplChange} />
-        }
-
-        {
-          editModal && <EditProfileModal data={editData} handleEditStyleChange={handleEditStyleChange} handleCloseEditModal={handleCloseEditModal} handleEditUsernameChange={handleEditUsernameChange} handleEditEmailChange={handleEditEmailChange} handleEditPronounsChange={handleEditPronounsChange} handleEditFullNameChange={handleEditFullNameChange} handleEditMainCenterChange={handleEditMainCenterChange} handleEditAverageChange={handleEditAverageChange} handleEditEarningsChange={handleEditEarningChange} handleEditHighGameChange={handleEditHighGameChange} handleEditHighSeriesChange={handleEditHighSeriesChange} handleEditUserConfirm={handleEditUserConfirm} handleEditProfileImgChange={handleEditProfileImgChange} />
-        }
-
-        {
-          editMatchModal && editingChallengeBool && !confirmationModal && <AddChallengeModal addingChallengeBool={true} handleTrueChallengeBool={() => { }} handleFalseChallengeBool={() => { }} create1v1Challenge={create1v1Challenge} createPracticeSession={createPracticeSession} handleVisibilityChange={handleVisibilityChange} visibility={visibility} handleLocationOneChange={handleLocationOneChange} locationOne={locationOne} handleLocationTwoChange={handleLocationTwoChange} locationTwo={locationTwo} handleLocationThreeChange={handleLocationThreeChange} locationThree={locationThree} handlePracticeLocationChange={handlePracticeLocationChange} handlePracticeDescriptionChange={handlePracticeDescriptionChange} handleDescriptionChange={handleDescriptionChange} description={description} handleCloseModal={handleCloseMatchModal} handleTimeStartChange={handleTimeStartChange} handleTimeEndChange={handleTimeEndChange} setDate={setDate} handleMaxPplChange={handleMaxPplChange} timeStart={startTime} timeEnd={endTime} date={date} maxPpl={maxPpl.toString()} practiceLocation={practiceLocation} practiceDescription={practiceDescription} edit={true} closeEditMatchModal={closeEditMatchModal} editMatchClick={editMatchClick} openConfirmation={openConfirmation} currentPpl={currentPpl} handleCurrentPplChange={handleCurrentPplChange} />
-        }
-
-        {
-          editMatchModal && !editingChallengeBool && !confirmationModal && <AddChallengeModal addingChallengeBool={false} handleTrueChallengeBool={() => { }} handleFalseChallengeBool={() => { }} create1v1Challenge={create1v1Challenge} createPracticeSession={createPracticeSession} handleVisibilityChange={handleVisibilityChange} visibility={visibility} handleLocationOneChange={handleLocationOneChange} locationOne={locationOne} handleLocationTwoChange={handleLocationTwoChange} locationTwo={locationTwo} handleLocationThreeChange={handleLocationThreeChange} locationThree={locationThree} handlePracticeLocationChange={handlePracticeLocationChange} handlePracticeDescriptionChange={handlePracticeDescriptionChange} handleDescriptionChange={handleDescriptionChange} description={description} handleCloseModal={handleCloseMatchModal} handleTimeStartChange={handleTimeStartChange} handleTimeEndChange={handleTimeEndChange} setDate={setDate} handleMaxPplChange={handleMaxPplChange} timeStart={startTime} timeEnd={endTime} date={date} maxPpl={maxPpl.toString()} practiceLocation={practiceLocation} practiceDescription={practiceDescription} edit={true} closeEditMatchModal={closeEditMatchModal} editMatchClick={editMatchClick} openConfirmation={openConfirmation} currentPpl={currentPpl} handleCurrentPplChange={handleCurrentPplChange} />
-        }
-
-        {
-          editMatchModal && confirmationModal && <ConfirmationModal closeConfirmation={closeConfirmation} deleteMatch={deleteMatch} />
-        }
-
-        {
-          userProfileModal && editMatchModal
-        }
-
-        {
-          inboxModal && <InboxModalComponent closeModal={closeInboxModal} openFriendsModal={openFriendsModal} notifications={notificationArray} />
-        }
-
-        {
-          friendsModal && <FriendsModalComponent closeModal={closeFriendsModal} />
-        }
-
-        {
-          searchModal && <SearchModal closeModal={closeSearchModal} userArr={usersArray} clickSearch={clickSearch} currentUsername={verifiedUserData.username} />
-        }
-
+        
       </Modal>
 
       <div className='bgLogin min-h-screen pt-12 2xl:px-44 xl:px-36 lg:px-24 sm:px-14 px-6 pb-20 relative'>
@@ -1177,7 +1100,7 @@ const HomePage = () => {
                       matchData.map((data, idx) => (
                         <div key={idx}>
                           {
-                            data.isVisible && !data.isFinished ? data.title === 'Practice Session' ? (
+                            data.isVisible && !data.isFinished && Number(data.maxPpl) !== Number(data.currentPpl) ? data.title === 'Practice Session' ? (
                               skeleton ? (<MatchSkeleton />) : (<PracticeSessionComponent fadeAway={fadeAwayClass} data={data} join={() => viewMatch(data)} userClick={() => { }} edit={data.publisher === currentUsername} handleEditMatchClick={() => { openEditMatchModal(data) }} />)
                             ) : (
                               skeleton ? (<MatchSkeleton />) : (<MatchComponent fadeAway={fadeAwayClass} challenge={() => viewMatch(data)} data={data} edit={data.publisher === currentUsername} handleEditMatchClick={() => { openEditMatchModal(data) }} />)
@@ -1198,7 +1121,7 @@ const HomePage = () => {
 
                 </div>
 
-                <div className='min-h-[500px] max-h-[1200px] bg-black sm:rounded-3xl rounded-xl overflow-y-auto overflow-x-hidden scrollbar mt-8'>
+                <div className='min-h-[500px] max-h-[1200px] bg-black sm:rounded-3xl rounded-xl overflow-y-auto overflow-x-hidden scrollbar mt-10'>
                   <div className='flex'>
                     <h1 className='text-black xl:text-4xl lg:text-3xl sm:text-2xl text-xl juraBold py-4 px-8 bg-[#FF7A00] inline-block md:text-center sm:rounded-tl-3xl rounded-tl-xl mb-6'>Recent Winners</h1>
                   </div>

@@ -11,6 +11,7 @@ import ProfileMatchesComponent from '../HomePage/ProfileMatchesComponent';
 const ProfileModalComponent = (props: { userData: IPublicUserData, handleOpenEditModal: () => void, handleCloseUsersProfileModal: () => void, openMyPosts: () => void, openMyInfo: () => void, onInfo: boolean, posts: IUserPosts[], openEditMatchModal: (data: IUserPosts) => void, viewModal: boolean, viewChallenge: (post: IUserPosts) => void, viewSession: (post: IUserPosts) => void }) => {
   const router = useRouter();
   const handleLogOut = () => {
+    localStorage.clear();
     router.push('/');
   }
 
@@ -79,8 +80,9 @@ const ProfileModalComponent = (props: { userData: IPublicUserData, handleOpenEdi
 
       </div>
 
+      {/* Info and posts Section */}
       <div>
-        <div className="rounded-xl jura bg-black max-h-[475px] overflow-y-scroll scrollbar justify-center lg:p-8 sm:p-6 p-4 ">
+        <div className="rounded-xl jura bg-black scrollbar justify-center lg:p-8 sm:p-6 p-4 ">
 
           <div className='flex sm:mb-4 mb-2'>
 
@@ -102,7 +104,7 @@ const ProfileModalComponent = (props: { userData: IPublicUserData, handleOpenEdi
                   </h1>
 
                   <h1 className="bg-orange-500 text-center lg:text-3xl text-2xl rounded-md py-2 sm:px-10 px-4 text-black hover:cursor-pointer " onClick={props.openMyPosts}>
-                  {props.viewModal ? "Posts" : "Your Posts"}
+                    {props.viewModal ? "Posts" : "Your Posts"}
                   </h1>
                 </>
               )
@@ -179,16 +181,21 @@ const ProfileModalComponent = (props: { userData: IPublicUserData, handleOpenEdi
                     </h1>
                   </>
                 ) : (
-                  props.posts.map((p, idx) => {
-                    if (p.userID === props.userData.id && !p.isFinished) {
-                      return p.title === "1v1 Challenge" ? (
-                        <ProfileMatchesComponent data={p} key={idx} openEditMatchModal={props.openEditMatchModal} viewMatch={() => props.viewChallenge(p)} viewModal={props.viewModal} />
-                      ) : (
-                        <ProfileMatchesComponent data={p} key={idx} openEditMatchModal={props.openEditMatchModal} viewMatch={() => props.viewSession(p)} viewModal={props.viewModal} />
-                      )
+                  <div className='overflow-auto max-h-[400px] scrollbar'>
+                    {
+                      props.posts.map((p, idx) => {
+                        if (p.userID === props.userData.id && !p.isFinished) {
+                          return p.title === "1v1 Challenge" ? (
+                            <ProfileMatchesComponent data={p} key={idx} openEditMatchModal={props.openEditMatchModal} viewMatch={() => props.viewChallenge(p)} viewModal={props.viewModal} />
+                          ) : (
+                            <ProfileMatchesComponent data={p} key={idx} openEditMatchModal={props.openEditMatchModal} viewMatch={() => props.viewSession(p)} viewModal={props.viewModal} />
+                          )
 
+                        }
+                      })
                     }
-                  })
+                  </div>
+
                 ))
           }
 

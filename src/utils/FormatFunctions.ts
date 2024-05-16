@@ -99,3 +99,13 @@ export const grabUserPosts = (id: number, posts: IUserPosts[]) => {
   })
   return arr;
 }
+
+export const grabViewUserPosts = (id: number, posts: IUserPosts[]) => {
+  let arr: IUserPosts[] = [];
+  posts.forEach(post => {
+    if(post.userID === id && Number(post.currentPpl) !== Number(post.maxPpl)){
+      arr.push(post);
+    }
+  })
+  return arr;
+}

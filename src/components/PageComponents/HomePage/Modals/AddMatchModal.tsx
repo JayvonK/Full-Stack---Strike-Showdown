@@ -154,7 +154,7 @@ const AddMatchModal = (props: { addingChallengeBool: boolean, handleFalseChallen
                             <div className="grid grid-cols-2 gap-10">
                                 <div>
                                     <h3 className='jura text-white lg:text-2xl sm:text-xl text-lg'>Curr PPL:</h3>
-                                    {props.addingChallengeBool ? (<></>) : (<input required type="text" onChange={props.handleCurrentPplChange} value={props.currentPpl} placeholder='0' maxLength={4} className="w-full jura lg:text-2xl sm:text-xl text-lg h-10 bg-white pl-2 mb-2 mt-2 rounded-sm" />)}
+                                    {props.addingChallengeBool ? (<></>) : (<input required type="text" onChange={props.handleCurrentPplChange} value={props.currentPpl} placeholder='0' maxLength={4} className={`w-full jura lg:text-2xl sm:text-xl text-lg h-10 ${!props.edit ? 'bg-white' : 'bg-gray-500'} pl-2 mb-2 mt-2 rounded-sm`} disabled={props.edit}/>)}
                                 </div>
 
                                 <div>

@@ -84,18 +84,16 @@ const InboxModalComponent = (props: { closeModal: () => void, openFriendsModal: 
     })
   }, [])
   return (
-    <div className="bg-white rounded-lg">
-      <div className="  px-6 py-5  lg:py-10 ">
-        <div className="flex justify-evenly">
+    <div className="bg-white rounded-lg p-6">
+        <div className="flex justify-evenly mb-4">
           <button className={`tab-button relative px-4 w-48 py-2 rounded focus:outline-none jura text-xl md:text-2xl lg:text-3xl ${activeTab === "Inbox" ? "bg-orange-500 " : "text-black"}`} onClick={inboxClick}> Inbox </button>
 
           <button className={`tab-button relative px-4 py-2 w-48 rounded focus:outline-none jura text-xl md:text-2xl lg:text-3xl ${activeTab === "Matches" ? "bg-orange-500 " : " text-black "}`} onClick={matchesClick}> Matches {matchesUnread && <div className="absolute bg-red-600 w-4 h-4 rounded-full top-2 right-2"></div>} </button>
 
           <button className={`tab-button relative px-4 py-2 w-48 rounded focus:outline-none jura text-xl md:text-2xl lg:text-3xl ${activeTab === "Sessions" ? "bg-orange-500  " : " text-black"}`} onClick={sessionsClick}> Sessions {sessionsUnread && <div className="absolute bg-red-600 w-4 h-4 rounded-full top-2 right-2"></div>} </button>
         </div>
-      </div>
 
-      <div className=" min-h-[500px]">
+      <div className=" min-h-[500px] max-h-[600px] overflow-auto">
         {tabOneActive && props.notifications.map((noti, idx) => {
           if (noti.type.includes("Inbox")) {
             if (noti.type.includes("Message")) {
@@ -115,7 +113,7 @@ const InboxModalComponent = (props: { closeModal: () => void, openFriendsModal: 
               return (<MatchNotificationComponent data={noti} key={idx} click={() => { }} edit={false} />)
             }
           }
-        })
+        }).reverse()
         }
 
         {tabThreeActive && props.notifications.map((noti, idx) => {
@@ -128,12 +126,12 @@ const InboxModalComponent = (props: { closeModal: () => void, openFriendsModal: 
               return (<MatchNotificationComponent data={noti} key={idx} click={() => { }} edit={false} />)
             }
           }
-        })
+        }).reverse()
         }
 
       </div>
 
-      <div className="flex justify-end py-7 px-7">
+      <div className="flex justify-end pt-4">
         <button className=" border-color focus:outline-none h-10 md:h-12 lg:h-14  mt-3 bg-orange-500  w-20 md:w-36 rounded-md   hover:!bg-orange-500 text-black jura" onClick={props.closeModal}>
           <h3 className=" text-xl md:text-2xl lg:text-3xl ">Close</h3>
         </button>

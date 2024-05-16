@@ -10,7 +10,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
-const JoinChallengeModal = (props: { data: IUserPosts, closeModal: () => void, joinChallenge: (data: IUserPosts) => void }) => {
+const JoinChallengeModal = (props: { data: IUserPosts, closeModal: () => void, joinChallenge: (data: IUserPosts) => void, handleJoinChallengeLocationChange: (e: string) => void, joinChallengeLocation: string }) => {
 
   let locations = props.data.locations.split(",");
 
@@ -19,7 +19,7 @@ const JoinChallengeModal = (props: { data: IUserPosts, closeModal: () => void, j
       <h1 className='jura text-black text-4xl inline-block px-6 py-2 bgOrange mb-4 rounded-lg'>Info</h1>
 
       <div className='bg-black p-4 rounded-lg'>
-        <h2 className='text-white text-2xl juraBold'>*For Meetup Time Message User</h2>
+        <h2 className='text-white text-2xl juraBold'>*For Meetup Time & Date Message User</h2>
 
         <div className='mt-6'>
           <div className='flex justify-between'>
@@ -67,7 +67,7 @@ const JoinChallengeModal = (props: { data: IUserPosts, closeModal: () => void, j
               <h2 className='text-white pr-20'>Select Location:</h2>
               {
                 props.data.locations.includes(",") ? (
-                  <Select>
+                  <Select value={props.joinChallengeLocation} onValueChange={props.handleJoinChallengeLocationChange}>
                     <SelectTrigger className="w-full xl:text-xl sm:text-lg text-sm bg-white pl-3 py-0">
                       <SelectValue placeholder="Location" />
                     </SelectTrigger>
