@@ -13,7 +13,7 @@ const SearchModal = (props: { closeModal: () => void, userArr: IPublicUserData[]
 
   return (
     <div>
-      <div className='bg-white rounded-lg max-h-[850px] overflow-auto '>
+      <div className='bg-white rounded-lg max-h-[750px] overflow-auto '>
         <input type="text" placeholder='Search For User' className='bg-transparent jura lg:text-3xl text-2xl w-full pl-6 py-2 relative' onFocus={() => setRecSearch(true)} onChange={(e) => setSearchedUsername(e.target.value)} />
 
         <>
@@ -33,6 +33,7 @@ const SearchModal = (props: { closeModal: () => void, userArr: IPublicUserData[]
             })
           }
         </>
+        
       </div>
 
       <div className='pt-4 flex justify-end'>
