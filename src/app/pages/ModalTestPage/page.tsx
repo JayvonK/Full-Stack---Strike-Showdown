@@ -38,7 +38,7 @@ function page() {
 
     <div>
        <Button onClick={() => setOpenModal(true)}>Toggle modal</Button>
-       <Modal dismissible show={openModal} onClose={() => setOpenModal(false)} size={'2xl'}>
+       <Modal dismissible show={openModal} onClose={() => setOpenModal(false)} size={'md'}>
 
      <FriendsModalComponent closeModal={function (): void {
           throw new Error('Function not implemented.');
