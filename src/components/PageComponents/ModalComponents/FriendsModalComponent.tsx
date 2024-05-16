@@ -10,12 +10,17 @@ const FriendsModalComponent = (props: {closeModal: () => void}) => {
   <>
   <div className='px-10 pt-10'>
   <h3
+<<<<<<< HEAD
             className=" mb-6   text-base md:text-3xl md:w-36   w-20 rounded-xl  md:rounded-lg  bg-orange-500   hover:!bg-orange-500 text-center text-black jura px-4 pt-3 pb-3"
             
+=======
+            className=" mb-6    text-md md:text-2xl  lg:text-3xl w-32   md:w-32  lg:w-36   rounded-xl  md:rounded-lg  bg-orange-500   hover:!bg-orange-500 text-center text-black jura px-4 pt-3 pb-3"
+>>>>>>> 5ce9bda (getting close to Final response on friend)
           >
             Friends
           </h3>
   </div>
+<<<<<<< HEAD
          
 <div className=" flex flex-col items-start px-10 py-10">
 
@@ -54,6 +59,26 @@ const FriendsModalComponent = (props: {closeModal: () => void}) => {
               </button>
             </div>
           </div>
+=======
+<div className=' grid grid-cols-2 max-h-[450px] justify-center gap-y-6 gap-x-4 overflow-auto'>
+
+<div>
+  <FriendBoxComponent userName={''} userImage={''} challengeBtn={function (): void {
+        throw new Error('Function not implemented.');
+      } } message={function (): void {
+        throw new Error('Function not implemented.');
+      } }></FriendBoxComponent>
+      </div>
+      <div>
+  <FriendBoxComponent userName={''} userImage={''} challengeBtn={function (): void {
+        throw new Error('Function not implemented.');
+      } } message={function (): void {
+        throw new Error('Function not implemented.');
+      } }></FriendBoxComponent>
+      </div>
+   
+      </div>
+>>>>>>> 5ce9bda (getting close to Final response on friend)
       
           </div>
 
@@ -63,7 +88,11 @@ const FriendsModalComponent = (props: {closeModal: () => void}) => {
               
               onClick={props.closeModal}
             >
+<<<<<<< HEAD
               <h3 className=" text-base  md:text-3xl   md:w-36 rounded-xl  md:rounded-2xl ">Close</h3>
+=======
+              <h3 className=" text-lg md:text-2xl   lg:text-3xl md:w-32  lg:w-36  rounded-xl  md:rounded-2xl ">Close</h3>
+>>>>>>> 5ce9bda (getting close to Final response on friend)
             </Button>
           </div>
       
