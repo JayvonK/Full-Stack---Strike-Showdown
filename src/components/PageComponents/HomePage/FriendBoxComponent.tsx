@@ -42,7 +42,7 @@ function FriendBoxComponent(props: {userName: string, userImage: string,challeng
     
    
   <div
-  className="  py-2 bg-black md:w-46  lg:w-54 xl:w-64 items-center mx-auto   rounded-2xl   "
+  className="  py-2 bg-black md:w-48  lg:w-54 xl:w-64 items-center mx-auto   rounded-2xl   "
   
 >
 {/* <div className="flow-root">
@@ -68,7 +68,7 @@ function FriendBoxComponent(props: {userName: string, userImage: string,challeng
           </div>
           </div> */}
 
- <div className="grid  grid-flow-col-dense   justify-center items-center    ">
+ <div className="grid  grid-flow-col-dense gap-2  justify-center items-center    ">
   <div className=" grid justify-center mr-1  ml-0 md:mr-1 md:ml-1 lg:mr-2 xl:mr-5 shrink-0">
     <img className=' h-9 w-9 md:h-12 md:w-12   lg:!h-14 lg:!w-14 ' src={ProfilePic.src}></img>
   </div>
