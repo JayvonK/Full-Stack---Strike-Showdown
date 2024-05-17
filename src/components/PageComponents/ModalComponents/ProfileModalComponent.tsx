@@ -8,7 +8,7 @@ import MessagingIcon from "../../../../public/images/MessageProfile.png"
 import { useRouter } from 'next/navigation';
 import { IPublicUserData, IUserPosts } from '@/interfaces/Interfaces';
 import ProfileMatchesComponent from '../HomePage/ProfileMatchesComponent';
-const ProfileModalComponent = (props: { userData: IPublicUserData, handleOpenEditModal: () => void, handleCloseUsersProfileModal: () => void, openMyPosts: () => void, openMyInfo: () => void, onInfo: boolean, posts: IUserPosts[], openEditMatchModal: (data: IUserPosts) => void, viewModal: boolean, viewChallenge: (post: IUserPosts) => void, viewSession: (post: IUserPosts) => void }) => {
+const ProfileModalComponent = (props: { userData: IPublicUserData, handleOpenEditModal: () => void, handleCloseUsersProfileModal: () => void, openMyPosts: () => void, openMyInfo: () => void, onInfo: boolean, posts: IUserPosts[], openEditMatchModal: (data: IUserPosts) => void, viewModal: boolean, viewChallenge: (post: IUserPosts) => void, viewSession: (post: IUserPosts) => void, errorToast: () => void }) => {
   const router = useRouter();
   const handleLogOut = () => {
     localStorage.clear();
@@ -21,7 +21,7 @@ const ProfileModalComponent = (props: { userData: IPublicUserData, handleOpenEdi
         <div className='flex sm:justify-normal justify-center items-center sm:mt-6 mb-6 mt-0'>
           <img
             src={props.userData.profileImage}
-            className="md:w-48 w-36 aspect-square rounded-full border border-black lg:ml-8 md:ml-0 sm:ml-3"
+            className="md:w-48 w-36 aspect-square rounded-full border object-cover border-black lg:ml-8 md:ml-0 sm:ml-3"
           ></img>
         </div>
 
@@ -42,7 +42,7 @@ const ProfileModalComponent = (props: { userData: IPublicUserData, handleOpenEdi
                 {
                   props.viewModal ? (
                     <>
-                      <button className=" bg-orange-500  rounded-lg px-3 pt-1 pb-1 w-24 lg:w-48  hover:!bg-orange-500 text-black jura">
+                      <button className=" bg-orange-500  rounded-lg px-3 pt-1 pb-1 w-24 lg:w-48  hover:!bg-orange-500 text-black jura" onClick={props.errorToast}>
                         <div className="flex flex-col-2  items-center justify-center">
 
                           <img alt="Friend Icon" src={AddFriendIcon.src} className="h-4 lg:h-8 lg:w-8 mr-3" />
@@ -55,7 +55,7 @@ const ProfileModalComponent = (props: { userData: IPublicUserData, handleOpenEdi
                         </div>
                       </button>
 
-                      <button onClick={() => { }} className="bg-orange-500 w-24 flex justify-center rounded-lg pt-2 text-black jura">
+                      <button onClick={props.errorToast} className="bg-orange-500 w-24 flex justify-center rounded-lg pt-2 text-black jura">
                         <img src={MessagingIcon.src} className="h-6 w-6 " alt="message icon" />
                       </button>
                     </>

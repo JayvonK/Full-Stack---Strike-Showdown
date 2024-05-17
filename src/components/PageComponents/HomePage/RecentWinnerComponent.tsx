@@ -1,6 +1,6 @@
 import React from 'react'
 
-const RecentWinnerComponent = (props: { pfp: string, idx: number }) => {
+const RecentWinnerComponent = (props: { pfp: string, idx: number, errorToast: () => void }) => {
     return (
         <>
             {
@@ -31,9 +31,9 @@ const RecentWinnerComponent = (props: { pfp: string, idx: number }) => {
                                 </div>
                             </div>
 
-                            <button className='bgOrange w-full xl:text-2xl lg:text-xl md:text-2xl sm:text-xl text-lg juraBold py-1 px-2 rounded-lg hover:bg-[#ff9939] mt-6 md:mb-0 mb-8 md:block hidden'>View Profile</button>
+                            <button className='bgOrange w-full xl:text-2xl lg:text-xl md:text-2xl sm:text-xl text-lg juraBold py-1 px-2 rounded-lg hover:bg-[#ff9939] mt-6 md:mb-0 mb-8 md:block hidden' onClick={props.errorToast}>View Profile</button>
                         </div>
-                        <button className='bgOrange w-full xl:text-2xl lg:text-xl md:text-2xl sm:text-xl text-lg juraBold py-1 px-2 rounded-lg hover:bg-[#ff9939] mt-6 md:mb-0 mb-8 block md:hidden'>View Profile</button>
+                        <button className='bgOrange w-full xl:text-2xl lg:text-xl md:text-2xl sm:text-xl text-lg juraBold py-1 px-2 rounded-lg hover:bg-[#ff9939] mt-6 md:mb-0 mb-8 block md:hidden' onClick={props.errorToast}>View Profile</button>
                     </div>
                 ) : (
                     <div className='md:flex w-full lg:justify-normal md:justify-center'>
@@ -62,9 +62,9 @@ const RecentWinnerComponent = (props: { pfp: string, idx: number }) => {
                                     </div>
                                 </div>
                             </div>
-                            <button className='bgOrange w-full xl:text-2xl lg:text-xl md:text-2xl sm:text-xl text-lg juraBold py-1 px-2 rounded-lg hover:bg-[#ff9939] mt-6 md:mb-0 mb-8 md:block hidden'>View Profile</button>
+                            <button className='bgOrange w-full xl:text-2xl lg:text-xl md:text-2xl sm:text-xl text-lg juraBold py-1 px-2 rounded-lg hover:bg-[#ff9939] mt-6 md:mb-0 mb-8 md:block hidden' onClick={props.errorToast}>View Profile</button>
                         </div>
-                        <button className='bgOrange w-full xl:text-2xl lg:text-xl md:text-2xl sm:text-xl text-lg juraBold py-1 px-2 rounded-lg hover:bg-[#ff9939] mt-6 md:mb-0 mb-8 block md:hidden'>View Profile</button>
+                        <button className='bgOrange w-full xl:text-2xl lg:text-xl md:text-2xl sm:text-xl text-lg juraBold py-1 px-2 rounded-lg hover:bg-[#ff9939] mt-6 md:mb-0 mb-8 block md:hidden' onClick={props.errorToast}>View Profile</button>
                     </div>
 
                 )

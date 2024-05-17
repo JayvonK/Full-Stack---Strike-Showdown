@@ -101,6 +101,7 @@ const HomePage = () => {
   const [messagePage, setMessagePage] = useState<boolean>(false);
   const [currentUsersPosts, setCurrentUsersPosts] = useState<IUserPosts[]>([]);
   const [viewUsersPosts, setViewUsersPosts] = useState<IUserPosts[]>([])
+  const [viewUserID, setViewUserID] = useState<number>(0);
   const [usersArray, setUsersArray] = useState<IPublicUserData[]>([fakeUserData, fakeUserData, fakeUserData2])
 
   // State Variables For Match Data
@@ -272,7 +273,8 @@ const HomePage = () => {
 
   const clickSearch = (data: IPublicUserData) => {
     setViewOtherUserData(data);
-    setViewUsersPosts(grabViewUserPosts(data.id, matchData))
+    setViewUserID(data.id)
+    setViewUsersPosts(grabViewUserPosts(data.id, matchData));
     openViewOtherUserModal();
     console.log(grabUserPosts(data.id, matchData));
     console.log(matchData)
@@ -565,6 +567,9 @@ const HomePage = () => {
   const createPracticeSession = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    let currentDate = new Date();
+    currentDate.setHours(0, 0, 0, 0)
+
     let PostData: ICreatePost = {
       title: 'Practice Session',
       isVisible: visibility,
@@ -577,33 +582,46 @@ const HomePage = () => {
       description: practiceDescription,
       isFinished: false,
     }
-
-    try {
-      if (await CreatePostAPI(PostData, currentUsername)) {
-        setMatchModal(false);
-        setOpenModal(false);
-        let noti: ICreateNotification = {
-          senderID: verifiedUserData.id,
-          recieverID: verifiedUserData.id,
-          postID: await GetRecentMatchIDByUserIDAPI(verifiedUserData.id),
-          type: "Publisher " + "Practice Session",
-          content: "You have created a Practice Session"
-        }
-        clearMatchInputs();
-        await CreateNotificationAPI(noti);
-        updateNotifications();
-        updateAllMatches();
-        toast({
-          title: "Your Post Was Created!",
-          description: "Yayy",
-        })
-      }
-    } catch (error) {
+    if(date === undefined || currentDate > date || PostData.date === ""){
       toast({
         variant: 'destructive',
-        title: "Something went wrong.",
+        title: "Make sure the date isn't empty, and that you don't have a date that has already passed.",
         description: "Uh Oh",
       })
+    }else if(Number(maxPpl) <= Number(currentPpl) || Number(maxPpl) < 2) {
+      toast({
+        variant: 'destructive',
+        title: "Max amount of people can't be lower than current people. And maxPpl should be greater than 1",
+        description: "Uh Oh",
+      })
+    } else {
+      try {
+        if (await CreatePostAPI(PostData, currentUsername)) {
+          setMatchModal(false);
+          setOpenModal(false);
+          let noti: ICreateNotification = {
+            senderID: verifiedUserData.id,
+            recieverID: verifiedUserData.id,
+            postID: await GetRecentMatchIDByUserIDAPI(verifiedUserData.id),
+            type: "Publisher " + "Practice Session",
+            content: "You have created a Practice Session"
+          }
+          clearMatchInputs();
+          await CreateNotificationAPI(noti);
+          updateNotifications();
+          updateAllMatches();
+          toast({
+            title: "Your Post Was Created!",
+            description: "Yayy",
+          })
+        }
+      } catch (error) {
+        toast({
+          variant: 'destructive',
+          title: "Something went wrong.",
+          description: "Uh Oh",
+        })
+      }
     }
   }
 
@@ -664,14 +682,12 @@ const HomePage = () => {
   }
 
   const viewChallenge = (data: IUserPosts) => {
-    console.log('hey')
     setViewMatchData(data);
     setJoinChallengeModal(true);
     setOpenModal(true);
   }
 
   const viewSession = (data: IUserPosts) => {
-    console.log('hey')
     setViewMatchData(data);
     setJoinSessionModal(true);
     setOpenModal(true);
@@ -778,7 +794,11 @@ const HomePage = () => {
   const editMatchClick = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    let currentDate = new Date();
+    currentDate.setHours(0, 0, 0, 0)
+
     let location = locationFormat([locationOne, locationTwo, locationThree]);
+
 
     let users = userMatchIDs.split("-");
 
@@ -788,7 +808,7 @@ const HomePage = () => {
       title: editingChallengeBool ? '1v1 Challenge' : 'Practice Session',
       isVisible: visibility,
       state: verifiedUserData.location,
-      locations: editingChallengeBool ? location : practiceLocation,
+      locations: !editingChallengeBool ? practiceLocation : location.trim() === "" ? "Open to any location" : location,
       date: date ? format(date, "MM/dd/yy") : format(new Date(), "MM/dd/yy"),
       time: timeFormat(startTime) + '-' + timeFormat(endTime),
       maxPpl: maxPpl === "" ? 0 : Number(maxPpl),
@@ -804,10 +824,16 @@ const HomePage = () => {
       streak: verifiedUserData.streak
     }
 
-    if (Number(maxPpl) < Number(currentPpl)) {
+    if(date === undefined || currentDate > date || editMatchData.date === ""){
       toast({
         variant: 'destructive',
-        title: "Max amount of people can't be lower than current people.",
+        title: "Make sure the date isn't empty, and that you don't have a date that has already passed.",
+        description: "Uh Oh",
+      })
+    }else if (Number(maxPpl) <= Number(currentPpl) || Number(maxPpl) < 2) {
+      toast({
+        variant: 'destructive',
+        title: "Max amount of people can't be lower than current people. And maxPpl should be greater than 1",
         description: "Uh Oh",
       })
     } else {
@@ -842,8 +868,6 @@ const HomePage = () => {
         })
       }
     }
-
-
   }
 
 
@@ -861,6 +885,10 @@ const HomePage = () => {
 
   const goToMessagingPage = () => {
     setMessagePage(true);
+    toast({
+      title: "Warning! Messaging is still in progress",
+      description: "Sorry about that",
+    })
   }
 
   const goToHomePage = () => {
@@ -871,7 +899,7 @@ const HomePage = () => {
     toast({
       variant: 'destructive',
       title: "Mobile Modals are still in the works.",
-      description: "Sorry aboout that",
+      description: "Sorry about that",
     })
   }
 
@@ -907,6 +935,7 @@ const HomePage = () => {
   const updateAllMatches = async () => {
     setMatchData(await GetPublicMatchesByStateAPI(verifiedUserData.location))
     setCurrentUsersPosts(grabUserPosts(verifiedUserData.id, await GetPublicMatchesByStateAPI(verifiedUserData.location)));
+    setViewUsersPosts(grabViewUserPosts(viewUserID, await GetPublicMatchesByStateAPI(verifiedUserData.location)));
   }
 
   const updateNotifications = async () => {
@@ -923,6 +952,14 @@ const HomePage = () => {
         setNewNotificationBool(false);
       }
     }
+  }
+
+  const errorToast = () => {
+    toast({
+      variant: 'destructive',
+      title: "Sorry this function is still in progress.",
+      description: "Sorry about that",
+    })
   }
 
   useEffect(() => {
@@ -987,11 +1024,11 @@ const HomePage = () => {
         {/* Everything when opening profile modal */}
 
         {
-          userProfileModal && !editMatchModal && !editModal && <ProfileModalComponent userData={verifiedUserData} handleCloseUsersProfileModal={closeUsersProfileModal} handleOpenEditModal={openEditModal} openMyInfo={openMyInfo} openMyPosts={openMyPosts} onInfo={onInfo} posts={currentUsersPosts} openEditMatchModal={openEditMatchModal} viewModal={false} viewChallenge={viewChallenge} viewSession={viewSession} />
+          userProfileModal && !editMatchModal && !editModal && <ProfileModalComponent userData={verifiedUserData} handleCloseUsersProfileModal={closeUsersProfileModal} handleOpenEditModal={openEditModal} openMyInfo={openMyInfo} openMyPosts={openMyPosts} onInfo={onInfo} posts={currentUsersPosts} openEditMatchModal={openEditMatchModal} viewModal={false} viewChallenge={viewChallenge} viewSession={viewSession} errorToast={errorToast}/>
         }
 
         {
-          inboxModal && <InboxModalComponent closeModal={closeInboxModal} openFriendsModal={openFriendsModal} notifications={notificationArray} />
+          inboxModal && <InboxModalComponent closeModal={closeInboxModal} openFriendsModal={openFriendsModal} notifications={notificationArray} errorToast={errorToast}/>
         }
 
         {
@@ -1003,15 +1040,15 @@ const HomePage = () => {
         }
 
         {
-          searchModal && viewOtherUserModal && !joinChallengeModal && !joinSessionModal && <ProfileModalComponent userData={viewOtherUserData} handleCloseUsersProfileModal={() => setViewOtherUserModal(false)} handleOpenEditModal={openEditModal} openMyInfo={openMyInfo} openMyPosts={openMyPosts} onInfo={onInfo} posts={viewUsersPosts} openEditMatchModal={openEditMatchModal} viewModal={true} viewChallenge={viewChallenge} viewSession={viewSession} />
+          searchModal && viewOtherUserModal && !joinChallengeModal && !joinSessionModal && <ProfileModalComponent userData={viewOtherUserData} handleCloseUsersProfileModal={() => setViewOtherUserModal(false)} handleOpenEditModal={openEditModal} openMyInfo={openMyInfo} openMyPosts={openMyPosts} onInfo={onInfo} posts={viewUsersPosts} openEditMatchModal={openEditMatchModal} viewModal={true} viewChallenge={viewChallenge} viewSession={viewSession} errorToast={errorToast}/>
         }
 
         {
-          joinChallengeModal && <JoinChallengeModal data={viewMatchData} closeModal={closeViewMatch} joinChallenge={handleJoinMatch} handleJoinChallengeLocationChange={handleJoinChallengeLocationChange} joinChallengeLocation={joinChallengeLocation} />
+          joinChallengeModal && <JoinChallengeModal data={viewMatchData} closeModal={closeViewMatch} joinChallenge={handleJoinMatch} handleJoinChallengeLocationChange={handleJoinChallengeLocationChange} joinChallengeLocation={joinChallengeLocation}  currentUserID={verifiedUserData.id} errorToast={errorToast}/>
         }
 
         {
-          joinSessionModal && <JoinSessionModalComponent data={viewMatchData} closeModal={closeViewMatch} joinChallenge={handleJoinMatch} />
+          joinSessionModal && <JoinSessionModalComponent data={viewMatchData} closeModal={closeViewMatch} joinChallenge={handleJoinMatch} currentUserID={verifiedUserData.id} errorToast={errorToast}/>
         }
 
       </Modal>
@@ -1149,10 +1186,10 @@ const HomePage = () => {
                   </div>
 
                   <div className='grid lg:grid-cols-2 grid-cols-1 justify-between md:px-10 sm:px-8 px-4'>
-                    <RecentWinnerComponent pfp='/images/blankpfp.png' idx={0} />
-                    <RecentWinnerComponent pfp='/images/blankpfp.png' idx={1} />
-                    <RecentWinnerComponent pfp='/images/blankpfp.png' idx={2} />
-                    <RecentWinnerComponent pfp='/images/blankpfp.png' idx={3} />
+                    <RecentWinnerComponent pfp='/images/blankpfp.png' idx={0} errorToast={errorToast}/>
+                    <RecentWinnerComponent pfp='/images/blankpfp.png' idx={1} errorToast={errorToast}/>
+                    <RecentWinnerComponent pfp='/images/blankpfp.png' idx={2} errorToast={errorToast}/>
+                    <RecentWinnerComponent pfp='/images/blankpfp.png' idx={3} errorToast={errorToast}/>
                   </div>
                 </div>
               </>

@@ -9,7 +9,7 @@ import { INotification } from "@/interfaces/Interfaces";
 import MessageNotificationComponent from "../HomePage/Notifications/MessageNotificationComponent";
 import MatchNotificationComponent from "../HomePage/Notifications/MatchNotificationComponent";
 import { MakeNotificationRead } from "@/Data/DataServices";
-const InboxModalComponent = (props: { closeModal: () => void, openFriendsModal: () => void, notifications: INotification[] }) => {
+const InboxModalComponent = (props: { closeModal: () => void, openFriendsModal: () => void, notifications: INotification[], errorToast: () => void }) => {
 
   const [activeTab, setActiveTab] = useState("Inbox");
   const [tabOneActive, setTabOneActive] = useState(true);
@@ -108,11 +108,11 @@ const InboxModalComponent = (props: { closeModal: () => void, openFriendsModal: 
             if (noti.type.includes("Deleted")) {
               return (<MessageNotificationComponent data={noti} key={idx} />)
             } else if (noti.type.includes("Publisher")) {
-              return (<MatchNotificationComponent data={noti} key={idx} click={() => { }} edit={true} />)
+              return (<MatchNotificationComponent data={noti} key={idx} click={props.errorToast} edit={true} />)
             } else if (noti.type.includes("Viewer")) {
-              return (<MatchNotificationComponent data={noti} key={idx} click={() => { }} edit={false} />)
+              return (<MatchNotificationComponent data={noti} key={idx} click={props.errorToast} edit={false} />)
             } else if (noti.type.includes("Edited")){
-              return (<MatchNotificationComponent data={noti} key={idx} click={() => { }} edit={true} />)
+              return (<MatchNotificationComponent data={noti} key={idx} click={props.errorToast} edit={true} />)
             }
           }
         }).reverse()
@@ -123,11 +123,11 @@ const InboxModalComponent = (props: { closeModal: () => void, openFriendsModal: 
             if (noti.type.includes("Deleted")) {
               return (<MessageNotificationComponent data={noti} key={idx} />)
             } else if (noti.type.includes("Publisher")) {
-              return (<MatchNotificationComponent data={noti} key={idx} click={() => { }} edit={true} />)
+              return (<MatchNotificationComponent data={noti} key={idx} click={props.errorToast} edit={true} />)
             } else if (noti.type.includes("Viewer")) {
-              return (<MatchNotificationComponent data={noti} key={idx} click={() => { }} edit={false} />)
+              return (<MatchNotificationComponent data={noti} key={idx} click={props.errorToast} edit={false} />)
             } else if (noti.type.includes("Edited")){
-              return (<MatchNotificationComponent data={noti} key={idx} click={() => { }} edit={true} />)
+              return (<MatchNotificationComponent data={noti} key={idx} click={props.errorToast} edit={true} />)
             }
           }
         }).reverse()
