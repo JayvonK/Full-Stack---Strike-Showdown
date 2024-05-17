@@ -30,7 +30,7 @@ const MatchComponent = (props: { challenge: () => void, data: IUserPosts, fadeAw
             <div className='flex justify-between'>
                 <h2 className='text-white juraBold xl:text-3xl sm:text-2xl text-lg md:mr-10 mr-5'>{props.data.title}</h2>
                 <div className='flex justify-end'>
-                    <button className={`${isIncluded ? 'bg-orange-200' : 'bgOrange hover:bg-[#ff9939]'} md:min-w-56 xl:text-3xl sm:text-2xl text-lg juraBold md:py-2 py-1 md:px-0 sm:px-10 px-4 sm:rounded-3xl rounded-xl`} onClick={props.edit ? props.handleEditMatchClick : props.challenge}>{props.edit ? "Edit" : isIncluded ? "View" : "Challenge"}</button>
+                    <button className={`${isIncluded ? 'bg-gray-500' : 'bgOrange hover:bg-[#ff9939]'} md:min-w-56 xl:text-3xl sm:text-2xl text-lg juraBold md:py-2 py-1 md:px-0 sm:px-10 px-4 sm:rounded-3xl rounded-xl`} onClick={props.edit ? props.handleEditMatchClick : props.challenge}>{props.edit ? "Edit" : isIncluded ? "View" : "Challenge"}</button>
                 </div>
             </div>
 

@@ -111,6 +111,8 @@ const InboxModalComponent = (props: { closeModal: () => void, openFriendsModal: 
               return (<MatchNotificationComponent data={noti} key={idx} click={() => { }} edit={true} />)
             } else if (noti.type.includes("Viewer")) {
               return (<MatchNotificationComponent data={noti} key={idx} click={() => { }} edit={false} />)
+            } else if (noti.type.includes("Edited")){
+              return (<MatchNotificationComponent data={noti} key={idx} click={() => { }} edit={true} />)
             }
           }
         }).reverse()
@@ -124,6 +126,8 @@ const InboxModalComponent = (props: { closeModal: () => void, openFriendsModal: 
               return (<MatchNotificationComponent data={noti} key={idx} click={() => { }} edit={true} />)
             } else if (noti.type.includes("Viewer")) {
               return (<MatchNotificationComponent data={noti} key={idx} click={() => { }} edit={false} />)
+            } else if (noti.type.includes("Edited")){
+              return (<MatchNotificationComponent data={noti} key={idx} click={() => { }} edit={true} />)
             }
           }
         }).reverse()

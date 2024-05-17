@@ -291,6 +291,7 @@ const HomePage = () => {
 
   const deleteMatch = async () => {
     let users = deletePost?.matchUsersIDs.split("-");
+    let created = false;
     console.log(users);
 
     if (deletePost !== undefined) {
@@ -314,11 +315,11 @@ const HomePage = () => {
               type: "Deleted " + deletePost.title,
               content: idx === 0 ? `You have deleted your ${deletePost.title} that was created on ${deletePost.date}` : `${verifiedUserData.username} has deleted their ${deletePost.title} that was created on ${deletePost.date}`
             }
-            await CreateNotificationAPI(noti);
+              await CreateNotificationAPI(noti);
+              updateNotifications();
           }
         })
-
-        updateNotifications();
+        clearMatchInputs();
       } catch (error) {
         toast({
           variant: 'destructive',
@@ -327,6 +328,7 @@ const HomePage = () => {
         })
       }
     }
+
   }
 
 
@@ -778,6 +780,8 @@ const HomePage = () => {
 
     let location = locationFormat([locationOne, locationTwo, locationThree]);
 
+    let users = userMatchIDs.split("-");
+
     let editMatchData: IUserPosts = {
       id: editMatchID,
       userID: verifiedUserData.id,
@@ -810,11 +814,26 @@ const HomePage = () => {
       try {
         await UpdateMatchAPI(editMatchData);
         closeEditMatchModal();
-        updateAllMatches()
+        updateAllMatches();
         toast({
           title: "Your Match Was Updated!.",
           description: "Yayy",
         })
+
+        users?.forEach(async (user, idx) => {
+          if (user !== "") {
+            let noti: ICreateNotification = {
+              senderID: verifiedUserData.id,
+              recieverID: Number(user),
+              postID: editMatchData.id,
+              type: Number(user) === verifiedUserData.id ? 'Edited' + editMatchData.title : 'Viewer' + editMatchData.title,
+              content: idx === 0 ? `You have edited your ${editMatchData.title}` : `${verifiedUserData.username} has edited their ${editMatchData.title} make sure you click view to see the edits`
+            }
+              await CreateNotificationAPI(noti);
+              updateNotifications();
+          }
+        })
+        clearMatchInputs();
       } catch (error) {
         toast({
           variant: 'destructive',
@@ -893,6 +912,7 @@ const HomePage = () => {
   const updateNotifications = async () => {
     const notiArr: INotification[] = await GetNotificationsByUserIDAPI(verifiedUserData.id);
     setNotificationsArray(notiArr);
+    console.log('updated');
     if (notiArr.length !== 0) {
       notiArr.forEach(noti => {
         if (noti.isDeleted === false && noti.isRead === false) {
@@ -997,17 +1017,17 @@ const HomePage = () => {
       </Modal>
 
       <Modal className='bg-black lg:hidden md:flex hidden justify-center items-center' show={openModal} size={'2xl'} onClose={() => setOpenModal(false)}>
-        
+
       </Modal>
 
       <Modal className='bg-black md:hidden sm:flex hidden justify-center items-center h-auto' show={openModal} size={'xl'} onClose={() => setOpenModal(false)}>
-        
+
 
       </Modal>
 
 
       <Modal className='bg-black sm:hidden flex justify-center items-center h-auto' show={openModal} size={'sm'} onClose={() => setOpenModal(false)}>
-        
+
       </Modal>
 
       <div className='bgLogin min-h-screen pt-12 2xl:px-44 xl:px-36 lg:px-24 sm:px-14 px-6 pb-20 relative'>
@@ -1104,8 +1124,8 @@ const HomePage = () => {
                               skeleton ? (<MatchSkeleton />) : (<PracticeSessionComponent fadeAway={fadeAwayClass} data={data} join={() => viewMatch(data)} userClick={() => { }} edit={data.publisher === currentUsername} handleEditMatchClick={() => { openEditMatchModal(data) }} userID={verifiedUserData.id} />)
                             ) : (
                               skeleton ? (<MatchSkeleton />) : (
-                              <MatchComponent fadeAway={fadeAwayClass} challenge={() => viewMatch(data)} data={data} edit={data.publisher === currentUsername} handleEditMatchClick={() => { openEditMatchModal(data) }} userID={verifiedUserData.id}/>
-                            )
+                                <MatchComponent fadeAway={fadeAwayClass} challenge={() => viewMatch(data)} data={data} edit={data.publisher === currentUsername} handleEditMatchClick={() => { openEditMatchModal(data) }} userID={verifiedUserData.id} />
+                              )
                             )
 
                               : (
@@ -1113,7 +1133,7 @@ const HomePage = () => {
                               )
                           }
                         </div>
-                      ))
+                      )).reverse()
                     ) : (
                       <h2 className='text-white text-4xl jura text-center py-10'>
                         No Matches Found.
