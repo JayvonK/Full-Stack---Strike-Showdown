@@ -33,7 +33,7 @@ const ProfileModalComponent = (props: { userData: IPublicUserData, handleOpenEdi
                   {props.userData.username}
                 </h1>
 
-                <h1 className="text-white  lg:text-3xl sm:text-2xl text-xl pb-6">
+                <h1 className="text-white  lg:text-3xl sm:text-2xl text-xl pb-6 break-words">
                   {props.userData.pronouns}
                 </h1>
               </div>
@@ -120,13 +120,13 @@ const ProfileModalComponent = (props: { userData: IPublicUserData, handleOpenEdi
                     <p className="text-white text-xl pt-2">
                       Full Name:
                     </p>
-                    <p className="text-orange-500  text-2xl ">
+                    <p className="text-orange-500  text-2xl break-words">
                       {props.userData.fullName}
                     </p>
                     <p className="text-white text-xl pt-4 ">
                       Main Center:
                     </p>
-                    <p className=" text-orange-500 text-2xl">
+                    <p className=" text-orange-500 text-2xl break-words">
                       {props.userData.mainCenter}
                     </p>
                   </div>
@@ -134,13 +134,13 @@ const ProfileModalComponent = (props: { userData: IPublicUserData, handleOpenEdi
                     <p className="text-white text-xl pt-2">
                       Style:
                     </p>
-                    <p className="text-orange-500 text-2xl">
+                    <p className="text-orange-500 text-2xl break-words">
                       {props.userData.style}
                     </p>
                     <p className="text-white text-xl pt-4">
                       Average:
                     </p>
-                    <p className="text-orange-500 text-2xl">
+                    <p className="text-orange-500 text-2xl break-words">
                       {props.userData.average}
                     </p>
                   </div>
@@ -150,7 +150,7 @@ const ProfileModalComponent = (props: { userData: IPublicUserData, handleOpenEdi
                     <h1 className="text-white text-xl ">
                       High Game:
                     </h1>
-                    <h1 className="text-orange-500 text-2xl">
+                    <h1 className="text-orange-500 text-2xl break-words">
                       {props.userData.highGame}
                     </h1>
                   </div>
@@ -158,7 +158,7 @@ const ProfileModalComponent = (props: { userData: IPublicUserData, handleOpenEdi
                     <h1 className="text-white text-xl sm:pt-0 pt-4">
                       High Series:
                     </h1>
-                    <h1 className="text-orange-500 text-2xl">
+                    <h1 className="text-orange-500 text-2xl break-words">
                       {props.userData.highSeries}
                     </h1>
                   </div>
@@ -166,7 +166,7 @@ const ProfileModalComponent = (props: { userData: IPublicUserData, handleOpenEdi
                     <h1 className="text-white text-xl sm:pt-0 pt-4">
                       Earnings:
                     </h1>
-                    <h1 className="text-orange-500 text-2xl">
+                    <h1 className="text-orange-500 text-2xl break-words">
                       ${props.userData.earnings}
                     </h1>
                   </div>

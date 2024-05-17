@@ -49,7 +49,7 @@ setActiveTab(tab);
           ></img>
         </div>
         <div className="">
-          <div className="grid grid-flow-col overflow-hidden  bg-black rounded-2xl  justify-center   md:mx-0 md:px-0 md:pt-4 md:pb-4 md:pr-5  w-64   md:w-96 md:h-60">
+          <div className="grid grid-flow-col overflow-hidden  bg-black rounded-2xl  justify-center md:mx-0 md:px-0 md:pt-4 md:pb-4 md:pr-5  w-64   md:w-96 md:h-60">
             <div className=" ml-8 ">
               <div className="grid grid-flow-col  auto-cols-max justify-start items-center pb-3 ">
                 <div>
