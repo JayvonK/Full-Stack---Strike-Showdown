@@ -712,7 +712,7 @@ const HomePage = () => {
       recieverID: match.userID,
       postID: match.id,
       type: "Publisher  " + match.title,
-      content: match.title === "1v1 Challenge" ? `${verifiedUserData.username} has accepted your ${match.title} at the location: ${joinChallengeLocation} !` : `${verifiedUserData.username} has joined your ${match.title} scheduled on ${match.date} at ${match.time}`
+      content: match.title === "1v1 Challenge" ? `${verifiedUserData.username} has accepted your ${match.title} at the location: ${joinChallengeLocation.trim() === "" ? "a custom location" : joinChallengeLocation} !` : `${verifiedUserData.username} has joined your ${match.title} scheduled on ${match.date} at ${match.time}`
     }
 
     let noti2: ICreateNotification = {
@@ -720,7 +720,7 @@ const HomePage = () => {
       recieverID: verifiedUserData.id,
       postID: match.id,
       type: "Viewer  " + match.title,
-      content: match.title === "1v1 Challenge" ? `You have joined ${match.publisher}'s ${match.title} at ${joinChallengeLocation}, message them for the date and time if you haven't already!` : `You have joined ${match.publisher}'s ${match.title} on ${match.date} at ${match.time}`
+      content: match.title === "1v1 Challenge" ? `You have joined ${match.publisher}'s ${match.title} at ${joinChallengeLocation.trim() === "" ? "a custom location" : joinChallengeLocation}, message them for the date and time if you haven't already!` : `You have joined ${match.publisher}'s ${match.title} on ${match.date} at ${match.time}`
     }
 
     if (await AddUserToMatchAPI(verifiedUserData.id, match)) {
