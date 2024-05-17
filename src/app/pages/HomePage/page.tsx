@@ -1101,9 +1101,11 @@ const HomePage = () => {
                         <div key={idx}>
                           {
                             data.isVisible && !data.isFinished && Number(data.maxPpl) !== Number(data.currentPpl) ? data.title === 'Practice Session' ? (
-                              skeleton ? (<MatchSkeleton />) : (<PracticeSessionComponent fadeAway={fadeAwayClass} data={data} join={() => viewMatch(data)} userClick={() => { }} edit={data.publisher === currentUsername} handleEditMatchClick={() => { openEditMatchModal(data) }} />)
+                              skeleton ? (<MatchSkeleton />) : (<PracticeSessionComponent fadeAway={fadeAwayClass} data={data} join={() => viewMatch(data)} userClick={() => { }} edit={data.publisher === currentUsername} handleEditMatchClick={() => { openEditMatchModal(data) }} userID={verifiedUserData.id} />)
                             ) : (
-                              skeleton ? (<MatchSkeleton />) : (<MatchComponent fadeAway={fadeAwayClass} challenge={() => viewMatch(data)} data={data} edit={data.publisher === currentUsername} handleEditMatchClick={() => { openEditMatchModal(data) }} />)
+                              skeleton ? (<MatchSkeleton />) : (
+                              <MatchComponent fadeAway={fadeAwayClass} challenge={() => viewMatch(data)} data={data} edit={data.publisher === currentUsername} handleEditMatchClick={() => { openEditMatchModal(data) }} userID={verifiedUserData.id}/>
+                            )
                             )
 
                               : (
