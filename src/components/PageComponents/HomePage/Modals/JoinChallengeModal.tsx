@@ -10,9 +10,19 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
-const JoinChallengeModal = (props: { data: IUserPosts, closeModal: () => void, joinChallenge: (data: IUserPosts) => void, handleJoinChallengeLocationChange: (e: string) => void, joinChallengeLocation: string }) => {
+const JoinChallengeModal = (props: { data: IUserPosts, closeModal: () => void, joinChallenge: (data: IUserPosts) => void, handleJoinChallengeLocationChange: (e: string) => void, joinChallengeLocation: string, currentUserID: number, errorToast: () => void }) => {
 
   let locations = props.data.locations.split(",");
+
+  let isIncluded = false
+
+  let userIDs = props.data.matchUsersIDs.split("-");
+
+  userIDs.forEach(user => {
+    if (Number(user) === props.currentUserID) {
+      isIncluded = true;
+    }
+  })
 
   return (
     <div className='bg-white rounded-lg p-4'>
@@ -48,7 +58,7 @@ const JoinChallengeModal = (props: { data: IUserPosts, closeModal: () => void, j
             </div>
 
             <div>
-              <button className='text-2xl text-black jura py-2 px-6 bgOrange rounded-md'>Message</button>
+              <button className='text-2xl text-black jura py-2 px-6 bgOrange rounded-md' onClick={props.errorToast}>Message</button>
             </div>
 
           </div>
@@ -111,7 +121,10 @@ const JoinChallengeModal = (props: { data: IUserPosts, closeModal: () => void, j
 
 
       <div className='pt-4 flex justify-end'>
-      <button className='jura lg:text-3xl text-2xl py-2 px-4 rounded-md bgOrange mr-6' onClick={() => props.joinChallenge(props.data)}>Challenge</button>
+        {
+          !isIncluded && <button className='jura lg:text-3xl text-2xl py-2 px-4 rounded-md bgOrange mr-6' onClick={() => props.joinChallenge(props.data)}>Challenge</button>
+        }
+
         <button className='jura lg:text-3xl text-2xl py-2 px-4 rounded-md bgOrange' onClick={props.closeModal}>Close</button>
       </div>
     </div>

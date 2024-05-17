@@ -10,7 +10,7 @@ const MatchNotificationComponent = (props: { data: INotification, click: () => v
         <h2 className="text-lg md:text-xl lg:text-2xl pb-3 jura text-white">
           {props.data.content}
         </h2>
-        <button className="text-center text-lg md:text-xl lg:text-2xl bg-orange-500 rounded-lg jura px-2" onClick={() => props.click}>
+        <button className="text-center text-lg md:text-xl lg:text-2xl bg-orange-500 rounded-lg jura px-2" onClick={props.click}>
           {props.edit ? "Edit Match" : "View Match"}
         </button>
       </div>
