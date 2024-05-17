@@ -60,7 +60,7 @@ setActiveTab(tab);
                   <h1 className="text-white jura text-base md:text-2xl pt-2 ">
                     {props.email}
                   </h1>
-                  <h1 className="text-white jura text-base md:text-xl pt-2 pb-2 ">
+                  <h1 className="text-white jura text-base md:text-xl pt-2 pb-2 break-words">
                     {props.proNouns}
                   
                   </h1>
