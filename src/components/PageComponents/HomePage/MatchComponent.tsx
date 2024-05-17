@@ -67,7 +67,7 @@ const MatchComponent = (props: { challenge: () => void, data: IUserPosts, fadeAw
                     </div>
                     <div className='pr-8 xl:text-xl sm:text-lg text-sm'>
                         <h3 className='jura text-white'>Locations</h3>
-                        <h3 className='juraBold txtOrange'>{props.data.locations}</h3>
+                        <h3 className='juraBold txtOrange break-words'>{props.data.locations}</h3>
                     </div>
                     <div className='xl:text-xl sm:text-lg text-sm'>
                         <h3 className='jura text-white mb-1'>Time/Date</h3>
@@ -93,7 +93,7 @@ const MatchComponent = (props: { challenge: () => void, data: IUserPosts, fadeAw
 
                     <div className='xl:text-xl sm:text-lg text-sm mt-3'>
                         <h3 className='jura text-white sm:-mb-2 mb-0'>Location & Date:</h3>
-                        <h3 className='juraBold txtOrange'>{props.data.locations}</h3>
+                        <h3 className='juraBold txtOrange break-words'>{props.data.locations}</h3>
                     </div>
                 </div>
             </div>
