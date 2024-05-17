@@ -210,6 +210,7 @@ export const CreateNotificationAPI = async (noti: ICreateNotification) => {
         throw new Error(message);
     }
     const data = await res.json();
+    console.log(data + 'hh');
     return data;
 }
 
