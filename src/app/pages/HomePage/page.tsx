@@ -634,7 +634,7 @@ const HomePage = () => {
       title: '1v1 Challenge',
       isVisible: visibility,
       state: verifiedUserData.location,
-      locations: location === "" ? "Open to any locations" : location,
+      locations: location === "" ? "Open to any location" : location,
       date: format(new Date(), "MM/dd/yy"),
       time: '1:00 pm-2:00 pm',
       maxPpl: 2,
@@ -758,7 +758,7 @@ const HomePage = () => {
     setCurrentPpl(data.currentPpl.toString());
     setMaxPpl(data.maxPpl.toString());
     setDescription(data.description);
-    setLocationOne(loc[0]);
+    setLocationOne(loc[0] === "Open to any location" ? "" : loc[0]);
     setLocationTwo(loc[1]);
     setLocationThree(loc[2]);
     setUserMatchIDs(data.matchUsersIDs)
