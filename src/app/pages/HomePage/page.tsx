@@ -236,6 +236,10 @@ const HomePage = () => {
     setInboxModal(false);
     setFriendsModal(true);
     setOpenModal(true);
+    toast({
+      title: "This modal has no functionality yet.",
+      description: "Sorry about that",
+    })
   }
 
   const closeFriendsModal = () => {
