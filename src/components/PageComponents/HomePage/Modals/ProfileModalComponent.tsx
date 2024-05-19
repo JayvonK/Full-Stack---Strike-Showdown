@@ -7,7 +7,7 @@ import AddFriendIcon from "../../../../public/images/UserPlus.png"
 import MessagingIcon from "../../../../public/images/MessageProfile.png"
 import { useRouter } from 'next/navigation';
 import { IPublicUserData, IUserPosts } from '@/interfaces/Interfaces';
-import ProfileMatchesComponent from '../HomePage/ProfileMatchesComponent';
+import ProfileMatchesComponent from '../ProfileMatchesComponent';
 const ProfileModalComponent = (props: { userData: IPublicUserData, handleOpenEditModal: () => void, handleCloseUsersProfileModal: () => void, openMyPosts: () => void, openMyInfo: () => void, onInfo: boolean, posts: IUserPosts[], openEditMatchModal: (data: IUserPosts) => void, viewModal: boolean, viewChallenge: (post: IUserPosts) => void, viewSession: (post: IUserPosts) => void, errorToast: () => void }) => {
   const router = useRouter();
   const handleLogOut = () => {

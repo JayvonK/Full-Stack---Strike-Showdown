@@ -4,7 +4,7 @@ import ProfilePic from "../../../public/images/Ellipse 16.png";
 import { useState } from 'react';
 import { Modal, Button } from 'flowbite-react';
 import "../../../app/css/LoginPageAndHome.css";
-import FriendBoxComponent from '../FriendBoxComponent';
+import FriendBoxComponent from '../../FriendBoxComponent';
 
 
 const FriendsModalComponent = (props: {closeModal: () => void}) => {

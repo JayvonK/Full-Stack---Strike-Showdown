@@ -31,9 +31,9 @@ import EditProfileModal from '@/components/PageComponents/HomePage/Modals/EditPr
 import { EditLocalStorageUsername, GetLocalStorage } from '@/utils/LocalStorageFunctions';
 import MatchSkeleton from '@/components/PageComponents/HomePage/MatchSkeleton';
 import { averageStatFormat, convertTimeBack, convertToDate, editMatchLocationArr, grabUserPosts, grabViewUserPosts, locationFormat, timeFormat } from '@/utils/FormatFunctions';
-import ProfileModalComponent from '@/components/PageComponents/ModalComponents/ProfileModalComponent';
-import InboxModalComponent from '@/components/PageComponents/ModalComponents/InboxModalComponent';
-import FriendsModalComponent from '@/components/PageComponents/ModalComponents/FriendsModalComponent';
+import ProfileModalComponent from '@/components/PageComponents/HomePage/Modals/ProfileModalComponent';
+import InboxModalComponent from '@/components/PageComponents/HomePage/Modals/InboxModalComponent';
+import FriendsModalComponent from '@/components/PageComponents/HomePage/Modals/FriendsModalComponent';
 import MessagingBubbleComponent from '@/components/PageComponents/MessagingBubbleComponent';
 import plusIcon from '../../../../public/images/plus-bold.svg';
 import closeIcon from '../../../../public/images/x-bold.svg';
@@ -41,7 +41,7 @@ import profile from '../../../../public/images/Profile.png';
 import planeIcon from '../../../../public/images/paper-plane-tilt-fill.svg'
 import ConfirmationModal from '@/components/PageComponents/HomePage/Modals/ConfirmationModal';
 import SearchModal from '@/components/PageComponents/HomePage/Modals/SearchModal';
-import JoinSessionModalComponent from '@/components/PageComponents/ModalComponents/JoinSessionModalComponent';
+import JoinSessionModalComponent from '@/components/PageComponents/HomePage/Modals/JoinSessionModalComponent';
 import JoinChallengeModal from '@/components/PageComponents/HomePage/Modals/JoinChallengeModal';
 
 const HomePage = () => {

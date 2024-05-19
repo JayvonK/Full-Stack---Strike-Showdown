@@ -6,8 +6,8 @@ import React from "react";
 import "../../../app/css/LoginPageAndHome.css";
 import ProfilePic from "../../../../public/images/Ellipse 16.png";
 import { INotification } from "@/interfaces/Interfaces";
-import MessageNotificationComponent from "../HomePage/Notifications/MessageNotificationComponent";
-import MatchNotificationComponent from "../HomePage/Notifications/MatchNotificationComponent";
+import MessageNotificationComponent from "../Notifications/MessageNotificationComponent";
+import MatchNotificationComponent from "../Notifications/MatchNotificationComponent";
 import { MakeNotificationRead } from "@/Data/DataServices";
 const InboxModalComponent = (props: { closeModal: () => void, openFriendsModal: () => void, notifications: INotification[], errorToast: () => void }) => {
 
