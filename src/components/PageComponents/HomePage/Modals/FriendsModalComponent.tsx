@@ -1,9 +1,8 @@
 import React from 'react'
-import UserMinus from "../../../public/images/UserMinus.png";
-import ProfilePic from "../../../public/images/Ellipse 16.png";
+import UserMinus from "../../../../../public/images/UserMinus.png";
+import ProfilePic from "../../../../../public/images/Ellipse 16.png";
 import { useState } from 'react';
 import { Modal, Button } from 'flowbite-react';
-import "../../../app/css/LoginPageAndHome.css";
 import FriendBoxComponent from '../../FriendBoxComponent';
 
 

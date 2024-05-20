@@ -1,7 +1,6 @@
 import React from "react";
-import ProfilePic from "../../../../public/images/Ellipse 16.png";
+import ProfilePic from "../../../../../public/images/Ellipse 16.png";
 import { Button } from "flowbite-react";
-import "../../../app/css/LoginPageAndHome.css";
 import { Dispatch, SetStateAction, useState } from "react";
 import { useEffect } from "react";
 import { IUserPosts } from "@/interfaces/Interfaces";

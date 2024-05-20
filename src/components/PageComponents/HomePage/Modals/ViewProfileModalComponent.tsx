@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { Modal } from "flowbite-react";
-import "../../../app/css/LoginPageAndHome.css";
-import ProfilePic2 from "../../../../public/images/profilePIc.png";
+import ProfilePic2 from "../../../../../public/images/profilePIc.png";
 import { useRouter } from "next/navigation";
-import AddFriendIcon from "../../../../public/images/UserPlus.png";
-import MessagingIcon from "../../../../public/images/MessageProfile.png";
+import AddFriendIcon from "../../../../../public/images/UserPlus.png";
+import MessagingIcon from "../../../../../public/images/MessageProfile.png";
 import UserMinus from "../../../../../public/images/UserMinus.png";
 import Router from "next/router";
 const ViewProfileModalComponent = (props: {
