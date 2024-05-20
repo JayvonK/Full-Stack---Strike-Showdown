@@ -6,6 +6,7 @@ import {
     SheetHeader,
     SheetTitle,
     SheetTrigger,
+    SheetClose
 } from "@/components/ui/sheet"
 import { useRouter } from 'next/navigation'
 
@@ -63,26 +64,41 @@ const NewNavBarComponent = (props: { openUsersProfileModal: () => void, openFrie
                         <SheetHeader>
                             <SheetTrigger className='flex justify-end'><img className='w-16' src="/images/list-bold.svg" alt="" /></SheetTrigger>
                             <SheetDescription>
-                                <div className='flex items-center hover:brightness-125 hover:cursor-pointer hover:!text-orange-500 text-white mt-10'>
-                                    <img className='aspect-square md:w-16 md:h-16 w-14 h-14 mr-10' src="/images/Search.png" alt="" onClick={props.errorMobileModal} />
-                                    <h3 className='md:text-6xl text-5xl text-center inline-block jura' onClick={props.errorMobileModal}>Search</h3>
-                                </div>
-                                <div className='flex items-center hover:brightness-125 hover:cursor-pointer hover:!text-orange-500 text-white mt-14'>
-                                    <img className='aspect-square md:w-16 md:h-12 w-14 h-10 mr-10' src="/images/Friends.png" alt="" onClick={props.errorMobileModal} />
-                                    <h3 className='md:text-6xl text-5xl text-center inline-block jura' onClick={props.errorMobileModal}>Friends</h3>
-                                </div>
-                                <div className='flex items-center hover:brightness-125 hover:cursor-pointer hover:!text-orange-500 text-white mt-14'>
-                                    <img className='aspect-square md:w-16 md:h-16 w-14 h-14 mr-10' src="/images/Inbox.png" alt="" onClick={props.errorMobileModal} />
-                                    <h3 className='md:text-6xl text-5xl text-center inline-block jura' onClick={props.errorMobileModal}>Inbox</h3>
-                                </div>
-                                <div className='flex items-center hover:brightness-125 hover:cursor-pointer hover:!text-orange-500 text-white mt-14'>
-                                    <img className='aspect-square md:w-16 md:h-16 w-14 h-14 mr-10' src="/images/Message.png" alt="" onClick={props.goToMessagingPage} />
-                                    <h3 className='md:text-6xl text-5xl text-center inline-block jura' onClick={props.goToMessagingPage}>Message</h3>
-                                </div>
-                                <div className='flex items-center hover:brightness-125 hover:cursor-pointer hover:!text-orange-500 text-white mt-14'>
-                                    <img className='aspect-square md:w-16 md:h-16 w-14 h-14 mr-10' src="/images/Profile.png" alt="" onClick={props.errorMobileModal} />
-                                    <h3 className='md:text-6xl text-5xl text-center inline-block jura' onClick={props.errorMobileModal}>Profile</h3>
-                                </div>
+                                <SheetClose asChild>
+                                    <div className='flex items-center hover:brightness-125 hover:cursor-pointer hover:!text-orange-500 text-white mt-10'>
+                                        <img className='aspect-square md:w-16 md:h-16 w-14 h-14 mr-10' src="/images/Search.png" alt="" onClick={props.openSearchModal} />
+                                        <h3 className='md:text-6xl text-5xl text-center inline-block jura' onClick={props.openSearchModal}>Search</h3>
+                                    </div>
+                                </SheetClose>
+
+                                <SheetClose asChild>
+                                    <div className='flex items-center hover:brightness-125 hover:cursor-pointer hover:!text-orange-500 text-white mt-14'>
+                                        <img className='aspect-square md:w-16 md:h-12 w-14 h-10 mr-10' src="/images/Friends.png" alt="" onClick={props.openFriendsModal} />
+                                        <h3 className='md:text-6xl text-5xl text-center inline-block jura' onClick={props.openFriendsModal}>Friends</h3>
+                                    </div>
+                                </SheetClose>
+
+                                <SheetClose asChild>
+                                    <div className='flex items-center hover:brightness-125 hover:cursor-pointer hover:!text-orange-500 text-white mt-14'>
+                                        <img className='aspect-square md:w-16 md:h-16 w-14 h-14 mr-10' src="/images/Inbox.png" alt="" onClick={props.openInboxModal} />
+                                        <h3 className='md:text-6xl text-5xl text-center inline-block jura' onClick={props.openInboxModal}>Inbox</h3>
+                                    </div>
+                                </SheetClose>
+
+                                <SheetClose asChild>
+                                    <div className='flex items-center hover:brightness-125 hover:cursor-pointer hover:!text-orange-500 text-white mt-14'>
+                                        <img className='aspect-square md:w-16 md:h-16 w-14 h-14 mr-10' src="/images/Message.png" alt="" onClick={props.goToMessagingPage} />
+                                        <h3 className='md:text-6xl text-5xl text-center inline-block jura' onClick={props.goToMessagingPage}>Message</h3>
+                                    </div>
+                                </SheetClose>
+
+                                <SheetClose asChild>
+                                    <div className='flex items-center hover:brightness-125 hover:cursor-pointer hover:!text-orange-500 text-white mt-14'>
+                                        <img className='aspect-square md:w-16 md:h-16 w-14 h-14 mr-10' src="/images/Profile.png" alt="" onClick={props.openUsersProfileModal} />
+                                        <h3 className='md:text-6xl text-5xl text-center inline-block jura' onClick={props.openUsersProfileModal}>Profile</h3>
+                                    </div>
+                                </SheetClose>
+
                             </SheetDescription>
                         </SheetHeader>
                     </SheetContent>
