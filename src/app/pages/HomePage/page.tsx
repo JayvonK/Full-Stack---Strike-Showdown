@@ -19,8 +19,8 @@ import { useToast } from "@/components/ui/use-toast";
 
 import { useState } from "react";
 import { useAppContext } from '@/context/Context';
-import { ICreateNotification, ICreatePost, INotification, IPublicUserData, IUserInfoWithStats, IUserPosts } from '@/interfaces/Interfaces';
-import { AcceptFriendRequestAPI, AddUserToMatchAPI, CreateNotificationAPI, CreatePostAPI, DeclineFriendRequestAPI, DeleteMatchAPI, GetNotificationsByUserIDAPI, GetPublicMatchesByStateAPI, GetRecentMatchIDByUserIDAPI, GetUserAPI, GetUsernameByIDAPI, GetUsersByStateAPI, RemoveFriendAPI, SendFriendRequestAPI, UpdateMatchAPI, UpdateUserAPI } from '@/Data/DataServices';
+import { ICreateNotification, ICreatePost, INotification, IPublicUserData, IUserInfoWithStats, IUserPosts, IUsername } from '@/interfaces/Interfaces';
+import { AcceptFriendRequestAPI, AddUserToMatchAPI, CreateNotificationAPI, CreatePostAPI, DeclineFriendRequestAPI, DeleteMatchAPI, DeleteNotificationAPI, GetNotificationsByUserIDAPI, GetPublicMatchesByStateAPI, GetRecentMatchIDByUserIDAPI, GetUserAPI, GetUsernameByIDAPI, GetUsersByStateAPI, RemoveFriendAPI, SendFriendRequestAPI, UpdateMatchAPI, UpdateUserAPI } from '@/Data/DataServices';
 import PracticePostDummyData from '../../../utils/PostData.json';
 import PracticeSessionComponent from '@/components/PageComponents/HomePage/PracticeSessionComponent';
 import MatchComponent from '@/components/PageComponents/HomePage/MatchComponent';
@@ -224,11 +224,14 @@ const HomePage = () => {
     setOnInfo(false);
   }
 
-  const acceptFriend = async (otherID: number) => {
+  const acceptFriend = async (otherID: number, deleteNoti: INotification | undefined) => {
     const data = await AcceptFriendRequestAPI(otherID, verifiedUserData.id);
+    setUsersArray(await GetUsersByStateAPI(verifiedUserData.location));
+
+    const data2: IUsername = await GetUsernameByIDAPI(otherID);
+    const username = data2.username;
+
     if (data) {
-      let data = await GetUsersByStateAPI(verifiedUserData.location);
-      setUsersArray(data);
 
       let noti: ICreateNotification = {
         senderID: verifiedUserData.id,
@@ -245,15 +248,17 @@ const HomePage = () => {
         recieverID: verifiedUserData.id,
         postID: 0,
         type: "Inbox Message",
-        content: `You've accepted ${await GetUsernameByIDAPI(otherID)}'s friend request. You are now friends`
+        content: `You've accepted ${username}'s friend request. You are now friends`
       }
 
       await CreateNotificationAPI(noti2);
 
+      deleteNoti && await DeleteNotificationAPI(deleteNoti);
+
       updateNotifications();
 
       toast({
-        title: `You've accepted ${await GetUsernameByIDAPI(otherID)}'s friend request. You are now friends`,
+        title: `You've accepted ${username}'s friend request. You are now friends`,
         description: "YAY",
       })
     } else {
@@ -265,11 +270,14 @@ const HomePage = () => {
     }
   }
 
-  const declineFriend = async (otherID: number) => {
+  const declineFriend = async (otherID: number, deleteNoti: INotification | undefined) => {
     const data = await DeclineFriendRequestAPI(otherID, verifiedUserData.id);
+    setUsersArray(await GetUsersByStateAPI(verifiedUserData.location));
+
+    const data2: IUsername = await GetUsernameByIDAPI(otherID);
+    const username = data2.username;
+
     if (data) {
-      let data = await GetUsersByStateAPI(verifiedUserData.location);
-      setUsersArray(data);
 
       let noti: ICreateNotification = {
         senderID: verifiedUserData.id,
@@ -286,15 +294,17 @@ const HomePage = () => {
         recieverID: verifiedUserData.id,
         postID: 0,
         type: "Inbox Message",
-        content: `You've declined ${await GetUsernameByIDAPI(otherID)}'s friend request`
+        content: `You've declined ${username}'s friend request`
       }
 
       await CreateNotificationAPI(noti2);
 
+      deleteNoti && DeleteNotificationAPI(deleteNoti);
+
       updateNotifications();
 
       toast({
-        title: `You've declined ${await GetUsernameByIDAPI(otherID)}'s friend request`,
+        title: `You've declined ${username}'s friend request`,
         description: "YAY",
       })
     } else {
@@ -308,9 +318,12 @@ const HomePage = () => {
 
   const sendFriend = async (otherID: number) => {
     const data = await SendFriendRequestAPI(otherID, verifiedUserData.id);
+    setUsersArray(await GetUsersByStateAPI(verifiedUserData.location));
+
+    const data2: IUsername = await GetUsernameByIDAPI(otherID);
+    const username = data2.username;
+
     if (data) {
-      let data = await GetUsersByStateAPI(verifiedUserData.location);
-      setUsersArray(data);
 
       let noti: ICreateNotification = {
         senderID: verifiedUserData.id,
@@ -327,7 +340,7 @@ const HomePage = () => {
         recieverID: verifiedUserData.id,
         postID: 0,
         type: "Inbox Message",
-        content: `You've sent ${await GetUsernameByIDAPI(otherID)} a friend request`
+        content: `You've sent ${username} a friend request`
       }
 
       await CreateNotificationAPI(noti2);
@@ -335,7 +348,7 @@ const HomePage = () => {
       updateNotifications();
 
       toast({
-        title: `You've sent ${await GetUsernameByIDAPI(otherID)} a friend request`,
+        title: `You've sent ${username} a friend request`,
         description: "YAY",
       })
     
@@ -350,10 +363,12 @@ const HomePage = () => {
 
   const removeFriend = async (otherID: number) => {
     const data = await RemoveFriendAPI(otherID, verifiedUserData.id);
+    setUsersArray(await GetUsersByStateAPI(verifiedUserData.location));
+
+    const data2: IUsername = await GetUsernameByIDAPI(otherID);
+    const username = data2.username;
 
     if (data) {
-      let data = await GetUsersByStateAPI(verifiedUserData.location);
-      setUsersArray(data);
 
       let noti: ICreateNotification = {
         senderID: verifiedUserData.id,
@@ -370,7 +385,7 @@ const HomePage = () => {
         recieverID: verifiedUserData.id,
         postID: 0,
         type: "Inbox Message",
-        content: `You are no longer friends ${await GetUsernameByIDAPI(otherID)}`
+        content: `You are no longer friends ${username}`
       }
 
       await CreateNotificationAPI(noti2);
@@ -378,7 +393,7 @@ const HomePage = () => {
       updateNotifications();
 
       toast({
-        title: `You are no longer friends ${await GetUsernameByIDAPI(otherID)}`,
+        title: `You are no longer friends ${username}`,
         description: "YAY",
       })
     
@@ -1144,7 +1159,6 @@ const HomePage = () => {
       const grabUserData = async () => {
         try {
           const userData: IPublicUserData = await GetUserAPI(storageArr[0][1]);
-          // console.log(await GetUsernameByIDAPI(1))
           setVerifiedUserData(userData);
           setEditData(userData);
           setCurrentUsername(storageArr[0][1])
@@ -1153,6 +1167,7 @@ const HomePage = () => {
           setUsersArray(await GetUsersByStateAPI(userData.location));
           const notiArr: INotification[] = await GetNotificationsByUserIDAPI(userData.id);
           setNotificationsArray(notiArr);
+          console.log(notiArr);
           if (notiArr.length !== 0) {
             notiArr.forEach(noti => {
               if (noti.isDeleted === false && noti.isRead === false) {

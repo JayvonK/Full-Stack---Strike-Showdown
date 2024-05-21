@@ -118,3 +118,7 @@ export interface ICreateNotification{
   type: string;
   content: string;
 }
+
+export interface IUsername {
+  username: string;
+}

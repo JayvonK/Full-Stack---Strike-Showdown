@@ -1,7 +1,7 @@
 import { INotification } from '@/interfaces/Interfaces'
 import React from 'react'
 
-const FriendRequestNotificationComponent = (props: {data: INotification, accept: (id: number) => void, decline: (id: number) => void}) => {
+const FriendRequestNotificationComponent = (props: {data: INotification, accept: (id: number, noti: INotification | undefined) => void, decline: (id: number, noti: INotification | undefined) => void}) => {
     
     return (
         <div className="bg-black flex justify-start rounded-lg px-5 py-4 my-2">
@@ -11,10 +11,10 @@ const FriendRequestNotificationComponent = (props: {data: INotification, accept:
                 <h2 className="text-lg md:text-xl lg:text-2xl pb-3 jura text-white">
                     {props.data.content}
                 </h2>
-                <button className="text-center text-lg md:text-xl lg:text-2xl bg-orange-500 rounded-lg jura px-2 mr-4" onClick={() => props.accept(props.data.senderID)}>
+                <button className="text-center text-lg md:text-xl lg:text-2xl bg-orange-500 rounded-lg jura px-2 mr-4" onClick={() => props.accept(props.data.senderID, props.data)}>
                     Accept
                 </button>
-                <button className="text-center text-lg md:text-xl lg:text-2xl bg-orange-500 rounded-lg jura px-2" onClick={() => props.decline(props.data.senderID)}>
+                <button className="text-center text-lg md:text-xl lg:text-2xl bg-orange-500 rounded-lg jura px-2" onClick={() => props.decline(props.data.senderID, props.data)}>
                     Decline
                 </button>
             </div>

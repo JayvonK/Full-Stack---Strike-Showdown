@@ -9,7 +9,7 @@ import MessageNotificationComponent from "../Notifications/MessageNotificationCo
 import MatchNotificationComponent from "../Notifications/MatchNotificationComponent";
 import { MakeNotificationRead } from "@/Data/DataServices";
 import FriendRequestNotificationComponent from "../Notifications/FriendRequestNotificationComponent";
-const InboxModalComponent = (props: { closeModal: () => void, openFriendsModal: () => void, notifications: INotification[], errorToast: () => void, acceptFriend: (id: number) => void, declineFriend: (id: number) => void }) => {
+const InboxModalComponent = (props: { closeModal: () => void, openFriendsModal: () => void, notifications: INotification[], errorToast: () => void, acceptFriend: (id: number, noti: INotification | undefined) => void, declineFriend: (id: number, noti: INotification | undefined) => void }) => {
 
   const [activeTab, setActiveTab] = useState("Inbox");
   const [tabOneActive, setTabOneActive] = useState(true);
@@ -99,7 +99,7 @@ const InboxModalComponent = (props: { closeModal: () => void, openFriendsModal: 
             if (noti.type.includes("Message")) {
               return (<MessageNotificationComponent data={noti} key={idx} />)
             } else if (noti.type.includes("FriendRequest")) {
-              <FriendRequestNotificationComponent data={noti} key={idx} accept={props.acceptFriend} decline={props.declineFriend} />
+              return <FriendRequestNotificationComponent data={noti} key={idx} accept={props.acceptFriend} decline={props.declineFriend} />
             }
           }
         })
