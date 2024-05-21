@@ -35,7 +35,7 @@ const JoinChallengeModal = (props: { data: IUserPosts, closeModal: () => void, j
           <div className='flex justify-between'>
 
             <div className='flex'>
-              <img className='aspect-square w-28 rounded-full mr-8' src={props.data.image} alt="" />
+              <img className='aspect-square object-cover w-28 rounded-full mr-8' src={props.data.image} alt="" />
 
               <div className='flex flex-col'>
 

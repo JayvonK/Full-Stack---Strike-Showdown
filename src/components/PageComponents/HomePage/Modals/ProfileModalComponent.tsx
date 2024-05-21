@@ -2,17 +2,51 @@
 import React, { useState } from 'react'
 import { Modal } from 'flowbite-react';
 import ProfilePic2 from "../../../../../public/images/profilePIc.png";
-import AddFriendIcon from "../../../../../public/images/UserPlus.png"
 import MessagingIcon from "../../../../../public/images/MessageProfile.png"
 import { useRouter } from 'next/navigation';
 import { IPublicUserData, IUserPosts } from '@/interfaces/Interfaces';
 import ProfileMatchesComponent from '../ProfileMatchesComponent';
-const ProfileModalComponent = (props: { userData: IPublicUserData, handleOpenEditModal: () => void, handleCloseUsersProfileModal: () => void, openMyPosts: () => void, openMyInfo: () => void, onInfo: boolean, posts: IUserPosts[], openEditMatchModal: (data: IUserPosts) => void, viewModal: boolean, viewChallenge: (post: IUserPosts) => void, viewSession: (post: IUserPosts) => void, errorToast: () => void }) => {
+import { isUserIncludedInMatch } from '@/utils/Functions';
+const ProfileModalComponent = (props: { currentUser: IPublicUserData, userData: IPublicUserData, handleOpenEditModal: () => void, handleCloseUsersProfileModal: () => void, openMyPosts: () => void, openMyInfo: () => void, onInfo: boolean, posts: IUserPosts[], openEditMatchModal: (data: IUserPosts) => void, viewModal: boolean, viewChallenge: (post: IUserPosts) => void, viewSession: (post: IUserPosts) => void, errorToast: () => void, acceptFriend: (id: number) => void, declineFriend: (d: number) => void, sendFriend: (d: number) => void, removeFriend: (d: number) => void }) => {
+
   const router = useRouter();
+
   const handleLogOut = () => {
     localStorage.clear();
     router.push('/');
   }
+
+  let friendBool = false;
+
+  let pendingRequestBool = false;
+
+  let yourRequestBool = false;
+
+  let friendsArray: string[] = props.currentUser.friends.split('-');
+
+  let pendingFriendsArray: string[] = props.currentUser.pendingFriends.split('-');
+
+  let pendingFriendsArray2: string[] = props.userData.pendingFriends.split("-");
+
+  friendsArray.forEach(friend => {
+    if (Number(friend) === props.currentUser.id) {
+      friendBool = true;
+    }
+  })
+
+  pendingFriendsArray.forEach(pend => {
+    if (Number(pend) === props.currentUser.id) {
+      pendingRequestBool = true;
+    }
+  })
+
+  pendingFriendsArray2.forEach(pend => {
+    if (Number(pend) === props.currentUser.id) {
+      yourRequestBool = true;
+    }
+  })
+
+  console.log(props.userData);
 
   return (
     <div className='lg:p-8 p-6 bg-white rounded-md'>
@@ -28,6 +62,7 @@ const ProfileModalComponent = (props: { userData: IPublicUserData, handleOpenEdi
           <div className="bg-black rounded-2xl mx-0 lg:p-8 sm:p-6 p-4 h-full sm:w-full w-[304px]">
             <div className='flex flex-col justify-between h-full jura'>
               <div>
+
                 <h1 className="text-white juraBold lg:text-4xl text-3xl md:pb-4 pb-2 Bold break-words">
                   {props.userData.username}
                 </h1>
@@ -41,18 +76,34 @@ const ProfileModalComponent = (props: { userData: IPublicUserData, handleOpenEdi
                 {
                   props.viewModal ? (
                     <>
-                      <button className=" bg-orange-500  rounded-lg px-3 pt-1 pb-1 w-24 lg:w-48  hover:!bg-orange-500 text-black jura" onClick={props.errorToast}>
+                      <button className=" bg-orange-500  rounded-lg px-3 py-1  hover:!bg-orange-500 text-black jura" onClick={friendBool ? () => props.removeFriend(props.userData.id) : pendingRequestBool ? () => props.acceptFriend(props.userData.id) : yourRequestBool? () => {} : () => props.sendFriend(props.userData.id)}>
                         <div className="flex flex-col-2  items-center justify-center">
 
-                          <img alt="Friend Icon" src={AddFriendIcon.src} className="h-4 lg:h-8 lg:w-8 mr-3" />
+                          <img alt="Friend Icon" src={`/images/user-${friendBool ? 'minus' : pendingRequestBool ? 'check' : yourRequestBool? 'sound' : 'plus'}-fill.svg`} className="h-4 lg:h-8 lg:w-8 mr-2" />
 
                           <div>
-                            <h3 className="text-base md:text-3xl text-center">
-                              Friend
+                            <h3 className="text-base md:text-2xl text-center">
+                              {friendBool ? "Remove" : pendingRequestBool ? "Accept" : yourRequestBool ? "Request Sent" : "Friend"}
                             </h3>
                           </div>
                         </div>
                       </button>
+
+                      {
+                        pendingRequestBool &&
+                        <button className=" bg-orange-500  rounded-lg px-3 py-1  hover:!bg-orange-500 text-black jura" onClick={() => props.declineFriend(props.userData.id)}>
+                          <div className="flex items-center justify-center">
+
+                            <img alt="Friend Icon" src='/images/user-minus-fill.svg' className="h-4 lg:h-8 lg:w-8 mr-2" />
+
+                            <div>
+                              <h3 className="text-base md:text-2xl text-center">
+                                Deny
+                              </h3>
+                            </div>
+                          </div>
+                        </button>
+                      }
 
                       <button onClick={props.errorToast} className="bg-orange-500 w-24 flex justify-center rounded-lg pt-2 text-black jura">
                         <img src={MessagingIcon.src} className="h-6 w-6 " alt="message icon" />
@@ -103,7 +154,7 @@ const ProfileModalComponent = (props: { userData: IPublicUserData, handleOpenEdi
                   </h1>
 
                   <h1 className="bg-orange-500 text-center lg:text-3xl text-2xl rounded-md py-2 sm:px-10 px-4 text-black hover:cursor-pointer " onClick={props.openMyPosts}>
-                    {props.viewModal ? "Posts" : "Your Posts"}
+                    Posts
                   </h1>
                 </>
               )
@@ -183,11 +234,11 @@ const ProfileModalComponent = (props: { userData: IPublicUserData, handleOpenEdi
                   <div className='overflow-auto max-h-[400px] scrollbar'>
                     {
                       props.posts.map((p, idx) => {
-                        if (p.userID === props.userData.id && !p.isFinished) {
+                        if (!p.isFinished) {
                           return p.title === "1v1 Challenge" ? (
-                            <ProfileMatchesComponent data={p} key={idx} openEditMatchModal={props.openEditMatchModal} viewMatch={() => props.viewChallenge(p)} viewModal={props.viewModal} />
+                            <ProfileMatchesComponent data={p} key={idx} openEditMatchModal={props.openEditMatchModal} viewMatch={() => props.viewChallenge(p)} viewModal={p.userID !== props.userData.id} />
                           ) : (
-                            <ProfileMatchesComponent data={p} key={idx} openEditMatchModal={props.openEditMatchModal} viewMatch={() => props.viewSession(p)} viewModal={props.viewModal} />
+                            <ProfileMatchesComponent data={p} key={idx} openEditMatchModal={props.openEditMatchModal} viewMatch={() => props.viewSession(p)} viewModal={p.userID !== props.userData.id} />
                           )
 
                         }

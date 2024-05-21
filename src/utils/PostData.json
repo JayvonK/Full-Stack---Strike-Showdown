@@ -1,7 +1,7 @@
 [
     {
-        "id": 0,
-        "userID": 0,
+        "id": 1,
+        "userID": 4,
         "title": "Practice Session",
         "isVisible": true,
         "state": "CA",
@@ -18,12 +18,11 @@
         "wins": 32,
         "average": "160-170 Avg" ,
         "style": "1 Handed (Left)",
-        "streak": 1,
-        "invitedUsers": []
+        "streak": 1
     },
     {
-        "id": 1,
-        "userID": 0,
+        "id": 2,
+        "userID": 3,
         "title": "Practice Session",
         "isVisible": true,
         "state": "CA",
@@ -32,7 +31,7 @@
         "time": "1:00 - 2:15 pm",
         "maxPpl": 8,
         "currentPpl": 4,
-        "matchUsersIDs": "",
+        "matchUsersIDs": "1-",
         "description": "Come listen to me give the most inspirational motivational speech ever, then we can practice striking right after, but only a quick practice because I have to go look after my daughter",
         "isFinished": false,
         "publisher": "Ephective Tophu",
@@ -40,27 +39,20 @@
         "wins": 22,
         "average": "190-200 Avg" ,
         "style": "Hadouken Style",
-        "streak": 9,
-        "invitedUsers": [
-            {
-                "iD": 2,
-                "userId": 0,
-                "publisherName": ""
-            }
-        ]
+        "streak": 9
     },
     {
-        "id": 2,
-        "userID": 1,
+        "id": 3,
+        "userID": 2,
         "title": "1v1 Challenge",
         "isVisible": true,
         "state": "CA",
         "locations": "West Lane Bowl, McHenry Bowl",
         "date": "N/A",
         "time": "N/A",
-        "maxPpl": 0,
-        "currentPpl": 0,
-        "matchUsersIDs": "",
+        "maxPpl": 2,
+        "currentPpl": 1,
+        "matchUsersIDs": "1-",
         "description": "Imma be honest, I have the best feet in the world, if you disagree with that then come get the smoke",
         "isFinished": false,
         "publisher": "Feetsaiah",
@@ -68,18 +60,11 @@
         "wins": 40,
         "average": "180-190 Avg" ,
         "style": "1 Handed (Right)",
-        "streak": 12,
-        "invitedUsers": [
-            {
-                "iD": 0,
-                "userId": 0,
-                "publisherName": ""
-            }
-        ]
+        "streak": 12
     },
     {
-        "id": 3,
-        "userID": 1,
+        "id": 4,
+        "userID": 5,
         "title": "Practice Session",
         "isVisible": true,
         "state": "CA",
@@ -96,13 +81,6 @@
         "wins": 19,
         "average": "110-120 Avg" ,
         "style": "2 Handed (Right)",
-        "streak": 3,
-        "invitedUsers": [
-            {
-                "iD": 1,
-                "userId": 0,
-                "publisherName": ""
-            }
-        ]
+        "streak": 3
     }
 ]

@@ -63,6 +63,13 @@ export const ChangePasswordAPI = async(UsernameOrEmail: string, password: string
 
 // Everything for Users
 
+export const GetUsernameByIDAPI = async (id: number) => {
+    const promise = await fetch(url + 'User/GetUsernameByID/' + id);
+    const data = await promise.json();
+    return data;
+}
+
+
 export const GetUserAPI = async (UsernameOrEmail: string) => {
     const promise = await fetch(url + `User/GetUserByUsernameOrEmail/${UsernameOrEmail}`);
     const data: IPublicUserData = await promise.json();
@@ -84,6 +91,68 @@ export const UpdateUserAPI = async (username: string, userData: IPublicUserData)
     const data = await res.json();
     return data;
 }
+
+export const AcceptFriendRequestAPI = async (userID: number, yourID: number) => {
+    const res = await fetch(url  + 'User/AcceptFriendRequest/' + userID + '/' + yourID, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': "application/json"
+        }
+    })
+    if(!res.ok){
+        const message = "Ann error message has occured " + res.status;
+        throw new Error(message);
+    }
+    const data = await res.json();
+    return data;
+}
+
+export const SendFriendRequestAPI = async (userID: number, yourID: number) => {
+    const res = await fetch(url  + 'User/SendFriendRequest/' + userID + '/' + yourID, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': "application/json"
+        }
+    })
+    if(!res.ok){
+        const message = "Ann error message has occured " + res.status;
+        throw new Error(message);
+    }
+    const data = await res.json();
+    return data;
+}
+
+export const DeclineFriendRequestAPI = async (userID: number, yourID: number) => {
+    const res = await fetch(url  + 'User/DeclineFriendRequest/' + userID + '/' + yourID, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': "application/json"
+        }
+    })
+    if(!res.ok){
+        const message = "Ann error message has occured " + res.status;
+        throw new Error(message);
+    }
+    const data = await res.json();
+    return data;
+}
+
+export const RemoveFriendAPI = async (userID: number, yourID: number) => {
+    const res = await fetch(url  + 'User/RemoveFriend/' + userID + '/' + yourID, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': "application/json"
+        }
+    })
+    if(!res.ok){
+        const message = "Ann error message has occured " + res.status;
+        throw new Error(message);
+    }
+    const data = await res.json();
+    return data;
+}
+
+
 
 // Everything for Post and Matches
 export const GetUsersByStateAPI = async (state: string) => {

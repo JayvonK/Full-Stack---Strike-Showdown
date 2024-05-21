@@ -8,7 +8,8 @@ import { INotification } from "@/interfaces/Interfaces";
 import MessageNotificationComponent from "../Notifications/MessageNotificationComponent";
 import MatchNotificationComponent from "../Notifications/MatchNotificationComponent";
 import { MakeNotificationRead } from "@/Data/DataServices";
-const InboxModalComponent = (props: { closeModal: () => void, openFriendsModal: () => void, notifications: INotification[], errorToast: () => void }) => {
+import FriendRequestNotificationComponent from "../Notifications/FriendRequestNotificationComponent";
+const InboxModalComponent = (props: { closeModal: () => void, openFriendsModal: () => void, notifications: INotification[], errorToast: () => void, acceptFriend: (id: number) => void, declineFriend: (id: number) => void }) => {
 
   const [activeTab, setActiveTab] = useState("Inbox");
   const [tabOneActive, setTabOneActive] = useState(true);
@@ -84,19 +85,21 @@ const InboxModalComponent = (props: { closeModal: () => void, openFriendsModal: 
   }, [])
   return (
     <div className="bg-white rounded-lg p-6">
-        <div className="flex justify-evenly mb-4">
-          <button className={`tab-button relative px-4 w-48 py-2 rounded focus:outline-none jura text-xl md:text-2xl lg:text-3xl ${activeTab === "Inbox" ? "bg-orange-500 " : "text-black"}`} onClick={inboxClick}> Inbox </button>
+      <div className="flex justify-evenly mb-4">
+        <button className={`tab-button relative px-4 w-48 py-2 rounded focus:outline-none jura text-xl md:text-2xl lg:text-3xl ${activeTab === "Inbox" ? "bg-orange-500 " : "text-black"}`} onClick={inboxClick}> Inbox </button>
 
-          <button className={`tab-button relative px-4 py-2 w-48 rounded focus:outline-none jura text-xl md:text-2xl lg:text-3xl ${activeTab === "Matches" ? "bg-orange-500 " : " text-black "}`} onClick={matchesClick}> Matches {matchesUnread && <div className="absolute bg-red-600 w-4 h-4 rounded-full top-2 right-2"></div>} </button>
+        <button className={`tab-button relative px-4 py-2 w-48 rounded focus:outline-none jura text-xl md:text-2xl lg:text-3xl ${activeTab === "Matches" ? "bg-orange-500 " : " text-black "}`} onClick={matchesClick}> Matches {matchesUnread && <div className="absolute bg-red-600 w-4 h-4 rounded-full top-2 right-2"></div>} </button>
 
-          <button className={`tab-button relative px-4 py-2 w-48 rounded focus:outline-none jura text-xl md:text-2xl lg:text-3xl ${activeTab === "Sessions" ? "bg-orange-500  " : " text-black"}`} onClick={sessionsClick}> Sessions {sessionsUnread && <div className="absolute bg-red-600 w-4 h-4 rounded-full top-2 right-2"></div>} </button>
-        </div>
+        <button className={`tab-button relative px-4 py-2 w-48 rounded focus:outline-none jura text-xl md:text-2xl lg:text-3xl ${activeTab === "Sessions" ? "bg-orange-500  " : " text-black"}`} onClick={sessionsClick}> Sessions {sessionsUnread && <div className="absolute bg-red-600 w-4 h-4 rounded-full top-2 right-2"></div>} </button>
+      </div>
 
       <div className=" min-h-[500px] max-h-[600px] overflow-auto">
         {tabOneActive && props.notifications.map((noti, idx) => {
           if (noti.type.includes("Inbox")) {
             if (noti.type.includes("Message")) {
               return (<MessageNotificationComponent data={noti} key={idx} />)
+            } else if (noti.type.includes("FriendRequest")) {
+              <FriendRequestNotificationComponent data={noti} key={idx} accept={props.acceptFriend} decline={props.declineFriend} />
             }
           }
         })
@@ -110,7 +113,7 @@ const InboxModalComponent = (props: { closeModal: () => void, openFriendsModal: 
               return (<MatchNotificationComponent data={noti} key={idx} click={props.errorToast} edit={true} />)
             } else if (noti.type.includes("Viewer")) {
               return (<MatchNotificationComponent data={noti} key={idx} click={props.errorToast} edit={false} />)
-            } else if (noti.type.includes("Edited")){
+            } else if (noti.type.includes("Edited")) {
               return (<MatchNotificationComponent data={noti} key={idx} click={props.errorToast} edit={true} />)
             }
           }
@@ -125,7 +128,7 @@ const InboxModalComponent = (props: { closeModal: () => void, openFriendsModal: 
               return (<MatchNotificationComponent data={noti} key={idx} click={props.errorToast} edit={true} />)
             } else if (noti.type.includes("Viewer")) {
               return (<MatchNotificationComponent data={noti} key={idx} click={props.errorToast} edit={false} />)
-            } else if (noti.type.includes("Edited")){
+            } else if (noti.type.includes("Edited")) {
               return (<MatchNotificationComponent data={noti} key={idx} click={props.errorToast} edit={true} />)
             }
           }
