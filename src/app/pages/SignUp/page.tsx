@@ -278,12 +278,13 @@ const SignUp = () => {
     }
 
     try {
+      setLoading(true);
       let createdUser = await CreateAccountAPI(userData);
       console.log(createdUser);
-      setLoading(true);
       pageContext.setCreatedAccountBool(true);
       router.push('/');
     } catch (error) {
+      setLoading(false);
       toast({
         variant: "destructive",
         title: "Error",
@@ -321,12 +322,12 @@ const SignUp = () => {
     }
 
     try {
-      let createdUser = await CreateAccountAPI(userData);
-      console.log(createdUser);
       setLoading(true);
+      let createdUser = await CreateAccountAPI(userData);
       pageContext.setCreatedAccountBool(true);
       router.push('/');
     } catch (error) {
+      setLoading(false);
       toast({
         variant: "destructive",
         title: "Error ",

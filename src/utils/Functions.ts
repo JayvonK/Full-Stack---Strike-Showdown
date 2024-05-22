@@ -92,38 +92,38 @@ export const convertTimeBack = (time: string) => {
 
 export const grabUserPosts = (id: number, posts: IUserPosts[]) => {
   let arr: IUserPosts[] = [];
-  posts.forEach(post => {
-    let idArray: string[] = post.matchUsersIDs.split('-');
-    post.matchUsersIDs.split('-').forEach(user => {
-      if(Number(user) === id){
-        arr.push(post);
-      }
-    })
-
-    if(post.userID === id){
+  posts.forEach((post) => {
+    let idArray: string[] = post.matchUsersIDs.split("-");
+    if (post.userID == id) {
       arr.push(post);
+    } else {
+      post.matchUsersIDs.split("-").forEach((user) => {
+        if (Number(user) === id) {
+          arr.push(post);
+        }
+      });
     }
-  })
+  });
   return arr;
-}
+};
 
 export const grabViewUserPosts = (id: number, posts: IUserPosts[]) => {
   let arr: IUserPosts[] = [];
-  posts.forEach(post => {
-    if(post.userID === id && Number(post.currentPpl) !== Number(post.maxPpl)){
+  posts.forEach((post) => {
+    if (post.userID === id && Number(post.currentPpl) !== Number(post.maxPpl)) {
       arr.push(post);
     }
-  })
+  });
   return arr;
-}
+};
 
 export const isUserIncludedInMatch = (userID: number, idArray: string[]) => {
-  idArray.forEach(id => {
-    if(Number(id) === userID){
+  idArray.forEach((id) => {
+    if (Number(id) === userID) {
       console.log(true);
       return true;
     }
-  })
+  });
   console.log(false);
   return false;
-}
+};

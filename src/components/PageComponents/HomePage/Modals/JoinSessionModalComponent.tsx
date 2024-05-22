@@ -83,12 +83,8 @@ const JoinSessionModalComponent = (props: { data: IUserPosts, closeModal: () => 
       </div>
 
       <div className="flex justify-end pt-4">
-        {
-          !isIncluded && <button className=" border-color outline-none mr-5 bg-orange-500  w-36 md:w-36 rounded-xl  md:rounded-lg  hover:!bg-orange-500 text-black jura" onClick={() => props.joinChallenge(props.data)}>
-            <h3 className=" text-2xl  md:text-3xl   ">Join</h3>
-          </button>
-        }
-        <button className=" border-color outline-none bg-orange-500  w-36 md:w-36 rounded-xl  md:rounded-lg  hover:!bg-orange-500 text-black jura">
+        <button className={`border-color outline-none mr-5 ${isIncluded ? 'bg-red-500 hover:bg-red-400' : 'bgOrange hover:bg-orange-400'}  w-36 md:w-36 rounded-xl  md:rounded-lg   text-black jura`} onClick={() => props.joinChallenge(props.data)}><h3 className=" text-2xl  md:text-3xl">{isIncluded ? "Leave" : "Join"}</h3></button>
+        <button className=" border-color outline-none bgOrange  w-36 md:w-36 rounded-xl  md:rounded-lg  hover:bg-orange-400 text-black jura">
           <h3 className=" text-2xl  lg:text-3xl  py-2 " onClick={props.closeModal}>Close</h3>
         </button>
       </div>

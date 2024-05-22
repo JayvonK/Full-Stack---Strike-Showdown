@@ -1,15 +1,13 @@
-"use client";
-import Link from "next/link";
-import { Navbar, Pagination, Modal, Button } from "flowbite-react";
+'use client'
+
 import { useEffect, useState } from "react";
 import React from "react";
-import ProfilePic from "../../../../../public/images/Ellipse 16.png";
-import { INotification } from "@/interfaces/Interfaces";
+import { INotification, IUserPosts } from "@/interfaces/Interfaces";
 import MessageNotificationComponent from "../Notifications/MessageNotificationComponent";
 import MatchNotificationComponent from "../Notifications/MatchNotificationComponent";
-import { MakeNotificationRead } from "@/Data/DataServices";
+import { GetMatchByPostIDAPI, MakeNotificationRead } from "@/Data/DataServices";
 import FriendRequestNotificationComponent from "../Notifications/FriendRequestNotificationComponent";
-const InboxModalComponent = (props: { closeModal: () => void, openFriendsModal: () => void, notifications: INotification[], errorToast: () => void, acceptFriend: (id: number, noti: INotification | undefined) => void, declineFriend: (id: number, noti: INotification | undefined) => void }) => {
+const InboxModalComponent = (props: { closeModal: () => void, openFriendsModal: () => void, notifications: INotification[], errorToast: () => void, acceptFriend: (id: number, noti: INotification | undefined) => void, declineFriend: (id: number, noti: INotification | undefined) => void, editMatchClick: (id: number) => void, currentUsersPosts: IUserPosts[], viewMatchFromInbox: (postID: number) => void }) => {
 
   const [activeTab, setActiveTab] = useState("Inbox");
   const [tabOneActive, setTabOneActive] = useState(true);
@@ -102,7 +100,7 @@ const InboxModalComponent = (props: { closeModal: () => void, openFriendsModal: 
               return <FriendRequestNotificationComponent data={noti} key={idx} accept={props.acceptFriend} decline={props.declineFriend} />
             }
           }
-        })
+        }).reverse()
         }
 
         {tabTwoActive && props.notifications.map((noti, idx) => {
@@ -110,11 +108,11 @@ const InboxModalComponent = (props: { closeModal: () => void, openFriendsModal: 
             if (noti.type.includes("Deleted")) {
               return (<MessageNotificationComponent data={noti} key={idx} />)
             } else if (noti.type.includes("Publisher")) {
-              return (<MatchNotificationComponent data={noti} key={idx} click={props.errorToast} edit={true} />)
+              return (<MatchNotificationComponent data={noti} key={idx} editMatchClick={() => props.editMatchClick(noti.postID)} viewMatchClick={() => props.viewMatchFromInbox(noti.postID)} edit={true} />)
             } else if (noti.type.includes("Viewer")) {
-              return (<MatchNotificationComponent data={noti} key={idx} click={props.errorToast} edit={false} />)
+              return (<MatchNotificationComponent data={noti} key={idx} editMatchClick={() => props.editMatchClick(noti.postID)} viewMatchClick={() => props.viewMatchFromInbox(noti.postID)} edit={false} />)
             } else if (noti.type.includes("Edited")) {
-              return (<MatchNotificationComponent data={noti} key={idx} click={props.errorToast} edit={true} />)
+              return (<MatchNotificationComponent data={noti} key={idx} editMatchClick={() => props.editMatchClick(noti.postID)} viewMatchClick={() => props.viewMatchFromInbox(noti.postID)} edit={true} />)
             }
           }
         }).reverse()
@@ -122,14 +120,15 @@ const InboxModalComponent = (props: { closeModal: () => void, openFriendsModal: 
 
         {tabThreeActive && props.notifications.map((noti, idx) => {
           if (noti.type.includes("Session")) {
+
             if (noti.type.includes("Deleted")) {
               return (<MessageNotificationComponent data={noti} key={idx} />)
             } else if (noti.type.includes("Publisher")) {
-              return (<MatchNotificationComponent data={noti} key={idx} click={props.errorToast} edit={true} />)
+              return (<MatchNotificationComponent data={noti} key={idx} editMatchClick={() => props.editMatchClick(noti.postID)} viewMatchClick={() => props.viewMatchFromInbox(noti.postID)} edit={true} />)
             } else if (noti.type.includes("Viewer")) {
-              return (<MatchNotificationComponent data={noti} key={idx} click={props.errorToast} edit={false} />)
+              return (<MatchNotificationComponent data={noti} key={idx} editMatchClick={() => props.editMatchClick(noti.postID)} viewMatchClick={() => props.viewMatchFromInbox(noti.postID)} edit={false} />)
             } else if (noti.type.includes("Edited")) {
-              return (<MatchNotificationComponent data={noti} key={idx} click={props.errorToast} edit={true} />)
+              return (<MatchNotificationComponent data={noti} key={idx} editMatchClick={() => props.editMatchClick(noti.postID)} viewMatchClick={() => props.viewMatchFromInbox(noti.postID)} edit={true} />)
             }
           }
         }).reverse()

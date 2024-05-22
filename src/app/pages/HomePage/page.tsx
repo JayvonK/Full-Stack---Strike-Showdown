@@ -20,7 +20,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { useState } from "react";
 import { useAppContext } from '@/context/Context';
 import { ICreateNotification, ICreatePost, INotification, IPublicUserData, IUserInfoWithStats, IUserPosts, IUsername } from '@/interfaces/Interfaces';
-import { AcceptFriendRequestAPI, AddUserToMatchAPI, CreateNotificationAPI, CreatePostAPI, DeclineFriendRequestAPI, DeleteMatchAPI, DeleteNotificationAPI, GetNotificationsByUserIDAPI, GetPublicMatchesByStateAPI, GetRecentMatchIDByUserIDAPI, GetUserAPI, GetUsernameByIDAPI, GetUsersByStateAPI, RemoveFriendAPI, SendFriendRequestAPI, UpdateMatchAPI, UpdateUserAPI } from '@/Data/DataServices';
+import { AcceptFriendRequestAPI, AddUserToMatchAPI, CreateNotificationAPI, CreatePostAPI, DeclineFriendRequestAPI, DeleteMatchAPI, DeleteNotificationAPI, GetAllFriendsAPI, GetMatchByPostIDAPI, GetNotificationsByUserIDAPI, GetPublicMatchesByStateAPI, GetRecentMatchIDByUserIDAPI, GetUserAPI, GetUserByID, GetUsernameByIDAPI, GetUsersByStateAPI, MakeNotificationRead, RemoveFriendAPI, SendFriendRequestAPI, UpdateMatchAPI, UpdateUserAPI } from '@/Data/DataServices';
 import PracticePostDummyData from '../../../utils/PostData.json';
 import PracticeSessionComponent from '@/components/PageComponents/HomePage/PracticeSessionComponent';
 import MatchComponent from '@/components/PageComponents/HomePage/MatchComponent';
@@ -43,6 +43,7 @@ import ConfirmationModal from '@/components/PageComponents/HomePage/Modals/Confi
 import SearchModal from '@/components/PageComponents/HomePage/Modals/SearchModal';
 import JoinSessionModalComponent from '@/components/PageComponents/HomePage/Modals/JoinSessionModalComponent';
 import JoinChallengeModal from '@/components/PageComponents/HomePage/Modals/JoinChallengeModal';
+import FriendsModalComponentcopy from '@/components/PageComponents/HomePage/Modals/FriendsModalComponent copy';
 
 const HomePage = () => {
   const fakeUserData: IPublicUserData = {
@@ -137,7 +138,6 @@ const HomePage = () => {
 
   // State Variables for Viewing Matches Modal
   const [viewMatchData, setViewMatchData] = useState<IUserPosts>(postsData[0]);
-  const [viewMatchModal, setViewMatchModal] = useState<boolean>(false);
   const [joinSessionModal, setJoinSessionModal] = useState<boolean>(false);
   const [joinChallengeModal, setJoinChallengeModal] = useState<boolean>(false);
   const [joinChallengeLocation, setJoinChallengeLocation] = useState<string>('');
@@ -154,6 +154,7 @@ const HomePage = () => {
 
   // State Variables for Friends Modal
   const [friendsModal, setFriendsModal] = useState<boolean>(false);
+  const [friendArray, setFriendsArray] = useState<IPublicUserData[]>([]);
 
   // State Variables for Confirmation Modal
   const [confirmationModal, setConfirmationModal] = useState<boolean>(false);
@@ -226,7 +227,7 @@ const HomePage = () => {
 
   const acceptFriend = async (otherID: number, deleteNoti: INotification | undefined) => {
     const data = await AcceptFriendRequestAPI(otherID, verifiedUserData.id);
-    setUsersArray(await GetUsersByStateAPI(verifiedUserData.location));
+    updateViewUserArrAndData();
 
     const data2: IUsername = await GetUsernameByIDAPI(otherID);
     const username = data2.username;
@@ -256,6 +257,7 @@ const HomePage = () => {
       deleteNoti && await DeleteNotificationAPI(deleteNoti);
 
       updateNotifications();
+      updateFriendsArray();
 
       toast({
         title: `You've accepted ${username}'s friend request. You are now friends`,
@@ -272,7 +274,7 @@ const HomePage = () => {
 
   const declineFriend = async (otherID: number, deleteNoti: INotification | undefined) => {
     const data = await DeclineFriendRequestAPI(otherID, verifiedUserData.id);
-    setUsersArray(await GetUsersByStateAPI(verifiedUserData.location));
+    updateViewUserArrAndData();
 
     const data2: IUsername = await GetUsernameByIDAPI(otherID);
     const username = data2.username;
@@ -318,7 +320,7 @@ const HomePage = () => {
 
   const sendFriend = async (otherID: number) => {
     const data = await SendFriendRequestAPI(otherID, verifiedUserData.id);
-    setUsersArray(await GetUsersByStateAPI(verifiedUserData.location));
+    updateViewUserArrAndData();
 
     const data2: IUsername = await GetUsernameByIDAPI(otherID);
     const username = data2.username;
@@ -363,7 +365,7 @@ const HomePage = () => {
 
   const removeFriend = async (otherID: number) => {
     const data = await RemoveFriendAPI(otherID, verifiedUserData.id);
-    setUsersArray(await GetUsersByStateAPI(verifiedUserData.location));
+    updateViewUserArrAndData();
 
     const data2: IUsername = await GetUsernameByIDAPI(otherID);
     const username = data2.username;
@@ -385,15 +387,16 @@ const HomePage = () => {
         recieverID: verifiedUserData.id,
         postID: 0,
         type: "Inbox Message",
-        content: `You are no longer friends ${username}`
+        content: `You are no longer friends with ${username}`
       }
 
       await CreateNotificationAPI(noti2);
 
       updateNotifications();
+      updateFriendsArray();
 
       toast({
-        title: `You are no longer friends ${username}`,
+        title: `You are no longer friends with ${username}`,
         description: "YAY",
       })
     
@@ -424,10 +427,6 @@ const HomePage = () => {
     setInboxModal(false);
     setFriendsModal(true);
     setOpenModal(true);
-    toast({
-      title: "This modal has no functionality yet.",
-      description: "Sorry about that",
-    })
   }
 
   const closeFriendsModal = () => {
@@ -442,7 +441,12 @@ const HomePage = () => {
     setOpenModal(true);
   }
 
-  const closeInboxModal = () => {
+  const closeInboxModal = async () => {
+    notificationArray.forEach(async noti => {
+      if(noti.type.includes("Inbox") && noti.isRead === false){
+        await MakeNotificationRead(noti)
+      }
+    })
     setInboxModal(false);
     setOpenModal(false);
     updateNotifications();
@@ -735,10 +739,6 @@ const HomePage = () => {
     }
   }
 
-  const handleInvitedUsersChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInvitedUsers(e.target.value);
-  }
-
   const clearMatchInputs = () => {
     setVisibility(true);
     setLocationOne("");
@@ -865,6 +865,13 @@ const HomePage = () => {
 
   // View Matches Functions
 
+  const viewMatchFromInbox = async (postID: number) => {
+    const data = await GetMatchByPostIDAPI(postID);
+    setViewMatchData(data);
+    data.title === "1v1 Challenge" ? setJoinChallengeModal(true) : setJoinSessionModal(true);
+    setOpenModal(true);
+  }
+
   const viewMatch = (data: IUserPosts) => {
     setViewMatchData(data);
     data.title === "1v1 Challenge" ? setJoinChallengeModal(true) : setJoinSessionModal(true);
@@ -887,7 +894,7 @@ const HomePage = () => {
     setJoinChallengeLocation("");
     setJoinChallengeModal(false);
     setJoinSessionModal(false);
-    viewOtherUserModal ? setOpenModal(true) : setOpenModal(false);
+    viewOtherUserModal || inboxModal || userProfileModal ? setOpenModal(true) : setOpenModal(false);
   }
 
   // Join Match Functions
@@ -963,6 +970,15 @@ const HomePage = () => {
     setOpenModal(true);
   }
 
+  const openEditMatchModalFromInbox = async (id: number) => {
+    const data = await GetMatchByPostIDAPI(id);
+    setDeletePost(data);
+    setEditMatchModalData(data);
+    setEditMatchModal(true);
+    data.title === '1v1 Challenge' ? setEditingChallengeBool(true) : setEditingChallengeBool(false);
+    setOpenModal(true);
+  }
+
   const closeEditMatchModal = () => {
     setVisibility(true);
     setLocationOne("");
@@ -977,7 +993,7 @@ const HomePage = () => {
     setCurrentPpl("");
     setDate(undefined);
     setEditMatchModal(false);
-    userProfileModal ? (setOpenModal(true)) : (setOpenModal(false))
+    userProfileModal || inboxModal ? (setOpenModal(true)) : (setOpenModal(false))
   }
 
   const editMatchClick = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -1142,6 +1158,21 @@ const HomePage = () => {
     }
   }
 
+  const updateViewUserArrAndData = async () => {
+    console.log("viewed user updated");
+    let currentUser = await GetUserAPI(verifiedUserData.username)
+    let userData = await GetUserByID(viewOtherUserData.id);
+    setUsersArray(await GetUsersByStateAPI(verifiedUserData.location));
+    setVerifiedUserData(currentUser);
+    setViewOtherUserData(userData)
+    setViewUserID(userData.id);
+  }
+
+  const updateFriendsArray = async () => {
+    let data = await GetAllFriendsAPI(verifiedUserData.id);
+    setFriendsArray(data);
+  }
+
   const errorToast = () => {
     toast({
       variant: 'destructive',
@@ -1164,10 +1195,11 @@ const HomePage = () => {
           setCurrentUsername(storageArr[0][1])
           setMatchData(await GetPublicMatchesByStateAPI(userData.location));
           setCurrentUsersPosts(grabUserPosts(userData.id, await GetPublicMatchesByStateAPI(userData.location)));
+          console.log(grabUserPosts(userData.id, await GetPublicMatchesByStateAPI(userData.location)));
           setUsersArray(await GetUsersByStateAPI(userData.location));
+          setFriendsArray(await GetAllFriendsAPI(userData.id))
           const notiArr: INotification[] = await GetNotificationsByUserIDAPI(userData.id);
           setNotificationsArray(notiArr);
-          console.log(notiArr);
           if (notiArr.length !== 0) {
             notiArr.forEach(noti => {
               if (noti.isDeleted === false && noti.isRead === false) {
@@ -1213,15 +1245,15 @@ const HomePage = () => {
         {/* Everything when opening profile modal */}
 
         {
-          userProfileModal && !editMatchModal && !editModal && <ProfileModalComponent currentUser={verifiedUserData} userData={verifiedUserData} handleCloseUsersProfileModal={closeUsersProfileModal} handleOpenEditModal={openEditModal} openMyInfo={openMyInfo} openMyPosts={openMyPosts} onInfo={onInfo} posts={currentUsersPosts} openEditMatchModal={openEditMatchModal} viewModal={false} viewChallenge={viewChallenge} viewSession={viewSession} errorToast={errorToast} acceptFriend={acceptFriend} declineFriend={declineFriend} sendFriend={sendFriend} removeFriend={removeFriend} />
+          userProfileModal && !editMatchModal && !editModal && !joinChallengeModal && !joinSessionModal && <ProfileModalComponent currentUser={verifiedUserData} userData={verifiedUserData} handleCloseUsersProfileModal={closeUsersProfileModal} handleOpenEditModal={openEditModal} openMyInfo={openMyInfo} openMyPosts={openMyPosts} onInfo={onInfo} posts={currentUsersPosts} openEditMatchModal={openEditMatchModal} viewModal={false} viewChallenge={viewChallenge} viewSession={viewSession} errorToast={errorToast} acceptFriend={acceptFriend} declineFriend={declineFriend} sendFriend={sendFriend} removeFriend={removeFriend} />
         }
 
         {
-          inboxModal && <InboxModalComponent closeModal={closeInboxModal} openFriendsModal={openFriendsModal} notifications={notificationArray} errorToast={errorToast} acceptFriend={acceptFriend} declineFriend={declineFriend}/>
+          inboxModal && !editMatchModal && !joinSessionModal && !joinChallengeModal &&  <InboxModalComponent closeModal={closeInboxModal} openFriendsModal={openFriendsModal} notifications={notificationArray} errorToast={errorToast} acceptFriend={acceptFriend} declineFriend={declineFriend} editMatchClick={openEditMatchModalFromInbox} currentUsersPosts={currentUsersPosts} viewMatchFromInbox={viewMatchFromInbox}/>
         }
 
         {
-          friendsModal && <FriendsModalComponent closeModal={closeFriendsModal} />
+          friendsModal && <FriendsModalComponentcopy friendsArray={friendArray} closeModal={closeFriendsModal} />
         }
 
         {

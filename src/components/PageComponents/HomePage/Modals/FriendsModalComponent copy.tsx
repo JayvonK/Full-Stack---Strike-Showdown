@@ -1,0 +1,53 @@
+import React from 'react'
+import UserMinus from "../../../../../public/images/UserMinus.png";
+import ProfilePic from "../../../../../public/images/Ellipse 16.png";
+import { useState } from 'react';
+import { Modal, Button } from 'flowbite-react';
+import FriendBoxComponent from '../../FriendBoxComponent';
+import { IPublicUserData } from '@/interfaces/Interfaces';
+
+
+const FriendsModalComponentcopy = (props: { closeModal: () => void, friendsArray: IPublicUserData[] }) => {
+  const [openModal, setOpenModal] = useState(false);
+  return (
+    <div className='p-4  bg-white rounded-lg'>
+      <div>
+        <h3
+          className=" mb-6  text-lg md:text-xl   lg:text-2xl w-32   md:w-32  lg:w-36   rounded-lg  md:rounded-lg  bg-orange-500   hover:!bg-orange-500 text-center text-black jura px-4 py-1"
+        >
+          Friends
+        </h3>
+      </div>
+      <div className=' grid grid-cols-2 md:grid-cols-3   justify-evenly  max-h-[450px]  gap-y-4 gap-x-2 overflow-auto'>
+
+        <div>
+          {
+            props.friendsArray.map((friend, idx) => {
+              return <FriendBoxComponent key={idx} userName={friend.username} userImage={friend.profileImage} challengeBtn={function (): void {
+                throw new Error('Function not implemented.');
+              }} message={function (): void {
+                throw new Error('Function not implemented.');
+              }}></FriendBoxComponent>
+            }).reverse()
+          }
+        </div>
+
+      </div>
+
+
+      <div className="flex justify-end pt-4">
+        <a
+          className="    bg-orange-500 text-lg md:text-xl py-1  lg:text-2xl md:w-32  lg:w-36  rounded-lg  hover:!bg-orange-500 text-black jura"
+
+          onClick={props.closeModal}
+        >
+          <h3 className=" text-lg md:text-xl px-4   lg:text-2xl md:w-32  lg:w-36  text-center  rounded-lg ">Close</h3>
+        </a>
+      </div>
+
+
+    </div>
+  )
+}
+
+export default FriendsModalComponentcopy

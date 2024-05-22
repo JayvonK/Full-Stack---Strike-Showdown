@@ -7,9 +7,6 @@ const SearchModal = (props: { closeModal: () => void, userArr: IPublicUserData[]
   const [recSearch, setRecSearch] = useState<boolean>(false);
   const [searchedUsername, setSearchedUsername] = useState<string>('');
 
-  const viewUser = () => {
-    setRecSearch(true);
-  }
 
   return (
     <div>
@@ -24,11 +21,11 @@ const SearchModal = (props: { closeModal: () => void, userArr: IPublicUserData[]
                   if (user.username !== props.currentUsername) {
                     if (searchedUsername.trim() === '') {
                       return (
-                        idx === props.userArr.length - 1 ? (<SearchModalRecentUsersComponent key={idx} username={user.username} avg={user.average} wins={user.wins} losses={user.losses} pfp={user.profileImage} last={true} viewUser={() => { props.clickSearch(user) }} />) : (<SearchModalRecentUsersComponent key={idx} username={user.username} avg={user.average} wins={user.wins} losses={user.losses} pfp={user.profileImage} last={false} viewUser={() => { props.clickSearch(user) }} />)
+                        idx === props.userArr.length - 5 ? (<SearchModalRecentUsersComponent key={idx} username={user.username} avg={user.average} wins={user.wins} losses={user.losses} pfp={user.profileImage} last={true} viewUser={() => { props.clickSearch(user) }} />) : (<SearchModalRecentUsersComponent key={idx} username={user.username} avg={user.average} wins={user.wins} losses={user.losses} pfp={user.profileImage} last={false} viewUser={() => { props.clickSearch(user) }} />)
                       )
                     } else if (user.username.toLowerCase().includes(searchedUsername.toLowerCase())) {
                       return (
-                        idx === props.userArr.length - 1 ? (<SearchModalRecentUsersComponent key={idx} username={user.username} avg={user.average} wins={user.wins} losses={user.losses} pfp={user.profileImage} last={true} viewUser={() => { props.clickSearch(user) }} />) : (<SearchModalRecentUsersComponent key={idx} username={user.username} avg={user.average} wins={user.wins} losses={user.losses} pfp={user.profileImage} last={false} viewUser={() => { props.clickSearch(user) }} />)
+                        idx === props.userArr.length - 5 ? (<SearchModalRecentUsersComponent key={idx} username={user.username} avg={user.average} wins={user.wins} losses={user.losses} pfp={user.profileImage} last={true} viewUser={() => { props.clickSearch(user) }} />) : (<SearchModalRecentUsersComponent key={idx} username={user.username} avg={user.average} wins={user.wins} losses={user.losses} pfp={user.profileImage} last={false} viewUser={() => { props.clickSearch(user) }} />)
                       )
                     }
                   }
@@ -37,11 +34,11 @@ const SearchModal = (props: { closeModal: () => void, userArr: IPublicUserData[]
                 if (user.username !== props.currentUsername) {
                   if (searchedUsername.trim() === '') {
                     return (
-                      idx === props.userArr.length - 1 ? (<SearchModalRecentUsersComponent key={idx} username={user.username} avg={user.average} wins={user.wins} losses={user.losses} pfp={user.profileImage} last={true} viewUser={() => { props.clickSearch(user) }} />) : (<SearchModalRecentUsersComponent key={idx} username={user.username} avg={user.average} wins={user.wins} losses={user.losses} pfp={user.profileImage} last={false} viewUser={() => { props.clickSearch(user) }} />)
+                      idx === 0 ? (<SearchModalRecentUsersComponent key={idx} username={user.username} avg={user.average} wins={user.wins} losses={user.losses} pfp={user.profileImage} last={true} viewUser={() => { props.clickSearch(user) }} />) : (<SearchModalRecentUsersComponent key={idx} username={user.username} avg={user.average} wins={user.wins} losses={user.losses} pfp={user.profileImage} last={false} viewUser={() => { props.clickSearch(user) }} />)
                     )
                   } else if (user.username.toLowerCase().includes(searchedUsername.toLowerCase())) {
                     return (
-                      idx === props.userArr.length - 1 ? (<SearchModalRecentUsersComponent key={idx} username={user.username} avg={user.average} wins={user.wins} losses={user.losses} pfp={user.profileImage} last={true} viewUser={() => { props.clickSearch(user) }} />) : (<SearchModalRecentUsersComponent key={idx} username={user.username} avg={user.average} wins={user.wins} losses={user.losses} pfp={user.profileImage} last={false} viewUser={() => { props.clickSearch(user) }} />)
+                      idx === 0 ? (<SearchModalRecentUsersComponent key={idx} username={user.username} avg={user.average} wins={user.wins} losses={user.losses} pfp={user.profileImage} last={true} viewUser={() => { props.clickSearch(user) }} />) : (<SearchModalRecentUsersComponent key={idx} username={user.username} avg={user.average} wins={user.wins} losses={user.losses} pfp={user.profileImage} last={false} viewUser={() => { props.clickSearch(user) }} />)
                     )
                   }
                 }

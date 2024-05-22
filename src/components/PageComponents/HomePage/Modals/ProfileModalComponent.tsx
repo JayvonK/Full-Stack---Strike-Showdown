@@ -1,13 +1,16 @@
 
-import React, { useState } from 'react'
-import { Modal } from 'flowbite-react';
-import ProfilePic2 from "../../../../../public/images/profilePIc.png";
+import React, { useEffect, useState } from 'react'
 import MessagingIcon from "../../../../../public/images/MessageProfile.png"
 import { useRouter } from 'next/navigation';
 import { INotification, IPublicUserData, IUserPosts } from '@/interfaces/Interfaces';
 import ProfileMatchesComponent from '../ProfileMatchesComponent';
-import { isUserIncludedInMatch } from '@/utils/Functions';
+import { GetFriendRequestNotificationsAPI } from '@/Data/DataServices';
 const ProfileModalComponent = (props: { currentUser: IPublicUserData, userData: IPublicUserData, handleOpenEditModal: () => void, handleCloseUsersProfileModal: () => void, openMyPosts: () => void, openMyInfo: () => void, onInfo: boolean, posts: IUserPosts[], openEditMatchModal: (data: IUserPosts) => void, viewModal: boolean, viewChallenge: (post: IUserPosts) => void, viewSession: (post: IUserPosts) => void, errorToast: () => void, acceptFriend: (id: number, noti: INotification | undefined) => void, declineFriend: (d: number, noti: INotification | undefined) => void, sendFriend: (d: number) => void, removeFriend: (d: number) => void }) => {
+
+  const [friendNoti, setFriendNoti] = useState<INotification>();
+  const [friendBool, setFriendBool] = useState<boolean>(false);
+  const [pendingRequestBool, setPendingRequestBool] = useState<boolean>(false);
+  const [yourRequestBool, setYourRequestBool] = useState<boolean>(false);
 
   const router = useRouter();
 
@@ -16,37 +19,46 @@ const ProfileModalComponent = (props: { currentUser: IPublicUserData, userData: 
     router.push('/');
   }
 
-  let friendBool = false;
+  const getFriendNoti = async () => {
+    const data: INotification = await GetFriendRequestNotificationsAPI(props.currentUser.id, props.userData.id);
+    setFriendNoti(data);
+  }
 
-  let pendingRequestBool = false;
+  useEffect(() => {
+    setFriendBool(false);
+    setPendingRequestBool(false);
+    setYourRequestBool(false);
 
-  let yourRequestBool = false;
+    let friendsArray: string[] = props.currentUser.friends.split('-');
 
-  let friendsArray: string[] = props.currentUser.friends.split('-');
+    let pendingFriendsArray: string[] = props.currentUser.pendingFriends.split('-');
 
-  let pendingFriendsArray: string[] = props.currentUser.pendingFriends.split('-');
+    let pendingFriendsArray2: string[] = props.userData.pendingFriends.split("-");
 
-  let pendingFriendsArray2: string[] = props.userData.pendingFriends.split("-");
+    console.log(`Friends: ${friendsArray} | Pending: ${pendingFriendsArray} | Your Request: ${pendingFriendsArray2}`)
 
-  friendsArray.forEach(friend => {
-    if (Number(friend) === props.currentUser.id) {
-      friendBool = true;
-    }
-  })
+    friendsArray.forEach(friend => {
+      if (Number(friend) === props.userData.id) {
+        console.log("friend true")
+        setFriendBool(true);
+      }
+    })
 
-  pendingFriendsArray.forEach(pend => {
-    if (Number(pend) === props.userData.id) {
-      pendingRequestBool = true;
-    }
-  })
+    pendingFriendsArray.forEach(pend => {
+      if (Number(pend) === props.userData.id) {
+        console.log("pend true")
+        setPendingRequestBool(true);
+        getFriendNoti();
+      }
+    })
 
-  pendingFriendsArray2.forEach(pend => {
-    if (Number(pend) === props.currentUser.id) {
-      yourRequestBool = true;
-    }
-  })
-
-  console.log(props.userData);
+    pendingFriendsArray2.forEach(pend => {
+      if (Number(pend) === props.currentUser.id) {
+        console.log("send friend true")
+        setYourRequestBool(true);
+      }
+    })
+  }, [props.currentUser, props.userData])
 
   return (
     <div className='lg:p-8 p-6 bg-white rounded-md'>
@@ -76,10 +88,10 @@ const ProfileModalComponent = (props: { currentUser: IPublicUserData, userData: 
                 {
                   props.viewModal ? (
                     <>
-                      <button className=" bg-orange-500  rounded-lg px-3 py-1  hover:!bg-orange-500 text-black jura" onClick={friendBool ? () => props.removeFriend(props.userData.id) : pendingRequestBool ? () => props.acceptFriend(props.userData.id, undefined) : yourRequestBool? () => {} : () => props.sendFriend(props.userData.id)}>
+                      <button className=" bg-orange-500  rounded-lg px-3 py-1  hover:!bg-orange-500 text-black jura" onClick={friendBool ? () => props.removeFriend(props.userData.id) : pendingRequestBool ? () => props.acceptFriend(props.userData.id, friendNoti) : yourRequestBool ? () => { } : () => props.sendFriend(props.userData.id)}>
                         <div className="flex flex-col-2  items-center justify-center">
 
-                          <img alt="Friend Icon" src={`/images/user-${friendBool ? 'minus' : pendingRequestBool ? 'check' : yourRequestBool? 'sound' : 'plus'}-fill.svg`} className="h-4 lg:h-8 lg:w-8 mr-2" />
+                          <img alt="Friend Icon" src={`/images/user-${friendBool ? 'minus' : pendingRequestBool ? 'check' : yourRequestBool ? 'sound' : 'plus'}-fill.svg`} className="h-4 lg:h-8 lg:w-8 mr-2" />
 
                           <div>
                             <h3 className="text-base md:text-2xl text-center">
@@ -91,7 +103,7 @@ const ProfileModalComponent = (props: { currentUser: IPublicUserData, userData: 
 
                       {
                         pendingRequestBool &&
-                        <button className=" bg-orange-500  rounded-lg px-3 py-1  hover:!bg-orange-500 text-black jura" onClick={() => props.declineFriend(props.userData.id, undefined)}>
+                        <button className=" bg-orange-500  rounded-lg px-3 py-1  hover:!bg-orange-500 text-black jura" onClick={() => props.declineFriend(props.userData.id, friendNoti)}>
                           <div className="flex items-center justify-center">
 
                             <img alt="Friend Icon" src='/images/user-minus-fill.svg' className="h-4 lg:h-8 lg:w-8 mr-2" />
@@ -240,7 +252,6 @@ const ProfileModalComponent = (props: { currentUser: IPublicUserData, userData: 
                           ) : (
                             <ProfileMatchesComponent data={p} key={idx} openEditMatchModal={props.openEditMatchModal} viewMatch={() => props.viewSession(p)} viewModal={p.userID !== props.userData.id} />
                           )
-
                         }
                       })
                     }

@@ -69,6 +69,17 @@ export const GetUsernameByIDAPI = async (id: number) => {
     return data;
 }
 
+export const GetUserByID = async (id: number) => {
+    const promise = await fetch(url + 'User/GetUserByID/' + id);
+    const data: IPublicUserData = await promise.json();
+    return data;
+}
+
+export const GetAllFriendsAPI = async (userID: number) => {
+    const promise = await fetch(url + '/User/GetAllFriends/' + userID);
+    const data = await promise.json();
+    return data;
+}
 
 export const GetUserAPI = async (UsernameOrEmail: string) => {
     const promise = await fetch(url + `User/GetUserByUsernameOrEmail/${UsernameOrEmail}`);
@@ -104,6 +115,7 @@ export const AcceptFriendRequestAPI = async (userID: number, yourID: number) => 
         throw new Error(message);
     }
     const data = await res.json();
+    console.log('accepted friend')
     return data;
 }
 
@@ -119,6 +131,7 @@ export const SendFriendRequestAPI = async (userID: number, yourID: number) => {
         throw new Error(message);
     }
     const data = await res.json();
+    console.log('sent friend')
     return data;
 }
 
@@ -134,6 +147,7 @@ export const DeclineFriendRequestAPI = async (userID: number, yourID: number) =>
         throw new Error(message);
     }
     const data = await res.json();
+    console.log('declined friend')
     return data;
 }
 
@@ -149,9 +163,9 @@ export const RemoveFriendAPI = async (userID: number, yourID: number) => {
         throw new Error(message);
     }
     const data = await res.json();
+    console.log('removed friend')
     return data;
 }
-
 
 
 // Everything for Post and Matches
@@ -266,6 +280,12 @@ export const GetNotificationsByUserIDAPI = async (id: number) => {
     return data;
 }
 
+export const GetFriendRequestNotificationsAPI = async (yourID: number, userID: number) => {
+    const promise = await fetch(url + 'Notification/GetFriendRequestNotification/' + yourID + '/' + userID)
+    const data = await promise.json();
+    return data;
+}
+
 export const CreateNotificationAPI = async (noti: ICreateNotification) => {
     const res = await fetch(url + 'Notification/CreateNotification', {
         method: 'POST',
@@ -297,6 +317,7 @@ export const DeleteNotificationAPI = async (noti: INotification) => {
     }
 
     const data = res.json();
+    console.log('noti deleted');
     return data;
 }
 
