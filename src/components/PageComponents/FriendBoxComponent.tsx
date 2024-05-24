@@ -8,11 +8,11 @@ function FriendBoxComponent(props: {
   message: () => void;
 }) {
   return (
-    <div className="  py-4 bg-black  w-80  md:w-64  lg:w-52 xl:w-64 items-center mx-auto   rounded-2xl   ">
+    <div className="  py-4 bg-black w-80  md:w-64  lg:w-64 xl:w-64 items-center mx-auto   rounded-2xl   ">
       <div className="grid  grid-flow-col gap-10  md:gap-2 lg:mx-2  justify-center items-center    ">
         <div className=" grid justify-center mr-1  ml-0 md:mr-1 md:ml-1 lg:mr-2 xl:mr-5 shrink-0">
           <img
-            className=" min-h-14 min-w-14 lg:min-w-10 lg:min-h-10  "
+            className=" min-h-14 min-w-14 lg:min-w-14 lg:min-h-14  "
             src="/images/Profile.png"
           ></img>
         </div>
