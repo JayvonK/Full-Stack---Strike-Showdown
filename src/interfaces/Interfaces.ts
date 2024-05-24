@@ -69,6 +69,7 @@ export interface IUserPosts {
   isVisible: boolean; 
   state: string;
   locations: string;
+  challengeLocation: string;
   date: string; 
   time: string; 
   maxPpl: number;

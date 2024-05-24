@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { IUserPosts } from "@/interfaces/Interfaces";
 import { profile } from "console";
 
-const JoinSessionModalComponent = (props: { data: IUserPosts, closeModal: () => void, joinChallenge: (data: IUserPosts) => void, currentUserID: number, errorToast: () => void }) => {
+const JoinSessionModalComponent = (props: { data: IUserPosts, closeModal: () => void, joinChallenge: (data: IUserPosts) => void, currentUserID: number, errorToast: () => void, leaveClick: () => void }) => {
   const [pageSize, setPageSize] = useState<boolean>(false);
 
   let isIncluded = false
@@ -83,7 +83,7 @@ const JoinSessionModalComponent = (props: { data: IUserPosts, closeModal: () => 
       </div>
 
       <div className="flex justify-end pt-4">
-        <button className={`border-color outline-none mr-5 ${isIncluded ? 'bg-red-500 hover:bg-red-400' : 'bgOrange hover:bg-orange-400'}  w-36 md:w-36 rounded-xl  md:rounded-lg   text-black jura`} onClick={() => props.joinChallenge(props.data)}><h3 className=" text-2xl  md:text-3xl">{isIncluded ? "Leave" : "Join"}</h3></button>
+        <button className={`border-color outline-none mr-5 ${isIncluded ? 'bg-red-500 hover:bg-red-400' : 'bgOrange hover:bg-orange-400'}  w-36 md:w-36 rounded-xl  md:rounded-lg   text-black jura`} onClick={isIncluded? props.leaveClick : () => props.joinChallenge(props.data)}><h3 className=" text-2xl  md:text-3xl">{isIncluded ? "Leave" : "Join"}</h3></button>
         <button className=" border-color outline-none bgOrange  w-36 md:w-36 rounded-xl  md:rounded-lg  hover:bg-orange-400 text-black jura">
           <h3 className=" text-2xl  lg:text-3xl  py-2 " onClick={props.closeModal}>Close</h3>
         </button>

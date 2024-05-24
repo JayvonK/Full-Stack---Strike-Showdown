@@ -20,7 +20,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { useState } from "react";
 import { useAppContext } from '@/context/Context';
 import { ICreateNotification, ICreatePost, INotification, IPublicUserData, IUserInfoWithStats, IUserPosts, IUsername } from '@/interfaces/Interfaces';
-import { AcceptFriendRequestAPI, AddUserToMatchAPI, CreateNotificationAPI, CreatePostAPI, DeclineFriendRequestAPI, DeleteMatchAPI, DeleteNotificationAPI, GetAllFriendsAPI, GetMatchByPostIDAPI, GetNotificationsByUserIDAPI, GetPublicMatchesByStateAPI, GetRecentMatchIDByUserIDAPI, GetUserAPI, GetUserByID, GetUsernameByIDAPI, GetUsersByStateAPI, MakeNotificationRead, RemoveFriendAPI, SendFriendRequestAPI, UpdateMatchAPI, UpdateUserAPI } from '@/Data/DataServices';
+import { AcceptFriendRequestAPI, AddUserToMatchAPI, CreateNotificationAPI, CreatePostAPI, DeclineFriendRequestAPI, DeleteMatchAPI, DeleteNotificationAPI, GetAllFriendsAPI, GetMatchByPostIDAPI, GetNotificationsByUserIDAPI, GetPublicMatchesByStateAPI, GetRecentMatchIDByUserIDAPI, GetUserAPI, GetUserByID, GetUsernameByIDAPI, GetUsersByStateAPI, MakeNotificationRead, RemoveFriendAPI, RemoveUserFromMatchAPI, SendFriendRequestAPI, UpdateMatchAPI, UpdateUserAPI } from '@/Data/DataServices';
 import PracticePostDummyData from '../../../utils/PostData.json';
 import PracticeSessionComponent from '@/components/PageComponents/HomePage/PracticeSessionComponent';
 import MatchComponent from '@/components/PageComponents/HomePage/MatchComponent';
@@ -44,6 +44,7 @@ import SearchModal from '@/components/PageComponents/HomePage/Modals/SearchModal
 import JoinSessionModalComponent from '@/components/PageComponents/HomePage/Modals/JoinSessionModalComponent';
 import JoinChallengeModal from '@/components/PageComponents/HomePage/Modals/JoinChallengeModal';
 import FriendsModalComponentcopy from '@/components/PageComponents/HomePage/Modals/FriendsModalComponent copy';
+import ChallengeScoresModal from '@/components/PageComponents/HomePage/Modals/ChallengeScoresModal';
 
 const HomePage = () => {
   const fakeUserData: IPublicUserData = {
@@ -162,6 +163,11 @@ const HomePage = () => {
 
   // State Variables for Search Modal
   const [searchModal, setSearchModal] = useState<boolean>(false);
+  const [scoreOne, setScoreOne] = useState<number>(0);
+  const [scoreTwo, setScoreTwo] = useState<number>(0);
+
+  // State Variables for Challenge Scores Modal
+  const [scoresModal, setScoresModal] = useState<boolean>(false);
 
   // State Variables For Edit User Modal
   const [editModal, setEditModal] = useState<boolean>(false);
@@ -353,7 +359,7 @@ const HomePage = () => {
         title: `You've sent ${username} a friend request`,
         description: "YAY",
       })
-    
+
     } else {
       toast({
         variant: 'destructive',
@@ -399,7 +405,7 @@ const HomePage = () => {
         title: `You are no longer friends with ${username}`,
         description: "YAY",
       })
-    
+
     } else {
       toast({
         variant: 'destructive',
@@ -443,13 +449,12 @@ const HomePage = () => {
 
   const closeInboxModal = async () => {
     notificationArray.forEach(async noti => {
-      if(noti.type.includes("Inbox") && noti.isRead === false){
+      if (noti.type.includes("Inbox") && noti.isRead === false) {
         await MakeNotificationRead(noti)
       }
     })
     setInboxModal(false);
     setOpenModal(false);
-    updateNotifications();
   }
 
   // Functions for Search Modal
@@ -522,6 +527,41 @@ const HomePage = () => {
         })
       }
     }
+
+  }
+
+
+  // Functions For Scores Modal
+
+  const openScoresModal = () => {
+    setScoresModal(true);
+    setOpenModal(true);
+  }
+
+  const closeScoresModal = () => {
+    setScoreOne(0);
+    setScoreTwo(0);
+    setScoresModal(false);
+    setOpenModal(false);
+  }
+
+  const handleScoreOneChange = (e: string) => {
+    if (e.trim() === '') {
+      setScoreOne(0);
+    } else {
+      setScoreOne(Number(e));
+    }
+  }
+
+  const handleScoreTwoChange = (e: string) => {
+    if (e.trim() === '') {
+      setScoreTwo(0);
+    } else {
+      setScoreTwo(Number(e));
+    }
+  }
+
+  const confirmScores = () => {
 
   }
 
@@ -894,6 +934,7 @@ const HomePage = () => {
     setJoinChallengeLocation("");
     setJoinChallengeModal(false);
     setJoinSessionModal(false);
+    setConfirmationModal(false);
     viewOtherUserModal || inboxModal || userProfileModal ? setOpenModal(true) : setOpenModal(false);
   }
 
@@ -904,12 +945,13 @@ const HomePage = () => {
   }
 
   const handleJoinMatch = async (match: IUserPosts) => {
+    match.challengeLocation = joinChallengeLocation;
     let noti1: ICreateNotification = {
       senderID: verifiedUserData.id,
       recieverID: match.userID,
       postID: match.id,
       type: "Publisher  " + match.title,
-      content: match.title === "1v1 Challenge" ? `${verifiedUserData.username} has accepted your ${match.title} at the location: ${joinChallengeLocation.trim() === "" ? "a custom location" : joinChallengeLocation} !` : `${verifiedUserData.username} has joined your ${match.title} scheduled on ${match.date} at ${match.time}`
+      content: match.title === "1v1 Challenge" ? `${verifiedUserData.username} has accepted your ${match.title} at the location: ${match.challengeLocation.trim() === "" ? "a custom location" : match.challengeLocation} !` : `${verifiedUserData.username} has joined your ${match.title} scheduled on ${match.date} at ${match.time}`
     }
 
     let noti2: ICreateNotification = {
@@ -934,6 +976,42 @@ const HomePage = () => {
       toast({
         variant: 'destructive',
         title: "This match is full please join another match",
+        description: "Uh Oh",
+      })
+    }
+  }
+
+  const handleLeaveMatch = async (match: IUserPosts) => {
+    let noti1: ICreateNotification = {
+      senderID: verifiedUserData.id,
+      recieverID: match.userID,
+      postID: match.id,
+      type: "Publisher  " + match.title,
+      content: match.title === "1v1 Challenge" ? `${verifiedUserData.username} has left your ${match.title} at the location: ${match.challengeLocation.trim() === "" ? "a custom location" : match.challengeLocation} !` : `${verifiedUserData.username} has left your ${match.title} scheduled on ${match.date} at ${match.time}`
+    }
+
+    let noti2: ICreateNotification = {
+      senderID: match.userID,
+      recieverID: verifiedUserData.id,
+      postID: match.id,
+      type: "Viewer  " + match.title,
+      content: match.title === "1v1 Challenge" ? `You have left ${match.publisher}'s ${match.title} at ${match.challengeLocation.trim() === "" ? "a custom location" : match.challengeLocation}` : `You have left ${match.publisher}'s ${match.title} on ${match.date} at ${match.time}`
+    }
+
+    if (await RemoveUserFromMatchAPI(verifiedUserData.id, match)) {
+      await CreateNotificationAPI(noti1);
+      await CreateNotificationAPI(noti2);
+      closeViewMatch();
+      updateNotifications();
+      updateAllMatches();
+      toast({
+        title: "You've successfully left the " + match.title,
+        description: "YAY",
+      })
+    } else {
+      toast({
+        variant: 'destructive',
+        title: "Something went wrong",
         description: "Uh Oh",
       })
     }
@@ -1014,6 +1092,7 @@ const HomePage = () => {
       isVisible: visibility,
       state: verifiedUserData.location,
       locations: !editingChallengeBool ? practiceLocation : location.trim() === "" ? "Open to any location" : location,
+      challengeLocation: "",
       date: date ? format(date, "MM/dd/yy") : format(new Date(), "MM/dd/yy"),
       time: timeFormat(startTime) + '-' + timeFormat(endTime),
       maxPpl: maxPpl === "" ? 0 : Number(maxPpl),
@@ -1239,7 +1318,7 @@ const HomePage = () => {
         }
 
         {
-          editMatchModal && confirmationModal && <ConfirmationModal closeConfirmation={closeConfirmation} deleteMatch={deleteMatch} />
+          editMatchModal && confirmationModal && <ConfirmationModal closeConfirmation={closeConfirmation} deleteMatch={deleteMatch} leaving={false} leaveMatch={() => { }} scoreOne={scoreOne} scoreTwo={scoreTwo} scores={false} confirmScores={confirmScores}/>
         }
 
         {/* Everything when opening profile modal */}
@@ -1249,11 +1328,11 @@ const HomePage = () => {
         }
 
         {
-          inboxModal && !editMatchModal && !joinSessionModal && !joinChallengeModal &&  <InboxModalComponent closeModal={closeInboxModal} openFriendsModal={openFriendsModal} notifications={notificationArray} errorToast={errorToast} acceptFriend={acceptFriend} declineFriend={declineFriend} editMatchClick={openEditMatchModalFromInbox} currentUsersPosts={currentUsersPosts} viewMatchFromInbox={viewMatchFromInbox}/>
+          inboxModal && !editMatchModal && !joinSessionModal && !joinChallengeModal && <InboxModalComponent closeModal={closeInboxModal} openFriendsModal={openFriendsModal} notifications={notificationArray} errorToast={errorToast} acceptFriend={acceptFriend} declineFriend={declineFriend} editMatchClick={openEditMatchModalFromInbox} currentUsersPosts={currentUsersPosts} viewMatchFromInbox={viewMatchFromInbox} updateNotifications={updateNotifications}/>
         }
 
         {
-          friendsModal && <FriendsModalComponentcopy friendsArray={friendArray} closeModal={closeFriendsModal} />
+          friendsModal && <FriendsModalComponent friendsArray={friendArray} closeModal={closeFriendsModal} />
         }
 
         {
@@ -1265,11 +1344,23 @@ const HomePage = () => {
         }
 
         {
-          joinChallengeModal && <JoinChallengeModal data={viewMatchData} closeModal={closeViewMatch} joinChallenge={handleJoinMatch} handleJoinChallengeLocationChange={handleJoinChallengeLocationChange} joinChallengeLocation={joinChallengeLocation} currentUserID={verifiedUserData.id} errorToast={errorToast} />
+          joinChallengeModal && !confirmationModal && <JoinChallengeModal data={viewMatchData} closeModal={closeViewMatch} joinChallenge={handleJoinMatch} handleJoinChallengeLocationChange={handleJoinChallengeLocationChange} joinChallengeLocation={joinChallengeLocation} currentUserID={verifiedUserData.id} errorToast={errorToast} leaveClick={openConfirmation} />
         }
 
         {
-          joinSessionModal && <JoinSessionModalComponent data={viewMatchData} closeModal={closeViewMatch} joinChallenge={handleJoinMatch} currentUserID={verifiedUserData.id} errorToast={errorToast} />
+          joinSessionModal && !confirmationModal && <JoinSessionModalComponent data={viewMatchData} closeModal={closeViewMatch} joinChallenge={handleJoinMatch} currentUserID={verifiedUserData.id} errorToast={errorToast} leaveClick={openConfirmation} />
+        }
+
+        {
+          joinChallengeModal || joinSessionModal && confirmationModal && <ConfirmationModal closeConfirmation={closeConfirmation} deleteMatch={deleteMatch} leaving={true} leaveMatch={() => handleLeaveMatch(viewMatchData)} scoreOne={scoreOne} scoreTwo={scoreTwo} scores={false} confirmScores={confirmScores}/>
+        }
+
+        {
+          scoresModal && !confirmationModal && <ChallengeScoresModal you={verifiedUserData} match={matchData[0]} close={closeScoresModal} confirm={openConfirmation} scoreOneChange={handleScoreOneChange} scoreTwoChange={handleScoreTwoChange} scoreOne={scoreOne} scoreTwo={scoreTwo} />
+        }
+
+        {
+          scoresModal && confirmationModal && <ConfirmationModal closeConfirmation={closeConfirmation} deleteMatch={deleteMatch} leaving={false} leaveMatch={() => { }} scoreOne={scoreOne} scoreTwo={scoreTwo} scores={true} confirmScores={confirmScores}/>
         }
 
       </Modal>
@@ -1407,10 +1498,10 @@ const HomePage = () => {
                   </div>
 
                   <div className='grid lg:grid-cols-2 grid-cols-1 justify-between md:px-10 sm:px-8 px-4'>
-                    <RecentWinnerComponent pfp='/images/blankpfp.png' idx={0} errorToast={errorToast} />
-                    <RecentWinnerComponent pfp='/images/blankpfp.png' idx={1} errorToast={errorToast} />
-                    <RecentWinnerComponent pfp='/images/blankpfp.png' idx={2} errorToast={errorToast} />
-                    <RecentWinnerComponent pfp='/images/blankpfp.png' idx={3} errorToast={errorToast} />
+                    <RecentWinnerComponent user={verifiedUserData} idx={0} errorToast={errorToast} />
+                    <RecentWinnerComponent user={verifiedUserData} idx={1} errorToast={errorToast} />
+                    <RecentWinnerComponent user={verifiedUserData} idx={2} errorToast={errorToast} />
+                    <RecentWinnerComponent user={verifiedUserData} idx={3} errorToast={errorToast} />
                   </div>
                 </div>
               </>

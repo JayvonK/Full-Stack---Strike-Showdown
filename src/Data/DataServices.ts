@@ -272,6 +272,24 @@ export const AddUserToMatchAPI = async (userID: number, match: IUserPosts) => {
     return data;
 }
 
+export const RemoveUserFromMatchAPI = async (userID: number, match: IUserPosts) => {
+    const res = await fetch(url + 'Match/RemoveUserFromMatch/' + userID, {
+        method: "PUT",
+        headers: {
+            'Content-Type': "application/json"
+        },
+        body: JSON.stringify(match)
+    })
+
+    if(!res.ok){
+        const message = "An error message has occured " + res.status;
+        throw new Error(message);
+    }
+
+    const data = await res.json();
+    return data;
+}
+
 // Everything For Notifications
 
 export const GetNotificationsByUserIDAPI = async (id: number) => {

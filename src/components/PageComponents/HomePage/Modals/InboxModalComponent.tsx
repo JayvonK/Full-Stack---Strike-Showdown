@@ -7,7 +7,7 @@ import MessageNotificationComponent from "../Notifications/MessageNotificationCo
 import MatchNotificationComponent from "../Notifications/MatchNotificationComponent";
 import { GetMatchByPostIDAPI, MakeNotificationRead } from "@/Data/DataServices";
 import FriendRequestNotificationComponent from "../Notifications/FriendRequestNotificationComponent";
-const InboxModalComponent = (props: { closeModal: () => void, openFriendsModal: () => void, notifications: INotification[], errorToast: () => void, acceptFriend: (id: number, noti: INotification | undefined) => void, declineFriend: (id: number, noti: INotification | undefined) => void, editMatchClick: (id: number) => void, currentUsersPosts: IUserPosts[], viewMatchFromInbox: (postID: number) => void }) => {
+const InboxModalComponent = (props: { closeModal: () => void, openFriendsModal: () => void, notifications: INotification[], errorToast: () => void, acceptFriend: (id: number, noti: INotification | undefined) => void, declineFriend: (id: number, noti: INotification | undefined) => void, editMatchClick: (id: number) => void, currentUsersPosts: IUserPosts[], viewMatchFromInbox: (postID: number) => void, updateNotifications: () => void }) => {
 
   const [activeTab, setActiveTab] = useState("Inbox");
   const [tabOneActive, setTabOneActive] = useState(true);
@@ -39,6 +39,7 @@ const InboxModalComponent = (props: { closeModal: () => void, openFriendsModal: 
     props.notifications.forEach(async (noti, idx) => {
       if (noti.type.includes("Challenge") && noti.isRead === false) {
         await MakeNotificationRead(noti)
+        props.updateNotifications()
       }
     })
     setMatchesUnread(false);
@@ -52,7 +53,8 @@ const InboxModalComponent = (props: { closeModal: () => void, openFriendsModal: 
     handleTabChange("Sessions");
     props.notifications.forEach(async (noti, idx) => {
       if (noti.type.includes("Session") && noti.isRead === false) {
-        await MakeNotificationRead(noti)
+        await MakeNotificationRead(noti);
+        props.updateNotifications()
       }
     })
     setSessionsUnread(false);
@@ -66,18 +68,21 @@ const InboxModalComponent = (props: { closeModal: () => void, openFriendsModal: 
     props.notifications.forEach(noti => {
       if (noti.type.includes("Inbox") && noti.isRead === false) {
         notiRead(noti)
+        props.updateNotifications()
       }
     })
 
     props.notifications.forEach(noti => {
       if (noti.type.includes("Challenge") && noti.isRead === false) {
         setMatchesUnread(true);
+        props.updateNotifications()
       }
     })
 
     props.notifications.forEach(noti => {
       if (noti.type.includes("Session") && noti.isRead === false) {
         setSessionsUnread(true);
+        props.updateNotifications()
       }
     })
   }, [])

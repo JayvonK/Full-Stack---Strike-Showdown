@@ -10,7 +10,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
-const JoinChallengeModal = (props: { data: IUserPosts, closeModal: () => void, joinChallenge: (data: IUserPosts) => void, handleJoinChallengeLocationChange: (e: string) => void, joinChallengeLocation: string, currentUserID: number, errorToast: () => void }) => {
+const JoinChallengeModal = (props: { data: IUserPosts, closeModal: () => void, joinChallenge: (data: IUserPosts) => void, handleJoinChallengeLocationChange: (e: string) => void, joinChallengeLocation: string, currentUserID: number, errorToast: () => void , leaveClick: () => void}) => {
 
   let locations = props.data.locations.split(",");
 
@@ -122,7 +122,7 @@ const JoinChallengeModal = (props: { data: IUserPosts, closeModal: () => void, j
 
       <div className='pt-4 flex justify-end'>
         
-           <button className='jura lg:text-3xl text-2xl py-2 px-4 rounded-md bgOrange mr-6' onClick={() => props.joinChallenge(props.data)}>{isIncluded ? "Leave" : "Challenge"}</button>
+           <button className='jura lg:text-3xl text-2xl py-2 px-4 rounded-md bgOrange mr-6' onClick={isIncluded ? props.leaveClick : () => props.joinChallenge(props.data)}>{isIncluded ? "Leave" : "Challenge"}</button>
         
 
         <button className='jura lg:text-3xl text-2xl py-2 px-4 rounded-md bgOrange' onClick={props.closeModal}>Close</button>

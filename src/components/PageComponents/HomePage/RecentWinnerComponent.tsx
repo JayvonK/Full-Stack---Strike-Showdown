@@ -1,6 +1,7 @@
+import { IPublicUserData } from '@/interfaces/Interfaces'
 import React from 'react'
 
-const RecentWinnerComponent = (props: { pfp: string, idx: number, errorToast: () => void }) => {
+const RecentWinnerComponent = (props: { user: IPublicUserData, idx: number, errorToast: () => void }) => {
     return (
         <>
             {
@@ -9,14 +10,14 @@ const RecentWinnerComponent = (props: { pfp: string, idx: number, errorToast: ()
                         <div className='md:mb-10'>
                             <div className='flex 2xl:pr-14 xl:pr-5 lg:pr-2 sm:pr-4 justify-between'>
                                 <div className='flex items-center'>
-                                    <img className='2xl:w-[105px] 2xl:h-[105px] xl:w-20 xl:h-20 lg:w-16 lg:h-16 md:w-[105px] md:h-[105px] sm:w-24 sm:h-24 w-16 h-16 aspect-square rounded-full object-cover xl:mr-8 lg:mr-4 mr-12' src={props.pfp} alt="bowler's pfp" />
+                                    <img className='2xl:w-[105px] 2xl:h-[105px] xl:w-20 xl:h-20 lg:w-16 lg:h-16 md:w-[105px] md:h-[105px] sm:w-24 sm:h-24 w-16 h-16 aspect-square rounded-full object-cover xl:mr-8 lg:mr-4 mr-12' src={props.user.profileImage} alt="bowler's pfp" />
                                 </div>
                                 <div className='xl:text-xl text-lg md:w-auto w-full'>
-                                    <h3 className='jura text-white xl:text-2xl lg:text-xl md:text-2xl sm:text-xl text-lg mb-1'>Bowler Name</h3>
+                                    <h3 className='jura text-white xl:text-2xl lg:text-xl md:text-2xl sm:text-xl text-lg mb-1'>{props.user.username}</h3>
                                     <div className='flex justify-between'>
                                         <div className='2xl:text-xl xl:text-lg lg:text-base md:text-xl sm:text-base text-sm'>
-                                            <h1 className='juraBold txtOrange'> 15 Wins</h1>
-                                            <h1 className='juraBold txtOrange'> 220-230 Avg</h1>
+                                            <h1 className='juraBold txtOrange'> {props.user.wins} Wins</h1>
+                                            <h1 className='juraBold txtOrange'> {props.user.average} Avg</h1>
                                         </div>
 
                                         <div className='xl:flex justify-center xl:px-6 lg:px-4 sm:px-10 px-2'>
@@ -24,8 +25,8 @@ const RecentWinnerComponent = (props: { pfp: string, idx: number, errorToast: ()
                                         </div>
 
                                         <div className='2xl:text-xl xl:text-lg lg:text-base md:text-xl sm:text-base text-sm'>
-                                            <h1 className='juraBold txtOrange'> Streak: 10</h1>
-                                            <h1 className='juraBold txtOrange'> 2 Handed (Right)</h1>
+                                            <h1 className='juraBold txtOrange'> Streak: {props.user.streak}</h1>
+                                            <h1 className='juraBold txtOrange'> {props.user.style} </h1>
                                         </div>
                                     </div>
                                 </div>
@@ -40,15 +41,15 @@ const RecentWinnerComponent = (props: { pfp: string, idx: number, errorToast: ()
                         <div className='md:mb-10 '>
                             <div className='flex 2xl:pr-14 xl:pr-5 lg:pr-2 sm:pr-4 justify-between w-full'>
                                 <div className='flex items-center'>
-                                    <img className='2xl:w-[105px] 2xl:h-[105px] xl:w-20 xl:h-20 lg:w-16 lg:h-16 md:w-[105px] md:h-[105px] sm:w-24 sm:h-24 w-16 h-16 aspect-square rounded-full object-cover xl:mr-8 lg:mr-4 mr-12' src={props.pfp} alt="bowler's pfp" />
+                                    <img className='2xl:w-[105px] 2xl:h-[105px] xl:w-20 xl:h-20 lg:w-16 lg:h-16 md:w-[105px] md:h-[105px] sm:w-24 sm:h-24 w-16 h-16 aspect-square rounded-full object-cover xl:mr-8 lg:mr-4 mr-12' src={props.user.profileImage} alt="bowler's pfp" />
                                 </div>
 
                                 <div className='xl:text-xl text-lg md:w-auto w-full'>
-                                    <h3 className='jura text-white xl:text-2xl lg:text-xl md:text-2xl sm:text-xl text-lg mb-1'>Bowler Name</h3>
+                                    <h3 className='jura text-white xl:text-2xl lg:text-xl md:text-2xl sm:text-xl text-lg mb-1'>{props.user.username}</h3>
                                     <div className='flex justify-between'>
                                         <div className='2xl:text-xl xl:text-lg lg:text-base md:text-xl sm:text-base text-sm'>
-                                            <h1 className='juraBold txtOrange'> 10 Wins</h1>
-                                            <h1 className='juraBold txtOrange'> 220-230 Avg</h1>
+                                        <h1 className='juraBold txtOrange'> {props.user.wins} Wins</h1>
+                                            <h1 className='juraBold txtOrange'> {props.user.average} Avg</h1>
                                         </div>
 
                                         <div className='xl:flex justify-center xl:px-6 lg:px-4 sm:px-10 px-2 '>
@@ -56,8 +57,8 @@ const RecentWinnerComponent = (props: { pfp: string, idx: number, errorToast: ()
                                         </div>
 
                                         <div className='2xl:text-xl xl:text-lg lg:text-base md:text-xl sm:text-base text-sm'>
-                                            <h1 className='juraBold txtOrange'> Streak: 10</h1>
-                                            <h1 className='juraBold txtOrange'> 2 Handed (Right)</h1>
+                                        <h1 className='juraBold txtOrange'> Streak: {props.user.streak}</h1>
+                                            <h1 className='juraBold txtOrange'> {props.user.style} </h1>
                                         </div>
                                     </div>
                                 </div>
