@@ -19,8 +19,8 @@ import { useToast } from "@/components/ui/use-toast";
 
 import { useState } from "react";
 import { useAppContext } from '@/context/Context';
-import { ICreateNotification, ICreatePost, INotification, IPublicUserData, IUserInfoWithStats, IUserPosts } from '@/interfaces/Interfaces';
-import { AddUserToMatchAPI, CreateNotificationAPI, CreatePostAPI, DeleteMatchAPI, GetNotificationsByUserIDAPI, GetPublicMatchesByStateAPI, GetRecentMatchIDByUserIDAPI, GetUserAPI, GetUsersByStateAPI, UpdateMatchAPI, UpdateUserAPI } from '@/Data/DataServices';
+import { ICreateNotification, ICreatePost, INotification, IPublicUserData, IUserInfoWithStats, IUserPosts, IUsername } from '@/interfaces/Interfaces';
+import { AcceptFriendRequestAPI, AddUserToMatchAPI, CreateNotificationAPI, CreatePostAPI, DeclineFriendRequestAPI, DeleteMatchAPI, DeleteNotificationAPI, GetAllFriendsAPI, GetMatchByPostIDAPI, GetNotificationsByUserIDAPI, GetPublicMatchesByStateAPI, GetRecentMatchIDByUserIDAPI, GetUserAPI, GetUserByID, GetUsernameByIDAPI, GetUsersByStateAPI, MakeNotificationRead, RemoveFriendAPI, SendFriendRequestAPI, UpdateMatchAPI, UpdateUserAPI } from '@/Data/DataServices';
 import PracticePostDummyData from '../../../utils/PostData.json';
 import PracticeSessionComponent from '@/components/PageComponents/HomePage/PracticeSessionComponent';
 import MatchComponent from '@/components/PageComponents/HomePage/MatchComponent';
@@ -30,10 +30,10 @@ import NewNavBarComponent from '@/components/PageComponents/NewNavBarComponent';
 import EditProfileModal from '@/components/PageComponents/HomePage/Modals/EditProfileModal';
 import { EditLocalStorageUsername, GetLocalStorage } from '@/utils/LocalStorageFunctions';
 import MatchSkeleton from '@/components/PageComponents/HomePage/MatchSkeleton';
-import { averageStatFormat, convertTimeBack, convertToDate, editMatchLocationArr, grabUserPosts, grabViewUserPosts, locationFormat, timeFormat } from '@/utils/FormatFunctions';
-import ProfileModalComponent from '@/components/PageComponents/ModalComponents/ProfileModalComponent';
-import InboxModalComponent from '@/components/PageComponents/ModalComponents/InboxModalComponent';
-import FriendsModalComponent from '@/components/PageComponents/ModalComponents/FriendsModalComponent';
+import { averageStatFormat, convertTimeBack, convertToDate, editMatchLocationArr, grabUserPosts, grabViewUserPosts, locationFormat, timeFormat } from '@/utils/Functions';
+import ProfileModalComponent from '@/components/PageComponents/HomePage/Modals/ProfileModalComponent';
+import InboxModalComponent from '@/components/PageComponents/HomePage/Modals/InboxModalComponent';
+import FriendsModalComponent from '@/components/PageComponents/HomePage/Modals/FriendsModalComponent';
 import MessagingBubbleComponent from '@/components/PageComponents/MessagingBubbleComponent';
 import plusIcon from '../../../../public/images/plus-bold.svg';
 import closeIcon from '../../../../public/images/x-bold.svg';
@@ -41,12 +41,13 @@ import profile from '../../../../public/images/Profile.png';
 import planeIcon from '../../../../public/images/paper-plane-tilt-fill.svg'
 import ConfirmationModal from '@/components/PageComponents/HomePage/Modals/ConfirmationModal';
 import SearchModal from '@/components/PageComponents/HomePage/Modals/SearchModal';
-import JoinSessionModalComponent from '@/components/PageComponents/ModalComponents/JoinSessionModalComponent';
+import JoinSessionModalComponent from '@/components/PageComponents/HomePage/Modals/JoinSessionModalComponent';
 import JoinChallengeModal from '@/components/PageComponents/HomePage/Modals/JoinChallengeModal';
+import FriendsModalComponentcopy from '@/components/PageComponents/HomePage/Modals/FriendsModalComponent copy';
 
 const HomePage = () => {
   const fakeUserData: IPublicUserData = {
-    id: 0,
+    id: 1,
     username: 'KingOfBowling209',
     email: 'kingofbowling@gmail.com',
     location: 'CA',
@@ -64,11 +65,13 @@ const HomePage = () => {
     earnings: '700',
     highGame: '300',
     highSeries: '800',
-    streak: 5
+    streak: 5,
+    pendingFriends: "",
+    friends: ""
   }
 
   const fakeUserData2: IPublicUserData = {
-    id: 1,
+    id: 2,
     username: 'NotKingOfBowling',
     email: 'kingofbowling@gmail.com',
     location: 'CA',
@@ -86,7 +89,9 @@ const HomePage = () => {
     earnings: '700',
     highGame: '300',
     highSeries: '800',
-    streak: 5
+    streak: 5,
+    pendingFriends: "",
+    friends: ""
   }
 
   const pageContext = useAppContext();
@@ -133,7 +138,6 @@ const HomePage = () => {
 
   // State Variables for Viewing Matches Modal
   const [viewMatchData, setViewMatchData] = useState<IUserPosts>(postsData[0]);
-  const [viewMatchModal, setViewMatchModal] = useState<boolean>(false);
   const [joinSessionModal, setJoinSessionModal] = useState<boolean>(false);
   const [joinChallengeModal, setJoinChallengeModal] = useState<boolean>(false);
   const [joinChallengeLocation, setJoinChallengeLocation] = useState<string>('');
@@ -150,6 +154,7 @@ const HomePage = () => {
 
   // State Variables for Friends Modal
   const [friendsModal, setFriendsModal] = useState<boolean>(false);
+  const [friendArray, setFriendsArray] = useState<IPublicUserData[]>([]);
 
   // State Variables for Confirmation Modal
   const [confirmationModal, setConfirmationModal] = useState<boolean>(false);
@@ -191,7 +196,9 @@ const HomePage = () => {
     earnings: editEarnings,
     highGame: editHighGame,
     highSeries: editHighSeries,
-    streak: 0
+    streak: 0,
+    pendingFriends: "",
+    friends: ""
   }
 
   // State Variables for Notifications
@@ -218,6 +225,190 @@ const HomePage = () => {
     setOnInfo(false);
   }
 
+  const acceptFriend = async (otherID: number, deleteNoti: INotification | undefined) => {
+    const data = await AcceptFriendRequestAPI(otherID, verifiedUserData.id);
+    updateViewUserArrAndData();
+
+    const data2: IUsername = await GetUsernameByIDAPI(otherID);
+    const username = data2.username;
+
+    if (data) {
+
+      let noti: ICreateNotification = {
+        senderID: verifiedUserData.id,
+        recieverID: otherID,
+        postID: 0,
+        type: "Inbox Message",
+        content: `${verifiedUserData.username} has accepted your friend request! You are now friends`
+      }
+
+      await CreateNotificationAPI(noti);
+
+      let noti2: ICreateNotification = {
+        senderID: otherID,
+        recieverID: verifiedUserData.id,
+        postID: 0,
+        type: "Inbox Message",
+        content: `You've accepted ${username}'s friend request. You are now friends`
+      }
+
+      await CreateNotificationAPI(noti2);
+
+      deleteNoti && await DeleteNotificationAPI(deleteNoti);
+
+      updateNotifications();
+      updateFriendsArray();
+
+      toast({
+        title: `You've accepted ${username}'s friend request. You are now friends`,
+        description: "YAY",
+      })
+    } else {
+      toast({
+        variant: 'destructive',
+        title: "Something went wrong.",
+        description: "Uh Oh",
+      })
+    }
+  }
+
+  const declineFriend = async (otherID: number, deleteNoti: INotification | undefined) => {
+    const data = await DeclineFriendRequestAPI(otherID, verifiedUserData.id);
+    updateViewUserArrAndData();
+
+    const data2: IUsername = await GetUsernameByIDAPI(otherID);
+    const username = data2.username;
+
+    if (data) {
+
+      let noti: ICreateNotification = {
+        senderID: verifiedUserData.id,
+        recieverID: otherID,
+        postID: 0,
+        type: "Inbox Message",
+        content: `${verifiedUserData.username} has declined your friend request.`
+      }
+
+      await CreateNotificationAPI(noti);
+
+      let noti2: ICreateNotification = {
+        senderID: otherID,
+        recieverID: verifiedUserData.id,
+        postID: 0,
+        type: "Inbox Message",
+        content: `You've declined ${username}'s friend request`
+      }
+
+      await CreateNotificationAPI(noti2);
+
+      deleteNoti && DeleteNotificationAPI(deleteNoti);
+
+      updateNotifications();
+
+      toast({
+        title: `You've declined ${username}'s friend request`,
+        description: "YAY",
+      })
+    } else {
+      toast({
+        variant: 'destructive',
+        title: "Something went wrong.",
+        description: "Uh Oh",
+      })
+    }
+  }
+
+  const sendFriend = async (otherID: number) => {
+    const data = await SendFriendRequestAPI(otherID, verifiedUserData.id);
+    updateViewUserArrAndData();
+
+    const data2: IUsername = await GetUsernameByIDAPI(otherID);
+    const username = data2.username;
+
+    if (data) {
+
+      let noti: ICreateNotification = {
+        senderID: verifiedUserData.id,
+        recieverID: otherID,
+        postID: 0,
+        type: "Inbox FriendRequest",
+        content: `${verifiedUserData.username} has sent you a friend request.`
+      }
+
+      await CreateNotificationAPI(noti);
+
+      let noti2: ICreateNotification = {
+        senderID: otherID,
+        recieverID: verifiedUserData.id,
+        postID: 0,
+        type: "Inbox Message",
+        content: `You've sent ${username} a friend request`
+      }
+
+      await CreateNotificationAPI(noti2);
+
+      updateNotifications();
+
+      toast({
+        title: `You've sent ${username} a friend request`,
+        description: "YAY",
+      })
+    
+    } else {
+      toast({
+        variant: 'destructive',
+        title: "Something went wrong.",
+        description: "Uh Oh",
+      })
+    }
+  }
+
+  const removeFriend = async (otherID: number) => {
+    const data = await RemoveFriendAPI(otherID, verifiedUserData.id);
+    updateViewUserArrAndData();
+
+    const data2: IUsername = await GetUsernameByIDAPI(otherID);
+    const username = data2.username;
+
+    if (data) {
+
+      let noti: ICreateNotification = {
+        senderID: verifiedUserData.id,
+        recieverID: otherID,
+        postID: 0,
+        type: "Inbox Message",
+        content: `${verifiedUserData.username} has unfriended you :(`
+      }
+
+      await CreateNotificationAPI(noti);
+
+      let noti2: ICreateNotification = {
+        senderID: otherID,
+        recieverID: verifiedUserData.id,
+        postID: 0,
+        type: "Inbox Message",
+        content: `You are no longer friends with ${username}`
+      }
+
+      await CreateNotificationAPI(noti2);
+
+      updateNotifications();
+      updateFriendsArray();
+
+      toast({
+        title: `You are no longer friends with ${username}`,
+        description: "YAY",
+      })
+    
+    } else {
+      toast({
+        variant: 'destructive',
+        title: "Something went wrong.",
+        description: "Uh Oh",
+      })
+    }
+  }
+
   // Function for viewing others profile
 
   const openViewOtherUserModal = () => {
@@ -236,10 +427,6 @@ const HomePage = () => {
     setInboxModal(false);
     setFriendsModal(true);
     setOpenModal(true);
-    toast({
-      title: "This modal has no functionality yet.",
-      description: "Sorry about that",
-    })
   }
 
   const closeFriendsModal = () => {
@@ -254,7 +441,12 @@ const HomePage = () => {
     setOpenModal(true);
   }
 
-  const closeInboxModal = () => {
+  const closeInboxModal = async () => {
+    notificationArray.forEach(async noti => {
+      if(noti.type.includes("Inbox") && noti.isRead === false){
+        await MakeNotificationRead(noti)
+      }
+    })
     setInboxModal(false);
     setOpenModal(false);
     updateNotifications();
@@ -267,7 +459,6 @@ const HomePage = () => {
     setOpenModal(true);
     let data = await GetUsersByStateAPI(verifiedUserData.location);
     setUsersArray(data);
-    console.log(data);
   }
 
   const closeSearchModal = () => {
@@ -280,8 +471,6 @@ const HomePage = () => {
     setViewUserID(data.id)
     setViewUsersPosts(grabViewUserPosts(data.id, matchData));
     openViewOtherUserModal();
-    console.log(grabUserPosts(data.id, matchData));
-    console.log(matchData)
   }
 
   // Functions for Cofirmation Modal
@@ -298,7 +487,6 @@ const HomePage = () => {
   const deleteMatch = async () => {
     let users = deletePost?.matchUsersIDs.split("-");
     let created = false;
-    console.log(users);
 
     if (deletePost !== undefined) {
       try {
@@ -321,8 +509,8 @@ const HomePage = () => {
               type: "Deleted " + deletePost.title,
               content: idx === 0 ? `You have deleted your ${deletePost.title} that was created on ${deletePost.date}` : `${verifiedUserData.username} has deleted their ${deletePost.title} that was created on ${deletePost.date}`
             }
-              await CreateNotificationAPI(noti);
-              updateNotifications();
+            await CreateNotificationAPI(noti);
+            updateNotifications();
           }
         })
         clearMatchInputs();
@@ -453,7 +641,9 @@ const HomePage = () => {
       earnings: editEarnings === "" ? "N/A" : editEarnings,
       highGame: editHighGame === "" ? "N/A" : editHighGame,
       highSeries: editHighSeries === "" ? "N/A" : editHighSeries,
-      streak: verifiedUserData.streak
+      streak: verifiedUserData.streak,
+      friends: "",
+      pendingFriends: ""
     }
 
     try {
@@ -549,10 +739,6 @@ const HomePage = () => {
     }
   }
 
-  const handleInvitedUsersChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInvitedUsers(e.target.value);
-  }
-
   const clearMatchInputs = () => {
     setVisibility(true);
     setLocationOne("");
@@ -586,13 +772,13 @@ const HomePage = () => {
       description: practiceDescription,
       isFinished: false,
     }
-    if(date === undefined || currentDate > date || PostData.date === ""){
+    if (date === undefined || currentDate > date || PostData.date === "") {
       toast({
         variant: 'destructive',
         title: "Make sure the date isn't empty, and that you don't have a date that has already passed.",
         description: "Uh Oh",
       })
-    }else if(Number(maxPpl) <= Number(currentPpl) || Number(maxPpl) < 2) {
+    } else if (Number(maxPpl) <= Number(currentPpl) || Number(maxPpl) < 2) {
       toast({
         variant: 'destructive',
         title: "Max amount of people can't be lower than current people. And maxPpl should be greater than 1",
@@ -679,6 +865,13 @@ const HomePage = () => {
 
   // View Matches Functions
 
+  const viewMatchFromInbox = async (postID: number) => {
+    const data = await GetMatchByPostIDAPI(postID);
+    setViewMatchData(data);
+    data.title === "1v1 Challenge" ? setJoinChallengeModal(true) : setJoinSessionModal(true);
+    setOpenModal(true);
+  }
+
   const viewMatch = (data: IUserPosts) => {
     setViewMatchData(data);
     data.title === "1v1 Challenge" ? setJoinChallengeModal(true) : setJoinSessionModal(true);
@@ -701,7 +894,7 @@ const HomePage = () => {
     setJoinChallengeLocation("");
     setJoinChallengeModal(false);
     setJoinSessionModal(false);
-    viewOtherUserModal ? setOpenModal(true) : setOpenModal(false);
+    viewOtherUserModal || inboxModal || userProfileModal ? setOpenModal(true) : setOpenModal(false);
   }
 
   // Join Match Functions
@@ -772,7 +965,15 @@ const HomePage = () => {
   const openEditMatchModal = (data: IUserPosts) => {
     setDeletePost(data);
     setEditMatchModalData(data);
-    console.log(data);
+    setEditMatchModal(true);
+    data.title === '1v1 Challenge' ? setEditingChallengeBool(true) : setEditingChallengeBool(false);
+    setOpenModal(true);
+  }
+
+  const openEditMatchModalFromInbox = async (id: number) => {
+    const data = await GetMatchByPostIDAPI(id);
+    setDeletePost(data);
+    setEditMatchModalData(data);
     setEditMatchModal(true);
     data.title === '1v1 Challenge' ? setEditingChallengeBool(true) : setEditingChallengeBool(false);
     setOpenModal(true);
@@ -792,7 +993,7 @@ const HomePage = () => {
     setCurrentPpl("");
     setDate(undefined);
     setEditMatchModal(false);
-    userProfileModal ? (setOpenModal(true)) : (setOpenModal(false))
+    userProfileModal || inboxModal ? (setOpenModal(true)) : (setOpenModal(false))
   }
 
   const editMatchClick = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -828,13 +1029,13 @@ const HomePage = () => {
       streak: verifiedUserData.streak
     }
 
-    if(date === undefined || currentDate > date || editMatchData.date === ""){
+    if (date === undefined || currentDate > date || editMatchData.date === "") {
       toast({
         variant: 'destructive',
         title: "Make sure the date isn't empty, and that you don't have a date that has already passed.",
         description: "Uh Oh",
       })
-    }else if (Number(maxPpl) <= Number(currentPpl) || Number(maxPpl) < 2) {
+    } else if (Number(maxPpl) <= Number(currentPpl) || Number(maxPpl) < 2) {
       toast({
         variant: 'destructive',
         title: "Max amount of people can't be lower than current people. And maxPpl should be greater than 1",
@@ -859,8 +1060,8 @@ const HomePage = () => {
               type: Number(user) === verifiedUserData.id ? 'Edited' + editMatchData.title : 'Viewer' + editMatchData.title,
               content: idx === 0 ? `You have edited your ${editMatchData.title}` : `${verifiedUserData.username} has edited their ${editMatchData.title} make sure you click view to see the edits`
             }
-              await CreateNotificationAPI(noti);
-              updateNotifications();
+            await CreateNotificationAPI(noti);
+            updateNotifications();
           }
         })
         clearMatchInputs();
@@ -945,7 +1146,6 @@ const HomePage = () => {
   const updateNotifications = async () => {
     const notiArr: INotification[] = await GetNotificationsByUserIDAPI(verifiedUserData.id);
     setNotificationsArray(notiArr);
-    console.log('updated');
     if (notiArr.length !== 0) {
       notiArr.forEach(noti => {
         if (noti.isDeleted === false && noti.isRead === false) {
@@ -958,6 +1158,21 @@ const HomePage = () => {
     }
   }
 
+  const updateViewUserArrAndData = async () => {
+    console.log("viewed user updated");
+    let currentUser = await GetUserAPI(verifiedUserData.username)
+    let userData = await GetUserByID(viewOtherUserData.id);
+    setUsersArray(await GetUsersByStateAPI(verifiedUserData.location));
+    setVerifiedUserData(currentUser);
+    setViewOtherUserData(userData)
+    setViewUserID(userData.id);
+  }
+
+  const updateFriendsArray = async () => {
+    let data = await GetAllFriendsAPI(verifiedUserData.id);
+    setFriendsArray(data);
+  }
+
   const errorToast = () => {
     toast({
       variant: 'destructive',
@@ -966,38 +1181,40 @@ const HomePage = () => {
     })
   }
 
-  // useEffect(() => {
-  //   let storageArr = GetLocalStorage();
-  //   setStorage(storageArr);
-  //   if (storageArr.length === 0) {
-  //     route.push('/');
-  //   } else {
-  //     const grabUserData = async () => {
-  //       try {
-  //         const userData: IPublicUserData = await GetUserAPI(storageArr[0][1]);
-  //         setVerifiedUserData(userData);
-  //         setEditData(userData);
-  //         setCurrentUsername(storageArr[0][1])
-  //         setMatchData(await GetPublicMatchesByStateAPI(userData.location));
-  //         setCurrentUsersPosts(grabUserPosts(userData.id, await GetPublicMatchesByStateAPI(userData.location)));
-  //         console.log(grabUserPosts(userData.id, await GetPublicMatchesByStateAPI(userData.location)))
-  //         const notiArr: INotification[] = await GetNotificationsByUserIDAPI(userData.id);
-  //         setNotificationsArray(notiArr);
-  //         if (notiArr.length !== 0) {
-  //           notiArr.forEach(noti => {
-  //             if (noti.isDeleted === false && noti.isRead === false) {
-  //               setNewNotificationBool(true);
-  //             }
-  //           })
-  //         }
-  //       } catch (error) {
-  //         localStorage.clear();
-  //         route.push('/');
-  //       }
-  //     }
-  //     grabUserData();
-  //   }
-  // }, [runUseEffect])
+  useEffect(() => {
+    let storageArr = GetLocalStorage();
+    setStorage(storageArr);
+    if (storageArr.length === 0) {
+      route.push('/');
+    } else {
+      const grabUserData = async () => {
+        try {
+          const userData: IPublicUserData = await GetUserAPI(storageArr[0][1]);
+          setVerifiedUserData(userData);
+          setEditData(userData);
+          setCurrentUsername(storageArr[0][1])
+          setMatchData(await GetPublicMatchesByStateAPI(userData.location));
+          setCurrentUsersPosts(grabUserPosts(userData.id, await GetPublicMatchesByStateAPI(userData.location)));
+          console.log(grabUserPosts(userData.id, await GetPublicMatchesByStateAPI(userData.location)));
+          setUsersArray(await GetUsersByStateAPI(userData.location));
+          setFriendsArray(await GetAllFriendsAPI(userData.id))
+          const notiArr: INotification[] = await GetNotificationsByUserIDAPI(userData.id);
+          setNotificationsArray(notiArr);
+          if (notiArr.length !== 0) {
+            notiArr.forEach(noti => {
+              if (noti.isDeleted === false && noti.isRead === false) {
+                setNewNotificationBool(true);
+              }
+            })
+          }
+        } catch (error) {
+          localStorage.clear();
+          route.push('/');
+        }
+      }
+      grabUserData();
+    }
+  }, [runUseEffect])
 
   return (
     <div>
@@ -1028,15 +1245,15 @@ const HomePage = () => {
         {/* Everything when opening profile modal */}
 
         {
-          userProfileModal && !editMatchModal && !editModal && <ProfileModalComponent userData={verifiedUserData} handleCloseUsersProfileModal={closeUsersProfileModal} handleOpenEditModal={openEditModal} openMyInfo={openMyInfo} openMyPosts={openMyPosts} onInfo={onInfo} posts={currentUsersPosts} openEditMatchModal={openEditMatchModal} viewModal={false} viewChallenge={viewChallenge} viewSession={viewSession} errorToast={errorToast}/>
+          userProfileModal && !editMatchModal && !editModal && !joinChallengeModal && !joinSessionModal && <ProfileModalComponent currentUser={verifiedUserData} userData={verifiedUserData} handleCloseUsersProfileModal={closeUsersProfileModal} handleOpenEditModal={openEditModal} openMyInfo={openMyInfo} openMyPosts={openMyPosts} onInfo={onInfo} posts={currentUsersPosts} openEditMatchModal={openEditMatchModal} viewModal={false} viewChallenge={viewChallenge} viewSession={viewSession} errorToast={errorToast} acceptFriend={acceptFriend} declineFriend={declineFriend} sendFriend={sendFriend} removeFriend={removeFriend} />
         }
 
         {
-          inboxModal && <InboxModalComponent closeModal={closeInboxModal} openFriendsModal={openFriendsModal} notifications={notificationArray} errorToast={errorToast}/>
+          inboxModal && !editMatchModal && !joinSessionModal && !joinChallengeModal &&  <InboxModalComponent closeModal={closeInboxModal} openFriendsModal={openFriendsModal} notifications={notificationArray} errorToast={errorToast} acceptFriend={acceptFriend} declineFriend={declineFriend} editMatchClick={openEditMatchModalFromInbox} currentUsersPosts={currentUsersPosts} viewMatchFromInbox={viewMatchFromInbox}/>
         }
 
         {
-          friendsModal && <FriendsModalComponent closeModal={closeFriendsModal} />
+          friendsModal && <FriendsModalComponentcopy friendsArray={friendArray} closeModal={closeFriendsModal} />
         }
 
         {
@@ -1044,15 +1261,15 @@ const HomePage = () => {
         }
 
         {
-          searchModal && viewOtherUserModal && !joinChallengeModal && !joinSessionModal && <ProfileModalComponent userData={viewOtherUserData} handleCloseUsersProfileModal={() => setViewOtherUserModal(false)} handleOpenEditModal={openEditModal} openMyInfo={openMyInfo} openMyPosts={openMyPosts} onInfo={onInfo} posts={viewUsersPosts} openEditMatchModal={openEditMatchModal} viewModal={true} viewChallenge={viewChallenge} viewSession={viewSession} errorToast={errorToast}/>
+          searchModal && viewOtherUserModal && !joinChallengeModal && !joinSessionModal && <ProfileModalComponent currentUser={verifiedUserData} userData={viewOtherUserData} handleCloseUsersProfileModal={() => setViewOtherUserModal(false)} handleOpenEditModal={openEditModal} openMyInfo={openMyInfo} openMyPosts={openMyPosts} onInfo={onInfo} posts={viewUsersPosts} openEditMatchModal={openEditMatchModal} viewModal={true} viewChallenge={viewChallenge} viewSession={viewSession} errorToast={errorToast} acceptFriend={acceptFriend} declineFriend={declineFriend} sendFriend={sendFriend} removeFriend={removeFriend} />
         }
 
         {
-          joinChallengeModal && <JoinChallengeModal data={viewMatchData} closeModal={closeViewMatch} joinChallenge={handleJoinMatch} handleJoinChallengeLocationChange={handleJoinChallengeLocationChange} joinChallengeLocation={joinChallengeLocation}  currentUserID={verifiedUserData.id} errorToast={errorToast}/>
+          joinChallengeModal && <JoinChallengeModal data={viewMatchData} closeModal={closeViewMatch} joinChallenge={handleJoinMatch} handleJoinChallengeLocationChange={handleJoinChallengeLocationChange} joinChallengeLocation={joinChallengeLocation} currentUserID={verifiedUserData.id} errorToast={errorToast} />
         }
 
         {
-          joinSessionModal && <JoinSessionModalComponent data={viewMatchData} closeModal={closeViewMatch} joinChallenge={handleJoinMatch} currentUserID={verifiedUserData.id} errorToast={errorToast}/>
+          joinSessionModal && <JoinSessionModalComponent data={viewMatchData} closeModal={closeViewMatch} joinChallenge={handleJoinMatch} currentUserID={verifiedUserData.id} errorToast={errorToast} />
         }
 
       </Modal>
@@ -1190,10 +1407,10 @@ const HomePage = () => {
                   </div>
 
                   <div className='grid lg:grid-cols-2 grid-cols-1 justify-between md:px-10 sm:px-8 px-4'>
-                    <RecentWinnerComponent pfp='/images/blankpfp.png' idx={0} errorToast={errorToast}/>
-                    <RecentWinnerComponent pfp='/images/blankpfp.png' idx={1} errorToast={errorToast}/>
-                    <RecentWinnerComponent pfp='/images/blankpfp.png' idx={2} errorToast={errorToast}/>
-                    <RecentWinnerComponent pfp='/images/blankpfp.png' idx={3} errorToast={errorToast}/>
+                    <RecentWinnerComponent pfp='/images/blankpfp.png' idx={0} errorToast={errorToast} />
+                    <RecentWinnerComponent pfp='/images/blankpfp.png' idx={1} errorToast={errorToast} />
+                    <RecentWinnerComponent pfp='/images/blankpfp.png' idx={2} errorToast={errorToast} />
+                    <RecentWinnerComponent pfp='/images/blankpfp.png' idx={3} errorToast={errorToast} />
                   </div>
                 </div>
               </>

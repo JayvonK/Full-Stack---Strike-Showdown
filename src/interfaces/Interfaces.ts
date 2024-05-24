@@ -58,6 +58,8 @@ export interface IPublicUserData {
   highGame: string;
   highSeries: string;
   streak: number;
+  pendingFriends: string;
+  friends: string;
 }
 
 export interface IUserPosts {
@@ -115,4 +117,8 @@ export interface ICreateNotification{
   postID: number;
   type: string;
   content: string;
+}
+
+export interface IUsername {
+  username: string;
 }

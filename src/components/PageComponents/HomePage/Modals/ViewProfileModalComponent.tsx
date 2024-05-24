@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { Modal } from "flowbite-react";
-import "../../../app/css/LoginPageAndHome.css";
-import ProfilePic2 from "../../../../public/images/profilePIc.png";
+import ProfilePic2 from "../../../../../public/images/profilePIc.png";
 import { useRouter } from "next/navigation";
-import AddFriendIcon from "../../../../public/images/UserPlus.png";
-import MessagingIcon from "../../../../public/images/MessageProfile.png";
+import AddFriendIcon from "../../../../../public/images/UserPlus.png";
+import MessagingIcon from "../../../../../public/images/MessageProfile.png";
 import UserMinus from "../../../../../public/images/UserMinus.png";
 import Router from "next/router";
 const ViewProfileModalComponent = (props: {
@@ -49,7 +48,7 @@ setActiveTab(tab);
           ></img>
         </div>
         <div className="">
-          <div className="grid grid-flow-col overflow-hidden  bg-black rounded-2xl  justify-center   md:mx-0 md:px-0 md:pt-4 md:pb-4 md:pr-5  w-64   md:w-96 md:h-60">
+          <div className="grid grid-flow-col overflow-hidden  bg-black rounded-2xl  justify-center md:mx-0 md:px-0 md:pt-4 md:pb-4 md:pr-5  w-64   md:w-96 md:h-60">
             <div className=" ml-8 ">
               <div className="grid grid-flow-col  auto-cols-max justify-start items-center pb-3 ">
                 <div>
@@ -60,7 +59,7 @@ setActiveTab(tab);
                   <h1 className="text-white jura text-base md:text-2xl pt-2 ">
                     {props.email}
                   </h1>
-                  <h1 className="text-white jura text-base md:text-xl pt-2 pb-2 ">
+                  <h1 className="text-white jura text-base md:text-xl pt-2 pb-2 break-words">
                     {props.proNouns}
                   
                   </h1>

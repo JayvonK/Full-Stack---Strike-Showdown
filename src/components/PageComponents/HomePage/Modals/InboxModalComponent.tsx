@@ -1,15 +1,13 @@
-"use client";
-import Link from "next/link";
-import { Navbar, Pagination, Modal, Button } from "flowbite-react";
+'use client'
+
 import { useEffect, useState } from "react";
 import React from "react";
-import "../../../app/css/LoginPageAndHome.css";
-import ProfilePic from "../../../../public/images/Ellipse 16.png";
-import { INotification } from "@/interfaces/Interfaces";
-import MessageNotificationComponent from "../HomePage/Notifications/MessageNotificationComponent";
-import MatchNotificationComponent from "../HomePage/Notifications/MatchNotificationComponent";
-import { MakeNotificationRead } from "@/Data/DataServices";
-const InboxModalComponent = (props: { closeModal: () => void, openFriendsModal: () => void, notifications: INotification[], errorToast: () => void }) => {
+import { INotification, IUserPosts } from "@/interfaces/Interfaces";
+import MessageNotificationComponent from "../Notifications/MessageNotificationComponent";
+import MatchNotificationComponent from "../Notifications/MatchNotificationComponent";
+import { GetMatchByPostIDAPI, MakeNotificationRead } from "@/Data/DataServices";
+import FriendRequestNotificationComponent from "../Notifications/FriendRequestNotificationComponent";
+const InboxModalComponent = (props: { closeModal: () => void, openFriendsModal: () => void, notifications: INotification[], errorToast: () => void, acceptFriend: (id: number, noti: INotification | undefined) => void, declineFriend: (id: number, noti: INotification | undefined) => void, editMatchClick: (id: number) => void, currentUsersPosts: IUserPosts[], viewMatchFromInbox: (postID: number) => void }) => {
 
   const [activeTab, setActiveTab] = useState("Inbox");
   const [tabOneActive, setTabOneActive] = useState(true);
@@ -85,22 +83,24 @@ const InboxModalComponent = (props: { closeModal: () => void, openFriendsModal: 
   }, [])
   return (
     <div className="bg-white rounded-lg p-6">
-        <div className="flex justify-evenly mb-4">
-          <button className={`tab-button relative px-4 w-48 py-2 rounded focus:outline-none jura text-xl md:text-2xl lg:text-3xl ${activeTab === "Inbox" ? "bg-orange-500 " : "text-black"}`} onClick={inboxClick}> Inbox </button>
+      <div className="flex justify-evenly mb-4">
+        <button className={`tab-button relative px-4 w-48 py-2 rounded focus:outline-none jura text-xl md:text-2xl lg:text-3xl ${activeTab === "Inbox" ? "bg-orange-500 " : "text-black"}`} onClick={inboxClick}> Inbox </button>
 
-          <button className={`tab-button relative px-4 py-2 w-48 rounded focus:outline-none jura text-xl md:text-2xl lg:text-3xl ${activeTab === "Matches" ? "bg-orange-500 " : " text-black "}`} onClick={matchesClick}> Matches {matchesUnread && <div className="absolute bg-red-600 w-4 h-4 rounded-full top-2 right-2"></div>} </button>
+        <button className={`tab-button relative px-4 py-2 w-48 rounded focus:outline-none jura text-xl md:text-2xl lg:text-3xl ${activeTab === "Matches" ? "bg-orange-500 " : " text-black "}`} onClick={matchesClick}> Matches {matchesUnread && <div className="absolute bg-red-600 w-4 h-4 rounded-full top-2 right-2"></div>} </button>
 
-          <button className={`tab-button relative px-4 py-2 w-48 rounded focus:outline-none jura text-xl md:text-2xl lg:text-3xl ${activeTab === "Sessions" ? "bg-orange-500  " : " text-black"}`} onClick={sessionsClick}> Sessions {sessionsUnread && <div className="absolute bg-red-600 w-4 h-4 rounded-full top-2 right-2"></div>} </button>
-        </div>
+        <button className={`tab-button relative px-4 py-2 w-48 rounded focus:outline-none jura text-xl md:text-2xl lg:text-3xl ${activeTab === "Sessions" ? "bg-orange-500  " : " text-black"}`} onClick={sessionsClick}> Sessions {sessionsUnread && <div className="absolute bg-red-600 w-4 h-4 rounded-full top-2 right-2"></div>} </button>
+      </div>
 
       <div className=" min-h-[500px] max-h-[600px] overflow-auto">
         {tabOneActive && props.notifications.map((noti, idx) => {
           if (noti.type.includes("Inbox")) {
             if (noti.type.includes("Message")) {
               return (<MessageNotificationComponent data={noti} key={idx} />)
+            } else if (noti.type.includes("FriendRequest")) {
+              return <FriendRequestNotificationComponent data={noti} key={idx} accept={props.acceptFriend} decline={props.declineFriend} />
             }
           }
-        })
+        }).reverse()
         }
 
         {tabTwoActive && props.notifications.map((noti, idx) => {
@@ -108,11 +108,11 @@ const InboxModalComponent = (props: { closeModal: () => void, openFriendsModal: 
             if (noti.type.includes("Deleted")) {
               return (<MessageNotificationComponent data={noti} key={idx} />)
             } else if (noti.type.includes("Publisher")) {
-              return (<MatchNotificationComponent data={noti} key={idx} click={props.errorToast} edit={true} />)
+              return (<MatchNotificationComponent data={noti} key={idx} editMatchClick={() => props.editMatchClick(noti.postID)} viewMatchClick={() => props.viewMatchFromInbox(noti.postID)} edit={true} />)
             } else if (noti.type.includes("Viewer")) {
-              return (<MatchNotificationComponent data={noti} key={idx} click={props.errorToast} edit={false} />)
-            } else if (noti.type.includes("Edited")){
-              return (<MatchNotificationComponent data={noti} key={idx} click={props.errorToast} edit={true} />)
+              return (<MatchNotificationComponent data={noti} key={idx} editMatchClick={() => props.editMatchClick(noti.postID)} viewMatchClick={() => props.viewMatchFromInbox(noti.postID)} edit={false} />)
+            } else if (noti.type.includes("Edited")) {
+              return (<MatchNotificationComponent data={noti} key={idx} editMatchClick={() => props.editMatchClick(noti.postID)} viewMatchClick={() => props.viewMatchFromInbox(noti.postID)} edit={true} />)
             }
           }
         }).reverse()
@@ -120,14 +120,15 @@ const InboxModalComponent = (props: { closeModal: () => void, openFriendsModal: 
 
         {tabThreeActive && props.notifications.map((noti, idx) => {
           if (noti.type.includes("Session")) {
+
             if (noti.type.includes("Deleted")) {
               return (<MessageNotificationComponent data={noti} key={idx} />)
             } else if (noti.type.includes("Publisher")) {
-              return (<MatchNotificationComponent data={noti} key={idx} click={props.errorToast} edit={true} />)
+              return (<MatchNotificationComponent data={noti} key={idx} editMatchClick={() => props.editMatchClick(noti.postID)} viewMatchClick={() => props.viewMatchFromInbox(noti.postID)} edit={true} />)
             } else if (noti.type.includes("Viewer")) {
-              return (<MatchNotificationComponent data={noti} key={idx} click={props.errorToast} edit={false} />)
-            } else if (noti.type.includes("Edited")){
-              return (<MatchNotificationComponent data={noti} key={idx} click={props.errorToast} edit={true} />)
+              return (<MatchNotificationComponent data={noti} key={idx} editMatchClick={() => props.editMatchClick(noti.postID)} viewMatchClick={() => props.viewMatchFromInbox(noti.postID)} edit={false} />)
+            } else if (noti.type.includes("Edited")) {
+              return (<MatchNotificationComponent data={noti} key={idx} editMatchClick={() => props.editMatchClick(noti.postID)} viewMatchClick={() => props.viewMatchFromInbox(noti.postID)} edit={true} />)
             }
           }
         }).reverse()
