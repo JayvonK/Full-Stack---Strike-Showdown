@@ -43,7 +43,6 @@ import ConfirmationModal from '@/components/PageComponents/HomePage/Modals/Confi
 import SearchModal from '@/components/PageComponents/HomePage/Modals/SearchModal';
 import JoinSessionModalComponent from '@/components/PageComponents/HomePage/Modals/JoinSessionModalComponent';
 import JoinChallengeModal from '@/components/PageComponents/HomePage/Modals/JoinChallengeModal';
-import FriendsModalComponentcopy from '@/components/PageComponents/HomePage/Modals/FriendsModalComponent copy';
 import ChallengeScoresModal from '@/components/PageComponents/HomePage/Modals/ChallengeScoresModal';
 
 const HomePage = () => {
