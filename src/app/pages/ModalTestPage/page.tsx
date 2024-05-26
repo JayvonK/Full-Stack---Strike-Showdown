@@ -2,7 +2,7 @@
 import { Button, Modal } from 'flowbite-react'
 import React, { useState } from 'react'
 
-function page() {
+function ModalTestPage() {
     const [openModal, setOpenModal] = useState(true);
   return (
     <div>
@@ -17,4 +17,4 @@ function page() {
   )
 }
 
-export default page
+export default ModalTestPage
