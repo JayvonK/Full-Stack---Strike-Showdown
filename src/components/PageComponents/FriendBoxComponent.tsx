@@ -3,6 +3,7 @@ import React from "react";
 
 function FriendBoxComponent(props: { 
   friend: IPublicUserData,
+  unFriend: () => void;
   challengeBtn: () => void;
   message: () => void;
 }) {
@@ -23,9 +24,9 @@ function FriendBoxComponent(props: {
             <div className="grid justify-end md:justify-center lg:justify-start items-center">
               <img
                 data-nimg="intrinsic"
-                onClick={() => {}}
+                onClick={props.unFriend}
                 src="/images/UserMinus.png"
-                className="pr-2 h-5 w-7  "
+                className="pr-2 h-5 w-7 hover:brightness-150 hover:cursor-pointer"
               ></img>
             </div>
 
@@ -37,12 +38,12 @@ function FriendBoxComponent(props: {
           </div>
           <div className=" grid gap-0 md:gap-1 grid-wrap justify-center pr-4  md:justify-center lg:justify-start ">
             <div>
-              <button className="items-center min-w-40 lg:min-w-10 xl:min-w-0 text-xl rounded-none md:px-6 py-0 text-center lg:text-sm xl:text-sm font-medium bg-orange-500 hover:!bg-orange-500 text-black jura">
+              <button className="items-center min-w-40 lg:min-w-10 xl:min-w-0 text-xl rounded-none md:px-6 py-0 text-center lg:text-sm xl:text-sm font-medium bg-orange-500 hover:bg-orange-400 text-black jura">
                 Challenge
               </button>
             </div>
             <div>
-              <button className="items-center  rounded-none text-xl   min-w-40 lg:!min-w-5 xl:text-sm lg:text-sm   md:px-7  py-0  text-center  font-medium bg-orange-500   hover:!bg-orange-500 text-black jura">
+              <button className="items-center rounded-none text-xl min-w-40 lg:!min-w-5 xl:text-sm lg:text-sm md:px-7 py-0 text-center font-medium bg-orange-500 hover:bg-orange-400 text-black jura">
                 Message 
               </button>
             </div>

@@ -1168,10 +1168,10 @@ const HomePage = () => {
 
   const goToMessagingPage = () => {
     setMessagePage(true);
-    toast({
-      title: "Warning! Messaging is still in progress",
-      description: "Sorry about that",
-    })
+    // toast({
+    //   title: "Warning! Messaging is still in progress",
+    //   description: "Sorry about that",
+    // })
   }
 
   const goToHomePage = () => {
@@ -1259,40 +1259,40 @@ const HomePage = () => {
     })
   }
 
-  useEffect(() => {
-    let storageArr = GetLocalStorage();
-    setStorage(storageArr);
-    if (storageArr.length === 0) {
-      route.push('/');
-    } else {
-      const grabUserData = async () => {
-        try {
-          const userData: IPublicUserData = await GetUserAPI(storageArr[0][1]);
-          setVerifiedUserData(userData);
-          setEditData(userData);
-          setCurrentUsername(storageArr[0][1])
-          setMatchData(await GetPublicMatchesByStateAPI(userData.location));
-          setCurrentUsersPosts(grabUserPosts(userData.id, await GetPublicMatchesByStateAPI(userData.location)));
-          console.log(grabUserPosts(userData.id, await GetPublicMatchesByStateAPI(userData.location)));
-          setUsersArray(await GetUsersByStateAPI(userData.location));
-          setFriendsArray(await GetAllFriendsAPI(userData.id))
-          const notiArr: INotification[] = await GetNotificationsByUserIDAPI(userData.id);
-          setNotificationsArray(notiArr);
-          if (notiArr.length !== 0) {
-            notiArr.forEach(noti => {
-              if (noti.isDeleted === false && noti.isRead === false) {
-                setNewNotificationBool(true);
-              }
-            })
-          }
-        } catch (error) {
-          localStorage.clear();
-          route.push('/');
-        }
-      }
-      grabUserData();
-    }
-  }, [runUseEffect])
+  // useEffect(() => {
+  //   let storageArr = GetLocalStorage();
+  //   setStorage(storageArr);
+  //   if (storageArr.length === 0) {
+  //     route.push('/');
+  //   } else {
+  //     const grabUserData = async () => {
+  //       try {
+  //         const userData: IPublicUserData = await GetUserAPI(storageArr[0][1]);
+  //         setVerifiedUserData(userData);
+  //         setEditData(userData);
+  //         setCurrentUsername(storageArr[0][1])
+  //         setMatchData(await GetPublicMatchesByStateAPI(userData.location));
+  //         setCurrentUsersPosts(grabUserPosts(userData.id, await GetPublicMatchesByStateAPI(userData.location)));
+  //         console.log(grabUserPosts(userData.id, await GetPublicMatchesByStateAPI(userData.location)));
+  //         setUsersArray(await GetUsersByStateAPI(userData.location));
+  //         setFriendsArray(await GetAllFriendsAPI(userData.id))
+  //         const notiArr: INotification[] = await GetNotificationsByUserIDAPI(userData.id);
+  //         setNotificationsArray(notiArr);
+  //         if (notiArr.length !== 0) {
+  //           notiArr.forEach(noti => {
+  //             if (noti.isDeleted === false && noti.isRead === false) {
+  //               setNewNotificationBool(true);
+  //             }
+  //           })
+  //         }
+  //       } catch (error) {
+  //         localStorage.clear();
+  //         route.push('/');
+  //       }
+  //     }
+  //     grabUserData();
+  //   }
+  // }, [runUseEffect])
 
   return (
     <div>
@@ -1331,7 +1331,7 @@ const HomePage = () => {
         }
 
         {
-          friendsModal && <FriendsModalComponent friendsArray={friendArray} closeModal={closeFriendsModal} />
+          friendsModal && <FriendsModalComponent friendsArray={friendArray} closeModal={closeFriendsModal} unFriend={removeFriend}/>
         }
 
         {

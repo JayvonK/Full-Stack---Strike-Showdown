@@ -7,7 +7,7 @@ import FriendBoxComponent from '../../FriendBoxComponent';
 import { IPublicUserData } from '@/interfaces/Interfaces';
 
 
-const FriendsModalComponent = (props: { friendsArray: IPublicUserData[], closeModal: () => void }) => {
+const FriendsModalComponent = (props: { friendsArray: IPublicUserData[], closeModal: () => void, unFriend: (id: number) => void }) => {
 
   return (
     <div className='p-4  bg-white rounded-lg'>
@@ -18,29 +18,14 @@ const FriendsModalComponent = (props: { friendsArray: IPublicUserData[], closeMo
       </div>
 
       <div className=' grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:gap-5   justify-evenly  max-h-[450px]  gap-y-4 gap-x-2 overflow-auto'>
-          {
-            props.friendsArray.map((friend, idx) => {
-              return (
-                <>
-                  <div>
-                    <FriendBoxComponent key={idx} friend={friend} challengeBtn={() => { }} message={() => { }} />
-                  </div>
-                  <div>
-                    <FriendBoxComponent key={idx} friend={friend} challengeBtn={() => { }} message={() => { }} />
-                  </div>
-                  <div>
-                    <FriendBoxComponent key={idx} friend={friend} challengeBtn={() => { }} message={() => { }} />
-                  </div>
-                  <div>
-                    <FriendBoxComponent key={idx} friend={friend} challengeBtn={() => { }} message={() => { }} />
-                  </div>
-                  <div>
-                    <FriendBoxComponent key={idx} friend={friend} challengeBtn={() => { }} message={() => { }} />
-                  </div>
-                </>
-              )
-            }).reverse()
-          }
+        {
+          props.friendsArray.map((friend, idx) =>
+          (
+            <div key={idx}>
+              <FriendBoxComponent key={idx} friend={friend} challengeBtn={() => { }} message={() => { }} unFriend={() => props.unFriend(friend.id)} />
+            </div>
+          )).reverse()
+        }
       </div>
 
       <div className="flex justify-end pt-4">
