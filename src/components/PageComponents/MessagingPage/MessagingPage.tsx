@@ -6,7 +6,7 @@ import { HubConnectionBuilder, LogLevel, HubConnection } from '@microsoft/signal
 import { Message, JoinChatRoom, SendMessage, IMessage, IPublicUserData, ICreateMessage } from '@/interfaces/Interfaces'
 import { GetMessagesFromRoomAPI, JoinChatRoomAPI, SendMessageAPI } from '@/Data/DataServices';
 
-const MessagingPage = (props: { openAddDM: () => void, currentUser: IPublicUserData, dmArray: IPublicUserData[] }) => {
+const MessagingPage = (props: { openAddDM: () => void, currentUser: IPublicUserData, dmArray: IPublicUserData[], openChallengeModal: () => void }) => {
 
   const [conn, setConnection] = useState<HubConnection | null>(null);
   const [messages, setMessages] = useState<IMessage[]>([]);
@@ -265,7 +265,7 @@ const MessagingPage = (props: { openAddDM: () => void, currentUser: IPublicUserD
                   </div>
 
                   <div className='lg:flex items-start hidden'>
-                    <button className='px-5 py-5 xl:text-2xl text-xl text-black juraBold bg-[#FF7A00] rounded-3xl'>Challenge</button>
+                    <button className='px-5 py-5 xl:text-2xl text-xl text-black juraBold bg-[#FF7A00] rounded-3xl' onClick={props.openChallengeModal}>Challenge</button>
                   </div>
 
                   <img className='lg:hidden absolute -left-2 top-4 sm:h-16 h-12' src="/images/caret-left-bold.svg" alt="" onClick={handleGoBack} />
@@ -333,7 +333,7 @@ const MessagingPage = (props: { openAddDM: () => void, currentUser: IPublicUserD
                       </div>
 
                       <div className='lg:flex items-start hidden'>
-                        <button className='px-5 py-5 xl:text-2xl text-xl text-black juraBold bg-[#FF7A00] rounded-3xl'>Challenge</button>
+                        <button className='px-5 py-5 xl:text-2xl text-xl text-black juraBold bg-[#FF7A00] rounded-3xl' onClick={props.openChallengeModal}>Challenge</button>
                       </div>
 
                       <img className='lg:hidden absolute -left-2 top-4 sm:h-16 h-12' src="/images/caret-left-bold.svg" alt="" onClick={handleGoBack} />

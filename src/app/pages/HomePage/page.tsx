@@ -1637,7 +1637,7 @@ const HomePage = () => {
 
               // Start of Messaging UI
 
-              <MessagingPage openAddDM={openAddDM} currentUser={verifiedUserData} dmArray={dmArray} />
+              <MessagingPage openAddDM={openAddDM} currentUser={verifiedUserData} dmArray={dmArray} openChallengeModal={openChallengeModal}/>
             )
           }
 
