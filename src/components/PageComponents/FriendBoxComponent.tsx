@@ -38,12 +38,12 @@ function FriendBoxComponent(props: {
           </div>
           <div className=" grid gap-0 md:gap-1 grid-wrap justify-center pr-4  md:justify-center lg:justify-start ">
             <div>
-              <button className="items-center min-w-40 lg:min-w-10 xl:min-w-0 text-xl rounded-none md:px-6 py-0 text-center lg:text-sm xl:text-sm font-medium bg-orange-500 hover:bg-orange-400 text-black jura">
+              <button className="items-center min-w-40 lg:min-w-10 xl:min-w-0 text-xl rounded-none md:px-6 py-0 text-center lg:text-sm xl:text-sm font-medium bg-orange-500 hover:bg-orange-400 text-black jura" onClick={props.challengeBtn}>
                 Challenge
               </button>
             </div>
             <div>
-              <button className="items-center rounded-none text-xl min-w-40 lg:!min-w-5 xl:text-sm lg:text-sm md:px-7 py-0 text-center font-medium bg-orange-500 hover:bg-orange-400 text-black jura">
+              <button className="items-center rounded-none text-xl min-w-40 lg:!min-w-5 xl:text-sm lg:text-sm md:px-7 py-0 text-center font-medium bg-orange-500 hover:bg-orange-400 text-black jura" onClick={props.message}>
                 Message 
               </button>
             </div>

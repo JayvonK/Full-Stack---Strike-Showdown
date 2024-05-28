@@ -189,6 +189,11 @@ export const RemoveFriendAPI = async (userID: number, yourID: number) => {
     return data;
 }
 
+export const GetUsersByStateAPI = async (state: string) => {
+    const promise = await fetch(url + 'User/GetUsersByState/' + state);
+    const data = await promise.json();
+    return data;
+}
 
 // Everything for Post and Matches
 
@@ -208,12 +213,6 @@ export const AddMatchScoreAPI = async (match: IMatchScore) => {
     return data;
 }
 
-
-export const GetUsersByStateAPI = async (state: string) => {
-    const promise = await fetch(url + 'User/GetUsersByState/' + state);
-    const data = await promise.json();
-    return data;
-}
 
 export const CreatePostAPI = async (Post: ICreatePost, publisher: string) => {
     const res = await fetch(url + 'Match/AddMatch/' + publisher, {
@@ -431,7 +430,7 @@ export const SendMessageAPI = async (message: ICreateMessage) => {
 // Everything for recent winners
 
 export const GetRecentWinnersByState = async (location: string) => {
-    const promise = await fetch(url + 'GetRecentWinnerModelsByState/' + location);
+    const promise = await fetch(url + 'RecentWinner/GetRecentWinnerModelsByState/' + location);
     const data = await promise.json();
     return data;
 }

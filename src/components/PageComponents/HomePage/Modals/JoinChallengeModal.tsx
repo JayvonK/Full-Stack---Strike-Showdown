@@ -10,7 +10,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
-const JoinChallengeModal = (props: { data: IUserPosts, closeModal: () => void, joinChallenge: (data: IUserPosts) => void, handleJoinChallengeLocationChange: (e: string) => void, joinChallengeLocation: string, currentUserID: number, errorToast: () => void , leaveClick: () => void}) => {
+const JoinChallengeModal = (props: { data: IUserPosts, closeModal: () => void, joinChallenge: (data: IUserPosts) => void, handleJoinChallengeLocationChange: (e: string) => void, joinChallengeLocation: string, currentUserID: number, errorToast: () => void , leaveClick: () => void, openScoresModal: () => void}) => {
 
   let locations = props.data.locations.split(",");
 
@@ -77,7 +77,7 @@ const JoinChallengeModal = (props: { data: IUserPosts, closeModal: () => void, j
               <h2 className='text-white pr-20'>Select Location:</h2>
               {
                 props.data.locations.includes(",") ? (
-                  <Select value={props.joinChallengeLocation} onValueChange={props.handleJoinChallengeLocationChange}>
+                  <Select value={props.data.maxPpl > props.data.currentPpl ? props.joinChallengeLocation : props.data.challengeLocation} disabled={props.data.maxPpl === props.data.currentPpl} onValueChange={props.handleJoinChallengeLocationChange}>
                     <SelectTrigger className="w-full xl:text-xl sm:text-lg text-sm bg-white pl-3 py-0">
                       <SelectValue placeholder="Location" />
                     </SelectTrigger>
@@ -124,7 +124,7 @@ const JoinChallengeModal = (props: { data: IUserPosts, closeModal: () => void, j
         
            <button className='jura lg:text-3xl text-2xl py-2 px-4 rounded-md bgOrange mr-6' onClick={isIncluded ? props.leaveClick : () => props.joinChallenge(props.data)}>{isIncluded ? "Leave" : "Challenge"}</button>
               
-              {props.data.currentPpl === props.data.maxPpl && <button className='jura lg:text-3xl text-2xl py-2 px-4 rounded-md bgOrange mr-6' onClick={() => {}}>Input Scores</button>}
+          {props.data.currentPpl === props.data.maxPpl && <button className='jura lg:text-3xl text-2xl py-2 px-4 rounded-md bgOrange mr-6' onClick={props.openScoresModal}>Input Scores</button>}
 
         <button className='jura lg:text-3xl text-2xl py-2 px-4 rounded-md bgOrange' onClick={props.closeModal}>Close</button>
       </div>

@@ -79,6 +79,7 @@ export interface IRecentWinner {
   earnings: string;
   highGame: string;
   highSeries: string;
+  streak: number;
   isDeleted: boolean;
   data: string;
 }

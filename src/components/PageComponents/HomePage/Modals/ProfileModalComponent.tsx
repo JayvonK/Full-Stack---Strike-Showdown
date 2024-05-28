@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { INotification, IPublicUserData, IUserPosts } from '@/interfaces/Interfaces';
 import ProfileMatchesComponent from '../ProfileMatchesComponent';
 import { GetFriendRequestNotificationsAPI } from '@/Data/DataServices';
-const ProfileModalComponent = (props: { currentUser: IPublicUserData, userData: IPublicUserData, handleOpenEditModal: () => void, handleCloseUsersProfileModal: () => void, openMyPosts: () => void, openMyInfo: () => void, onInfo: boolean, posts: IUserPosts[], openEditMatchModal: (data: IUserPosts) => void, viewModal: boolean, viewChallenge: (post: IUserPosts) => void, viewSession: (post: IUserPosts) => void, errorToast: () => void, acceptFriend: (id: number, noti: INotification | undefined) => void, declineFriend: (d: number, noti: INotification | undefined) => void, sendFriend: (d: number) => void, removeFriend: (d: number) => void }) => {
+const ProfileModalComponent = (props: { currentUser: IPublicUserData, userData: IPublicUserData, handleOpenEditModal: () => void, handleCloseUsersProfileModal: () => void, openMyPosts: () => void, openMyInfo: () => void, onInfo: boolean, posts: IUserPosts[], openEditMatchModal: (data: IUserPosts) => void, viewModal: boolean, viewChallenge: (post: IUserPosts) => void, viewSession: (post: IUserPosts) => void, errorToast: () => void, acceptFriend: (id: number, noti: INotification | undefined) => void, declineFriend: (d: number, noti: INotification | undefined) => void, sendFriend: (d: number) => void, removeFriend: (d: number) => void, addDM: (data: IPublicUserData) => void }) => {
 
   const [friendNoti, setFriendNoti] = useState<INotification>();
   const [friendBool, setFriendBool] = useState<boolean>(false);
@@ -117,8 +117,8 @@ const ProfileModalComponent = (props: { currentUser: IPublicUserData, userData: 
                         </button>
                       }
 
-                      <button onClick={props.errorToast} className="bg-orange-500 w-24 flex justify-center rounded-lg pt-2 text-black jura">
-                        <img src={MessagingIcon.src} className="h-6 w-6 " alt="message icon" />
+                      <button className="bg-orange-500 w-24 flex justify-center rounded-lg pt-2 text-black jura" onClick={() => props.addDM(props.userData)}>
+                        <img src={MessagingIcon.src} className="h-6 w-6 hover:cursor-pointer" alt="message icon" />
                       </button>
                     </>
                   ) : (
@@ -156,7 +156,7 @@ const ProfileModalComponent = (props: { currentUser: IPublicUserData, userData: 
                   </h1>
 
                   <h1 className="text-white lg:text-3xl text-2xl rounded-xl py-2 sm:px-10 px-4 hover:cursor-pointer" onClick={props.openMyPosts}>
-                    {props.viewModal ? "Posts" : "Your Posts"}
+                    Posts
                   </h1>
                 </>
               ) : (
@@ -248,9 +248,9 @@ const ProfileModalComponent = (props: { currentUser: IPublicUserData, userData: 
                       props.posts.map((p, idx) => {
                         if (!p.isFinished) {
                           return p.title === "1v1 Challenge" ? (
-                            <ProfileMatchesComponent data={p} key={idx} openEditMatchModal={props.openEditMatchModal} viewMatch={() => props.viewChallenge(p)} viewModal={p.userID !== props.userData.id} />
+                            <ProfileMatchesComponent data={p} key={idx} openEditMatchModal={props.openEditMatchModal} viewMatch={() => props.viewChallenge(p)} viewModal={p.userID !== props.currentUser.id} />
                           ) : (
-                            <ProfileMatchesComponent data={p} key={idx} openEditMatchModal={props.openEditMatchModal} viewMatch={() => props.viewSession(p)} viewModal={p.userID !== props.userData.id} />
+                            <ProfileMatchesComponent data={p} key={idx} openEditMatchModal={props.openEditMatchModal} viewMatch={() => props.viewSession(p)} viewModal={p.userID !== props.currentUser.id} />
                           )
                         }
                       })

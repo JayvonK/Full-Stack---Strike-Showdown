@@ -7,7 +7,7 @@ import FriendBoxComponent from '../../FriendBoxComponent';
 import { IPublicUserData } from '@/interfaces/Interfaces';
 
 
-const FriendsModalComponent = (props: { friendsArray: IPublicUserData[], closeModal: () => void, unFriend: (id: number) => void }) => {
+const FriendsModalComponent = (props: { friendsArray: IPublicUserData[], closeModal: () => void, unFriend: (id: number) => void, addNewDM: (user: IPublicUserData) => void, challengeClick: () => void }) => {
 
   return (
     <div className='p-4  bg-white rounded-lg'>
@@ -22,7 +22,7 @@ const FriendsModalComponent = (props: { friendsArray: IPublicUserData[], closeMo
           props.friendsArray.map((friend, idx) =>
           (
             <div key={idx}>
-              <FriendBoxComponent key={idx} friend={friend} challengeBtn={() => { }} message={() => { }} unFriend={() => props.unFriend(friend.id)} />
+              <FriendBoxComponent key={idx} friend={friend} challengeBtn={props.challengeClick} message={() => props.addNewDM(friend)} unFriend={() => props.unFriend(friend.id)} />
             </div>
           )).reverse()
         }

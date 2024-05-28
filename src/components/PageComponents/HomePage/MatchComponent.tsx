@@ -11,7 +11,7 @@ import {
 import Image from 'next/image';
 import { IUserPosts } from '@/interfaces/Interfaces';
 
-const MatchComponent = (props: { challenge: () => void, data: IUserPosts, fadeAway: string, edit: boolean, handleEditMatchClick: () => void, userID: number }) => {
+const MatchComponent = (props: { challenge: () => void, data: IUserPosts, fadeAway: string, edit: boolean, handleEditMatchClick: () => void, userID: number, userClick: () => void }) => {
     const array = props.data.locations.split(",");
 
     let userArr = props.data.matchUsersIDs.split("-");
@@ -44,7 +44,7 @@ const MatchComponent = (props: { challenge: () => void, data: IUserPosts, fadeAw
                 <div className='lg:grid 2xl:grid-cols-[22%_34%_24%_20%] grid-cols-3 w-full hidden'>
                     <div className='pr-8 xl:text-xl sm:text-lg text-sm'>
                         <h3 className='jura text-white'>Username</h3>
-                        <h3 className='juraBold txtOrange underline cursor-pointer' onClick={props.challenge}>{props.data.publisher}</h3>
+                        <h3 className='juraBold txtOrange underline cursor-pointer' onClick={props.userClick}>{props.data.publisher}</h3>
                     </div>
                     <div className='pr-8 2xl:block hidden xl:text-xl sm:text-lg text-sm'>
                         <h3 className='jura text-white'>Stats</h3>
