@@ -148,3 +148,12 @@ export interface IMessage {
 
 export type SendMessage = (message: string) => Promise<void>;
 export type JoinChatRoom = (username: string, chatroom: string) => Promise<void>;
+
+export interface IMatchScore {
+  id: number;
+  postID: number;
+  userID: number;
+  scoreOne: number;
+  scoreTwo: number;
+  isValid: boolean;
+}

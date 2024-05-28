@@ -20,7 +20,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { useState } from "react";
 import { useAppContext } from '@/context/Context';
 import { ICreateNotification, ICreatePost, INotification, IPublicUserData, IUserInfoWithStats, IUserPosts, IUsername } from '@/interfaces/Interfaces';
-import { AcceptFriendRequestAPI, AddUserToMatchAPI, CreateNotificationAPI, CreatePostAPI, DeclineFriendRequestAPI, DeleteMatchAPI, DeleteNotificationAPI, GetAllFriendsAPI, GetMatchByPostIDAPI, GetNotificationsByUserIDAPI, GetPublicMatchesByStateAPI, GetRecentMatchIDByUserIDAPI, GetUserAPI, GetUserByID, GetUsernameByIDAPI, GetUsersByStateAPI, MakeNotificationRead, RemoveFriendAPI, RemoveUserFromMatchAPI, SendFriendRequestAPI, UpdateMatchAPI, UpdateUserAPI } from '@/Data/DataServices';
+import { AcceptFriendRequestAPI, AddDMAPI, AddUserToMatchAPI, CreateNotificationAPI, CreatePostAPI, DeclineFriendRequestAPI, DeleteMatchAPI, DeleteNotificationAPI, GetAllDMSAPI, GetAllFriendsAPI, GetMatchByPostIDAPI, GetNotificationsByUserIDAPI, GetPublicMatchesByStateAPI, GetRecentMatchIDByUserIDAPI, GetUserAPI, GetUserByID, GetUsernameByIDAPI, GetUsersByStateAPI, MakeNotificationRead, RemoveFriendAPI, RemoveUserFromMatchAPI, SendFriendRequestAPI, UpdateMatchAPI, UpdateUserAPI } from '@/Data/DataServices';
 import PracticePostDummyData from '../../../utils/PostData.json';
 import PracticeSessionComponent from '@/components/PageComponents/HomePage/PracticeSessionComponent';
 import MatchComponent from '@/components/PageComponents/HomePage/MatchComponent';
@@ -109,6 +109,8 @@ const HomePage = () => {
   const [viewUsersPosts, setViewUsersPosts] = useState<IUserPosts[]>([])
   const [viewUserID, setViewUserID] = useState<number>(0);
   const [usersArray, setUsersArray] = useState<IPublicUserData[]>([fakeUserData, fakeUserData, fakeUserData2])
+  const [dmArray, setDmArray] = useState<IPublicUserData[]>([]);
+  const [addingDM, setAddingDM] = useState<boolean>(false);
 
   // State Variables For Match Data
   const [matchData, setMatchData] = useState<(IUserPosts)[]>(postsData);
@@ -1162,21 +1164,37 @@ const HomePage = () => {
 
   const goToMessagingPage = () => {
     setMessagePage(true);
-    // toast({
-    //   title: "Warning! Messaging is still in progress",
-    //   description: "Sorry about that",
-    // })
+    updateDMs();
   }
 
-  const addNewChat = async () => {
-    let data = await GetAllFriendsAPI(verifiedUserData.id);
+  const openAddDM = async () => {
+    let data = await GetUsersByStateAPI(verifiedUserData.location);
     setUsersArray(data);
+    setAddingDM(true);
     setSearchModal(true);
     setOpenModal(true);
   }
 
+  const closeAddDM = () => {
+    setAddingDM(false);
+    setSearchModal(false);
+    setOpenModal(false);
+  }
 
+  const addNewDM = async (data: IPublicUserData) => {
+    try {
+      await AddDMAPI(verifiedUserData.id, data.id);
+      updateDMs();
+      closeAddDM();
+    } catch (error) {
+      toast({
+        variant: 'destructive',
+        title: "Something went wrong.",
+        description: "Uh Oh",
+      })
+    }
 
+  }
 
   const closeAllModals = () => {
     setMatchModal(false);
@@ -1265,6 +1283,11 @@ const HomePage = () => {
     setFriendsArray(data);
   }
 
+  const updateDMs = async () => {
+    let data = await GetAllDMSAPI(verifiedUserData.id);
+    setDmArray(data);
+  }
+
   const errorToast = () => {
     toast({
       variant: 'destructive',
@@ -1290,6 +1313,7 @@ const HomePage = () => {
           console.log(grabUserPosts(userData.id, await GetPublicMatchesByStateAPI(userData.location)));
           setUsersArray(await GetUsersByStateAPI(userData.location));
           setFriendsArray(await GetAllFriendsAPI(userData.id))
+          setDmArray(await GetAllDMSAPI(userData.id));
           const notiArr: INotification[] = await GetNotificationsByUserIDAPI(userData.id);
           setNotificationsArray(notiArr);
           if (notiArr.length !== 0) {
@@ -1331,7 +1355,7 @@ const HomePage = () => {
         }
 
         {
-          editMatchModal && confirmationModal && <ConfirmationModal closeConfirmation={closeConfirmation} deleteMatch={deleteMatch} leaving={false} leaveMatch={() => { }} scoreOne={scoreOne} scoreTwo={scoreTwo} scores={false} confirmScores={confirmScores}/>
+          editMatchModal && confirmationModal && <ConfirmationModal closeConfirmation={closeConfirmation} deleteMatch={deleteMatch} leaving={false} leaveMatch={() => { }} scoreOne={scoreOne} scoreTwo={scoreTwo} scores={false} confirmScores={confirmScores} />
         }
 
         {/* Everything when opening profile modal */}
@@ -1341,15 +1365,19 @@ const HomePage = () => {
         }
 
         {
-          inboxModal && !editMatchModal && !joinSessionModal && !joinChallengeModal && <InboxModalComponent closeModal={closeInboxModal} openFriendsModal={openFriendsModal} notifications={notificationArray} errorToast={errorToast} acceptFriend={acceptFriend} declineFriend={declineFriend} editMatchClick={openEditMatchModalFromInbox} currentUsersPosts={currentUsersPosts} viewMatchFromInbox={viewMatchFromInbox} updateNotifications={updateNotifications}/>
+          inboxModal && !editMatchModal && !joinSessionModal && !joinChallengeModal && <InboxModalComponent closeModal={closeInboxModal} openFriendsModal={openFriendsModal} notifications={notificationArray} errorToast={errorToast} acceptFriend={acceptFriend} declineFriend={declineFriend} editMatchClick={openEditMatchModalFromInbox} currentUsersPosts={currentUsersPosts} viewMatchFromInbox={viewMatchFromInbox} updateNotifications={updateNotifications} />
         }
 
         {
-          friendsModal && <FriendsModalComponent friendsArray={friendArray} closeModal={closeFriendsModal} unFriend={removeFriend}/>
+          friendsModal && <FriendsModalComponent friendsArray={friendArray} closeModal={closeFriendsModal} unFriend={removeFriend} />
         }
 
         {
-          searchModal && !viewOtherUserModal && <SearchModal closeModal={closeSearchModal} userArr={usersArray} clickSearch={clickSearch} currentUsername={verifiedUserData.username} />
+          searchModal && !viewOtherUserModal && !addingDM && <SearchModal closeModal={closeSearchModal} userArr={usersArray} clickSearch={clickSearch} currentUsername={verifiedUserData.username} />
+        }
+
+        {
+          addingDM && searchModal && <SearchModal closeModal={closeAddDM} userArr={usersArray} clickSearch={addNewDM} currentUsername={verifiedUserData.username} />
         }
 
         {
@@ -1365,7 +1393,7 @@ const HomePage = () => {
         }
 
         {
-          joinChallengeModal || joinSessionModal && confirmationModal && <ConfirmationModal closeConfirmation={closeConfirmation} deleteMatch={deleteMatch} leaving={true} leaveMatch={() => handleLeaveMatch(viewMatchData)} scoreOne={scoreOne} scoreTwo={scoreTwo} scores={false} confirmScores={confirmScores}/>
+          joinChallengeModal || joinSessionModal && confirmationModal && <ConfirmationModal closeConfirmation={closeConfirmation} deleteMatch={deleteMatch} leaving={true} leaveMatch={() => handleLeaveMatch(viewMatchData)} scoreOne={scoreOne} scoreTwo={scoreTwo} scores={false} confirmScores={confirmScores} />
         }
 
         {
@@ -1373,7 +1401,7 @@ const HomePage = () => {
         }
 
         {
-          scoresModal && confirmationModal && <ConfirmationModal closeConfirmation={closeConfirmation} deleteMatch={deleteMatch} leaving={false} leaveMatch={() => { }} scoreOne={scoreOne} scoreTwo={scoreTwo} scores={true} confirmScores={confirmScores}/>
+          scoresModal && confirmationModal && <ConfirmationModal closeConfirmation={closeConfirmation} deleteMatch={deleteMatch} leaving={false} leaveMatch={() => { }} scoreOne={scoreOne} scoreTwo={scoreTwo} scores={true} confirmScores={confirmScores} />
         }
 
       </Modal>
@@ -1507,7 +1535,7 @@ const HomePage = () => {
 
                 <div className='min-h-[500px] max-h-[1200px] bg-black sm:rounded-3xl rounded-xl overflow-y-auto overflow-x-hidden scrollbar mt-10'>
                   <div className='flex'>
-                    <h1 className='text-black xl:text-4xl lg:text-3xl sm:text-2xl text-xl juraBold py-4 px-8 bg-[#FF7A00] inline-block md:text-center sm:rounded-tl-3xl rounded-tl-xl mb-6'>Recent Winners</h1>
+                    <h1 className='text-black xl:text-4xl lg:text-3xl sm:text-2xl text-xl juraBold py-4 px-8 bg-[#FF7A00] inline-block md:text-center sm:rounded-tl-3xl rounded-tl-xl mb-12'>Recent Winners</h1>
                   </div>
 
                   <div className='grid lg:grid-cols-2 grid-cols-1 justify-between md:px-10 sm:px-8 px-4'>
@@ -1523,7 +1551,7 @@ const HomePage = () => {
 
               // Start of Messaging UI
 
-              <MessagingPage addNewChat={addNewChat} currentUser={verifiedUserData} friendArray={friendArray}/>
+              <MessagingPage openAddDM={openAddDM} currentUser={verifiedUserData} dmArray={dmArray} />
             )
           }
 

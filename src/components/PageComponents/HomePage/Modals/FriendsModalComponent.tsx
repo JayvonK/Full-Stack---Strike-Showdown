@@ -28,6 +28,10 @@ const FriendsModalComponent = (props: { friendsArray: IPublicUserData[], closeMo
         }
       </div>
 
+      {
+        props.friendsArray.length === 0 && <h1 className='text-center jura text-black text-3xl py-20'>You have no friends :(</h1>
+      }
+
       <div className="flex justify-end pt-4">
         <Button className=" bg-orange-500 text-lg md:text-xl py-1  lg:text-2xl  rounded-lg  hover:!bg-orange-500 text-black jura" onClick={props.closeModal}>
           <h3 className=" text-xl lg:text-3xl  text-center  rounded-lg ">Close</h3>

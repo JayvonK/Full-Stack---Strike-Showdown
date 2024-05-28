@@ -1,4 +1,4 @@
-import { IChatRoomName, ICreateMessage, ICreateNotification, ICreatePost, IMessage, INotification, IPublicUserData, IToken, IUserInfoWithStats, IUserLogin, IUserPosts } from "@/interfaces/Interfaces"
+import { IChatRoomName, ICreateMessage, ICreateNotification, ICreatePost, IMatchScore, IMessage, INotification, IPublicUserData, IToken, IUserInfoWithStats, IUserLogin, IUserPosts } from "@/interfaces/Interfaces"
 
 const url = 'https://strikeshowdownbackend.azurewebsites.net/api/'
 
@@ -72,6 +72,28 @@ export const GetUsernameByIDAPI = async (id: number) => {
 export const GetUserByID = async (id: number) => {
     const promise = await fetch(url + 'User/GetUserByID/' + id);
     const data: IPublicUserData = await promise.json();
+    return data;
+}
+
+export const GetAllDMSAPI = async (id: number) => {
+    const promise = await fetch(url + 'User/GetAllDMs/' + id);
+    const data = await promise.json();
+    return data;
+}
+
+export const AddDMAPI = async (yourID: number, userID: number) => {
+    const res = await fetch(url  + 'User/AddDM/' + yourID + '/' + userID, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': "application/json"
+        }
+    })
+    if(!res.ok){
+        const message = "Ann error message has occured " + res.status;
+        throw new Error(message);
+    }
+    const data = await res.json();
+    console.log('sent friend')
     return data;
 }
 
@@ -169,6 +191,24 @@ export const RemoveFriendAPI = async (userID: number, yourID: number) => {
 
 
 // Everything for Post and Matches
+
+export const AddMatchScoreAPI = async (match: IMatchScore) => {
+    const res = await fetch(url + 'MatchScore/AddMatchScore', {
+        method: 'POST',
+        headers: {
+            'Content-Type': "application/json"
+        },
+        body: JSON.stringify(match)
+    })
+    if(!res.ok){
+        const message = "An error message has occured " + res.status;
+        throw new Error(message);
+    }
+    const data = await res.json();
+    return data;
+}
+
+
 export const GetUsersByStateAPI = async (state: string) => {
     const promise = await fetch(url + 'User/GetUsersByState/' + state);
     const data = await promise.json();

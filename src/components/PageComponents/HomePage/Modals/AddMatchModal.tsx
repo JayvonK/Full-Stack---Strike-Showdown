@@ -43,6 +43,7 @@ const AddMatchModal = (props: { addingChallengeBool: boolean, handleFalseChallen
             <div className='px-4'>
                 <form onSubmit={props.edit ? props.editMatchClick : (props.addingChallengeBool ? props.create1v1Challenge : props.createPracticeSession)}>
                     <div className="py-4 md:px-6 px-4 bg-black rounded-md">
+                        <h1 className="text-red-500 jura text-xl mb-4">Private Visibility and Sending To Users Is Still in Progress</h1>
                         <div className='sm:flex justify-between lg:gap-28 gap-10'>
                             <div className='w-full'>
                                 <h3 className='jura text-white lg:text-2xl sm:text-xl text-lg'>Visibility</h3>
