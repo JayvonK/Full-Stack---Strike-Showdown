@@ -428,3 +428,12 @@ export const SendMessageAPI = async (message: ICreateMessage) => {
 }
 
 
+// Everything for recent winners
+
+export const GetRecentWinnersByState = async (location: string) => {
+    const promise = await fetch(url + 'GetRecentWinnerModelsByState/' + location);
+    const data = await promise.json();
+    return data;
+}
+
+

@@ -118,6 +118,8 @@ const InboxModalComponent = (props: { closeModal: () => void, openFriendsModal: 
               return (<MatchNotificationComponent data={noti} key={idx} editMatchClick={() => props.editMatchClick(noti.postID)} viewMatchClick={() => props.viewMatchFromInbox(noti.postID)} edit={false} />)
             } else if (noti.type.includes("Edited")) {
               return (<MatchNotificationComponent data={noti} key={idx} editMatchClick={() => props.editMatchClick(noti.postID)} viewMatchClick={() => props.viewMatchFromInbox(noti.postID)} edit={true} />)
+            } else if (noti.type.includes("Winner")){
+              return (<MessageNotificationComponent data={noti} key={idx} />)
             }
           }
         }).reverse()

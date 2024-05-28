@@ -62,6 +62,27 @@ export interface IPublicUserData {
   friends: string;
 }
 
+export interface IRecentWinner {
+  id: number;
+  userID: number;
+  username: string;
+  email: string;
+  location: string;
+  fullName: string;
+  profileImage: string;
+  pronouns: string;
+  wins: number;
+  losses: number;
+  style: string;
+  mainCenter: string;
+  average: string;
+  earnings: string;
+  highGame: string;
+  highSeries: string;
+  isDeleted: boolean;
+  data: string;
+}
+
 export interface IUserPosts {
   id: number;
   userID: number;

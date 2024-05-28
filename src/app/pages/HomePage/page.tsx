@@ -19,8 +19,8 @@ import { useToast } from "@/components/ui/use-toast";
 
 import { useState } from "react";
 import { useAppContext } from '@/context/Context';
-import { ICreateNotification, ICreatePost, INotification, IPublicUserData, IUserInfoWithStats, IUserPosts, IUsername } from '@/interfaces/Interfaces';
-import { AcceptFriendRequestAPI, AddDMAPI, AddUserToMatchAPI, CreateNotificationAPI, CreatePostAPI, DeclineFriendRequestAPI, DeleteMatchAPI, DeleteNotificationAPI, GetAllDMSAPI, GetAllFriendsAPI, GetMatchByPostIDAPI, GetNotificationsByUserIDAPI, GetPublicMatchesByStateAPI, GetRecentMatchIDByUserIDAPI, GetUserAPI, GetUserByID, GetUsernameByIDAPI, GetUsersByStateAPI, MakeNotificationRead, RemoveFriendAPI, RemoveUserFromMatchAPI, SendFriendRequestAPI, UpdateMatchAPI, UpdateUserAPI } from '@/Data/DataServices';
+import { ICreateNotification, ICreatePost, IMatchScore, INotification, IPublicUserData, IUserInfoWithStats, IUserPosts, IUsername } from '@/interfaces/Interfaces';
+import { AcceptFriendRequestAPI, AddDMAPI, AddMatchScoreAPI, AddUserToMatchAPI, CreateNotificationAPI, CreatePostAPI, DeclineFriendRequestAPI, DeleteMatchAPI, DeleteNotificationAPI, GetAllDMSAPI, GetAllFriendsAPI, GetMatchByPostIDAPI, GetNotificationsByUserIDAPI, GetPublicMatchesByStateAPI, GetRecentMatchIDByUserIDAPI, GetUserAPI, GetUserByID, GetUsernameByIDAPI, GetUsersByStateAPI, MakeNotificationRead, RemoveFriendAPI, RemoveUserFromMatchAPI, SendFriendRequestAPI, UpdateMatchAPI, UpdateUserAPI } from '@/Data/DataServices';
 import PracticePostDummyData from '../../../utils/PostData.json';
 import PracticeSessionComponent from '@/components/PageComponents/HomePage/PracticeSessionComponent';
 import MatchComponent from '@/components/PageComponents/HomePage/MatchComponent';
@@ -111,6 +111,7 @@ const HomePage = () => {
   const [usersArray, setUsersArray] = useState<IPublicUserData[]>([fakeUserData, fakeUserData, fakeUserData2])
   const [dmArray, setDmArray] = useState<IPublicUserData[]>([]);
   const [addingDM, setAddingDM] = useState<boolean>(false);
+  const [recentWinners, setRecentWinners] = useState<string[]>([])
 
   // State Variables For Match Data
   const [matchData, setMatchData] = useState<(IUserPosts)[]>(postsData);
@@ -563,8 +564,31 @@ const HomePage = () => {
     }
   }
 
-  const confirmScores = () => {
+  const confirmScores = async () => {
+    let ms: IMatchScore = {
+      id: 0,
+      postID: viewMatchData.id,
+      userID: verifiedUserData.id,
+      scoreOne: scoreOne,
+      scoreTwo: scoreTwo,
+      isValid: true
+    }
 
+    try {
+      await AddMatchScoreAPI(ms); 
+      updateNotifications();
+      closeAllModals();
+      toast({
+        title: "Scores Sent! ",
+        description: "You will be recieve a notification when a winner has been verified",
+      })
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Error ",
+        description: "Something went wrong",
+      })
+    }
   }
 
 
@@ -1203,6 +1227,13 @@ const HomePage = () => {
     setFriendsModal(false);
     setSearchModal(false);
     setEditMatchModal(false);
+    setScoresModal(false);
+    setEditMatchModal(false);
+    setJoinChallengeModal(false);
+    setJoinSessionModal(false);
+    setUserProfileModal(false);
+    setViewOtherUserModal(false);
+    setConfirmationModal(false);
     setOpenModal(false);
   }
 
