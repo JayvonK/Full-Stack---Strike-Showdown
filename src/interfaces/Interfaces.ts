@@ -119,7 +119,32 @@ export interface ICreateNotification{
   type: string;
   content: string;
 }
-
 export interface IUsername {
   username: string;
 }
+
+export interface Message {
+  username: string;
+  msg: string;
+}
+
+export interface IChatRoomName {
+  chatroomName: string
+}
+
+export interface ICreateMessage {
+  userID: number;
+  message: string;
+  chatRoomName: string;
+}
+
+export interface IMessage {
+  id: number;
+  userID: number;
+  chatRoom: string;
+  message: string;
+  publisherName: string;
+}
+
+export type SendMessage = (message: string) => Promise<void>;
+export type JoinChatRoom = (username: string, chatroom: string) => Promise<void>;

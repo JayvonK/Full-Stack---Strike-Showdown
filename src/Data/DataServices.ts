@@ -1,4 +1,4 @@
-import { ICreateNotification, ICreatePost, INotification, IPublicUserData, IToken, IUserInfoWithStats, IUserLogin, IUserPosts } from "@/interfaces/Interfaces"
+import { IChatRoomName, ICreateMessage, ICreateNotification, ICreatePost, IMessage, INotification, IPublicUserData, IToken, IUserInfoWithStats, IUserLogin, IUserPosts } from "@/interfaces/Interfaces"
 
 const url = 'https://strikeshowdownbackend.azurewebsites.net/api/'
 
@@ -354,3 +354,37 @@ export const MakeNotificationRead = async (noti: INotification) => {
     const data = await res.json();
     return data;
 }
+
+// Everything For Chatroom And Messages
+
+const urlTwo = 'https://strikeshowdownbackend.azurewebsites.net/';
+
+export const JoinChatRoomAPI = async (yourID: number, userID: number) => {
+    const promise = await fetch(urlTwo + 'MessageController/JoinChatroom/' + yourID + '/' + userID);
+    const data: IChatRoomName = await promise.json();
+    return data;
+}
+
+export const GetMessagesFromRoomAPI = async (name: string) => {
+    const promise = await fetch(urlTwo + 'MessageController/GetMessagesFromChatroom/' + name);
+    const data: IMessage[] = await promise.json();
+    return data;
+}
+
+export const SendMessageAPI = async (message: ICreateMessage) => {
+    const res = await fetch(urlTwo + 'MessageController/SendMessage', {
+        method: 'POST',
+        headers: {
+            'Content-Type': "application/json"
+        },
+        body: JSON.stringify(message)
+    })
+    if(!res.ok){
+        const message = "An error message has occured " + res.status;
+        throw new Error(message);
+    }
+    const data = await res.json();
+    return data;
+}
+
+
