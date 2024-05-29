@@ -23,7 +23,7 @@ function FriendBoxComponent(props: {
           >
             <div className="grid justify-end md:justify-center lg:justify-start items-center">
               <img
-                data-nimg="intrinsic"
+                data-img="intrinsic"
                 onClick={() => {}}
                 src="/images/UserMinus.png"
                 className="pr-2 h-5 w-7  "
