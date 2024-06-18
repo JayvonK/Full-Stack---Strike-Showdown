@@ -161,7 +161,6 @@ const ForgotPassword = () => {
                 action: <ToastAction altText="Try again">Try again</ToastAction>,
             })
         }
-
     }
 
     const handleBack = () => {
