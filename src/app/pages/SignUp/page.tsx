@@ -34,6 +34,7 @@ const SignUp = () => {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [showSecondPassword, setShowSecondPassword] = useState<boolean>(false);
   const [email, setEmail] = useState<string>('');
   const [password2, setPassword2] = useState<string>('');
   const [passwordsMatch, setPasswordsMatch] = useState<boolean>(true);
@@ -79,6 +80,14 @@ const SignUp = () => {
 
   const handleLocationChange = (e: string) => {
     setLocation(e);
+  }
+
+  const showPasswordClick = () => {
+    setShowPassword(!showPassword)
+  }
+
+  const secondShowPasswordClick = () => {
+    setShowSecondPassword(!showSecondPassword);
   }
 
   const handlePasswordChange = (param: React.ChangeEvent<HTMLInputElement>) => {
@@ -418,8 +427,8 @@ const SignUp = () => {
                           <SelectItem value="WY">Wyoming</SelectItem>
                         </SelectContent>
                       </Select>
-                      <RequiredInputComponent title="Password:" type='password' borderError={passwordBorderError} placeholder='Enter Password' value={password} onChange={handlePasswordChange} maxLength={50} />
-                      <RequiredInputComponent title="Verify Password:" type='password' borderError={passwordBorderError} placeholder='Re-enter Password' value={password2} onChange={handlePassword2Change} maxLength={50} />
+                      <RequiredInputComponent title="Password:" type={showPassword ? 'text' : 'password'} borderError={passwordBorderError} placeholder='Enter Password' value={password} onChange={handlePasswordChange} maxLength={50} showPasswordClick={showPasswordClick}/>
+                      <RequiredInputComponent title="Verify Password:" type={showSecondPassword ? 'text' : 'password'} borderError={passwordBorderError} placeholder='Re-enter Password' value={password2} onChange={handlePassword2Change} maxLength={50} showPasswordClick={secondShowPasswordClick}/>
                       {!passwordsMatch ? (<h1 className='text-2xl jura text-red-600'>Passwords Dont Match</h1>) : (<div></div>)}
 
                       <button type='submit' className=" text-3xl text-black sm:min-h-14 min-h-12 w-full my-8 juraBold bgOrange rounded-xl hover:bg-[#ff9939]"> Next</button>
