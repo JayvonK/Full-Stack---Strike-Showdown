@@ -33,6 +33,7 @@ import {
 const SignUp = () => {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   const [email, setEmail] = useState<string>('');
   const [password2, setPassword2] = useState<string>('');
   const [passwordsMatch, setPasswordsMatch] = useState<boolean>(true);
@@ -346,7 +347,8 @@ const SignUp = () => {
 
           <div className="min-h-screen bgBlack">
             {
-              creatingAccount ? (
+              // Creating Account Section
+              creatingAccount &&
                 <>
                   <LoginNavComponent exist={true} onClick={handleBackLogin} />
 
@@ -424,15 +426,11 @@ const SignUp = () => {
                     </form>
                   </div>
                 </>
-              ) : (
-                <div>
-
-                </div>
-              )
             }
 
             {
-              answeringSecurity ? (
+              // Security Questions Section
+              answeringSecurity &&
                 <>
 
                   <LoginNavComponent exist={true} onClick={handleBackCreateAcc} />
@@ -499,15 +497,11 @@ const SignUp = () => {
 
                   </div>
                 </>
-              ) : (
-                <div>
-
-                </div>
-              )
             }
 
             {
-              doesUserWantStats ? (
+              // Optional Stats Section
+              doesUserWantStats &&
                 <>
                   <LoginNavComponent exist={true} onClick={handleBackSecurityQuestions} />
 
@@ -529,12 +523,11 @@ const SignUp = () => {
 
                   </div>
                 </>
-              ) : (<div></div>)
-
             }
 
             {
-              addingCustomStats ? (
+              // Adding Custom Stats Section
+              addingCustomStats &&
                 <>
                   <LoginNavComponent exist={true} onClick={handleBackOptional} />
 
@@ -630,9 +623,8 @@ const SignUp = () => {
                     }
 
                   </div>
-                </>) : (<></>)
+                </>
             }
-
 
 
           </div>
