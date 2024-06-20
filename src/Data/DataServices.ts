@@ -1,6 +1,6 @@
 import { IChatRoomName, ICreateMessage, ICreateNotification, ICreatePost, IMatchScore, IMessage, INotification, IPublicUserData, IToken, IUserInfoWithStats, IUserLogin, IUserPosts } from "@/interfaces/Interfaces"
 
-const url = 'https://strikeshowdownbackend.azurewebsites.net/api/'
+const url = 'https://strike-showdown.azurewebsites.net/api/'
 
 // Everything for Logging in and Creating User
 
