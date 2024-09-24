@@ -27,8 +27,8 @@ export default function Home() {
   const [password, setPassword] = useState<string>('');
   const [userBorderError, setuserBorderError] = useState<string>('');
   const [passwordBorderError, setPasswordBorderError] = useState<string>('');
+  const [showPasswordBool, setShowPasswordBool] = useState<boolean>(false);
   const router = useRouter();
-
 
   const pageContext = useAppContext();
 
@@ -98,6 +98,10 @@ export default function Home() {
     router.push('/pages/SignUp')
   }
 
+  const handleToggleShowPassword = () => {
+    setShowPasswordBool(prev => !prev);
+  }
+
   useEffect(() => {
     let storage = GetLocalStorage();
     if(storage.length !== 0 && !pageContext.userLoggedIn){
@@ -155,7 +159,7 @@ export default function Home() {
 
                       <RequiredInputComponent title={"Username:"} type={'text'} borderError={userBorderError} placeholder="Username/Email" value={username} onChange={handleUserChange} maxLength={50} />
 
-                      <RequiredInputComponent title={"Password:"} type={'password'} borderError={passwordBorderError} placeholder="Password" value={password} onChange={handlePasswordChange} maxLength={50} />
+                      <RequiredInputComponent title={"Password:"} type={showPasswordBool ? 'text' : 'password'} borderError={passwordBorderError} placeholder="Password" value={password} onChange={handlePasswordChange} maxLength={50} showPasswordClick={handleToggleShowPassword}/>
 
                       <h3 className=" text-2xl txtOrange jura underline hover:cursor-pointer hover:text-[#ff9939] my-2" onClick={handleForgotPassword}>Forgot Password?</h3>
 
